@@ -1,0 +1,14 @@
+{
+    "name": "prestashop/demosymfonyforms",
+    "authors": [
+        {
+            "name": "Tadas Davidsonas",
+            "email": "tadas.davidsonas@invertus.eu"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+        "PrestaShop\\Module\\DemoSymfonyForms\\": "src/"
+      }
+    }
+}
