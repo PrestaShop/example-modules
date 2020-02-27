@@ -128,7 +128,6 @@ class Installer
         // All hooks in the order view page.
         $hooks = [
             'displayBackOfficeOrderActions',
-            'displayAdminOrderContentOrder',
             'displayAdminOrderTabContent',
             'displayAdminOrderTabLink',
             'displayAdminOrderMain',
