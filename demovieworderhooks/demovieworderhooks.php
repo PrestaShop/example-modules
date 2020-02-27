@@ -74,11 +74,6 @@ class DemoViewOrderHooks extends Module
         ]);
     }
 
-    public function hookDisplayAdminOrderContentOrder(array $params)
-    {
-        return 'displayAdminOrderContentOrder';
-    }
-
     /**
      * Display shipment tracking information.
      */
