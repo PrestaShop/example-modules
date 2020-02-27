@@ -203,12 +203,6 @@ class DemoViewOrderHooks extends Module
         ]);
     }
 
-    public function hookActionGetAdminOrderButtons(array $params)
-    {
-        // export order
-        return 'actionGetAdminOrderButtons';
-    }
-
     /**
      * Render a twig template.
      */
