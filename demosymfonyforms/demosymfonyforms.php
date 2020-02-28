@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use PrestaShop\Module\DemoSymfonyForms\Uploader\SupplierSecondImageUploader;
+use DemoSymfonyForms\Uploader\SupplierSecondImageUploader;
 use PrestaShop\PrestaShop\Core\Image\Uploader\ImageUploaderInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;

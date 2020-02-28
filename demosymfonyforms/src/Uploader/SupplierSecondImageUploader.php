@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace PrestaShop\Module\DemoSymfonyForms\Uploader;
+namespace DemoSymfonyForms\Uploader;
 
 use PrestaShop\PrestaShop\Core\Image\Uploader\Exception\ImageOptimizationException;
 use PrestaShop\PrestaShop\Core\Image\Uploader\Exception\ImageUploadException;

@@ -1,7 +1,7 @@
 admin_suppliers_delete_image:
-  path: /{id}/delete-image
+  path: demosymfonyforms/{id}/delete-image
   methods: [POST]
   defaults:
-    _controller: PrestaShop\Module\DemoSymfonyForms\Controller\DemoSupplierController:deleteSecondImageAction
+    _controller: DemoSymfonyForms\Controller\DemoSupplierController:deleteSecondImageAction
   requirements:
     categoryId: \d+
