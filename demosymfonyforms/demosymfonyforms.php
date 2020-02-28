@@ -25,7 +25,7 @@ if (!defined('_PS_VERSION_')) {
 
 class demosymfonyforms extends Module
 {
-    const SUPPLIER_EXTRA_IMAGE_PATH = '/img/su/'.SupplierSecondImageUploader::EXTRA_IMAGE_NAME;
+    private const SUPPLIER_EXTRA_IMAGE_PATH = '/img/su/'.SupplierSecondImageUploader::EXTRA_IMAGE_NAME;
 
     /**
      * @var ImageUploaderInterface
@@ -68,6 +68,12 @@ class demosymfonyforms extends Module
             ->add('webPath', HiddenType::class, [
                 'data' => self::SUPPLIER_EXTRA_IMAGE_PATH .  $params['id'] . '.jpg',
             ])
+            ->add('delete_action_route', HiddenType::class, [
+                'data' => 'admin_suppliers_delete_image',
+            ])
+            ->add('id', HiddenType::class, [
+                'data' => $params['id'],
+            ])
             ->add('upload_file', FileType::class, [
                 'label' => $translator->trans('Upload file', [], 'Modules.DemoSymfonyForms'),
                 'required' => false,
@@ -78,7 +84,9 @@ class demosymfonyforms extends Module
                         'mimeTypesMessage' => 'Authorized extensions: gif, jpg, jpeg, png',
                     ]),
                 ],
-                'image_property' => 'webPath',
+                'image_property' => self::SUPPLIER_EXTRA_IMAGE_PATH .  $params['id'] . '.jpg',
+                'delete_action_route' => 'admin_suppliers_delete_image',
+                'id_property' => $params['id']
         ]);
     }
 
