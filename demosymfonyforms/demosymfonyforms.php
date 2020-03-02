@@ -23,6 +23,8 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
+require_once __DIR__ . '/vendor/autoload.php';
+
 class demosymfonyforms extends Module
 {
     private const SUPPLIER_EXTRA_IMAGE_PATH = '/img/su/'.SupplierSecondImageUploader::EXTRA_IMAGE_NAME;
@@ -42,7 +44,7 @@ class demosymfonyforms extends Module
         parent::__construct();
 
         $this->displayName = $this->l('Demo Symfony Forms');
-        $this->description = $this->l('Demonstration of how to insert an inputs inside the Symfony form');
+        $this->description = $this->l('Demonstration of how to add an image upload field inside the Symfony form');
 
         $this->supplierSecondImageUploader = new SupplierSecondImageUploader();
     }
@@ -87,7 +89,7 @@ class demosymfonyforms extends Module
                 'image_property' => self::SUPPLIER_EXTRA_IMAGE_PATH .  $params['id'] . '.jpg',
                 'delete_action_route' => 'admin_suppliers_delete_image',
                 'id_property' => $params['id']
-        ]);
+            ]);
     }
 
     public function hookActionAfterUpdateSupplierFormHandler(array $params)

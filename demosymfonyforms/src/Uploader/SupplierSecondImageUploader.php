@@ -79,7 +79,7 @@ class SupplierSecondImageUploader
      */
     private function deleteOldImage($supplierId)
     {
-        $currentImage =  _PS_SUPP_IMG_DIR_ . SupplierSecondImageUploader::EXTRA_IMAGE_NAME . $supplierId . '.jpg';
+        $currentImage =  _PS_SUPP_IMG_DIR_ . self::EXTRA_IMAGE_NAME . $supplierId . '.jpg';
 
         if (file_exists($currentImage)) {
             unlink($currentImage);
