@@ -24,6 +24,8 @@ class SupplierSecondImageUploader
     public function upload($supplierId, UploadedFile $image)
     {
         $tempImageName = $this->createTemporaryImage($image);
+        $this->deleteOldImage($supplierId);
+
         $destination = _PS_SUPP_IMG_DIR_. self::EXTRA_IMAGE_NAME . $supplierId . '.jpg';
         $this->uploadFromTemp($tempImageName, $destination);
     }
@@ -68,5 +70,19 @@ class SupplierSecondImageUploader
         }
 
         unlink($temporaryImageName);
+    }
+
+    /**
+     * Deletes old image
+     *
+     * @param $supplierId
+     */
+    private function deleteOldImage($supplierId)
+    {
+        $currentImage =  _PS_SUPP_IMG_DIR_ . SupplierSecondImageUploader::EXTRA_IMAGE_NAME . $supplierId . '.jpg';
+
+        if (file_exists($currentImage)) {
+            unlink($currentImage);
+        }
     }
 }

@@ -74,8 +74,8 @@ class demosymfonyforms extends Module
             ->add('id', HiddenType::class, [
                 'data' => $params['id'],
             ])
-            ->add('upload_file', FileType::class, [
-                'label' => $translator->trans('Upload file', [], 'Modules.DemoSymfonyForms'),
+            ->add('upload_image_file', FileType::class, [
+                'label' => $translator->trans('Upload image file', [], 'Modules.DemoSymfonyForms'),
                 'required' => false,
                 'constraints' => [
                     new Assert\File(['maxSize' => (int) Configuration::get('PS_ATTACHMENT_MAXIMUM_SIZE') . 'M']),
@@ -93,7 +93,7 @@ class demosymfonyforms extends Module
     public function hookActionAfterUpdateSupplierFormHandler(array $params)
     {
         /** @var UploadedFile $uploadedFile */
-        $uploadedFile = $params['form_data']['upload_file'];
+        $uploadedFile = $params['form_data']['upload_image_file'];
 
         if ($uploadedFile instanceof UploadedFile) {
             $this->supplierSecondImageUploader->upload($params['id'], $uploadedFile);
