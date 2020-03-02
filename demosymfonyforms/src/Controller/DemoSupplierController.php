@@ -24,21 +24,15 @@ class DemoSupplierController extends FrameworkBundleAdminController
 
     /**
      * Deletes image.
-     * @AdminSecurity(
-     *     "is_granted(['update'])",
-     *     message="You do not have permission to edit this.",
-     *     redirectRoute="admin_categories_edit",
-     *     redirectQueryParamsToKeep={"categoryId"}
-     * )
      *
-     * @param int $supplierId
+     * @param int $id
      *
      * @return RedirectResponse
      */
-    public function deleteSecondImageAction($supplierId)
+    public function deleteSecondImageAction(int $id)
     {
         try {
-            $this->deleteSecondUploadedImage($supplierId);
+            $this->deleteSecondUploadedImage($id);
 
             $this->addFlash(
                 'success',
@@ -49,7 +43,7 @@ class DemoSupplierController extends FrameworkBundleAdminController
         }
 
         return $this->redirectToRoute('admin_suppliers_edit', [
-            'categoryId' => $supplierId,
+            'supplierId' => $id,
         ]);
     }
 
