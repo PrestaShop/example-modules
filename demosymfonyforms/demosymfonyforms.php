@@ -46,7 +46,9 @@ class demosymfonyforms extends Module
         $this->displayName = $this->l('Demo Symfony Forms');
         $this->description = $this->l('Demonstration of how to add an image upload field inside the Symfony form');
 
-        $this->supplierSecondImageUploader = new SupplierSecondImageUploader();
+        $this->supplierSecondImageUploader = $this->get(
+            'prestashop.module.demosymfonyforms.uploader.supplier_second_image_uploader'
+        );
     }
 
     public function install()
