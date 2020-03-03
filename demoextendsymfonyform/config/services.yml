@@ -1,0 +1,3 @@
+services:
+  prestashop.module.demosymfonyforms.uploader.supplier_second_image_uploader:
+    class: PrestaShop\Module\DemoSymfonyForms\Uploader\SupplierSecondImageUploader
