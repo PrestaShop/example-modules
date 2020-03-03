@@ -1,0 +1,25 @@
+{#**
+ * 2007-2020 PrestaShop
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0).
+ * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
+ *#}
+
+{% extends '@Modules/demovieworderhooks/views/templates/admin/card.html.twig' %}
+
+{% block card_title %}
+  {{ 'Signature'|trans }}
+{% endblock %}
+
+{% block card_body %}
+  <div class="col-lg">
+    <div class="display-4 text-center">
+      {{ signature.gender }} {{ signature.firstName }} {{ signature.lastName }}
+    </div>
+    <div class="text-center">
+      <img src="{{ signature.filename }}" alt="">
+    </div>
+  </div>
+{% endblock %}

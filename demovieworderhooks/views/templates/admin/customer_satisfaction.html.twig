@@ -1,0 +1,43 @@
+{#**
+ * 2007-2020 PrestaShop
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0).
+ * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
+ *#}
+
+{% extends '@Modules/demovieworderhooks/views/templates/admin/card.html.twig' %}
+
+{% block card_title %}
+  {{ 'Customer\'s review'|trans }}
+{% endblock %}
+
+{% block card_body %}
+  <div class="col-lg">
+    <div class="row">
+      <div class="col-lg">
+        <div><strong>{{ 'Review:'|trans }}</strong></div>
+        <br>
+        <i class="material-icons">
+          {% if orderReview.score == 0 %}
+            sentiment_very_dissatisfied
+          {% elseif orderReview.score == 1 %}
+            sentiment_dissatisfied
+          {% elseif orderReview.score == 2 %}
+            sentiment_satisfied
+          {% else %}
+            sentiment_very_satisfied
+          {% endif %}
+        </i> ({{ '%score% out of 3'|trans({ '%score%': orderReview.score }) }})
+      </div>
+      <div class="col-lg">
+        <div><strong>{{ 'Comment:'|trans }}</strong></div>
+        <br>
+        <div class="text-muted">
+          {{ orderReview.comment }}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

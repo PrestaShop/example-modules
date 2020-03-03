@@ -1,0 +1,30 @@
+{#**
+ * 2007-2020 PrestaShop
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0).
+ * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
+ *#}
+
+{% trans_default_domain 'Module.Demovieworderhooks.Admin' %}
+
+<div class="row mb-3">
+  <div class="col text-left">
+    {% if previousOrder.enabled %}
+      <a href="{{ previousOrder.href }}" class="btn btn-primary">
+        {{ 'Previous'|trans }} ({{ previousOrder.text }})
+        <span class="material-icons">arrow_back</span>
+      </a>
+    {% endif %}
+  </div>
+
+  <div class="col text-right">
+    {% if nextOrder.enabled %}
+      <a href="{{ nextOrder.href }}" class="btn btn-primary">
+        {{ 'Next'|trans }} ({{ nextOrder.text }})
+        <span class="material-icons">arrow_forward</span>
+      </a>
+    {% endif %}
+  </div>
+</div>

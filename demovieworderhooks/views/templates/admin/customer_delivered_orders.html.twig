@@ -1,0 +1,53 @@
+{#**
+ * 2007-2020 PrestaShop
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0).
+ * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
+ *#}
+
+{% extends '@Modules/demovieworderhooks/views/templates/admin/card.html.twig' %}
+
+{% block card_title %}
+  {{ 'Customer delivered orders'|trans }}
+{% endblock %}
+
+{% block card_body %}
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>{{ 'Reference'|trans }}</th>
+          <th>{{ 'Status'|trans }}</th>
+          <th>{{ 'Total paid'|trans }}</th>
+          <th>{{ 'Placed at'|trans }}</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for order in orders %}
+        <tr>
+          <td>
+            <a href="{{ order.link }}">
+              {{ order.reference }}
+            </a>
+          </td>
+          <td>
+            <span class="badge rounded"
+                  style="background-color: {{ order.status.color }}; color: {{ is_color_bright(order.status.color) ? 'black' : 'white' }};"
+            >
+              {{ order.status.name }}
+            </span>
+          </td>
+          <td>
+            {{ order.totalPaid }}
+          </td>
+          <td>
+            {{ order.placedAt|date_format_full }}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
