@@ -11,9 +11,23 @@ It uses the following hooks:
 - displayAdminOrderSide
 - displayAdminOrder
 - displayAdminOrderTop
-- actionGetAdminOrderButtons
 
 Please note this module is an example only, not a mandatory structure.
+
+## Requirements
+
+ 1. Composer, see [Composer](https://getcomposer.org/) to learn more
+
+## How to install
+
+ 1. Download or clone module into `modules` directory of your PrestaShop installation
+ 2. Rename the directory to make sure that module directory is named `demovieworderhooks`*
+ 3. `cd` into module's directory and run following commands:
+     - `composer install` - to download dependencies into vendor folder
+     - `composer dumpautoload` to generate autoloader for module
+ 4. Install module from Back Office
+
+*Because the name of the directory and the name of the main module file must match.*
 
 ## Hooks usage
 
@@ -66,7 +80,3 @@ We put the install/uninstall logic of this module into a dedicated class for a b
 ### Using Doctrine ORM to handle persisted models
 
 We used [Doctrine ORM](https://github.com/doctrine/orm) to manage the persistence of multiple models, instead of PrestaShop ObjectModel ORM.
-
-### Using PHPStan to monitor code quality
-
-We added [PHPStan](https://github.com/phpstan/phpstan) to monitor the level of quality of this module code.
