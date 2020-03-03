@@ -28,11 +28,6 @@ class demoextendsymfonyform extends Module
 {
     private const SUPPLIER_EXTRA_IMAGE_PATH = '/img/su/'.SupplierExtraImageUploader::EXTRA_IMAGE_NAME;
 
-    /**
-     * @var ImageUploaderInterface
-     */
-    private $supplierSecondImageUploader;
-
     public function __construct()
     {
         $this->name = 'demoextendsymfonyform';
@@ -44,10 +39,6 @@ class demoextendsymfonyform extends Module
 
         $this->displayName = $this->l('Demo Symfony Forms');
         $this->description = $this->l('Demonstration of how to add an image upload field inside the Symfony form');
-
-        $this->supplierSecondImageUploader = $this->get(
-            'prestashop.module.demoextendsymfonyform.uploader.supplier_second_image_uploader'
-        );
     }
 
     public function install()
@@ -64,6 +55,7 @@ class demoextendsymfonyform extends Module
 
     public function hookActionSupplierFormBuilderModifier(array $params)
     {
+
         $translator = $this->getTranslator();
         /** @var FormBuilderInterface $formBuilder */
         $formBuilder = $params['form_builder'];
@@ -71,6 +63,11 @@ class demoextendsymfonyform extends Module
             ->add('upload_image_file', CustomContentType::class, [
                 'label' => $translator->trans('Upload image file', [], 'Modules.DemoExtendSymfonyForm'),
                 'required' => false,
+                'template' => 'modules/demoextendsymfonyform/src/View/upload_image.html.twig',
+                'data' => [
+                    'supplierId' => $params['id'],
+                    'imageUrl' => self::SUPPLIER_EXTRA_IMAGE_PATH .  $params['id'] . '.jpg',
+                ],
                 'constraints' => [
                     new Assert\File(['maxSize' => (int) Configuration::get('PS_ATTACHMENT_MAXIMUM_SIZE') . 'M']),
                     new File([
@@ -83,11 +80,16 @@ class demoextendsymfonyform extends Module
 
     public function hookActionAfterUpdateSupplierFormHandler(array $params)
     {
+        /** @var ImageUploaderInterface supplierExtraImageUploader */
+        $this->supplierExtraImageUploader = $this->get(
+            'prestashop.module.demoextendsymfonyform.uploader.supplier_extra_image_uploader'
+        );
+
         /** @var UploadedFile $uploadedFile */
         $uploadedFile = $params['form_data']['upload_image_file'];
 
         if ($uploadedFile instanceof UploadedFile) {
-            $this->supplierSecondImageUploader->upload($params['id'], $uploadedFile);
+            $this->supplierExtraImageUploader->upload($params['id'], $uploadedFile);
         }
     }
 
