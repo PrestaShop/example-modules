@@ -8,7 +8,7 @@
     ],
     "autoload": {
       "psr-4": {
-        "DemoSymfonyForms\\": "src/"
+        "PrestaShop\\Module\\DemoSymfonyForms\\": "src/"
       },
       "config": {
         "prepend-autoloader": false

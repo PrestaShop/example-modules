@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace DemoSymfonyForms\Controller;
+namespace PrestaShop\Module\DemoSymfonyForms\Controller;
 
-use DemoSymfonyForms\Uploader\SupplierSecondImageUploader;
+use PrestaShop\Module\DemoSymfonyForms\Uploader\SupplierSecondImageUploader;
 use PrestaShop\PrestaShop\Core\Domain\Category\Exception\CannotDeleteImageException;
 use PrestaShop\PrestaShop\Core\Domain\Supplier\Exception\SupplierException;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;

@@ -10,14 +10,15 @@
 
 declare(strict_types=1);
 
-namespace DemoSymfonyForms\Uploader;
+namespace PrestaShop\Module\DemoSymfonyForms\Uploader;
 
 use PrestaShop\PrestaShop\Core\Image\Uploader\Exception\ImageOptimizationException;
 use PrestaShop\PrestaShop\Core\Image\Uploader\Exception\ImageUploadException;
 use PrestaShop\PrestaShop\Core\Image\Uploader\Exception\MemoryLimitException;
+use PrestaShop\PrestaShop\Core\Image\Uploader\ImageUploaderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class SupplierSecondImageUploader
+class SupplierSecondImageUploader implements ImageUploaderInterface
 {
     const EXTRA_IMAGE_NAME = 'extra';
 

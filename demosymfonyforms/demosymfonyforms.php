@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use DemoSymfonyForms\Uploader\SupplierSecondImageUploader;
+use PrestaShop\Module\DemoSymfonyForms\Uploader\SupplierSecondImageUploader;
 use PrestaShop\PrestaShop\Core\Image\Uploader\ImageUploaderInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -23,7 +23,7 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__.'/vendor/autoload.php';
 
 class demosymfonyforms extends Module
 {
