@@ -10,10 +10,9 @@
 
 declare(strict_types=1);
 
-use PrestaShop\Module\DemoSymfonyForms\Uploader\SupplierExtraImageUploader;
+use PrestaShop\Module\DemoExtendSymfonyForm\Uploader\SupplierExtraImageUploader;
 use PrestaShop\PrestaShop\Core\Image\Uploader\ImageUploaderInterface;
 use PrestaShopBundle\Form\Admin\Type\CustomContentType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -25,7 +24,7 @@ if (!defined('_PS_VERSION_')) {
 
 require_once __DIR__.'/vendor/autoload.php';
 
-class demosymfonyforms extends Module
+class demoextendsymfonyform extends Module
 {
     private const SUPPLIER_EXTRA_IMAGE_PATH = '/img/su/'.SupplierExtraImageUploader::EXTRA_IMAGE_NAME;
 
@@ -36,7 +35,7 @@ class demosymfonyforms extends Module
 
     public function __construct()
     {
-        $this->name = 'demosymfonyforms';
+        $this->name = 'demoextendsymfonyform';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
         $this->ps_versions_compliancy = ['min' => '1.7.8.0', 'max' => _PS_VERSION_];
@@ -47,7 +46,7 @@ class demosymfonyforms extends Module
         $this->description = $this->l('Demonstration of how to add an image upload field inside the Symfony form');
 
         $this->supplierSecondImageUploader = $this->get(
-            'prestashop.module.demosymfonyforms.uploader.supplier_second_image_uploader'
+            'prestashop.module.demoextendsymfonyform.uploader.supplier_second_image_uploader'
         );
     }
 
@@ -70,7 +69,7 @@ class demosymfonyforms extends Module
         $formBuilder = $params['form_builder'];
         $formBuilder
             ->add('upload_image_file', CustomContentType::class, [
-                'label' => $translator->trans('Upload image file', [], 'Modules.DemoSymfonyForms'),
+                'label' => $translator->trans('Upload image file', [], 'Modules.DemoExtendSymfonyForm'),
                 'required' => false,
                 'constraints' => [
                     new Assert\File(['maxSize' => (int) Configuration::get('PS_ATTACHMENT_MAXIMUM_SIZE') . 'M']),
