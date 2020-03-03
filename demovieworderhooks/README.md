@@ -67,7 +67,7 @@ Please note Order page already contains these buttons, but we put some additiona
 
 ### actionGetAdminOrderButtons
 
-TODO
+We use this hook to display additional action buttons into the main buttons bar.
 
 ## Other examples
 
