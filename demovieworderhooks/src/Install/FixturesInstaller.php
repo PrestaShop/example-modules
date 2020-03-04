@@ -22,7 +22,7 @@ use Order;
 /**
  * Installs data fixtures for the module.
  */
-class FixturesInstaller implements InstallerInterface
+class FixturesInstaller
 {
     /**
      * @var LoremIpsum

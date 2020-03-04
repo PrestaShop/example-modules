@@ -19,6 +19,10 @@ use Order as PrestaShopOrder;
 use PrestaShop\Module\DemoViewOrderHooks\Collection\Orders;
 use PrestaShop\Module\DemoViewOrderHooks\DTO\Order;
 
+/**
+ * This repository uses DbCore from PrestaShop for Database Abstraction Layer
+ * It does not extend Doctrine EntityRepository
+ */
 class OrderRepository
 {
     /**

@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="PrestaShop\Module\DemoViewOrderHooks\Repository\PackageLocationRepository")
  */
 class PackageLocation
 {
