@@ -62,6 +62,43 @@ class DemoViewOrderHooks extends Module
     }
 
     /**
+     * Add buttons to main buttons bar
+     */
+    public function hookActionGetAdminOrderButtons(array $params)
+    {
+        $order = new Order($params['id_order']);
+
+        /** @var \Symfony\Bundle\FrameworkBundle\Routing\Router $router */
+        $router = $this->get('router');
+
+        /** @var \PrestaShopBundle\Controller\Admin\Sell\Order\ActionsBarButtonsCollection $bar */
+        $bar = $params['actions_bar_buttons_collection'];
+
+        $viewCustomerUrl = $router->generate('admin_customers_view', ['customerId'=> (int)$order->id_customer]);
+        $bar->add(
+            new \PrestaShopBundle\Controller\Admin\Sell\Order\ActionsBarButton(
+                'btn-secondary', ['href' => $viewCustomerUrl], 'View customer'
+            )
+        );
+        $bar->add(
+            new \PrestaShopBundle\Controller\Admin\Sell\Order\ActionsBarButton(
+                'btn-info', ['href' => 'https://www.prestashop.com/'], 'Go to prestashop'
+            )
+        );
+        $bar->add(
+            new \PrestaShopBundle\Controller\Admin\Sell\Order\ActionsBarButton(
+                'btn-dark', ['href' => 'https://github.com/PrestaShop/example-modules/tree/master/demovieworderhooks'], 'Go to GitHub'
+            )
+        );
+        $createAnOrderUrl = $router->generate('admin_orders_create');
+        $bar->add(
+            new \PrestaShopBundle\Controller\Admin\Sell\Order\ActionsBarButton(
+                'btn-link', ['href' => $createAnOrderUrl], 'Create an order'
+            )
+        );
+    }
+
+    /**
      * Displays customer's signature.
      */
     public function hookDisplayBackOfficeOrderActions(array $params)
