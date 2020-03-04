@@ -11,6 +11,7 @@ It uses the following hooks:
 - displayAdminOrderSide
 - displayAdminOrder
 - displayAdminOrderTop
+- actionGetAdminOrderButtons
 
 Please note this module is an example only, not a mandatory structure.
 
