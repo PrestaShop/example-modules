@@ -26,6 +26,9 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
+// needed because InstallerFactory is not autoloaded during the install
+require_once __DIR__.'/vendor/autoload.php';
+
 class DemoViewOrderHooks extends Module
 {
     private const DELIVERED_ORDER_STATE_ID = 5;
