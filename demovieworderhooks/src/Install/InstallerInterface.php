@@ -14,5 +14,5 @@ namespace PrestaShop\Module\DemoViewOrderHooks\Install;
 
 interface InstallerInterface
 {
-    public function install(): void;
+    public function install();
 }

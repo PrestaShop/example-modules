@@ -18,7 +18,7 @@ use Module;
 /**
  * Class responsible for modifications needed during installation/uninstallation of the module.
  */
-class Installer implements InstallerInterface
+class Installer
 {
     /**
      * @var FixturesInstaller
