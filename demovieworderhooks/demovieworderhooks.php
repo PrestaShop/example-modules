@@ -26,7 +26,7 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-// needed because InstallerFactory is not autoloaded during the install
+// need it because InstallerFactory is not autoloaded during the install
 require_once __DIR__.'/vendor/autoload.php';
 
 class DemoViewOrderHooks extends Module
