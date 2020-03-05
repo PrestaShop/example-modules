@@ -16,7 +16,7 @@ use Gender;
 use Order;
 use PrestaShop\Module\DemoViewOrderHooks\Entity\OrderSignature;
 
-class SignaturePresenter
+class OrderSignaturePresenter
 {
     /**
      * @var string

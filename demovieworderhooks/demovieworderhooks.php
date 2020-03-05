@@ -107,10 +107,10 @@ class DemoViewOrderHooks extends Module
     public function hookDisplayBackOfficeOrderActions(array $params)
     {
         /** @var OrderSignatureRepository $signatureRepository */
-        $signatureRepository = $this->get('prestashop.module.demovieworderhooks.repository.signature_repository');
+        $signatureRepository = $this->get('prestashop.module.demovieworderhooks.repository.order_signature_repository');
 
         /** @var SignaturePresenter $signaturePresenter */
-        $signaturePresenter = $this->get('prestashop.module.demovieworderhooks.presenter.signature_presenter');
+        $signaturePresenter = $this->get('prestashop.module.demovieworderhooks.presenter.order_signature_presenter');
 
         $signature = $signatureRepository->findOneBy(['orderId' => $params['id_order']]);
 

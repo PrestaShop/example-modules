@@ -11,7 +11,7 @@ services:
   prestashop.module.demovieworderhooks.repository.order_repository:
     class: PrestaShop\Module\DemoViewOrderHooks\Repository\OrderRepository
 
-  prestashop.module.demovieworderhooks.repository.signature_repository:
+  prestashop.module.demovieworderhooks.repository.order_signature_repository:
     class: PrestaShop\Module\DemoViewOrderHooks\Repository\OrderSignatureRepository
     factory: ['@doctrine.orm.default_entity_manager', getRepository]
     arguments:
@@ -35,8 +35,8 @@ services:
       - '@router.default'
       - '@prestashop.core.localization.locale.context_locale'
 
-  prestashop.module.demovieworderhooks.presenter.signature_presenter:
-    class: PrestaShop\Module\DemoViewOrderHooks\Presenter\SignaturePresenter
+  prestashop.module.demovieworderhooks.presenter.order_signature_presenter:
+    class: PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderSignaturePresenter
     arguments:
       - '@=service("prestashop.module.demovieworderhooks").getPathUri() ~ parameter("signatureImgDirectory")'
 
