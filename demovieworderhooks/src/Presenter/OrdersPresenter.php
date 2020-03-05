@@ -15,7 +15,7 @@ namespace PrestaShop\Module\DemoViewOrderHooks\Presenter;
 use Currency;
 use Order as PrestashopOrder;
 use OrderState;
-use PrestaShop\Module\DemoViewOrderHooks\Collection\Orders;
+use PrestaShop\Module\DemoViewOrderHooks\Collection\OrderCollection;
 use PrestaShop\Module\DemoViewOrderHooks\DTO\Order;
 use PrestaShop\PrestaShop\Core\Localization\Locale;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -43,7 +43,7 @@ class OrdersPresenter
      *
      * @return array presented array of orders
      */
-    public function present(Orders $orders, int $languageId): array
+    public function present(OrderCollection $orders, int $languageId): array
     {
         $presented = [];
 

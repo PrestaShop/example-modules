@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use PrestaShop\Module\DemoViewOrderHooks\Collection\Orders;
+use PrestaShop\Module\DemoViewOrderHooks\Collection\OrderCollection;
 use PrestaShop\Module\DemoViewOrderHooks\Install\InstallerFactory;
 use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderLinkPresenter;
 use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderReviewPresenter;
@@ -160,7 +160,7 @@ class DemoViewOrderHooks extends Module
         $ordersPresenter = $this->get('prestashop.module.demovieworderhooks.presenter.orders_presenter');
 
         $order = new Order($params['id_order']);
-        /** @var Orders $customerOrdersCollection */
+        /** @var OrderCollection $customerOrdersCollection */
         $customerOrdersCollection = $orderRepository->getCustomerOrders((int)$order->id_customer, [$order->id]);
         $onlyDeliveredOrders = $customerOrdersCollection->filter(
             function (\PrestaShop\Module\DemoViewOrderHooks\DTO\Order $order) {
