@@ -15,7 +15,7 @@ namespace PrestaShop\Module\DemoViewOrderHooks\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="PrestaShop\Module\DemoViewOrderHooks\Repository\SignatureRepository")
+ * @ORM\Entity(repositoryClass="OrderSignatureRepository")
  */
 class OrderSignature
 {

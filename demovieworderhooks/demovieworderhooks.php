@@ -20,7 +20,7 @@ use PrestaShop\Module\DemoViewOrderHooks\Presenter\SignaturePresenter;
 use PrestaShop\Module\DemoViewOrderHooks\Repository\OrderRepository;
 use PrestaShop\Module\DemoViewOrderHooks\Repository\OrderReviewRepository;
 use PrestaShop\Module\DemoViewOrderHooks\Repository\PackageLocationRepository;
-use PrestaShop\Module\DemoViewOrderHooks\Repository\SignatureRepository;
+use PrestaShop\Module\DemoViewOrderHooks\Repository\OrderSignatureRepository;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -106,7 +106,7 @@ class DemoViewOrderHooks extends Module
      */
     public function hookDisplayBackOfficeOrderActions(array $params)
     {
-        /** @var SignatureRepository $signatureRepository */
+        /** @var OrderSignatureRepository $signatureRepository */
         $signatureRepository = $this->get('prestashop.module.demovieworderhooks.repository.signature_repository');
 
         /** @var SignaturePresenter $signaturePresenter */

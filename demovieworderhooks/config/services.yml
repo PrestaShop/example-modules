@@ -12,7 +12,7 @@ services:
     class: PrestaShop\Module\DemoViewOrderHooks\Repository\OrderRepository
 
   prestashop.module.demovieworderhooks.repository.signature_repository:
-    class: PrestaShop\Module\DemoViewOrderHooks\Repository\SignatureRepository
+    class: PrestaShop\Module\DemoViewOrderHooks\Repository\OrderSignatureRepository
     factory: ['@doctrine.orm.default_entity_manager', getRepository]
     arguments:
       - PrestaShop\Module\DemoViewOrderHooks\Entity\OrderSignature
