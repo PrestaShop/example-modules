@@ -38,7 +38,7 @@ class SignaturePresenter
             'firstName' => $customer->firstname,
             'lastName' => $customer->lastname,
             'gender' => $gender->name,
-            'filename' => $this->signatureImgDir.$signature->getFilename()
+            'imagePath' => $this->signatureImgDir.$signature->getFilename()
         ];
     }
 }
