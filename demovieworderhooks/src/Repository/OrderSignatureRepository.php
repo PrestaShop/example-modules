@@ -14,7 +14,7 @@ namespace PrestaShop\Module\DemoViewOrderHooks\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class SignatureRepository extends EntityRepository
+class OrderSignatureRepository extends EntityRepository
 {
 }
 

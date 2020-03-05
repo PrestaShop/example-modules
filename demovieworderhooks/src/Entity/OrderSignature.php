@@ -15,10 +15,9 @@ namespace PrestaShop\Module\DemoViewOrderHooks\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="PrestaShop\Module\DemoViewOrderHooks\Repository\SignatureRepository")
+ * @ORM\Entity(repositoryClass="PrestaShop\Module\DemoViewOrderHooks\Repository\OrderSignatureRepository")
  */
-class Signature
+class OrderSignature
 {
     /**
      * @var int|null
@@ -54,9 +53,9 @@ class Signature
     /**
      * @param int $id
      *
-     * @return Signature
+     * @return self
      */
-    public function setId(int $id): Signature
+    public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -74,9 +73,9 @@ class Signature
     /**
      * @param string $filename
      *
-     * @return Signature
+     * @return self
      */
-    public function setFilename(string $filename): Signature
+    public function setFilename(string $filename): self
     {
         $this->filename = $filename;
 
@@ -94,9 +93,9 @@ class Signature
     /**
      * @param int $orderId
      *
-     * @return Signature
+     * @return self
      */
-    public function setOrderId(int $orderId): Signature
+    public function setOrderId(int $orderId): self
     {
         $this->orderId = $orderId;
 

@@ -10,21 +10,24 @@
 
 declare(strict_types=1);
 
-use PrestaShop\Module\DemoViewOrderHooks\Collection\Orders;
+use PrestaShop\Module\DemoViewOrderHooks\Collection\OrderCollection;
 use PrestaShop\Module\DemoViewOrderHooks\Install\InstallerFactory;
 use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderLinkPresenter;
 use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderReviewPresenter;
 use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrdersPresenter;
 use PrestaShop\Module\DemoViewOrderHooks\Presenter\PackageLocationsPresenter;
-use PrestaShop\Module\DemoViewOrderHooks\Presenter\SignaturePresenter;
+use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderSignaturePresenter;
 use PrestaShop\Module\DemoViewOrderHooks\Repository\OrderRepository;
 use PrestaShop\Module\DemoViewOrderHooks\Repository\OrderReviewRepository;
 use PrestaShop\Module\DemoViewOrderHooks\Repository\PackageLocationRepository;
-use PrestaShop\Module\DemoViewOrderHooks\Repository\SignatureRepository;
+use PrestaShop\Module\DemoViewOrderHooks\Repository\OrderSignatureRepository;
 
 if (!defined('_PS_VERSION_')) {
     exit;
 }
+
+// need it because InstallerFactory is not autoloaded during the install
+require_once __DIR__.'/vendor/autoload.php';
 
 class DemoViewOrderHooks extends Module
 {
@@ -103,11 +106,11 @@ class DemoViewOrderHooks extends Module
      */
     public function hookDisplayBackOfficeOrderActions(array $params)
     {
-        /** @var SignatureRepository $signatureRepository */
-        $signatureRepository = $this->get('prestashop.module.demovieworderhooks.repository.signature_repository');
+        /** @var OrderSignatureRepository $signatureRepository */
+        $signatureRepository = $this->get('prestashop.module.demovieworderhooks.repository.order_signature_repository');
 
-        /** @var SignaturePresenter $signaturePresenter */
-        $signaturePresenter = $this->get('prestashop.module.demovieworderhooks.presenter.signature_presenter');
+        /** @var OrderSignaturePresenter $signaturePresenter */
+        $signaturePresenter = $this->get('prestashop.module.demovieworderhooks.presenter.order_signature_presenter');
 
         $signature = $signatureRepository->findOneBy(['orderId' => $params['id_order']]);
 
@@ -157,7 +160,7 @@ class DemoViewOrderHooks extends Module
         $ordersPresenter = $this->get('prestashop.module.demovieworderhooks.presenter.orders_presenter');
 
         $order = new Order($params['id_order']);
-        /** @var Orders $customerOrdersCollection */
+        /** @var OrderCollection $customerOrdersCollection */
         $customerOrdersCollection = $orderRepository->getCustomerOrders((int)$order->id_customer, [$order->id]);
         $onlyDeliveredOrders = $customerOrdersCollection->filter(
             function (\PrestaShop\Module\DemoViewOrderHooks\DTO\Order $order) {
@@ -256,6 +259,6 @@ class DemoViewOrderHooks extends Module
      */
     private function getModuleTemplatePath(): string
     {
-        return "@Modules/$this->name/views/templates/admin/";
+        return sprintf('@Modules/%s/views/templates/admin/', $this->name);
     }
 }

@@ -14,9 +14,9 @@ namespace PrestaShop\Module\DemoViewOrderHooks\Presenter;
 
 use Gender;
 use Order;
-use PrestaShop\Module\DemoViewOrderHooks\Entity\Signature;
+use PrestaShop\Module\DemoViewOrderHooks\Entity\OrderSignature;
 
-class SignaturePresenter
+class OrderSignaturePresenter
 {
     /**
      * @var string
@@ -28,9 +28,9 @@ class SignaturePresenter
         $this->signatureImgDir = $signatureImgDir;
     }
 
-    public function present(Signature $signature, int $languageId): array
+    public function present(OrderSignature $orderSignature, int $languageId): array
     {
-        $order = new Order($signature->getOrderId());
+        $order = new Order($orderSignature->getOrderId());
         $customer = $order->getCustomer();
         $gender = new Gender($customer->id_gender, $languageId);
 
@@ -38,7 +38,7 @@ class SignaturePresenter
             'firstName' => $customer->firstname,
             'lastName' => $customer->lastname,
             'gender' => $gender->name,
-            'filename' => $this->signatureImgDir.$signature->getFilename()
+            'imagePath' => $this->signatureImgDir.$orderSignature->getFilename()
         ];
     }
 }

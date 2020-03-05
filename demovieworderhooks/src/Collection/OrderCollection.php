@@ -15,7 +15,7 @@ namespace PrestaShop\Module\DemoViewOrderHooks\Collection;
 use PrestaShop\Module\DemoViewOrderHooks\DTO\Order;
 use PrestaShop\PrestaShop\Core\Data\AbstractTypedCollection;
 
-final class Orders extends AbstractTypedCollection
+final class OrderCollection extends AbstractTypedCollection
 {
     /**
      * {@inheritdoc}

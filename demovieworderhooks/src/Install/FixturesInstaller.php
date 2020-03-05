@@ -67,7 +67,7 @@ class FixturesInstaller
 
     private function insertSignature(int $orderId): void
     {
-        $this->db->insert('signature', [
+        $this->db->insert('order_signature', [
             'id_order' => $orderId,
             'filename' => 'john_doe.png',
         ]);

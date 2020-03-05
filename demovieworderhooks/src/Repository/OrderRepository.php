@@ -16,7 +16,7 @@ use DateTimeImmutable;
 use Db;
 use DbQuery;
 use Order as PrestaShopOrder;
-use PrestaShop\Module\DemoViewOrderHooks\Collection\Orders;
+use PrestaShop\Module\DemoViewOrderHooks\Collection\OrderCollection;
 use PrestaShop\Module\DemoViewOrderHooks\DTO\Order;
 
 /**
@@ -38,10 +38,10 @@ class OrderRepository
     /**
      * Get all orders that a customer has placed.
      */
-    public function getCustomerOrders(int $customerId, array $excludeOrderIds = []): Orders
+    public function getCustomerOrders(int $customerId, array $excludeOrderIds = []): OrderCollection
     {
         $orders = PrestaShopOrder::getCustomerOrders($customerId);
-        $ordersCollection = new Orders();
+        $ordersCollection = new OrderCollection();
 
         foreach ($orders as $order) {
             if (in_array($order['id_order'], $excludeOrderIds)) {
