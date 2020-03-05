@@ -259,6 +259,6 @@ class DemoViewOrderHooks extends Module
      */
     private function getModuleTemplatePath(): string
     {
-        return "@Modules/$this->name/views/templates/admin/";
+        return sprintf('@Modules/"%s"/views/templates/admin/', $this->name);
     }
 }
