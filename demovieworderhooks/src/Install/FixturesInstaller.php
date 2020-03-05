@@ -22,7 +22,7 @@ use Order;
 /**
  * Installs data fixtures for the module.
  */
-class FixturesInstaller
+class FixturesInstaller implements InstallerInterface
 {
     /**
      * @var LoremIpsum
@@ -67,7 +67,7 @@ class FixturesInstaller
 
     private function insertSignature(int $orderId): void
     {
-        $this->db->insert('signature', [
+        $this->db->insert('order_signature', [
             'id_order' => $orderId,
             'filename' => 'john_doe.png',
         ]);

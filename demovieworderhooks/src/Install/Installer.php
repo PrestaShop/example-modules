@@ -70,7 +70,7 @@ class Installer
     private function installDatabase(): bool
     {
         $queries = [
-            'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'signature` (
+            'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'order_signature` (
               `id_signature` int(11) NOT NULL AUTO_INCREMENT,
               `id_order` int(11) NOT NULL,
               `filename` varchar(64) NOT NULL,
@@ -108,7 +108,7 @@ class Installer
     private function uninstallDatabase(): bool
     {
         $queries = [
-            'DROP TABLE IF EXISTS `'._DB_PREFIX_.'signature`',
+            'DROP TABLE IF EXISTS `'._DB_PREFIX_.'order_signature`',
             'DROP TABLE IF EXISTS `'._DB_PREFIX_.'order_review`',
             'DROP TABLE IF EXISTS `'._DB_PREFIX_.'package_location`',
         ];
