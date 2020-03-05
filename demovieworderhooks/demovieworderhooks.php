@@ -16,7 +16,7 @@ use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderLinkPresenter;
 use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderReviewPresenter;
 use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrdersPresenter;
 use PrestaShop\Module\DemoViewOrderHooks\Presenter\PackageLocationsPresenter;
-use PrestaShop\Module\DemoViewOrderHooks\Presenter\SignaturePresenter;
+use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderSignaturePresenter;
 use PrestaShop\Module\DemoViewOrderHooks\Repository\OrderRepository;
 use PrestaShop\Module\DemoViewOrderHooks\Repository\OrderReviewRepository;
 use PrestaShop\Module\DemoViewOrderHooks\Repository\PackageLocationRepository;
@@ -109,7 +109,7 @@ class DemoViewOrderHooks extends Module
         /** @var OrderSignatureRepository $signatureRepository */
         $signatureRepository = $this->get('prestashop.module.demovieworderhooks.repository.order_signature_repository');
 
-        /** @var SignaturePresenter $signaturePresenter */
+        /** @var OrderSignaturePresenter $signaturePresenter */
         $signaturePresenter = $this->get('prestashop.module.demovieworderhooks.presenter.order_signature_presenter');
 
         $signature = $signatureRepository->findOneBy(['orderId' => $params['id_order']]);

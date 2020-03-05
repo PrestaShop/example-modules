@@ -28,9 +28,9 @@ class OrderSignaturePresenter
         $this->signatureImgDir = $signatureImgDir;
     }
 
-    public function present(OrderSignature $signature, int $languageId): array
+    public function present(OrderSignature $orderSignature, int $languageId): array
     {
-        $order = new Order($signature->getOrderId());
+        $order = new Order($orderSignature->getOrderId());
         $customer = $order->getCustomer();
         $gender = new Gender($customer->id_gender, $languageId);
 
@@ -38,7 +38,7 @@ class OrderSignaturePresenter
             'firstName' => $customer->firstname,
             'lastName' => $customer->lastname,
             'gender' => $gender->name,
-            'imagePath' => $this->signatureImgDir.$signature->getFilename()
+            'imagePath' => $this->signatureImgDir.$orderSignature->getFilename()
         ];
     }
 }
