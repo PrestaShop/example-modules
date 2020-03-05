@@ -53,9 +53,9 @@ class OrderSignature
     /**
      * @param int $id
      *
-     * @return OrderSignature
+     * @return self
      */
-    public function setId(int $id): OrderSignature
+    public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -73,9 +73,9 @@ class OrderSignature
     /**
      * @param string $filename
      *
-     * @return OrderSignature
+     * @return self
      */
-    public function setFilename(string $filename): OrderSignature
+    public function setFilename(string $filename): self
     {
         $this->filename = $filename;
 
@@ -93,9 +93,9 @@ class OrderSignature
     /**
      * @param int $orderId
      *
-     * @return OrderSignature
+     * @return self
      */
-    public function setOrderId(int $orderId): OrderSignature
+    public function setOrderId(int $orderId): self
     {
         $this->orderId = $orderId;
 
