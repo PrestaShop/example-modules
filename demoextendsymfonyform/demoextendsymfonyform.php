@@ -13,6 +13,7 @@ declare(strict_types=1);
 use PrestaShop\Module\DemoExtendSymfonyForm\Uploader\SupplierExtraImageUploader;
 use PrestaShop\PrestaShop\Core\Image\Uploader\ImageUploaderInterface;
 use PrestaShopBundle\Form\Admin\Type\CustomContentType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -33,7 +34,7 @@ class demoextendsymfonyform extends Module
         $this->name = 'demoextendsymfonyform';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '1.7.8.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '1.7.7.0', 'max' => _PS_VERSION_];
 
         parent::__construct();
 
@@ -55,33 +56,34 @@ class demoextendsymfonyform extends Module
 
     public function hookActionSupplierFormBuilderModifier(array $params)
     {
-
         $translator = $this->getTranslator();
         /** @var FormBuilderInterface $formBuilder */
         $formBuilder = $params['form_builder'];
         $formBuilder
-            ->add('upload_image_file', CustomContentType::class, [
+            ->add('upload_image_file', FileType::class, [
                 'label' => $translator->trans('Upload image file', [], 'Modules.DemoExtendSymfonyForm'),
                 'required' => false,
-                'template' => 'modules/demoextendsymfonyform/src/View/upload_image.html.twig',
-                'data' => [
-                    'supplierId' => $params['id'],
-                    'imageUrl' => self::SUPPLIER_EXTRA_IMAGE_PATH .  $params['id'] . '.jpg',
-                ],
-                'constraints' => [
-                    new Assert\File(['maxSize' => (int) Configuration::get('PS_ATTACHMENT_MAXIMUM_SIZE') . 'M']),
-                    new File([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/gif', 'image/jpeg'],
-                        'mimeTypesMessage' => 'Authorized extensions: gif, jpg, jpeg, png',
-                    ]),
-                ],
             ]);
+
+        $supplierExtraImageUrl = _PS_SUPP_IMG_DIR_. SupplierExtraImageUploader::EXTRA_IMAGE_NAME . $params['id'] . '.jpg';
+        if (file_exists($supplierExtraImageUrl)) {
+            $formBuilder
+                ->add('image_file', CustomContentType::class, [
+                    'required' => false,
+                    'template' => '@Modules/demoextendsymfonyform/src/View/upload_image.html.twig',
+                    'data' => [
+                        'supplierId' => $params['id'],
+                        'imageUrl' => self::SUPPLIER_EXTRA_IMAGE_PATH . $params['id'] . '.jpg',
+                    ],
+                ]);
+
+        }
     }
 
     public function hookActionAfterUpdateSupplierFormHandler(array $params)
     {
         /** @var ImageUploaderInterface supplierExtraImageUploader */
-        $this->supplierExtraImageUploader = $this->get(
+        $supplierExtraImageUploader = $this->get(
             'prestashop.module.demoextendsymfonyform.uploader.supplier_extra_image_uploader'
         );
 
@@ -89,7 +91,7 @@ class demoextendsymfonyform extends Module
         $uploadedFile = $params['form_data']['upload_image_file'];
 
         if ($uploadedFile instanceof UploadedFile) {
-            $this->supplierExtraImageUploader->upload($params['id'], $uploadedFile);
+            $supplierExtraImageUploader->upload($params['id'], $uploadedFile);
         }
     }
 

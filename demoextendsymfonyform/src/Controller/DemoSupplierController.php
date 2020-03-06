@@ -24,14 +24,14 @@ class DemoSupplierController extends FrameworkBundleAdminController
     /**
      * Deletes image.
      *
-     * @param int $id
+     * @param int $supplierId
      *
      * @return RedirectResponse
      */
-    public function deleteSecondImageAction(int $id)
+    public function deleteExtraImageAction(int $supplierId)
     {
         try {
-            $this->deleteSecondUploadedImage($id);
+            $this->deleteExtraUploadedImage($supplierId);
 
             $this->addFlash(
                 'success',
@@ -42,7 +42,7 @@ class DemoSupplierController extends FrameworkBundleAdminController
         }
 
         return $this->redirectToRoute('admin_suppliers_edit', [
-            'supplierId' => $id,
+            'supplierId' => $supplierId,
         ]);
     }
 
@@ -66,7 +66,7 @@ class DemoSupplierController extends FrameworkBundleAdminController
      * @return bool
      * @throws CannotDeleteImageException
      */
-    private function deleteSecondUploadedImage(int $supplierId)
+    private function deleteExtraUploadedImage(int $supplierId)
     {
         $imgPath = _PS_SUPP_IMG_DIR_ . SupplierExtraImageUploader::EXTRA_IMAGE_NAME . $supplierId . '.jpg';
         if (file_exists($imgPath) && unlink($imgPath)) {

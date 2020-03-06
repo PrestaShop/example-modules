@@ -15,6 +15,7 @@ namespace PrestaShop\Module\DemoExtendSymfonyForm\Uploader;
 use PrestaShop\PrestaShop\Core\Image\Uploader\Exception\ImageOptimizationException;
 use PrestaShop\PrestaShop\Core\Image\Uploader\Exception\ImageUploadException;
 use PrestaShop\PrestaShop\Core\Image\Uploader\Exception\MemoryLimitException;
+use PrestaShop\PrestaShop\Core\Image\Uploader\Exception\UploadedImageConstraintException;
 use PrestaShop\PrestaShop\Core\Image\Uploader\ImageUploaderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -24,6 +25,7 @@ class SupplierExtraImageUploader implements ImageUploaderInterface
 
     public function upload($supplierId, UploadedFile $image)
     {
+        $this->checkImageIsAllowedForUpload($image);
         $tempImageName = $this->createTemporaryImage($image);
         $this->deleteOldImage($supplierId);
 
@@ -84,6 +86,29 @@ class SupplierExtraImageUploader implements ImageUploaderInterface
 
         if (file_exists($currentImage)) {
             unlink($currentImage);
+        }
+    }
+
+    /**
+     * Check if image is allowed to be uploaded.
+     *
+     * @param UploadedFile $image
+     *
+     * @throws UploadedImageConstraintException
+     */
+    protected function checkImageIsAllowedForUpload(UploadedFile $image)
+    {
+        $maxFileSize = \Tools::getMaxUploadSize();
+
+        if ($maxFileSize > 0 && $image->getSize() > $maxFileSize) {
+            throw new UploadedImageConstraintException(sprintf('Max file size allowed is "%s" bytes. Uploaded image size is "%s".', $maxFileSize, $image->getSize()), UploadedImageConstraintException::EXCEEDED_SIZE);
+        }
+
+        if (!\ImageManager::isRealImage($image->getPathname(), $image->getClientMimeType())
+            || !\ImageManager::isCorrectImageFileExt($image->getClientOriginalName())
+            || preg_match('/\%00/', $image->getClientOriginalName()) // prevent null byte injection
+        ) {
+            throw new UploadedImageConstraintException(sprintf('Image format "%s", not recognized, allowed formats are: .gif, .jpg, .png', $image->getClientOriginalExtension()), UploadedImageConstraintException::UNRECOGNIZED_FORMAT);
         }
     }
 }
