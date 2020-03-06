@@ -4,11 +4,11 @@ Demo View Order Hooks
 This module was created in order to demonstrate how to use the new hooks introduced with the new "View an Order" back-office page in PrestaShop 1.7.7.0 .
 
 It uses the following hooks:
-- displayBackOfficeOrderActions
 - displayAdminOrderTabContent
 - displayAdminOrderTabLink
 - displayAdminOrderMain
 - displayAdminOrderSide
+- displayAdminOrderSideBottom
 - displayAdminOrder
 - displayAdminOrderTop
 - actionGetAdminOrderButtons
@@ -32,7 +32,7 @@ Please note this module is an example only, not a mandatory structure.
 
 ## Hooks usage
 
-### displayBackOfficeOrderActions
+### displayAdminOrderSide
 
 We use this hook to display scanned customer signature.
 
@@ -52,7 +52,7 @@ It is controlled and linked to displayAdminOrderTabLink tab.
 We use this hook to display an additional listing in the page.
 The listing displays customer _delivered_ orders.
 
-### displayAdminOrderSide
+### displayAdminOrderSideBottom
 
 We use this hook to display a widget showing customer's review.
 
