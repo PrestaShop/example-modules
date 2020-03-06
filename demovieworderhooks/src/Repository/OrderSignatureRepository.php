@@ -16,5 +16,14 @@ use Doctrine\ORM\EntityRepository;
 
 class OrderSignatureRepository extends EntityRepository
 {
+    /**
+     * @param int $orderId
+     *
+     * @return object|null
+     */
+    public function findOneByOrderId(int $orderId)
+    {
+        return $this->findOneBy(['orderId' => $orderId]);
+    }
 }
 

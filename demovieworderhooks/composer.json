@@ -4,6 +4,13 @@
         {
             "name": "Rokas Zygmantas",
             "email": "rokas.zygmantas@invertus.eu"
+        },
+        {
+            "name": "Tadas Davidsonas",
+            "email": "tadas.davidsonas@invertus.eu"
+        },
+        {
+            "name": "PrestaShop Core Team"
         }
     ],
     "require": {
