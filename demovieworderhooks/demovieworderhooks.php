@@ -112,7 +112,7 @@ class DemoViewOrderHooks extends Module
         /** @var OrderSignaturePresenter $signaturePresenter */
         $signaturePresenter = $this->get('prestashop.module.demovieworderhooks.presenter.order_signature_presenter');
 
-        $signature = $signatureRepository->findOneBy(['orderId' => $params['id_order']]);
+        $signature = $signatureRepository->findOneByOrderId($params['id_order']);
 
         if (!$signature) {
             return '';
