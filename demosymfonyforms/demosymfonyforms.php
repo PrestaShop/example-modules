@@ -45,10 +45,6 @@ class demosymfonyforms extends Module
 
         $this->displayName = $this->l('Demo Symfony Forms');
         $this->description = $this->l('Demonstration of how to add an image upload field inside the Symfony form');
-
-        $this->supplierSecondImageUploader = $this->get(
-            'prestashop.module.demosymfonyforms.uploader.supplier_second_image_uploader'
-        );
     }
 
     public function install()
@@ -100,7 +96,11 @@ class demosymfonyforms extends Module
         $uploadedFile = $params['form_data']['upload_image_file'];
 
         if ($uploadedFile instanceof UploadedFile) {
-            $this->supplierSecondImageUploader->upload($params['id'], $uploadedFile);
+            /** @var SupplierSecondImageUploader $supplierSecondImageUploader */
+            $supplierSecondImageUploader = $this->get(
+                'prestashop.module.demosymfonyforms.uploader.supplier_second_image_uploader'
+            );
+            $supplierSecondImageUploader->upload($params['id'], $uploadedFile);
         }
     }
 
