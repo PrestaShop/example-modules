@@ -16,6 +16,7 @@ use PrestaShop\Module\DemoExtendSymfonyForm\Uploader\SupplierExtraImageUploader;
 use PrestaShop\PrestaShop\Core\Domain\Category\Exception\CannotDeleteImageException;
 use PrestaShop\PrestaShop\Core\Domain\Supplier\Exception\SupplierException;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
+use PrestaShopBundle\Security\Annotation\AdminSecurity;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class DemoSupplierController extends FrameworkBundleAdminController

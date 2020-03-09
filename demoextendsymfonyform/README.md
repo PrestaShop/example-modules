@@ -3,7 +3,7 @@
 ## About
 
 This module demonstrates:
- * insert a "upload image" input inside the Symfony form managing "Edit a Supplier" page
+ * how to insert an "upload image" input field inside the Symfony form managing "Edit a Supplier" page
 
  ### Supported PrestaShop versions
 
