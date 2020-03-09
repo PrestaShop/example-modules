@@ -10,7 +10,9 @@
 
 declare(strict_types=1);
 
-use PrestaShop\Module\DemoExtendSymfonyForm\Uploader\SupplierExtraImageUploader;
+use PrestaShop\Module\DemoExtendSymfonyForm\Entity\SupplierExtraImage;
+use PrestaShop\Module\DemoExtendSymfonyForm\Install\Installer;
+use PrestaShop\Module\DemoExtendSymfonyForm\Repository\SupplierExtraImageRepository;
 use PrestaShop\PrestaShop\Core\Image\Uploader\ImageUploaderInterface;
 use PrestaShopBundle\Form\Admin\Type\CustomContentType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -25,7 +27,7 @@ require_once __DIR__.'/vendor/autoload.php';
 
 class demoextendsymfonyform extends Module
 {
-    private const SUPPLIER_EXTRA_IMAGE_PATH = '/img/su/'.SupplierExtraImageUploader::EXTRA_IMAGE_NAME;
+    private const SUPPLIER_EXTRA_IMAGE_PATH = '/img/su/';
 
     public function __construct()
     {
@@ -42,19 +44,29 @@ class demoextendsymfonyform extends Module
 
     public function install()
     {
-        return parent::install()
-            && $this->registerHook('actionSupplierFormBuilderModifier')
-            && $this->registerHook('actionAfterUpdateSupplierFormHandler')
-            && $this->registerHook('actionAfterCreateSupplierFormHandler');
+        if (!parent::install()) {
+            return false;
+        }
+
+        $installer = new Installer();
+
+        return $installer->install($this);
     }
 
     public function uninstall()
     {
-        return parent::uninstall();
+        $installer = new Installer();
+
+        return $installer->uninstall() && parent::uninstall();
     }
 
     public function hookActionSupplierFormBuilderModifier(array $params)
     {
+        /** @var SupplierExtraImageRepository $supplierExtraImageRepository */
+        $supplierExtraImageRepository = $this->get(
+            'prestashop.module.demoextendsymfonyform.repository.supplier_extra_image_repository'
+        );
+
         $translator = $this->getTranslator();
         /** @var FormBuilderInterface $formBuilder */
         $formBuilder = $params['form_builder'];
@@ -64,19 +76,20 @@ class demoextendsymfonyform extends Module
                 'required' => false,
             ]);
 
-        $supplierExtraImageUrl = _PS_SUPP_IMG_DIR_. SupplierExtraImageUploader::EXTRA_IMAGE_NAME . $params['id'] . '.jpg';
-        if (file_exists($supplierExtraImageUrl)) {
+        /** @var SupplierExtraImage $supplierExtraImage */
+        $supplierExtraImage = $supplierExtraImageRepository->findOneBy(['supplierId' => $params['id']]);
+        if ($supplierExtraImage && file_exists(_PS_SUPP_IMG_DIR_ . $supplierExtraImage->getImageName())) {
             $formBuilder
                 ->add('image_file', CustomContentType::class, [
                     'required' => false,
                     'template' => '@Modules/demoextendsymfonyform/src/View/upload_image.html.twig',
                     'data' => [
                         'supplierId' => $params['id'],
-                        'imageUrl' => self::SUPPLIER_EXTRA_IMAGE_PATH . $params['id'] . '.jpg',
+                        'imageUrl' => self::SUPPLIER_EXTRA_IMAGE_PATH . $supplierExtraImage->getImageName(),
                     ],
                 ]);
-
         }
+
     }
 
     public function hookActionAfterUpdateSupplierFormHandler(array $params)
@@ -94,7 +107,7 @@ class demoextendsymfonyform extends Module
      */
     private function uploadImage(array $params): void
     {
-        /** @var ImageUploaderInterface supplierExtraImageUploader */
+        /** @var ImageUploaderInterface $supplierExtraImageUploader */
         $supplierExtraImageUploader = $this->get(
             'prestashop.module.demoextendsymfonyform.uploader.supplier_extra_image_uploader'
         );

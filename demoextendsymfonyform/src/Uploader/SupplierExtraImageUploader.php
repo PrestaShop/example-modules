@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoExtendSymfonyForm\Uploader;
 
+use PrestaShop\Module\DemoExtendSymfonyForm\Entity\SupplierExtraImage;
+use PrestaShop\Module\DemoExtendSymfonyForm\Repository\SupplierExtraImageRepository;
 use PrestaShop\PrestaShop\Core\Image\Uploader\Exception\ImageOptimizationException;
 use PrestaShop\PrestaShop\Core\Image\Uploader\Exception\ImageUploadException;
 use PrestaShop\PrestaShop\Core\Image\Uploader\Exception\MemoryLimitException;
@@ -21,7 +23,16 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class SupplierExtraImageUploader implements ImageUploaderInterface
 {
-    const EXTRA_IMAGE_NAME = 'extra';
+    /** @var SupplierExtraImageRepository */
+    private $supplierExtraImageRepository;
+
+    /**
+     * @param SupplierExtraImageRepository $supplierExtraImageRepository
+     */
+    public function __construct(SupplierExtraImageRepository $supplierExtraImageRepository)
+    {
+        $this->supplierExtraImageRepository = $supplierExtraImageRepository;
+    }
 
     public function upload($supplierId, UploadedFile $image)
     {
@@ -29,8 +40,12 @@ class SupplierExtraImageUploader implements ImageUploaderInterface
         $tempImageName = $this->createTemporaryImage($image);
         $this->deleteOldImage($supplierId);
 
-        $destination = _PS_SUPP_IMG_DIR_. self::EXTRA_IMAGE_NAME . $supplierId . '.jpg';
+        $originalImageName = $image->getClientOriginalName();
+        $destination = _PS_SUPP_IMG_DIR_ . $originalImageName;
         $this->uploadFromTemp($tempImageName, $destination);
+        $this->supplierExtraImageRepository->upsertSupplierImageName($supplierId, $originalImageName);
+
+
     }
 
     /**
@@ -82,10 +97,10 @@ class SupplierExtraImageUploader implements ImageUploaderInterface
      */
     private function deleteOldImage($supplierId)
     {
-        $currentImage =  _PS_SUPP_IMG_DIR_ . self::EXTRA_IMAGE_NAME . $supplierId . '.jpg';
-
-        if (file_exists($currentImage)) {
-            unlink($currentImage);
+        /** @var SupplierExtraImage $supplierExtraImage */
+        $supplierExtraImage = $this->supplierExtraImageRepository->findOneBy(['supplierId' => $supplierId]);
+        if ($supplierExtraImage && file_exists(_PS_SUPP_IMG_DIR_ . $supplierExtraImage->getImageName())) {
+            unlink(_PS_SUPP_IMG_DIR_ . $supplierExtraImage->getImageName());
         }
     }
 
@@ -111,4 +126,5 @@ class SupplierExtraImageUploader implements ImageUploaderInterface
             throw new UploadedImageConstraintException(sprintf('Image format "%s", not recognized, allowed formats are: .gif, .jpg, .png', $image->getClientOriginalExtension()), UploadedImageConstraintException::UNRECOGNIZED_FORMAT);
         }
     }
+
 }

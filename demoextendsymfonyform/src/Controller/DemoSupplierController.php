@@ -12,7 +12,8 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoExtendSymfonyForm\Controller;
 
-use PrestaShop\Module\DemoExtendSymfonyForm\Uploader\SupplierExtraImageUploader;
+use PrestaShop\Module\DemoExtendSymfonyForm\Entity\SupplierExtraImage;
+use PrestaShop\Module\DemoExtendSymfonyForm\Repository\SupplierExtraImageRepository;
 use PrestaShop\PrestaShop\Core\Domain\Category\Exception\CannotDeleteImageException;
 use PrestaShop\PrestaShop\Core\Domain\Supplier\Exception\SupplierException;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
@@ -68,12 +69,21 @@ class DemoSupplierController extends FrameworkBundleAdminController
      */
     private function deleteExtraUploadedImage(int $supplierId)
     {
-        $imgPath = _PS_SUPP_IMG_DIR_ . SupplierExtraImageUploader::EXTRA_IMAGE_NAME . $supplierId . '.jpg';
-        if (file_exists($imgPath) && unlink($imgPath)) {
-            return true;
+        /** @var SupplierExtraImageRepository $supplierExtraImageRepository */
+        $supplierExtraImageRepository = $this->get(
+            'prestashop.module.demoextendsymfonyform.repository.supplier_extra_image_repository'
+        );
+        /** @var SupplierExtraImage $supplierExtraImage */
+        $supplierExtraImage = $supplierExtraImageRepository->findOneBy(['supplierId' => $supplierId]);
+        if ($supplierExtraImage) {
+            $imgPath = _PS_SUPP_IMG_DIR_ . $supplierExtraImage->getImageName();
+            if (file_exists($imgPath) && unlink($imgPath)) {
+                return true;
+            }
         }
+
         throw new CannotDeleteImageException(sprintf(
-            'Cannot delete second image for supplier with id "%s"',
+            'Cannot delete extra image for supplier with id "%s"',
             $supplierId
         ));
     }
