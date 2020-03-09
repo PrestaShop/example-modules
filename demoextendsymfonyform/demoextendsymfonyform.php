@@ -16,8 +16,6 @@ use PrestaShopBundle\Form\Admin\Type\CustomContentType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Constraints\File;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -46,7 +44,8 @@ class demoextendsymfonyform extends Module
     {
         return parent::install()
             && $this->registerHook('actionSupplierFormBuilderModifier')
-            && $this->registerHook('actionAfterUpdateSupplierFormHandler');
+            && $this->registerHook('actionAfterUpdateSupplierFormHandler')
+            && $this->registerHook('actionAfterCreateSupplierFormHandler');
     }
 
     public function uninstall()
@@ -81,6 +80,19 @@ class demoextendsymfonyform extends Module
     }
 
     public function hookActionAfterUpdateSupplierFormHandler(array $params)
+    {
+        $this->uploadImage($params);
+    }
+
+    public function hookActionAfterCreateSupplierFormHandler(array $params)
+    {
+        $this->uploadImage($params);
+    }
+
+    /**
+     * @param array $params
+     */
+    private function uploadImage(array $params): void
     {
         /** @var ImageUploaderInterface supplierExtraImageUploader */
         $supplierExtraImageUploader = $this->get(
