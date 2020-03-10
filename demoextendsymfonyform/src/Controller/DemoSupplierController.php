@@ -82,7 +82,7 @@ class DemoSupplierController extends FrameworkBundleAdminController
             /** @var SupplierExtraImage $supplierExtraImage */
             $supplierExtraImage = $supplierExtraImageRepository->findOneBy(['image_name' => $extraImageName]);
             $imgPath = _PS_SUPP_IMG_DIR_ . $extraImageName;
-            if ($supplierExtraImage && file_exists($imgPath) && unlink($imgPath)) {
+            if ($supplierExtraImage === null && file_exists($imgPath) && unlink($imgPath)) {
                 return true;
             }
         }
