@@ -104,7 +104,7 @@ class DemoViewOrderHooks extends Module
     /**
      * Displays customer's signature.
      */
-    public function hookDisplayBackOfficeOrderActions(array $params)
+    public function hookDisplayAdminOrderSide(array $params)
     {
         /** @var OrderSignatureRepository $signatureRepository */
         $signatureRepository = $this->get('prestashop.module.demovieworderhooks.repository.order_signature_repository');
@@ -181,7 +181,7 @@ class DemoViewOrderHooks extends Module
     /**
      * Displays customer's review about the order.
      */
-    public function hookDisplayAdminOrderSide(array $params)
+    public function hookDisplayAdminOrderSideBottom(array $params)
     {
         /** @var OrderReviewRepository $orderReviewRepository */
         $orderReviewRepository = $this->get('prestashop.module.demovieworderhooks.repository.order_review_repository');
