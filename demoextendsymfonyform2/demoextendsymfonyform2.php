@@ -28,20 +28,20 @@ require_once __DIR__.'/vendor/autoload.php';
 /**
  * Class demoextendsymfonyform
  */
-class demoextendsymfonyform extends Module
+class DemoExtendSymfonyForm2 extends Module
 {
     private const SUPPLIER_EXTRA_IMAGE_PATH = '/img/su/';
 
     public function __construct()
     {
-        $this->name = 'demoextendsymfonyform';
+        $this->name = 'demoextendsymfonyform2';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
         $this->ps_versions_compliancy = ['min' => '1.7.7.0', 'max' => _PS_VERSION_];
 
         parent::__construct();
 
-        $this->displayName = $this->l('Demo Symfony Forms');
+        $this->displayName = $this->l('Demo Symfony Forms #2');
         $this->description = $this->l('Demonstration of how to add an image upload field inside the Symfony form');
     }
 
@@ -94,7 +94,7 @@ class demoextendsymfonyform extends Module
             $formBuilder
                 ->add('image_file', CustomContentType::class, [
                     'required' => false,
-                    'template' => '@Modules/demoextendsymfonyform/src/View/upload_image.html.twig',
+                    'template' => '@Modules/demoextendsymfonyform2/src/View/upload_image.html.twig',
                     'data' => [
                         'supplierId' => $params['id'],
                         'imageUrl' => self::SUPPLIER_EXTRA_IMAGE_PATH . $supplierExtraImage->getImageName(),
