@@ -15,8 +15,16 @@ namespace PrestaShop\Module\DemoExtendSymfonyForm\Repository;
 use Doctrine\ORM\EntityRepository;
 use PrestaShop\Module\DemoExtendSymfonyForm\Entity\SupplierExtraImage;
 
+/**
+ * Class SupplierExtraImageRepository
+ * @package PrestaShop\Module\DemoExtendSymfonyForm\Repository
+ */
 class SupplierExtraImageRepository extends EntityRepository
 {
+    /**
+     * @param $supplierId
+     * @param $imageName
+     */
     public function upsertSupplierImageName($supplierId, $imageName)
     {
         /** @var SupplierExtraImage $supplierExtraImage */
@@ -32,6 +40,9 @@ class SupplierExtraImageRepository extends EntityRepository
         $em->flush();
     }
 
+    /**
+     * @param SupplierExtraImage $supplierExtraImage
+     */
     public function deleteExtraImage(SupplierExtraImage $supplierExtraImage)
     {
         $em = $this->getEntityManager();

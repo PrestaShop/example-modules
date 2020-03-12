@@ -19,6 +19,10 @@ use PrestaShop\PrestaShop\Core\Domain\Supplier\Exception\SupplierException;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * Class DemoSupplierController
+ * @package PrestaShop\Module\DemoExtendSymfonyForm\Controller
+ */
 class DemoSupplierController extends FrameworkBundleAdminController
 {
 

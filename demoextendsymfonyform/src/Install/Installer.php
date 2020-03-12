@@ -16,6 +16,10 @@ namespace PrestaShop\Module\DemoExtendSymfonyForm\Install;
 use Db;
 use Module;
 
+/**
+ * Class Installer
+ * @package PrestaShop\Module\DemoExtendSymfonyForm\Install
+ */
 class Installer
 {
     /**

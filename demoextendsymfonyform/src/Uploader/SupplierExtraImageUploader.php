@@ -21,6 +21,10 @@ use PrestaShop\PrestaShop\Core\Image\Uploader\Exception\UploadedImageConstraintE
 use PrestaShop\PrestaShop\Core\Image\Uploader\ImageUploaderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * Class SupplierExtraImageUploader
+ * @package PrestaShop\Module\DemoExtendSymfonyForm\Uploader
+ */
 class SupplierExtraImageUploader implements ImageUploaderInterface
 {
     /** @var SupplierExtraImageRepository */
@@ -34,6 +38,10 @@ class SupplierExtraImageUploader implements ImageUploaderInterface
         $this->supplierExtraImageRepository = $supplierExtraImageRepository;
     }
 
+    /**
+     * @param int $supplierId
+     * @param UploadedFile $image
+     */
     public function upload($supplierId, UploadedFile $image)
     {
         $this->checkImageIsAllowedForUpload($image);

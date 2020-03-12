@@ -25,6 +25,9 @@ if (!defined('_PS_VERSION_')) {
 
 require_once __DIR__.'/vendor/autoload.php';
 
+/**
+ * Class demoextendsymfonyform
+ */
 class demoextendsymfonyform extends Module
 {
     private const SUPPLIER_EXTRA_IMAGE_PATH = '/img/su/';
@@ -42,6 +45,9 @@ class demoextendsymfonyform extends Module
         $this->description = $this->l('Demonstration of how to add an image upload field inside the Symfony form');
     }
 
+    /**
+     * @return bool
+     */
     public function install()
     {
         if (!parent::install()) {
@@ -53,6 +59,9 @@ class demoextendsymfonyform extends Module
         return $installer->install($this);
     }
 
+    /**
+     * @return bool
+     */
     public function uninstall()
     {
         $installer = new Installer();
@@ -60,6 +69,9 @@ class demoextendsymfonyform extends Module
         return $installer->uninstall() && parent::uninstall();
     }
 
+    /**
+     * @param array $params
+     */
     public function hookActionSupplierFormBuilderModifier(array $params)
     {
         /** @var SupplierExtraImageRepository $supplierExtraImageRepository */
@@ -92,11 +104,17 @@ class demoextendsymfonyform extends Module
 
     }
 
+    /**
+     * @param array $params
+     */
     public function hookActionAfterUpdateSupplierFormHandler(array $params)
     {
         $this->uploadImage($params);
     }
 
+    /**
+     * @param array $params
+     */
     public function hookActionAfterCreateSupplierFormHandler(array $params)
     {
         $this->uploadImage($params);
