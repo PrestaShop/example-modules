@@ -84,7 +84,7 @@ class DemoSupplierController extends FrameworkBundleAdminController
             $supplierExtraImageRepository->deleteExtraImage($supplierExtraImage);
             // check if the same image was associated with other suppliers
             /** @var SupplierExtraImage $supplierExtraImage */
-            $supplierExtraImage = $supplierExtraImageRepository->findOneBy(['image_name' => $extraImageName]);
+            $supplierExtraImage = $supplierExtraImageRepository->findOneBy(['imageName' => $extraImageName]);
             $imgPath = _PS_SUPP_IMG_DIR_ . $extraImageName;
             if ($supplierExtraImage === null && file_exists($imgPath) && unlink($imgPath)) {
                 return true;
