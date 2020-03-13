@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 Friends of PrestaShop
+ * 2007-2020 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -12,6 +12,9 @@ namespace DemoCQRSHooksUsage\Entity;
 
 use PrestaShop\PrestaShop\Adapter\Entity\ObjectModel;
 
+/**
+ * This entity database state is managed by PrestaShop ObjectModel
+ */
 class Reviewer extends ObjectModel
 {
     /**
