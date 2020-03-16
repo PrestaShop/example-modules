@@ -1,4 +1,4 @@
-# Demonstration of how to insert an inputs inside the Symfony form
+# Demonstration of how to insert an inputs inside the Symfony form - 2
 
 ## About
 
@@ -17,7 +17,7 @@ This module demonstrates:
  ### How to install
  
   1. Download or clone module into `modules` directory of your PrestaShop installation
-  2. Rename the directory to make sure that module directory is named `demoextendsymfonyform`*
+  2. Rename the directory to make sure that module directory is named `demoextendsymfonyform2`*
   3. `cd` into module's directory and run following commands:
       - `composer install` - to download dependencies into vendor folder
       - `composer dumpautoload` to generate autoloader for module
