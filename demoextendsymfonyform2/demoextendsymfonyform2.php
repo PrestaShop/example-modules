@@ -101,7 +101,6 @@ class DemoExtendSymfonyForm2 extends Module
                     ],
                 ]);
         }
-
     }
 
     /**
@@ -137,5 +136,4 @@ class DemoExtendSymfonyForm2 extends Module
             $supplierExtraImageUploader->upload($params['id'], $uploadedFile);
         }
     }
-
 }
