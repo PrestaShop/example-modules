@@ -69,7 +69,7 @@ class Installer
      */
     private function uninstallDatabase(): bool
     {
-        return $this->executeQueries(SqlQueries::uninstallQueries);
+        return $this->executeQueries(SqlQueries::uninstallQueries());
     }
 
     /**
