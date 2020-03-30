@@ -42,10 +42,8 @@ class SqlQueries
      */
     public static function uninstallQueries(): array
     {
-        $queries = [
+        return [
             'DROP TABLE IF EXISTS `'._DB_PREFIX_.'supplier_extra_image`',
         ];
-
-        return $queries;
     }
 }
