@@ -25,7 +25,7 @@ class SqlQueries
      */
     public static function installQueries(): array
     {
-        $queries = [
+        return [
             'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'supplier_extra_image` (
               `id_extra_image` int(11) NOT NULL AUTO_INCREMENT,
               `id_supplier` int(11) NOT NULL,
@@ -33,8 +33,6 @@ class SqlQueries
               PRIMARY KEY (`id_extra_image`)
             ) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;',
         ];
-
-        return $queries;
     }
 
     /**
