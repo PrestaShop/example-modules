@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoExtendSymfonyForm\Install;
 
-
 use Db;
 use Module;
+use PrestaShop\Module\DemoExtendSymfonyForm\Sql\SqlQueries;
 
 /**
  * Class Installer
@@ -59,16 +59,7 @@ class Installer
      */
     private function installDatabase(): bool
     {
-        $queries = [
-            'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'supplier_extra_image` (
-              `id_extra_image` int(11) NOT NULL AUTO_INCREMENT,
-              `id_supplier` int(11) NOT NULL,
-              `image_name` varchar(64) NOT NULL,
-              PRIMARY KEY (`id_extra_image`)
-            ) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;',
-        ];
-
-        return $this->executeQueries($queries);
+        return $this->executeQueries(SqlQueries::installQueries());
     }
 
     /**
@@ -78,11 +69,7 @@ class Installer
      */
     private function uninstallDatabase(): bool
     {
-        $queries = [
-            'DROP TABLE IF EXISTS `'._DB_PREFIX_.'supplier_extra_image`',
-        ];
-
-        return $this->executeQueries($queries);
+        return $this->executeQueries(SqlQueries::uninstallQueries());
     }
 
     /**

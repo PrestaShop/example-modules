@@ -52,8 +52,6 @@ class SupplierExtraImageUploader implements ImageUploaderInterface
         $destination = _PS_SUPP_IMG_DIR_ . $originalImageName;
         $this->uploadFromTemp($tempImageName, $destination);
         $this->supplierExtraImageRepository->upsertSupplierImageName($supplierId, $originalImageName);
-
-
     }
 
     /**
@@ -134,5 +132,4 @@ class SupplierExtraImageUploader implements ImageUploaderInterface
             throw new UploadedImageConstraintException(sprintf('Image format "%s", not recognized, allowed formats are: .gif, .jpg, .png', $image->getClientOriginalExtension()), UploadedImageConstraintException::UNRECOGNIZED_FORMAT);
         }
     }
-
 }

@@ -11,6 +11,7 @@
 declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoExtendSymfonyForm\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -88,5 +89,4 @@ class SupplierExtraImage
     {
         $this->imageName = $imageName;
     }
-
 }
