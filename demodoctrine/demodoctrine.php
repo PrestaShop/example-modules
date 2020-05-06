@@ -65,7 +65,12 @@ class DemoDoctrine extends Module
 
     public function hookDisplayHome()
     {
-        return '<h1>quotes</h1>';
+        $repository = $this->get('prestashop.module.demodoctrine.repository.quote_repository');
+        $quotes = $repository->getRandom(0, 3);
+
+        $this->smarty->assign(['quotes' => $quotes]);
+
+        return $this->fetch('module:demodoctrine/views/templates/front/home.tpl');
     }
 
     /**

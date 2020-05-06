@@ -92,6 +92,20 @@ class Quote
     /**
      * @return string
      */
+    public function getQuoteContent()
+    {
+        if ($this->quoteLangs->count() <= 0) {
+            return '';
+        }
+
+        $quoteLang = $this->quoteLangs->first();
+
+        return $quoteLang->getContent();
+    }
+
+    /**
+     * @return string
+     */
     public function getAuthor()
     {
         return $this->author;

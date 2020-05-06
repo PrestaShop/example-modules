@@ -1,10 +1,7 @@
-services:
-    prestashop.module.demodoctrine.repository.quote_repository:
-        class: PrestaShop\Module\DemoDoctrine\Repository\QuoteRepository
-        factory: ['@doctrine.orm.default_entity_manager', getRepository]
-        arguments:
-            - PrestaShop\Module\DemoDoctrine\Entity\Quote
+imports:
+    - { resource: ./common.yml }
 
+services:
     # Form services
     prestashop.module.demodoctrine.type.quote:
         class: 'PrestaShop\Module\DemoDoctrine\Form\QuoteType'
