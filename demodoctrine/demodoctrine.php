@@ -66,7 +66,8 @@ class DemoDoctrine extends Module
     public function hookDisplayHome()
     {
         $repository = $this->get('prestashop.module.demodoctrine.repository.quote_repository');
-        $quotes = $repository->getRandom(0, 3);
+        $langId = $this->context->language->id;
+        $quotes = $repository->getRandom($langId, 3);
 
         $this->smarty->assign(['quotes' => $quotes]);
 

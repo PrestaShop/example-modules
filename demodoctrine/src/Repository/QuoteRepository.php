@@ -46,6 +46,8 @@ class QuoteRepository extends EntityRepository
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('q')
             ->addSelect('q')
+            ->addSelect('ql')
+            ->leftJoin('q.quoteLangs', 'ql')
         ;
 
         if (0 !== $langId) {
@@ -58,7 +60,7 @@ class QuoteRepository extends EntityRepository
         $ids = $this->getAllIds();
         shuffle($ids);
         if ($limit > 0) {
-            array_splice($ids, 0, $limit);
+            $ids = array_slice($ids, 0, $limit);
         }
         $qb
             ->andWhere('q.id in (:ids)')
