@@ -1,3 +1,4 @@
 vendor/
 composer.lock
 .idea
+js/node_modules
