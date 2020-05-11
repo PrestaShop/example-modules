@@ -141,7 +141,22 @@ class QuotesController extends FrameworkBundleAdminController
      */
     public function editAction(Request $request, $quoteId)
     {
-        return $this->redirectToRoute('ps_demodoctrine_quote_index');
+        $quoteFormBuilder = $this->get('prestashop.module.demodoctrine.form.identifiable_object.builder.quote_form_builder');
+        $quoteForm = $quoteFormBuilder->getFormFor((int) $quoteId);
+        $quoteForm->handleRequest($request);
+
+        $quoteFormHandler = $this->get('prestashop.module.demodoctrine.form.identifiable_object.handler.quote_form_handler');
+        $result = $quoteFormHandler->handleFor((int) $quoteId, $quoteForm);
+
+        if ($result->isSubmitted() && $result->isValid()) {
+            $this->addFlash('success', $this->trans('Successful update.', 'Admin.Notifications.Success'));
+
+            return $this->redirectToRoute('ps_demodoctrine_quote_index');
+        }
+
+        return $this->render('@Modules/Demodoctrine/views/templates/admin/edit.html.twig', [
+            'quoteForm' => $quoteForm->createView(),
+        ]);
     }
 
     /**

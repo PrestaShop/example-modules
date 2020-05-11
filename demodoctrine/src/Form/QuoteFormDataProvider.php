@@ -35,7 +35,16 @@ class QuoteFormDataProvider implements FormDataProviderInterface
      */
     public function getData($quoteId)
     {
-        return $this->repository->findOneById($quoteId);
+        $quote = $this->repository->findOneById($quoteId);
+
+        $quoteData = [
+            'author' => $quote->getAuthor(),
+        ];
+        foreach ($quote->getQuoteLangs() as $quoteLang) {
+            $quoteData['content'][$quoteLang->getLang()->getId()] = $quoteLang->getContent();
+        }
+
+        return $quoteData;
     }
 
     /**
@@ -43,6 +52,9 @@ class QuoteFormDataProvider implements FormDataProviderInterface
      */
     public function getDefaultData()
     {
-        return new Quote();
+        return [
+            'author' => '',
+            'content' => [],
+        ];
     }
 }

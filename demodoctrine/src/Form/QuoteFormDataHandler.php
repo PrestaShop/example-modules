@@ -76,6 +76,17 @@ class QuoteFormDataHandler implements FormDataHandlerInterface
      */
     public function update($id, array $data)
     {
+        $quote = $this->quoteRepository->findOneById($id);
+        $quote->setAuthor($data['author']);
+        foreach ($data['content'] as $langId => $content) {
+            $quoteLang = $quote->getQuoteLangByLangId($langId);
+            if (null === $quoteLang) {
+                continue;
+            }
+            $quoteLang->setContent($content);
+        }
+        $this->entityManager->flush();
 
+        return $quote->getId();
     }
 }

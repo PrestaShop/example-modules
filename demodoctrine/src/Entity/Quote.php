@@ -78,6 +78,21 @@ class Quote
     }
 
     /**
+     * @param int $langId
+     * @return QuoteLang|null
+     */
+    public function getQuoteLangByLangId($langId)
+    {
+        foreach ($this->quoteLangs as $quoteLang) {
+            if ($langId === $quoteLang->getLang()->getId()) {
+                return $quoteLang;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * @param QuoteLang $quoteLang
      * @return $this
      */
