@@ -14,6 +14,7 @@ use Doctrine\DBAL\Driver\Connection;
 use Doctrine\DBAL\Exception\TableExistsException;
 use Doctrine\DBAL\Exception\TableNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityNotFoundException;
 use PrestaShop\Module\DemoDoctrine\Entity\Quote;
 use PrestaShop\Module\DemoDoctrine\Entity\QuoteLang;
 use PrestaShop\Module\DemoDoctrine\Grid\Definition\Factory\QuoteGridDefinitionFactory;
@@ -162,13 +163,40 @@ class QuotesController extends FrameworkBundleAdminController
     /**
      * Delete quote
      *
-     * @param Request $request
      * @param int $quoteId
      *
      * @return Response
      */
-    public function deleteAction(Request $request, $quoteId)
+    public function deleteAction($quoteId)
     {
+        $repository = $this->get('prestashop.module.demodoctrine.repository.quote_repository');
+        try {
+            $quote = $repository->findOneById($quoteId);
+        } catch (EntityNotFoundException $e) {
+            $quote = null;
+        }
+
+        if (null !== $quote) {
+            /** @var EntityManagerInterface $em */
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->remove($quote);
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                $this->trans('Successful deletion.', 'Admin.Notifications.Success')
+            );
+        } else {
+            $this->addFlash(
+                'error',
+                $this->trans(
+                    'Cannot find quote %quote%',
+                    'Modules.Demodoctrine.Admin',
+                    ['%quote%' => $quoteId]
+                )
+            );
+        }
+
         return $this->redirectToRoute('ps_demodoctrine_quote_index');
     }
 

@@ -43,7 +43,7 @@ ps_demodoctrine_quote_edit:
 
 ps_demodoctrine_quote_delete:
     path: /demo-doctrine/quotes/{quoteId}/delete
-    methods: [POST]
+    methods: [DELETE]
     defaults:
         _controller: 'PrestaShop\Module\DemoDoctrine\Controller\Admin\QuotesController::deleteAction'
         _legacy_controller: 'AdminDemodoctrineQuote'
