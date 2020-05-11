@@ -24,7 +24,7 @@ services:
             - 'PrestaShop\Module\DemoDoctrine\Form\QuoteType'
             - '@prestashop.module.demodoctrine.form.identifiable_object.data_provider.quote_form_data_provider'
 
-    prestashop.core.form.identifiable_object.data_handler.quote_form_data_handler:
+    prestashop.module.demodoctrine.form.identifiable_object.data_handler.quote_form_data_handler:
         class: 'PrestaShop\Module\DemoDoctrine\Form\QuoteFormDataHandler'
         arguments:
             - '@prestashop.module.demodoctrine.repository.quote_repository'
@@ -35,7 +35,7 @@ services:
         class: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Handler\FormHandler'
         factory: 'prestashop.core.form.identifiable_object.handler.form_handler_factory:create'
         arguments:
-            - '@prestashop.core.form.identifiable_object.data_handler.quote_form_data_handler'
+            - '@prestashop.module.demodoctrine.form.identifiable_object.data_handler.quote_form_data_handler'
 
     # Grid services
     prestashop.module.demodoctrine.grid.definition.factory.quotes:
@@ -65,3 +65,11 @@ services:
             - '@prestashop.module.demodoctrine.grid.data_provider.quotes'
             - '@prestashop.core.grid.filter.form_factory'
             - '@prestashop.core.hook.dispatcher'
+
+    # Generator service
+    prestashop.module.demodoctrine.quotes.generator:
+        class: 'PrestaShop\Module\DemoDoctrine\QuoteGenerator'
+        arguments:
+            - '@prestashop.module.demodoctrine.repository.quote_repository'
+            - '@prestashop.core.admin.lang.repository'
+            - '@doctrine.orm.default_entity_manager'

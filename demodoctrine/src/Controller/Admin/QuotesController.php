@@ -87,9 +87,11 @@ class QuotesController extends FrameworkBundleAdminController
     public function generateAction(Request $request)
     {
         if ($request->isMethod('POST')) {
-            $this->installTables();
-            $this->removeAllQuotes();
-            $this->insertQuotes();
+            $generator = $this->get('prestashop.module.demodoctrine.quotes.generator');
+            $generator->generateQuotes();
+            $this->addFlash('success', $this->trans('Quotes were successfully generated.', 'Modules.Demodoctrine.Admin'));
+
+            return $this->redirectToRoute('ps_demodoctrine_quote_index');
         }
 
         return $this->render(
@@ -268,47 +270,5 @@ class QuotesController extends FrameworkBundleAdminController
         } catch (TableExistsException $e) {
             // In case tables are already created
         }
-    }
-
-    private function removeAllQuotes()
-    {
-        $repository = $this->get('prestashop.module.demodoctrine.repository.quote_repository');
-        $quotes = $repository->findAll();
-        /** @var EntityManagerInterface $em */
-        $em = $this->get('doctrine.orm.entity_manager');
-        foreach ($quotes as $quote) {
-            $em->remove($quote);
-        }
-        $em->flush();
-    }
-
-    private function insertQuotes()
-    {
-        /** @var EntityManagerInterface $em */
-        $em = $this->get('doctrine.orm.entity_manager');
-
-        /** @var LangRepository $langRepository */
-        $langRepository = $this->get('prestashop.core.admin.lang.repository');
-        $languages = $langRepository->findAll();
-
-        $quotesDataFile = __DIR__ . '/../../../Resources/data/quotes.json';
-        $quotesData = json_decode(file_get_contents($quotesDataFile), true);
-        foreach ($quotesData as $quoteData) {
-            $quote = new Quote();
-            $quote->setAuthor($quoteData['author']);
-            /** @var Lang $language */
-            foreach ($languages as $language) {
-                $quoteLang = new QuoteLang();
-                $quoteLang->setLang($language);
-                if (isset($quoteData['quotes'][$language->getIsoCode()])) {
-                    $quoteLang->setContent($quoteData['quotes'][$language->getIsoCode()]);
-                } else {
-                    $quoteLang->setContent($quoteData['quotes']['en']);
-                }
-                $quote->addQuoteLang($quoteLang);
-            }
-            $em->persist($quote);
-        }
-        $em->flush();
     }
 }
