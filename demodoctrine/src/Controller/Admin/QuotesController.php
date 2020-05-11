@@ -209,6 +209,27 @@ class QuotesController extends FrameworkBundleAdminController
      */
     public function deleteBulkAction(Request $request)
     {
+        $quoteIds = $request->request->get('quote_bulk');
+        $repository = $this->get('prestashop.module.demodoctrine.repository.quote_repository');
+        try {
+            $quotes = $repository->findById($quoteIds);
+        } catch (EntityNotFoundException $e) {
+            $quotes = null;
+        }
+        if (!empty($quotes)) {
+            /** @var EntityManagerInterface $em */
+            $em = $this->get('doctrine.orm.entity_manager');
+            foreach ($quotes as $quote) {
+                $em->remove($quote);
+            }
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                $this->trans('The selection has been successfully deleted.', 'Admin.Notifications.Success')
+            );
+        }
+
         return $this->redirectToRoute('ps_demodoctrine_quote_index');
     }
 
