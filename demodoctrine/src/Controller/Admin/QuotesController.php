@@ -40,11 +40,7 @@ class QuotesController extends FrameworkBundleAdminController
     public function indexAction(QuoteFilters $filters)
     {
         $quoteGridFactory = $this->get('prestashop.module.demodoctrine.grid.factory.quotes');
-        try {
-            $quoteGrid = $quoteGridFactory->getGrid($filters);
-        } catch (TableNotFoundException $e) {
-            return $this->redirectToRoute('ps_demodoctrine_quote_generate');
-        }
+        $quoteGrid = $quoteGridFactory->getGrid($filters);
 
         return $this->render(
             '@Modules/Demodoctrine/views/templates/admin/index.html.twig',
@@ -252,23 +248,5 @@ class QuotesController extends FrameworkBundleAdminController
                 'href' => $this->generateUrl('ps_demodoctrine_quote_generate'),
             ],
         ];
-    }
-
-    /**
-     * This is an ugly way to install the tables, but PrestaShop doesn't manage
-     * module's entities schema update (...yet)
-     */
-    private function installTables()
-    {
-        $sqlInstallFile = __DIR__ . '/../../../Resources/data/install.sql';
-        /** @var RegistryInterface $doctrine */
-        $doctrine = $this->get('doctrine');
-        /** @var Connection $connection */
-        $connection = $doctrine->getConnection();
-        try {
-            $connection->exec(file_get_contents($sqlInstallFile));
-        } catch (TableExistsException $e) {
-            // In case tables are already created
-        }
     }
 }

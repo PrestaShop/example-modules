@@ -10,17 +10,8 @@
 
 declare(strict_types=1);
 
-use PrestaShop\Module\DemoViewOrderHooks\Collection\OrderCollection;
-use PrestaShop\Module\DemoViewOrderHooks\Install\InstallerFactory;
-use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderLinkPresenter;
-use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderReviewPresenter;
-use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrdersPresenter;
-use PrestaShop\Module\DemoViewOrderHooks\Presenter\PackageLocationsPresenter;
-use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderSignaturePresenter;
-use PrestaShop\Module\DemoViewOrderHooks\Repository\OrderRepository;
-use PrestaShop\Module\DemoViewOrderHooks\Repository\OrderReviewRepository;
-use PrestaShop\Module\DemoViewOrderHooks\Repository\PackageLocationRepository;
-use PrestaShop\Module\DemoViewOrderHooks\Repository\OrderSignatureRepository;
+use PrestaShop\Module\DemoDoctrine\Database\QuoteInstaller;
+use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -48,12 +39,12 @@ class DemoDoctrine extends Module
 
     public function install()
     {
-        return parent::install() && $this->registerHook('displayHome');
+        return $this->installTables() && parent::install() && $this->registerHook('displayHome');
     }
 
     public function uninstall()
     {
-        return parent::uninstall();
+        return $this->removeTables() && parent::uninstall();
     }
 
     public function getContent()
@@ -75,21 +66,46 @@ class DemoDoctrine extends Module
     }
 
     /**
-     * Render a twig template.
+     * @return bool
      */
-    private function render(string $template, array $params = []): string
+    private function installTables()
     {
-        /** @var Twig_Environment $twig */
-        $twig = $this->get('twig');
+        /** @var QuoteInstaller $installer */
+        $installer = $this->getInstaller();
+        $errors = $installer->createTables();
 
-        return $twig->render($template, $params);
+        return empty($errors);
     }
 
     /**
-     * Get path to this module's template directory
+     * @return bool
      */
-    private function getModuleTemplatePath(): string
+    private function removeTables()
     {
-        return sprintf('@Modules/%s/views/templates/admin/', $this->name);
+        /** @var QuoteInstaller $installer */
+        $installer = $this->getInstaller();
+        $errors = $installer->dropTables();
+
+        return empty($errors);
+    }
+
+    /**
+     * @return QuoteInstaller|null
+     */
+    private function getInstaller()
+    {
+        if ($this->isSymfonyContext()) {
+            try {
+                return $this->get('prestashop.module.demodoctrine.quotes.install');
+            } catch (\Exception $e) {
+            }
+        }
+
+        $container = SymfonyContainer::getInstance();
+
+        return new QuoteInstaller(
+            $container->get('doctrine.dbal.default_connection'),
+            $container->getParameter('database_prefix')
+        );
     }
 }

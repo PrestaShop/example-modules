@@ -4,3 +4,9 @@ services:
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - PrestaShop\Module\DemoDoctrine\Entity\Quote
+
+    prestashop.module.demodoctrine.quotes.install:
+        class: PrestaShop\Module\DemoDoctrine\Database\QuoteInstaller
+        arguments:
+            - '@doctrine.dbal.default_connection'
+            - '%database_prefix%'

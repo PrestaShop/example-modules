@@ -68,7 +68,7 @@ services:
 
     # Generator service
     prestashop.module.demodoctrine.quotes.generator:
-        class: 'PrestaShop\Module\DemoDoctrine\QuoteGenerator'
+        class: 'PrestaShop\Module\DemoDoctrine\Database\QuoteGenerator'
         arguments:
             - '@prestashop.module.demodoctrine.repository.quote_repository'
             - '@prestashop.core.admin.lang.repository'
