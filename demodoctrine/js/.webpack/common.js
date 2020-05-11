@@ -16,6 +16,7 @@ module.exports = {
   },
   entry: {
     quotes: './quotes',
+    quote_form: './quotes/form',
   },
   output: {
     path: path.resolve(__dirname, '../../views/js'),

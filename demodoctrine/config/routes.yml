@@ -45,7 +45,7 @@ ps_demodoctrine_quote_delete:
     path: /demo-doctrine/quotes/{quoteId}/delete
     methods: [POST]
     defaults:
-        _controller: 'PrestaShop\Module\DemoDoctrine\Controller\Admin\QuotesController::delete'
+        _controller: 'PrestaShop\Module\DemoDoctrine\Controller\Admin\QuotesController::deleteAction'
         _legacy_controller: 'AdminDemodoctrineQuote'
         _legacy_link: 'AdminDemodoctrineQuote:deletequote'
     requirements:
@@ -55,6 +55,6 @@ ps_demodoctrine_quote_bulk_delete:
     path: /demo-doctrine/quotes/bulkDelete
     methods: [POST]
     defaults:
-        _controller: 'PrestaShop\Module\DemoDoctrine\Controller\Admin\QuotesController::bulkDelete'
+        _controller: 'PrestaShop\Module\DemoDoctrine\Controller\Admin\QuotesController::deleteBulkAction'
         _legacy_controller: 'AdminDemodoctrineQuote'
         _legacy_link: 'AdminDemodoctrineQuote:submitBulkdeletequote'
