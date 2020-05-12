@@ -1,23 +1,20 @@
 <?php
 /**
- * 2007-2020 PrestaShop
+ * 2007-2020 PrestaShop SA and Contributors
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Academic Free License 3.0 (AFL-3.0).
  * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
  */
-
 declare(strict_types=1);
 
 use PrestaShop\Module\DemoDoctrine\Database\QuoteInstaller;
-use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 
 if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-// need it because InstallerFactory is not autoloaded during the install
 if (file_exists(__DIR__.'/vendor/autoload.php')) {
     require_once __DIR__.'/vendor/autoload.php';
 }
@@ -29,7 +26,7 @@ class DemoDoctrine extends Module
         $this->name = 'demodoctrine';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '1.7.6.5', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '1.7.7', 'max' => _PS_VERSION_];
 
         parent::__construct();
 
@@ -90,22 +87,19 @@ class DemoDoctrine extends Module
     }
 
     /**
-     * @return QuoteInstaller|null
+     * @return QuoteInstaller
      */
     private function getInstaller()
     {
-        if ($this->isSymfonyContext()) {
-            try {
-                return $this->get('prestashop.module.demodoctrine.quotes.install');
-            } catch (\Exception $e) {
-            }
+        $installer = $this->get('prestashop.module.demodoctrine.quotes.install');
+        // During install process the modules's service is not available yet so we build it manually
+        if (!$installer) {
+            $installer = new QuoteInstaller(
+                $this->get('doctrine.dbal.default_connection'),
+                $this->getContainer()->getParameter('database_prefix')
+            );
         }
 
-        $container = SymfonyContainer::getInstance();
-
-        return new QuoteInstaller(
-            $container->get('doctrine.dbal.default_connection'),
-            $container->getParameter('database_prefix')
-        );
+        return $installer;
     }
 }
