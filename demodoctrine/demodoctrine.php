@@ -91,7 +91,13 @@ class DemoDoctrine extends Module
      */
     private function getInstaller()
     {
-        $installer = $this->get('prestashop.module.demodoctrine.quotes.install');
+        try {
+            $installer = $this->get('prestashop.module.demodoctrine.quotes.install');
+        } catch (Exception $e) {
+            // Catch exception in case container is not available, or service is not available
+            $installer = null;
+        }
+
         // During install process the modules's service is not available yet so we build it manually
         if (!$installer) {
             $installer = new QuoteInstaller(
