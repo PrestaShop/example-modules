@@ -44,7 +44,7 @@ class QuotesController extends FrameworkBundleAdminController
         $quoteGrid = $quoteGridFactory->getGrid($filters);
 
         return $this->render(
-            '@Modules/Demodoctrine/views/templates/admin/index.html.twig',
+            '@Modules/demodoctrine/views/templates/admin/index.html.twig',
             [
                 'enableSidebar' => true,
                 'layoutTitle' => $this->trans('Quotes', 'Modules.Demodoctrine.Admin'),
@@ -92,7 +92,7 @@ class QuotesController extends FrameworkBundleAdminController
         }
 
         return $this->render(
-            '@Modules/Demodoctrine/views/templates/admin/generate.html.twig',
+            '@Modules/demodoctrine/views/templates/admin/generate.html.twig',
             [
                 'enableSidebar' => true,
                 'layoutTitle' => $this->trans('Quotes', 'Modules.Demodoctrine.Admin'),
@@ -126,7 +126,7 @@ class QuotesController extends FrameworkBundleAdminController
             return $this->redirectToRoute('ps_demodoctrine_quote_index');
         }
 
-        return $this->render('@Modules/Demodoctrine/views/templates/admin/create.html.twig', [
+        return $this->render('@Modules/demodoctrine/views/templates/admin/create.html.twig', [
             'quoteForm' => $quoteForm->createView(),
         ]);
     }
@@ -154,7 +154,7 @@ class QuotesController extends FrameworkBundleAdminController
             return $this->redirectToRoute('ps_demodoctrine_quote_index');
         }
 
-        return $this->render('@Modules/Demodoctrine/views/templates/admin/edit.html.twig', [
+        return $this->render('@Modules/demodoctrine/views/templates/admin/edit.html.twig', [
             'quoteForm' => $quoteForm->createView(),
         ]);
     }
