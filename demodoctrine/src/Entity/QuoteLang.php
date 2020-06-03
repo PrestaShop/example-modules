@@ -54,7 +54,7 @@ class QuoteLang
      * @param Quote $quote
      * @return $this
      */
-    public function setQuote($quote)
+    public function setQuote(Quote $quote)
     {
         $this->quote = $quote;
 
@@ -73,7 +73,7 @@ class QuoteLang
      * @param Lang $lang
      * @return $this
      */
-    public function setLang($lang)
+    public function setLang(Lang $lang)
     {
         $this->lang = $lang;
 
@@ -92,7 +92,7 @@ class QuoteLang
      * @param string $content
      * @return $this
      */
-    public function setContent($content)
+    public function setContent(string $content)
     {
         $this->content = $content;
 

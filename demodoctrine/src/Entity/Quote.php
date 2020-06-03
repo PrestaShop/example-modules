@@ -82,7 +82,7 @@ class Quote
      * @param int $langId
      * @return QuoteLang|null
      */
-    public function getQuoteLangByLangId($langId)
+    public function getQuoteLangByLangId(int $langId)
     {
         foreach ($this->quoteLangs as $quoteLang) {
             if ($langId === $quoteLang->getLang()->getId()) {
@@ -131,7 +131,7 @@ class Quote
      * @param string $author
      * @return $this
      */
-    public function setAuthor($author)
+    public function setAuthor(string $author)
     {
         $this->author = $author;
 
@@ -145,7 +145,7 @@ class Quote
      *
      * @return $this
      */
-    public function setDateAdd($dateAdd)
+    public function setDateAdd(DateTime $dateAdd)
     {
         $this->dateAdd = $dateAdd;
 
@@ -169,7 +169,7 @@ class Quote
      *
      * @return $this
      */
-    public function setDateUpd($dateUpd)
+    public function setDateUpd(DateTime $dateUpd)
     {
         $this->dateUpd = $dateUpd;
 
