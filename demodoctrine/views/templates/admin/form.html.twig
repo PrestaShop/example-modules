@@ -1,0 +1,38 @@
+{#**
+ * 2007-2020 PrestaShop SA and Contributors
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0).
+ * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
+ *#}
+
+{% import '@PrestaShop/Admin/macros.html.twig' as ps %}
+
+{% block contact_form %}
+    {{ form_start(quoteForm) }}
+    <div class="card">
+        <h3 class="card-header">
+            <i class="material-icons">mail_outline</i>
+            {{ 'Quotes'|trans({}, 'Modules.Demodoctrine.Admin') }}
+        </h3>
+        <div class="card-block row">
+            <div class="card-text">
+                {{ form_errors(quoteForm) }}
+
+                {% block quote_form_rest %}
+                    {{ form_rest(quoteForm) }}
+                {% endblock %}
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="{{ path('ps_demodoctrine_quote_index') }}" class="btn btn-outline-secondary">
+                {{ 'Cancel'|trans({}, 'Admin.Actions') }}
+            </a>
+            <button class="btn btn-primary float-right">
+                {{ 'Save'|trans({}, 'Admin.Actions') }}
+            </button>
+        </div>
+    </div>
+    {{ form_end(quoteForm) }}
+{% endblock %}

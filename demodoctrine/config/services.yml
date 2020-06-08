@@ -1,0 +1,75 @@
+imports:
+    - { resource: ./common.yml }
+
+services:
+    # Form services
+    prestashop.module.demodoctrine.type.quote:
+        class: 'PrestaShop\Module\DemoDoctrine\Form\QuoteType'
+        parent: 'form.type.translatable.aware'
+        public: true
+        arguments:
+            - '@=service("prestashop.adapter.multistore_feature").isUsed()'
+        tags:
+            - { name: form.type }
+
+    prestashop.module.demodoctrine.form.identifiable_object.data_provider.quote_form_data_provider:
+        class: 'PrestaShop\Module\DemoDoctrine\Form\QuoteFormDataProvider'
+        arguments:
+            - '@prestashop.module.demodoctrine.repository.quote_repository'
+
+    prestashop.module.demodoctrine.form.identifiable_object.builder.quote_form_builder:
+        class: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Builder\FormBuilder'
+        factory: 'prestashop.core.form.builder.form_builder_factory:create'
+        arguments:
+            - 'PrestaShop\Module\DemoDoctrine\Form\QuoteType'
+            - '@prestashop.module.demodoctrine.form.identifiable_object.data_provider.quote_form_data_provider'
+
+    prestashop.module.demodoctrine.form.identifiable_object.data_handler.quote_form_data_handler:
+        class: 'PrestaShop\Module\DemoDoctrine\Form\QuoteFormDataHandler'
+        arguments:
+            - '@prestashop.module.demodoctrine.repository.quote_repository'
+            - '@prestashop.core.admin.lang.repository'
+            - '@doctrine.orm.default_entity_manager'
+
+    prestashop.module.demodoctrine.form.identifiable_object.handler.quote_form_handler:
+        class: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Handler\FormHandler'
+        factory: 'prestashop.core.form.identifiable_object.handler.form_handler_factory:create'
+        arguments:
+            - '@prestashop.module.demodoctrine.form.identifiable_object.data_handler.quote_form_data_handler'
+
+    # Grid services
+    prestashop.module.demodoctrine.grid.definition.factory.quotes:
+        class: 'PrestaShop\Module\DemoDoctrine\Grid\Definition\Factory\QuoteGridDefinitionFactory'
+        parent: 'prestashop.core.grid.definition.factory.abstract_grid_definition'
+
+    prestashop.module.demodoctrine.grid.query_builder.quote:
+        class: 'PrestaShop\Module\DemoDoctrine\Grid\Query\QuoteQueryBuilder'
+        parent: 'prestashop.core.grid.abstract_query_builder'
+        public: true
+        arguments:
+            - '@prestashop.core.query.doctrine_search_criteria_applicator'
+            - "@=service('prestashop.adapter.legacy.context').getContext().language.id"
+
+    prestashop.module.demodoctrine.grid.data_provider.quotes:
+        class: '%prestashop.core.grid.data.factory.doctrine_grid_data_factory%'
+        arguments:
+            - '@prestashop.module.demodoctrine.grid.query_builder.quote'
+            - '@prestashop.core.hook.dispatcher'
+            - '@prestashop.core.grid.query.doctrine_query_parser'
+            - 'quote'
+
+    prestashop.module.demodoctrine.grid.factory.quotes:
+        class: 'PrestaShop\PrestaShop\Core\Grid\GridFactory'
+        arguments:
+            - '@prestashop.module.demodoctrine.grid.definition.factory.quotes'
+            - '@prestashop.module.demodoctrine.grid.data_provider.quotes'
+            - '@prestashop.core.grid.filter.form_factory'
+            - '@prestashop.core.hook.dispatcher'
+
+    # Generator service
+    prestashop.module.demodoctrine.quotes.generator:
+        class: 'PrestaShop\Module\DemoDoctrine\Database\QuoteGenerator'
+        arguments:
+            - '@prestashop.module.demodoctrine.repository.quote_repository'
+            - '@prestashop.core.admin.lang.repository'
+            - '@doctrine.orm.default_entity_manager'

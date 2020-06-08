@@ -1,0 +1,48 @@
+{#**
+ * 2007-2020 PrestaShop SA and Contributors
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0).
+ * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
+ *#}
+
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col">
+            <form method="post" class="form-horizontal">
+                <div class="card">
+                    <h3 class="card-header">
+                        <i class="material-icons">settings</i> {{ 'Generate quotes'|trans({}, 'Modules.Demodoctrine.Admin') }}
+                    </h3>
+                    <div class="card-block row">
+                        <div class="card-text">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="alert alert-info" role="alert">
+                                        <div class="alert-text">
+                                            <p>{{ 'If you want to generate the demo quotes, please click on "%generate_button_label%". Please be aware that this will remove your existing quotes (if present).'|trans({'%generate_button_label%': 'Generate quotes'|trans({}, 'Modules.Demodoctrine.Admin')}, 'Modules.Demodoctrine.Admin') }}</p>
+                                            <p>{{ 'If you don\'t want to generate the demo quotes, simple click on "%back_button_label%" to go back to the list.'|trans({'%back_button_label%': 'Go back to quotes list'|trans({}, 'Modules.Demodoctrine.Admin')}, 'Modules.Demodoctrine.Admin') }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-inline-flex">
+                            <a class="btn btn-outline-secondary" href="{{ path('ps_demodoctrine_quote_index') }}">
+                                {{ 'Go back to quotes list'|trans({}, 'Modules.Demodoctrine.Admin') }}
+                            </a>
+                        </div>
+                        <div class="d-inline-flex float-right">
+                            <button class="btn btn-primary">{{ 'Generate quotes'|trans({}, 'Modules.Demodoctrine.Admin') }}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
