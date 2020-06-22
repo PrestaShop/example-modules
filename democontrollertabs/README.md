@@ -1,5 +1,5 @@
-Controller Tabs
-===============
+Demo Controller Tabs
+====================
 
 This module demonstrates how to create modern Controllers and associate Tabs, it was designed for test purposes and as an example.
 

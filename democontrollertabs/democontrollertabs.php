@@ -34,7 +34,7 @@ class democontrollertabs extends Module
 
         parent::__construct();
 
-        $this->displayName = $this->l('Controller Tabs');
+        $this->displayName = $this->l('Demo Controller Tabs');
         $this->description = $this->l('Demonstration of Symfony Controllers, Tabs and Permissions');
 
         // See https://devdocs.prestashop.com/1.7/modules/concepts/controllers/admin-controllers/tabs/
@@ -44,7 +44,7 @@ class democontrollertabs extends Module
         }
         $this->tabs = [
             [
-                'route_name' => 'ps_controller_tabs_configure_index',
+                'route_name' => 'ps_controller_tabs_configure',
                 'class_name' => 'AdminDemoControllerTabsConfigure',
                 'visible' => true,
                 'name' => $tabNames,
@@ -56,7 +56,7 @@ class democontrollertabs extends Module
 
     public function getContent()
     {
-        // This uses the matching with the route ps_controller_tabs_configure_index via the _legacy_link property
+        // This uses the matching with the route ps_controller_tabs_configure via the _legacy_link property
         // See https://devdocs.prestashop.com/1.7/development/architecture/migration-guide/controller-routing
         Tools::redirectAdmin(
             $this->context->link->getAdminLink('AdminDemoControllerTabsConfigure')

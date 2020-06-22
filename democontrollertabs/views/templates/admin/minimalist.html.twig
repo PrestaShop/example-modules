@@ -28,7 +28,7 @@
             <pre>
                 <code class="yaml">
 # {your_module}/config/routes.yml
-ps_controller_tabs_minimalist_index:
+ps_controller_tabs_minimalist:
     path: /configure-tabs/minimalist
     methods: [GET]
     defaults:
@@ -48,7 +48,8 @@ class MinimalistController extends FrameworkBundleAdminController
     {
         return $this->render('@Modules/democontrollertabs/views/templates/admin/minimalist.html.twig');
     }
-}                </code>
+}
+                </code>
             </pre>
         </div>
     </div>
