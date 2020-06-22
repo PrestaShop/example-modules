@@ -6,3 +6,9 @@ ps_controller_tabs_configure_index:
         _controller: 'PrestaShop\Module\DemoControllerTabs\Controller\Admin\ConfigureController::indexAction'
         _legacy_controller: 'AdminDemoControllerTabsConfigure'
         _legacy_link: 'AdminDemoControllerTabsConfigure'
+
+ps_controller_tabs_minimalist_index:
+    path: /configure-tabs/minimalist
+    methods: [GET]
+    defaults:
+        _controller: 'PrestaShop\Module\DemoControllerTabs\Controller\Admin\MinimalistController::indexAction'
