@@ -1,0 +1,8 @@
+# @see https://devdocs.prestashop.com/1.7/modules/concepts/controllers/admin-controllers/#how-to-map-an-action-of-your-controller-to-a-uri
+ps_controller_tabs_configure_index:
+    path: /configure-tabs
+    methods: [GET]
+    defaults:
+        _controller: 'PrestaShop\Module\DemoControllerTabs\Controller\Admin\ConfigureController::indexAction'
+        _legacy_controller: 'AdminDemoControllerTabsConfigure'
+        _legacy_link: 'AdminDemoControllerTabsConfigure'
