@@ -28,7 +28,6 @@ declare(strict_types=1);
 namespace PrestaShop\Module\DemoControllerTabs\Controller\Admin;
 
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
-use PrestaShopBundle\Security\Annotation\AdminSecurity;
 use Symfony\Component\HttpFoundation\Response;
 
 class MinimalistController extends FrameworkBundleAdminController

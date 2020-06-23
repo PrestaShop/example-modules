@@ -24,7 +24,7 @@ if (!defined('_PS_VERSION_')) {
 }
 
 // Needed for install process
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 use PrestaShop\Module\DemoControllerTabs\Controller\Admin\ConfigureController;
 use PrestaShop\Module\DemoControllerTabs\Controller\Admin\ManualTabController;
@@ -46,7 +46,7 @@ class democontrollertabs extends Module
         // See https://devdocs.prestashop.com/1.7/modules/concepts/controllers/admin-controllers/tabs/
         $tabNames = [];
         foreach (Language::getLanguages(true) as $lang) {
-            $tabNames[$lang['locale']] = $this->trans('Demo Controller Tabs', array(), 'Modules.Democontrollertabs.Admin', $lang['locale']);
+            $tabNames[$lang['locale']] = $this->trans('Demo Controller Tabs', [], 'Modules.Democontrollertabs.Admin', $lang['locale']);
         }
         $this->tabs = [
             [
@@ -90,9 +90,9 @@ class democontrollertabs extends Module
         $tab->active = 1;
         $tab->class_name = $controllerClassName;
         $tab->route_name = 'ps_controller_tabs_manual_tab';
-        $tab->name = array();
+        $tab->name = [];
         foreach (Language::getLanguages() as $lang) {
-            $tab->name[$lang['id_lang']] = $this->trans('Manual Tab controller', array(), 'Modules.Democontrollertabs.Admin', $lang['locale']);
+            $tab->name[$lang['id_lang']] = $this->trans('Manual Tab controller', [], 'Modules.Democontrollertabs.Admin', $lang['locale']);
         }
         $tab->icon = 'build';
         $tab->id_parent = (int) Tab::getIdFromClassName('IMPROVE');
