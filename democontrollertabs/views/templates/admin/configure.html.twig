@@ -67,21 +67,21 @@ class ConfigureController extends FrameworkBundleAdminController
             <h3>Automatic Tabs registration</h3>
             <pre>
                 <code class="php">
-        // Inside module class constructor
-        $tabNames = [];
-        foreach (Language::getLanguages(true) as $lang) {
-            $tabNames[$lang['locale']] = $this->trans('Demo Controller Tabs', array(), 'Modules.Democontrollertabs.Admin', $lang['locale']);
-        }
-        $this->tabs = [
-            [
-                'route_name' => 'ps_controller_tabs_configure_index',
-                'class_name' => 'AdminDemoControllerTabsConfigure',
-                'visible' => true,
-                'name' => $tabNames,
-                'icon' => 'school',
-                'parent_class_name' => 'IMPROVE',
-            ],
-        ];
+    // Inside module class constructor
+    $tabNames = [];
+    foreach (Language::getLanguages(true) as $lang) {
+        $tabNames[$lang['locale']] = $this->trans('Demo Controller Tabs', array(), 'Modules.Democontrollertabs.Admin', $lang['locale']);
+    }
+    $this->tabs = [
+        [
+            'route_name' => 'ps_controller_tabs_configure_index',
+            'class_name' => 'AdminDemoControllerTabsConfigure',
+            'visible' => true,
+            'name' => $tabNames,
+            'icon' => 'school',
+            'parent_class_name' => 'IMPROVE',
+        ],
+    ];
                 </code>
             </pre>
 

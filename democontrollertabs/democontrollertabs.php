@@ -23,6 +23,12 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
+// Needed for install process
+require_once __DIR__.'/vendor/autoload.php';
+
+use PrestaShop\Module\DemoControllerTabs\Controller\Admin\ConfigureController;
+use PrestaShop\Module\DemoControllerTabs\Controller\Admin\ManualTabController;
+
 class democontrollertabs extends Module
 {
     public function __construct()
@@ -45,7 +51,7 @@ class democontrollertabs extends Module
         $this->tabs = [
             [
                 'route_name' => 'ps_controller_tabs_configure',
-                'class_name' => 'AdminDemoControllerTabsConfigure',
+                'class_name' => ConfigureController::TAB_CLASS_NAME,
                 'visible' => true,
                 'name' => $tabNames,
                 'icon' => 'school',
@@ -59,7 +65,39 @@ class democontrollertabs extends Module
         // This uses the matching with the route ps_controller_tabs_configure via the _legacy_link property
         // See https://devdocs.prestashop.com/1.7/development/architecture/migration-guide/controller-routing
         Tools::redirectAdmin(
-            $this->context->link->getAdminLink('AdminDemoControllerTabsConfigure')
+            $this->context->link->getAdminLink(ConfigureController::TAB_CLASS_NAME)
         );
+    }
+
+    public function install()
+    {
+        return parent::install() && $this->manuallyInstallTab();
+    }
+
+    /**
+     * @return bool
+     */
+    private function manuallyInstallTab(): bool
+    {
+        // Add Tab for ManualTabController
+        $controllerClassName = ManualTabController::TAB_CLASS_NAME;
+        $tabId = (int) Tab::getIdFromClassName($controllerClassName);
+        if (!$tabId) {
+            $tabId = null;
+        }
+
+        $tab = new Tab($tabId);
+        $tab->active = 1;
+        $tab->class_name = $controllerClassName;
+        $tab->route_name = 'ps_controller_tabs_manual_tab';
+        $tab->name = array();
+        foreach (Language::getLanguages() as $lang) {
+            $tab->name[$lang['id_lang']] = $this->trans('Manual Tab controller', array(), 'Modules.Democontrollertabs.Admin', $lang['locale']);
+        }
+        $tab->icon = 'build';
+        $tab->id_parent = (int) Tab::getIdFromClassName('IMPROVE');
+        $tab->module = $this->name;
+
+        return (bool) $tab->save();
     }
 }

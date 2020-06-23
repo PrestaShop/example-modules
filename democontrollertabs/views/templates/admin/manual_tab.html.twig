@@ -1,0 +1,93 @@
+{#**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0).
+ * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
+ *#}
+
+{% extends '@Modules/democontrollertabs/views/templates/admin/layout.html.twig' %}
+
+{% block controllerTitle %}{{ 'Manual Tab controller'|trans({}, 'Modules.Controllertab.Admin') }}{% endblock %}
+
+{% block controllerDescription %}
+    <div class="row justify-content-center">
+        <div class="col">
+            <h2>Manual Tab controller</h2>
+            <p>
+                This controller is an example of how to handle a <strong>secured</strong> Symfony controller, accessible via a tab that is created <strong>manually</strong>.
+            <ul>
+                <li>It is secured (you need special permission to access it)</li>
+                <li>It has a Tab that is created manually</li>
+            </ul>
+            </p>
+
+            <h3>Routing file</h3>
+            <p>
+                We define a route that uses the <code>ManualTabController</code>, it contains <strong>no</strong> <code>_legacy_controller</code> for Security as it will be managed in the controller class.
+            </p>
+            <pre>
+                <code class="yaml">
+# {your_module}/config/routes.yml
+ps_controller_tabs_manual_tab:
+    path: /configure-tabs/manual_tab
+    methods: [GET]
+    defaults:
+        _controller: 'PrestaShop\Module\DemoControllerTabs\Controller\Admin\ManualTabController::indexAction'
+                </code>
+            </pre>
+
+            <h3>Manual Controller</h3>
+            <p>
+                We use the <code>PrestaShopBundle\Security\Annotation\AdminSecurity</code> annotation to secure the controller, it will use the permissions associated to a hard coded controller <code>AdminDemoControllerTabsManualTab</code>.
+            </p>
+            <pre>
+                <code class="php">
+class ManualTabController extends FrameworkBundleAdminController
+{
+    /**
+     * @AdminSecurity("is_granted('read', 'AdminDemoControllerTabsManualTab')")
+     *
+     * @return Response
+     */
+    public function indexAction()
+    {
+        return $this->render('@Modules/democontrollertabs/views/templates/admin/manual_tab.html.twig');
+    }
+}
+                </code>
+            </pre>
+
+            <h3>Create Tab manually</h3>
+            <p>
+                The last thing to do is to create the <code>Tab</code> so that the controller is accessible in the menu <strong>and especially</strong> so that the authorization roles are created.
+            </p>
+            <pre>
+                <code class="php">
+    // Add Tab for ManualTabController, this has to be done in the install method
+    $controllerClassName = 'AdminDemoControllerTabsManualTab';
+    $tabId = (int) Tab::getIdFromClassName($controllerClassName);
+    if (!$tabId) {
+        $tabId = null;
+    }
+
+    $tab = new Tab($tabId);
+    $tab->active = 1;
+    $tab->class_name = $controllerClassName;
+    $tab->route_name = 'ps_controller_tabs_manual_tab';
+    $tab->name = array();
+    foreach (Language::getLanguages() as $lang) {
+        $tab->name[$lang['id_lang']] = $this->trans('Manual Tab controller', array(), 'Modules.Democontrollertabs.Admin', $lang['locale']);
+    }
+    $tab->icon = 'build';
+    $tab->id_parent = (int) Tab::getIdFromClassName('IMPROVE');
+    $tab->module = $this->name;
+
+    $tab->save();
+                </code>
+            </pre>
+        </div>
+    </div>
+{% endblock %}

@@ -31,17 +31,17 @@ use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use PrestaShopBundle\Security\Annotation\AdminSecurity;
 use Symfony\Component\HttpFoundation\Response;
 
-class ConfigureController extends FrameworkBundleAdminController
+class ManualTabController extends FrameworkBundleAdminController
 {
-    const TAB_CLASS_NAME = 'AdminDemoControllerTabsConfigure';
+    const TAB_CLASS_NAME = 'AdminDemoControllerTabsManualTab';
 
     /**
-     * @AdminSecurity("is_granted('read', request.get('_legacy_controller'))")
+     * @AdminSecurity("is_granted('read', 'AdminDemoControllerTabsManualTab')")
      *
      * @return Response
      */
     public function indexAction()
     {
-        return $this->render('@Modules/democontrollertabs/views/templates/admin/configure.html.twig');
+        return $this->render('@Modules/democontrollertabs/views/templates/admin/manual_tab.html.twig');
     }
 }
