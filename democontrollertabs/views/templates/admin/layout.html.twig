@@ -1,0 +1,80 @@
+{#**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0).
+ * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
+ *#}
+
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col">
+            <form method="post" class="form-horizontal">
+                <div class="card">
+                    <h3 class="card-header">
+                        <i class="material-icons">settings</i> {% block controllerTitle %}{{ 'Configure controller'|trans({}, 'Modules.Controllertab.Admin') }}{% endblock %}
+                    </h3>
+                    <div class="card-block row">
+                        <div class="card-text">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="alert alert-info" role="alert">
+                                        {% set controllerList = {
+                                            'Configure Controller': 'ps_controller_tabs_configure',
+                                            'Secured Controller': 'ps_controller_tabs_secured',
+                                            'Manual Tab Controller': 'ps_controller_tabs_manual_tab',
+                                            'Minimalist Controller': 'ps_controller_tabs_minimalist',
+                                        } %}
+                                        <div class="alert-text">
+                                            <p>{{ 'This module displays a few examples of Symfony controllers:'|trans({}, 'Modules.Democontrollertab.Admin') }}</p>
+                                            <ul>
+                                                {% for controllerName, controllerRoute in controllerList %}
+                                                    <li><a href="{{ path(controllerRoute) }}">{{ controllerName }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="alert alert-info" role="alert">
+                                        <div class="alert-text">
+                                            <p>{{ 'For detailed documentation of Controllers, Tabs and Permissions you can visit these links'|trans({}, 'Modules.Democontrollertab.Admin') }}</p>
+                                            {% set documentationLinks = [
+                                                'https://devdocs.prestashop.com/1.7/modules/concepts/controllers/admin-controllers',
+                                                'https://devdocs.prestashop.com/1.7/modules/concepts/controllers/admin-controllers/tabs/',
+                                                'https://devdocs.prestashop.com/1.7/development/architecture/migration-guide/controller-routing',
+                                            ] %}
+                                            <ul>
+                                                {% for documentationLink in documentationLinks %}
+                                                    <li><a target="_blank" href="{{ documentationLink }}">{{ documentationLink }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% block controllerDescription %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/atom-one-dark.min.css">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+{% endblock %}

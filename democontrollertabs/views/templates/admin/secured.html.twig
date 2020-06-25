@@ -1,0 +1,65 @@
+{#**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0).
+ * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
+ *#}
+
+{% extends '@Modules/democontrollertabs/views/templates/admin/layout.html.twig' %}
+
+{% block controllerTitle %}{{ 'Secured controller'|trans({}, 'Modules.Controllertab.Admin') }}{% endblock %}
+
+{% block controllerDescription %}
+    <div class="row justify-content-center">
+        <div class="col">
+            <h2>Secured controller</h2>
+            <p>
+                This controller is an example of how to handle a <strong>secured</strong> Symfony controller.
+            <ul>
+                <li>It is secured (you need special permission to access it)</li>
+                <li>It has no Tab but its permissions are automatically created thanks to the <code>_legacy_controller</code> parameter</li>
+            </ul>
+            </p>
+
+            <h3>Routing file</h3>
+            <p>
+                We define a route that uses the <code>SecuredController</code>, it defines a <code>_legacy_controller</code> parameter that will be used for Security, it automatically created the authorization roles for this controller.
+            </p>
+            <pre>
+                <code class="yaml">
+# {your_module}/config/routes.yml
+ps_controller_tabs_secured:
+    path: /configure-tabs/secured
+    methods: [GET]
+    defaults:
+        _controller: 'PrestaShop\Module\DemoControllerTabs\Controller\Admin\SecuredController::indexAction'
+        _legacy_controller: 'AdminDemoControllerTabsSecured'
+                </code>
+            </pre>
+
+            <h3>Secured Controller</h3>
+            <p>
+                We use the <code>PrestaShopBundle\Security\Annotation\AdminSecurity</code> annotation to secure the controller, it will use the permissions associated to the configured <code>_legacy_controller</code> (which is defined as <code>AdminDemoControllerTabsSecured</code> in the routing file).
+            </p>
+            <pre>
+                <code class="php">
+class SecuredController extends FrameworkBundleAdminController
+{
+    /**
+     * @AdminSecurity("is_granted('read', request.get('_legacy_controller'))")
+     *
+     * @return Response
+     */
+    public function indexAction()
+    {
+        return $this->render('@Modules/democontrollertabs/views/templates/admin/secured.html.twig');
+    }
+}
+                </code>
+            </pre>
+        </div>
+    </div>
+{% endblock %}

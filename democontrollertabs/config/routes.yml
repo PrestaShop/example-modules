@@ -1,0 +1,27 @@
+# @see https://devdocs.prestashop.com/1.7/modules/concepts/controllers/admin-controllers/#how-to-map-an-action-of-your-controller-to-a-uri
+ps_controller_tabs_configure:
+    path: /configure-tabs
+    methods: [GET]
+    defaults:
+        _controller: 'PrestaShop\Module\DemoControllerTabs\Controller\Admin\ConfigureController::indexAction'
+        _legacy_controller: 'AdminDemoControllerTabsConfigure'
+        _legacy_link: 'AdminDemoControllerTabsConfigure'
+
+ps_controller_tabs_minimalist:
+    path: /configure-tabs/minimalist
+    methods: [GET]
+    defaults:
+        _controller: 'PrestaShop\Module\DemoControllerTabs\Controller\Admin\MinimalistController::indexAction'
+
+ps_controller_tabs_secured:
+    path: /configure-tabs/secured
+    methods: [GET]
+    defaults:
+        _controller: 'PrestaShop\Module\DemoControllerTabs\Controller\Admin\SecuredController::indexAction'
+        _legacy_controller: 'AdminDemoControllerTabsSecured'
+
+ps_controller_tabs_manual_tab:
+    path: /configure-tabs/manual_tab
+    methods: [GET]
+    defaults:
+        _controller: 'PrestaShop\Module\DemoControllerTabs\Controller\Admin\ManualTabController::indexAction'
