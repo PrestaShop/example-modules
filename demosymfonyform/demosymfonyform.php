@@ -50,11 +50,9 @@ class DemoSymfonyForm extends Module
         $this->ps_versions_compliancy = array('min' => '1.7.8.0', 'max' => _PS_VERSION_);
     }
 
-
     public function getContent()
     {
         $route = SymfonyContainer::getInstance()->get('prestashop.router')->generate('demo_configuration_form');
         Tools::redirectAdmin($route);
     }
-
 }

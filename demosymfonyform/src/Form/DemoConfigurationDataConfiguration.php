@@ -47,9 +47,7 @@ final class DemoConfigurationDataConfiguration implements DataConfigurationInter
     /**
      * @param ConfigurationInterface $configuration
      */
-    public function __construct(
-        ConfigurationInterface $configuration
-    ) {
+    public function __construct(ConfigurationInterface $configuration) {
         $this->configuration = $configuration;
     }
 
