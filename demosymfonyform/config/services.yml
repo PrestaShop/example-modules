@@ -1,0 +1,28 @@
+services:
+  _defaults:
+    public: true
+
+  prestashop.module.demosymfonyform.form.type.demo_configuration:
+    class: 'PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationType'
+    parent: 'form.type.translatable.aware'
+    public: true
+    tags:
+      - { name: form.type }
+
+  prestashop.module.demosymfonyform.form.demo_configuration_form_data_provider:
+    class: 'PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationFormDataProvider'
+    arguments:
+      - '@prestashop.module.demosymfonyform.form.demo_configuration_data_configuration'
+
+  prestashop.module.demosymfonyform.form.demo_configuration_form_data_handler:
+    class: 'PrestaShop\PrestaShop\Core\Form\Handler'
+    arguments:
+      - '@form.factory'
+      - '@prestashop.core.hook.dispatcher'
+      - '@prestashop.module.demosymfonyform.form.demo_configuration_form_data_provider'
+      - 'PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationType'
+      - 'DemoConfiguration'
+
+  prestashop.module.demosymfonyform.form.demo_configuration_data_configuration:
+    class: PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationDataConfiguration
+    arguments: ['@prestashop.adapter.legacy.configuration']
