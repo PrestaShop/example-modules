@@ -38,6 +38,8 @@ use PrestaShop\PrestaShop\Core\Tax\Ecotax\ProductEcotaxResetterInterface;
 final class DemoConfigurationDataConfiguration implements DataConfigurationInterface
 {
     public const TRANSLATABLE_SIMPLE = 'DEMO_SYMFONY_FORM_TRANSLATABLE_SIMPLE_TYPE';
+    public const TRANSLATABLE_TEXT_AREA = 'DEMO_SYMFONY_FORM_TRANSLATABLE_TEXT_AREA_TYPE';
+    public const TRANSLATABLE_FORMATTED_TEXT_AREA = 'DEMO_SYMFONY_FORM_TRANSLATABLE_FORMATTED_TEXT_AREA_TYPE';
 
     /**
      * @var ConfigurationInterface
@@ -61,6 +63,14 @@ final class DemoConfigurationDataConfiguration implements DataConfigurationInter
             $return['translatable_type'] = json_decode($translatableSimple, true);
         }
 
+        if ($translatableSimple = $this->configuration->get(self::TRANSLATABLE_TEXT_AREA)) {
+            $return['translatable_text_area_type'] = json_decode($translatableSimple, true);
+        }
+
+        if ($translatableSimple = $this->configuration->get(self::TRANSLATABLE_FORMATTED_TEXT_AREA)) {
+            $return['translatable_formatted_text_area_type'] = json_decode($translatableSimple, true);
+        }
+
         return $return;
     }
 
@@ -70,6 +80,8 @@ final class DemoConfigurationDataConfiguration implements DataConfigurationInter
     public function updateConfiguration(array $configuration): array
     {
         $this->configuration->set(self::TRANSLATABLE_SIMPLE, json_encode($configuration['translatable_type']));
+        $this->configuration->set(self::TRANSLATABLE_TEXT_AREA, json_encode($configuration['translatable_text_area_type']));
+        $this->configuration->set(self::TRANSLATABLE_FORMATTED_TEXT_AREA, json_encode($configuration['translatable_formatted_text_area_type'], JSON_UNESCAPED_SLASHES), ['html' => true]);
 
         return [];
     }
