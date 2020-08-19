@@ -50,12 +50,12 @@ class DemoConfigurationType extends TranslatorAwareType
                 ]
             )
             ->add('translatable_text_area_type', TranslatableType::class, [
-                    'label' => $this->trans('Translatable type', 'Modules.DemoSymfonyForm.Admin'),
+                    'label' => $this->trans('Translatable text area type', 'Modules.DemoSymfonyForm.Admin'),
                     'type' => TextareaType::class,
                 ]
             )
             ->add('translatable_formatted_text_area_type', TranslateType::class, [
-                'label' => $this->trans('Translatable type', 'Modules.DemoSymfonyForm.Admin'),
+                'label' => $this->trans('Translatable formatted text area type', 'Modules.DemoSymfonyForm.Admin'),
                 'type' => FormattedTextareaType::class,
                 'locales' => $this->locales,
                 'hideTabs' => false,
