@@ -58,7 +58,7 @@ final class DemoConfigurationDataConfiguration implements DataConfigurationInter
     {
         $return = [];
         if ($translatableSimple = $this->configuration->get(self::TRANSLATABLE_SIMPLE)) {
-            $return['translatable_type'] = json_decode($translatableSimple, 'true');
+            $return['translatable_type'] = json_decode($translatableSimple, true);
         }
 
         return $return;

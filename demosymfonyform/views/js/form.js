@@ -24,5 +24,7 @@
  */
 
 $(document).ready(function () {
-  new window.prestashop.components.TranslatableInput();
+  window.prestashop.components.translatableInput.enable();
+  window.prestashop.components.translatableField.enable();
+  window.prestashop.components.tinyMCEEditor.enable();
 });
