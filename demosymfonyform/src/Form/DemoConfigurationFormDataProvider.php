@@ -62,3 +62,4 @@ class DemoConfigurationFormDataProvider implements FormDataProviderInterface
         return $this->demoConfigurationDataConfiguration->updateConfiguration($data);
     }
 }
+

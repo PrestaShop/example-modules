@@ -52,7 +52,7 @@ class DemoSymfonyForm extends Module
 
     public function getContent()
     {
-        $route = SymfonyContainer::getInstance()->get('prestashop.router')->generate('demo_configuration_form');
+        $route = SymfonyContainer::getInstance()->get('router')->generate('demo_configuration_form');
         Tools::redirectAdmin($route);
     }
 }
