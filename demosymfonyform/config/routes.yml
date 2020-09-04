@@ -1,0 +1,5 @@
+demo_configuration_form:
+  path: /demosymfonyform/configuration
+  methods: [GET, POST]
+  defaults:
+    _controller: 'PrestaShop\Module\DemoSymfonyForm\Controller\DemoConfigurationController::index'
