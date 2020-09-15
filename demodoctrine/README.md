@@ -15,7 +15,6 @@ Please note this module is an example only, not a mandatory structure.
  2. Rename the directory to make sure that module directory is named `demodoctrine`*
  3. `cd` into module's directory and run following commands:
      - `composer install` - to download dependencies into vendor folder
-     - `composer dumpautoload` to generate autoloader for module
  4. Install module:
   - from Back Office in Module Catalog
   - using the command `php ./bin/console prestashop:module install demodoctrine`

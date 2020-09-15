@@ -18,7 +18,6 @@ This module demonstrates how to use existing PrestaShop Symfony form types insid
   2. Rename the directory to make sure that module directory is named `demosymfonyform`*
   3. `cd` into module's directory and run following commands:
       - `composer install` - to download dependencies into vendor folder
-      - `composer dumpautoload` to generate autoloader for module
   4. Install module from Back Office
  
  *Because the name of the directory and the name of the main module file must match.
