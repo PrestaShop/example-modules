@@ -1,14 +1,12 @@
-# Demonstration of how to insert an inputs inside the Symfony form - 2
+# Demonstration of how to use PrestaShop Symfony form types
 
 ## About
 
-This module demonstrates:
- * how to insert an "upload image" input field inside the Symfony form managing "Edit a Supplier" page
- * how to use [DoctrineORM](https://www.doctrine-project.org/projects/orm.html) to manage the database state of a custom object
+This module demonstrates how to use existing PrestaShop Symfony form types inside a new page.
 
  ### Supported PrestaShop versions
 
- This module is compatible with and 1.7.7.0 and above versions.
+ This module is compatible with and 1.7.8.0 and above versions.
  
  ### Requirements
  
@@ -17,7 +15,7 @@ This module demonstrates:
  ### How to install
  
   1. Download or clone module into `modules` directory of your PrestaShop installation
-  2. Rename the directory to make sure that module directory is named `demoextendsymfonyform2`*
+  2. Rename the directory to make sure that module directory is named `demosymfonyform`*
   3. `cd` into module's directory and run following commands:
       - `composer install` - to download dependencies into vendor folder
   4. Install module from Back Office
