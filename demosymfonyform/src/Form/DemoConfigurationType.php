@@ -30,13 +30,10 @@ namespace PrestaShop\Module\DemoSymfonyForm\Form;
 
 use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\CleanHtml;
 use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\TypedRegex;
-use PrestaShop\PrestaShop\Core\Domain\OrderMessage\OrderMessageConstraint;
 use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
 use PrestaShopBundle\Form\Admin\Type\TranslatableType;
-use PrestaShopBundle\Form\Admin\Type\TranslateType;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 
@@ -50,6 +47,17 @@ class DemoConfigurationType extends TranslatorAwareType
         $builder
             ->add('translatable_type', TranslatableType::class, [
                     'label' => $this->trans('Translatable type', 'Modules.DemoSymfonyForm.Admin'),
+                    'help' => $this->trans('Throws error if length is > 10 or text contains <>={}', 'Modules.DemoSymfonyForm.Admin'),
+                    'options' => [
+                        'constraints' => [
+                            new TypedRegex([
+                                'type' => 'generic_name',
+                            ]),
+                            new Length([
+                                'max' => 10,
+                            ]),
+                        ],
+                    ],
                 ]
             )
             ->add('translatable_text_area_type', TranslatableType::class, [
@@ -67,21 +75,6 @@ class DemoConfigurationType extends TranslatorAwareType
                         ],
                     ],
                 ]
-            )
-            ->add('translatable_formatted_text_area_type', TranslatableType::class, [
-                'label' => $this->trans('Translatable formatted text area type.', 'Modules.DemoSymfonyForm.Admin'),
-                'help' => $this->trans('Throws error if Length -> 30 or html not clean(containing script tag)', 'Modules.DemoSymfonyForm.Admin'),
-                'type' => FormattedTextareaType::class,
-                'locales' => $this->locales,
-                'required' => false,
-                'options' => [
-                    'constraints' => [
-                        new Length([
-                            'max' => 30,
-                        ]),
-                        new CleanHtml(),
-                    ],
-                ],
-            ]);
+            );
     }
 }
