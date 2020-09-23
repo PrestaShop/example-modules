@@ -24,7 +24,11 @@
  */
 
 $(document).ready(function () {
-  window.prestashop.components.translatableInput.init();
-  window.prestashop.components.translatableField.init();
-  window.prestashop.components.tinyMCEEditor.init();
+  window.prestashop.component.initComponents(
+      [
+        'TranslatableField',
+        'TinyMCEEditor',
+        'TranslatableInput',
+      ],
+  );
 });
