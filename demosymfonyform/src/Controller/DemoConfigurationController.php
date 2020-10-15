@@ -40,7 +40,7 @@ class DemoConfigurationController extends FrameworkBundleAdminController
         $form = $formDataHander->getForm();
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $errors = $formDataHander->save($form->getData());
 
             if (empty($errors)) {

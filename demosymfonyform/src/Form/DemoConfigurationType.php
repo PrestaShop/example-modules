@@ -28,14 +28,12 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoSymfonyForm\Form;
 
-use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\CleanHtml;
-use PrestaShop\PrestaShop\Core\Domain\OrderMessage\OrderMessageConstraint;
-use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
+use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\TypedRegex;
 use PrestaShopBundle\Form\Admin\Type\TranslatableType;
-use PrestaShopBundle\Form\Admin\Type\TranslateType;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 
 class DemoConfigurationType extends TranslatorAwareType
 {
@@ -47,29 +45,34 @@ class DemoConfigurationType extends TranslatorAwareType
         $builder
             ->add('translatable_type', TranslatableType::class, [
                     'label' => $this->trans('Translatable type', 'Modules.DemoSymfonyForm.Admin'),
+                    'help' => $this->trans('Throws error if length is > 10 or text contains <>={}', 'Modules.DemoSymfonyForm.Admin'),
+                    'options' => [
+                        'constraints' => [
+                            new TypedRegex([
+                                'type' => 'generic_name',
+                            ]),
+                            new Length([
+                                'max' => 10,
+                            ]),
+                        ],
+                    ],
                 ]
             )
             ->add('translatable_text_area_type', TranslatableType::class, [
                     'label' => $this->trans('Translatable text area type', 'Modules.DemoSymfonyForm.Admin'),
+                    'help' => $this->trans('Throws error if length is > 10 or text contains <>={}', 'Modules.DemoSymfonyForm.Admin'),
                     'type' => TextareaType::class,
-                ]
-            )
-            ->add('translatable_formatted_text_area_type', TranslateType::class, [
-                'label' => $this->trans('Translatable formatted text area type', 'Modules.DemoSymfonyForm.Admin'),
-                'type' => FormattedTextareaType::class,
-                'locales' => $this->locales,
-                'hideTabs' => false,
-                'required' => false,
-                'options' => [
-                    'constraints' => [
-                        new CleanHtml([
-                            'message' => $this->trans(
-                                '%s is invalid.',
-                                'Admin.Notifications.Error'
-                            ),
-                        ]),
+                    'options' => [
+                        'constraints' => [
+                            new TypedRegex([
+                                'type' => 'generic_name',
+                            ]),
+                            new Length([
+                                'max' => 10,
+                            ]),
+                        ],
                     ],
-                ],
-            ]);
+                ]
+            );
     }
 }
