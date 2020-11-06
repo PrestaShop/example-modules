@@ -29,6 +29,7 @@ declare(strict_types=1);
 namespace PrestaShop\Module\DemoSymfonyForm\Form;
 
 use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\TypedRegex;
+use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
 use PrestaShopBundle\Form\Admin\Type\TranslatableType;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -73,6 +74,20 @@ class DemoConfigurationType extends TranslatorAwareType
                         ],
                     ],
                 ]
-            );
+            )
+            ->add('translatable_formatted_text_area_type', TranslatableType::class, [
+                'label' => $this->trans('Translatable formatted text area type', 'Modules.DemoSymfonyForm.Admin'),
+                'help' => $this->trans('Throws error if length is > 10', 'Modules.DemoSymfonyForm.Admin'),
+                'type' => FormattedTextareaType::class,
+                'locales' => $this->locales,
+                'required' => false,
+                'options' => [
+                    'constraints' => [
+                        new Length([
+                            'max' => 30,
+                        ]),
+                    ],
+                ],
+            ]);
     }
 }

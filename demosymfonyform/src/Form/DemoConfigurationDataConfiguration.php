@@ -81,7 +81,7 @@ final class DemoConfigurationDataConfiguration implements DataConfigurationInter
     {
         $this->configuration->set(self::TRANSLATABLE_SIMPLE, json_encode($configuration['translatable_type']));
         $this->configuration->set(self::TRANSLATABLE_TEXT_AREA, json_encode($configuration['translatable_text_area_type']));
-        $this->configuration->set(self::TRANSLATABLE_FORMATTED_TEXT_AREA, json_encode($configuration['translatable_formatted_text_area_type'], JSON_UNESCAPED_SLASHES), ['html' => true]);
+        $this->configuration->set(self::TRANSLATABLE_FORMATTED_TEXT_AREA, json_encode($configuration['translatable_formatted_text_area_type'], JSON_UNESCAPED_SLASHES), null, ['html' => true]);
 
         return [];
     }
