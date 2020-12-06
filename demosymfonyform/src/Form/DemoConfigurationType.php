@@ -77,7 +77,7 @@ class DemoConfigurationType extends TranslatorAwareType
             )
             ->add('translatable_formatted_text_area_type', TranslatableType::class, [
                 'label' => $this->trans('Translatable formatted text area type', 'Modules.DemoSymfonyForm.Admin'),
-                'help' => $this->trans('Throws error if length is > 10', 'Modules.DemoSymfonyForm.Admin'),
+                'help' => $this->trans('Throws error if length is > 30', 'Modules.DemoSymfonyForm.Admin'),
                 'type' => FormattedTextareaType::class,
                 'required' => false,
                 'options' => [
