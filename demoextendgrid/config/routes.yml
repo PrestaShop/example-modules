@@ -1,0 +1,7 @@
+admin_suppliers_delete_image:
+  path: demoextendsymfonyform/{supplierId}/delete-image
+  methods: [POST]
+  defaults:
+    _controller: PrestaShop\Module\DemoExtendSymfonyForm\Controller\DemoSupplierController::deleteExtraImageAction
+  requirements:
+    categoryId: \d+

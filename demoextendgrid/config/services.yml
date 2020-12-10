@@ -1,0 +1,13 @@
+services:
+
+  prestashop.module.demoextendsymfonyform.uploader.supplier_extra_image_uploader:
+    class: PrestaShop\Module\DemoExtendSymfonyForm\Uploader\SupplierExtraImageUploader
+    arguments:
+      - '@prestashop.module.demoextendsymfonyform.repository.supplier_extra_image_repository'
+
+  prestashop.module.demoextendsymfonyform.repository.supplier_extra_image_repository:
+    class: PrestaShop\Module\DemoExtendSymfonyForm\Repository\SupplierExtraImageRepository
+    public: true
+    factory: ['@doctrine.orm.entity_manager', getRepository]
+    arguments:
+      - PrestaShop\Module\DemoExtendSymfonyForm\Entity\SupplierExtraImage
