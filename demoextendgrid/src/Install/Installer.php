@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace PrestaShop\Module\DemoExtendSymfonyForm\Install;
+namespace PrestaShop\Module\DemoExtendGrid\Install;
 
 use Db;
 use Module;
@@ -30,41 +30,7 @@ class Installer
             return false;
         }
 
-        if (!$this->installDatabase()) {
-            return false;
-        }
-
         return true;
-    }
-
-    /**
-     * Module's uninstallation entry point.
-     *
-     * @return bool
-     */
-    public function uninstall(): bool
-    {
-        return $this->uninstallDatabase();
-    }
-
-    /**
-     * Install the database modifications required for this module.
-     *
-     * @return bool
-     */
-    private function installDatabase(): bool
-    {
-        return $this->executeQueries(SqlQueries::installQueries());
-    }
-
-    /**
-     * Uninstall database modifications.
-     *
-     * @return bool
-     */
-    private function uninstallDatabase(): bool
-    {
-        return $this->executeQueries(SqlQueries::uninstallQueries());
     }
 
     /**
@@ -77,9 +43,7 @@ class Installer
     private function registerHooks(Module $module): bool
     {
         $hooks = [
-            'actionSupplierFormBuilderModifier',
-            'actionAfterCreateSupplierFormHandler',
-            'actionAfterUpdateSupplierFormHandler',
+            'actionOrderGridDefinitionModifier',
         ];
 
         return (bool) $module->registerHook($hooks);
