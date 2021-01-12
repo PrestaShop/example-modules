@@ -224,6 +224,16 @@ class DemoViewOrderHooks extends Module
     }
 
     /**
+     * Displays placeholder text in quick order preview.
+     */
+    public function hookDisplayOrderPreview(array $params)
+    {
+        $orderId = $params['order_id']; // access to id of the order
+
+        return (new joshtronic\LoremIpsum())->sentence();
+    }
+
+    /**
      * Displays previous/next order buttons.
      */
     public function hookDisplayAdminOrderTop(array $params)

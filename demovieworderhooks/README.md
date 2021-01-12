@@ -11,6 +11,7 @@ It uses the following hooks:
 - displayAdminOrderSideBottom
 - displayAdminOrder
 - displayAdminOrderTop
+- displayOrderPreview
 - actionGetAdminOrderButtons
 
 Please note this module is an example only, not a mandatory structure.
@@ -64,6 +65,10 @@ The listing displays other orders from the same customer.
 
 We use this hook to display blue previous/next order buttons in the top to ease the navigation.
 Please note Order page already contains these buttons, but we put some additional buttons even easier to spot.
+
+### displayOrderPreview
+
+We use this hook on orders list, it's available in quick preview of the order after clicking a little blue arrow next to order ID.
 
 ### actionGetAdminOrderButtons
 
