@@ -1,6 +1,6 @@
 # Demonstration of how to insert an inputs inside the Symfony form
 
-Learn using identifiable object and grid hooks as well as combining CQRS pattern from module
+Learn using identifiable object and grid hooks.
 
 ## About
 
@@ -12,21 +12,23 @@ This new field appears:
 This modules demonstrates
  - how to add this field, manage its content and its
 properties using modern hooks in Symfony pages
- - how to use custom [CQRS](https://devdocs.prestashop.com/1.7/development/architecture/domain/cqrs/) Commands and Queries to separate your domain from your application*
  - how to use Translator inside modern Symfony module
 
-*This part is only demonstrated as a possibility for your module, this is
-not mandatory to be done this way.
+### Details
 
- ### Supported PrestaShop versions
+This module uses an ObjectModel entity to persist the data submitted by the user.
+[Other modules](https://github.com/PrestaShop/example-modules/tree/master/demoextendsymfonyform2) demonstrate
+how to use DoctrineORM.
+
+### Supported PrestaShop versions
 
  This module is compatible with and 1.7.6.0 and above versions.
  
- ### Requirements
+### Requirements
  
   1. Composer, see [Composer](https://getcomposer.org/) to learn more
  
- ### How to install
+### How to install
  
   1. Download or clone module into `modules` directory of your PrestaShop installation
   2. Rename the directory to make sure that module directory is named `demoextendsymfonyform1`*
@@ -35,5 +37,3 @@ not mandatory to be done this way.
   4. Install module from Back Office
  
  *Because the name of the directory and the name of the main module file must match.
- 
-

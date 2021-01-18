@@ -8,14 +8,11 @@
  * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
  */
 
-use DemoCQRSHooksUsage\Domain\Reviewer\Command\UpdateIsAllowedToReviewCommand;
-use DemoCQRSHooksUsage\Domain\Reviewer\Exception\CannotCreateReviewerException;
-use DemoCQRSHooksUsage\Domain\Reviewer\Exception\CannotToggleAllowedToReviewStatusException;
-use DemoCQRSHooksUsage\Domain\Reviewer\Exception\ReviewerException;
-use DemoCQRSHooksUsage\Domain\Reviewer\Query\GetReviewerSettingsForForm;
-use DemoCQRSHooksUsage\Domain\Reviewer\QueryResult\ReviewerSettingsForForm;
+
 use Doctrine\DBAL\Query\QueryBuilder;
-use PrestaShop\PrestaShop\Core\CommandBus\CommandBusInterface;
+use PrestaShop\Module\DemoHowToExtendSymfonyForm\Entity\Reviewer;
+use PrestaShop\Module\DemoHowToExtendSymfonyForm\Exception\CannotCreateReviewerException;
+use PrestaShop\Module\DemoHowToExtendSymfonyForm\Exception\CannotToggleAllowedToReviewStatusException;
 use PrestaShop\PrestaShop\Core\Domain\Customer\Exception\CustomerException;
 use PrestaShop\PrestaShop\Core\Grid\Column\Type\Common\ToggleColumn;
 use PrestaShop\PrestaShop\Core\Grid\Definition\GridDefinitionInterface;
@@ -24,18 +21,16 @@ use PrestaShop\PrestaShop\Core\Search\Filters\CustomerFilters;
 use PrestaShopBundle\Form\Admin\Type\SwitchType;
 use PrestaShopBundle\Form\Admin\Type\YesAndNoChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 /**
- * Class DemoExtendSymfonyForm1 demonstrates the usage of CQRS pattern and hooks.
+ * Class DemoExtendSymfonyForm1 demonstrates the usage of Symfony hooks.
  */
 class DemoExtendSymfonyForm1 extends Module
 {
     public function __construct()
     {
         $this->name = 'demoextendsymfonyform1';
-        $this->version = '1.0.0';
+        $this->version = '1.1.0';
         $this->author = 'Tomas Ilginis';
         $this->need_instance = 0;
 
@@ -44,14 +39,14 @@ class DemoExtendSymfonyForm1 extends Module
         $this->displayName = $this->getTranslator()->trans(
             'Demo Symfony Forms #1',
             [],
-            'Modules.Democqrshooksusage.Admin'
+            'Modules.DemoHowToExtendSymfonyForm.Admin'
         );
 
         $this->description =
             $this->getTranslator()->trans(
-                'Help developers to understand how to create module using new hooks and apply best practices when using CQRS',
+                'Help developers to understand how to create module using Symfony page hooks',
                 [],
-                'Modules.Democqrshooksusage.Admin'
+                'Modules.DemoHowToExtendSymfonyForm.Admin'
             );
 
         $this->ps_versions_compliancy = [
@@ -96,8 +91,7 @@ class DemoExtendSymfonyForm1 extends Module
             $this->registerHook('actionCustomerFormBuilderModifier') &&
             $this->registerHook('actionAfterCreateCustomerFormHandler') &&
             $this->registerHook('actionAfterUpdateCustomerFormHandler') &&
-            $this->installTables()
-        ;
+            $this->installTables();
     }
 
     public function uninstall()
@@ -123,19 +117,18 @@ class DemoExtendSymfonyForm1 extends Module
             ->addAfter(
                 'optin',
                 (new ToggleColumn('is_allowed_for_review'))
-                    ->setName($translator->trans('Allowed for review', [], 'Modules.Democqrshooksusage.Admin'))
+                    ->setName($translator->trans('Allowed for review', [], 'Modules.DemoHowToExtendSymfonyForm.Admin'))
                     ->setOptions([
                         'field' => 'is_allowed_for_review',
                         'primary_field' => 'id_customer',
-                        'route' => 'ps_democqrshooksusage_toggle_is_allowed_for_review',
+                        'route' => 'ps_demoextendsymfonyform_toggle_is_allowed_for_review',
                         'route_param_name' => 'customerId',
                     ])
-            )
-        ;
+            );
 
         $definition->getFilters()->add(
             (new Filter('is_allowed_for_review', YesAndNoChoiceType::class))
-            ->setAssociatedColumn('is_allowed_for_review')
+                ->setAssociatedColumn('is_allowed_for_review')
         );
     }
 
@@ -158,7 +151,7 @@ class DemoExtendSymfonyForm1 extends Module
 
         $searchQueryBuilder->leftJoin(
             'c',
-            '`' . pSQL(_DB_PREFIX_) . 'democqrshooksusage_reviewer`',
+            '`' . pSQL(_DB_PREFIX_) . 'demoextendsymfonyform_reviewer`',
             'dcur',
             'dcur.`id_customer` = c.`id_customer`'
         );
@@ -189,28 +182,16 @@ class DemoExtendSymfonyForm1 extends Module
         /** @var FormBuilderInterface $formBuilder */
         $formBuilder = $params['form_builder'];
         $formBuilder->add('is_allowed_for_review', SwitchType::class, [
-            'label' => $this->getTranslator()->trans('Allow reviews', [], 'Modules.Democqrshooksusage.Admin'),
+            'label' => $this->getTranslator()->trans('Allow reviews', [], 'Modules.DemoHowToExtendSymfonyForm.Admin'),
             'required' => false,
         ]);
 
-        /**
-         * @var CommandBusInterface
-         */
-        $queryBus = $this->get('prestashop.core.query_bus');
+        $result = false;
+        if (null !== $params['id']) {
+            $result = $this->get('ps_demoextendsymfonyform.repository.reviewer')->getIsAllowedToReviewStatus($params['id']);
+        }
 
-        /**
-         * This part demonstrates the usage of CQRS pattern query to perform read operation from Reviewer entity.
-         *
-         * @see https://devdocs.prestashop.com/1.7/development/architecture/cqrs/ for more detailed information.
-         *
-         * As this is our recommended approach of reading the data but we not force to use this pattern in modules -
-         * you can use directly an entity here or wrap it in custom service class.
-         *
-         * @var ReviewerSettingsForForm
-         */
-        $reviewerSettings = $queryBus->handle(new GetReviewerSettingsForForm($params['id']));
-
-        $params['data']['is_allowed_for_review'] = $reviewerSettings->isAllowedForReview();
+        $params['data']['is_allowed_for_review'] = $result;
 
         $formBuilder->setData($params['data']);
     }
@@ -249,25 +230,26 @@ class DemoExtendSymfonyForm1 extends Module
         $customerId = $params['id'];
         /** @var array $customerFormData */
         $customerFormData = $params['form_data'];
-        $isAllowedForReview = (bool) $customerFormData['is_allowed_for_review'];
+        $isAllowedForReview = (bool)$customerFormData['is_allowed_for_review'];
 
-        /** @var CommandBusInterface $commandBus */
-        $commandBus = $this->get('prestashop.core.command_bus');
+        $reviewerId = $this->get('ps_demoextendsymfonyform.repository.reviewer')->findIdByCustomer($customerId);
+
+        $reviewer = new Reviewer($reviewerId);
+        if (0 >= $reviewer->id) {
+            $reviewer = $this->createReviewer($customerId);
+        }
+        $reviewer->is_allowed_for_review = $isAllowedForReview;
 
         try {
-            /*
-             * This part demonstrates the usage of CQRS pattern command to perform write operation for Reviewer entity.
-             * @see https://devdocs.prestashop.com/1.7/development/architecture/cqrs/ for more detailed information.
-             *
-             * As this is our recommended approach of writing the data but we not force to use this pattern in modules -
-             * you can use directly an entity here or wrap it in custom service class.
-             */
-            $commandBus->handle(new UpdateIsAllowedToReviewCommand(
-                $customerId,
-                $isAllowedForReview
-            ));
-        } catch (ReviewerException $exception) {
-            $this->handleException($exception);
+            if (false === $reviewer->update()) {
+                throw new CannotToggleAllowedToReviewStatusException(
+                    sprintf('Failed to change status for reviewer with id "%s"', $reviewer->id)
+                );
+            }
+        } catch (PrestaShopException $exception) {
+            throw new CannotToggleAllowedToReviewStatusException(
+                'An unexpected error occurred when updating reviewer status'
+            );
         }
     }
 
@@ -279,7 +261,7 @@ class DemoExtendSymfonyForm1 extends Module
     private function installTables()
     {
         $sql = '
-            CREATE TABLE IF NOT EXISTS `' . pSQL(_DB_PREFIX_) . 'democqrshooksusage_reviewer` (
+            CREATE TABLE IF NOT EXISTS `' . pSQL(_DB_PREFIX_) . 'demoextendsymfonyform_reviewer` (
                 `id_reviewer` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `id_customer` INT(10) UNSIGNED NOT NULL,
                 `is_allowed_for_review` TINYINT(1) NOT NULL,
@@ -297,48 +279,46 @@ class DemoExtendSymfonyForm1 extends Module
      */
     private function uninstallTables()
     {
-        $sql = 'DROP TABLE IF EXISTS `' . pSQL(_DB_PREFIX_) . 'democqrshooksusage_reviewer`';
+        $sql = 'DROP TABLE IF EXISTS `' . pSQL(_DB_PREFIX_) . 'demoextendsymfonyform_reviewer`';
 
         return Db::getInstance()->execute($sql);
     }
 
     /**
-     * Handles exceptions and displays message in more user friendly form.
+     * Creates a reviewer.
      *
-     * @param ReviewerException $exception
+     * @param $customerId
      *
-     * @throws \PrestaShop\PrestaShop\Core\Module\Exception\ModuleErrorException
+     * @return Reviewer
+     *
+     * @throws CannotCreateReviewerException
      */
-    private function handleException(ReviewerException $exception)
+    protected function createReviewer($customerId)
     {
-        $exceptionDictionary = [
-            CannotCreateReviewerException::class => $this->getTranslator()->trans(
-                'Failed to create a record for customer',
-                [],
-                'Modules.Democqrshooksusage.Admin'
-            ),
-            CannotToggleAllowedToReviewStatusException::class => $this->getTranslator()->trans(
-                'Failed to toggle is allowed to review status',
-                [],
-                'Modules.Democqrshooksusage.Admin'
-            ),
-        ];
+        try {
+            $reviewer = new Reviewer();
+            $reviewer->id_customer = $customerId;
+            $reviewer->is_allowed_for_review = 0;
 
-        $exceptionType = get_class($exception);
-
-        if (isset($exceptionDictionary[$exceptionType])) {
-            $message = $exceptionDictionary[$exceptionType];
-        } else {
-            $message = $this->getTranslator()->trans(
-                'An unexpected error occurred. [%type% code %code%]',
-                [
-                    '%type%' => $exceptionType,
-                    '%code%' => $exception->getCode(),
-                ],
-                'Admin.Notifications.Error'
+            if (false === $reviewer->save()) {
+                throw new CannotCreateReviewerException(
+                    sprintf(
+                        'An error occurred when creating reviewer with customer id "%s"',
+                        $customerId
+                    )
+                );
+            }
+        } catch (PrestaShopException $exception) {
+            throw new CannotCreateReviewerException(
+                sprintf(
+                    'An unexpected error occurred when creating reviewer with customer id "%s"',
+                    $customerId
+                ),
+                0,
+                $exception
             );
         }
 
-        throw new \PrestaShop\PrestaShop\Core\Module\Exception\ModuleErrorException($message);
+        return $reviewer;
     }
 }

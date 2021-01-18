@@ -1,9 +1,17 @@
 {
-  "name": "prestashop/democqrshooksusage",
-  "description": "Help developers to understand how to create module using new hooks and apply best practices when using CQRS",
+  "name": "prestashop/demoextendsymfonyform1",
+  "authors": [
+    {
+      "name": "Tomas Ilginis"
+    },
+    {
+      "name": "PrestaShop Core Team"
+    }
+  ],
+  "description": "Help developers to understand how to create module using Symfony hooks",
   "autoload": {
     "psr-4": {
-      "DemoCQRSHooksUsage\\": "src/"
+      "PrestaShop\\Module\\DemoHowToExtendSymfonyForm\\": "src/"
     }
   },
   "license": "MIT",
