@@ -1,0 +1,33 @@
+services:
+  _defaults:
+    public: true
+#  @see  https://devdocs.prestashop.com/1.7/development/architecture/migration-guide/forms/cqrs-usage-in-forms/ for CQRS pattern usage examples.
+  democqrshooksusage.domain.reviewer.command_handler.toggle_is_allowed_to_review_handler:
+    class: 'DemoCQRSHooksUsage\Domain\Reviewer\CommandHandler\ToggleIsAllowedToReviewHandler'
+    arguments:
+      - '@democqrshooksusage.repository.reviewer'
+    tags:
+      - name: tactician.handler
+        command: 'DemoCQRSHooksUsage\Domain\Reviewer\Command\ToggleIsAllowedToReviewCommand'
+
+  democqrshooksusage.domain.reviewer.query_handler.get_reviewer_settings_for_form_handler:
+    class: 'DemoCQRSHooksUsage\Domain\Reviewer\QueryHandler\GetReviewerSettingsForFormHandler'
+    arguments:
+      - '@democqrshooksusage.repository.reviewer'
+    tags:
+      - name: tactician.handler
+        command: 'DemoCQRSHooksUsage\Domain\Reviewer\Query\GetReviewerSettingsForForm'
+
+  democqrshooksusage.domain.reviewer.command_handler.update_is_allowed_to_review_handler:
+    class: 'DemoCQRSHooksUsage\Domain\Reviewer\CommandHandler\UpdateIsAllowedToReviewHandler'
+    arguments:
+      - '@democqrshooksusage.repository.reviewer'
+    tags:
+      - name: tactician.handler
+        command: 'DemoCQRSHooksUsage\Domain\Reviewer\Command\UpdateIsAllowedToReviewCommand'
+
+  democqrshooksusage.repository.reviewer:
+    class: 'DemoCQRSHooksUsage\Repository\ReviewerRepository'
+    arguments:
+      - '@doctrine.dbal.default_connection'
+      - '%database_prefix%'
