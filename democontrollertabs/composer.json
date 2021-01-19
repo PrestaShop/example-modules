@@ -4,6 +4,9 @@
     {
       "name": "Jonathan Lelievre",
       "email": "jonathan.lelievre@prestashop.com"
+    },
+    {
+        "name": "PrestaShop Core Team"
     }
   ],
   "autoload": {

@@ -4,6 +4,9 @@
     {
       "name": "Tadas Davidsonas",
       "email": "tadas.davidsonas@invertus.eu"
+    },
+    {
+        "name": "PrestaShop Core Team"
     }
   ],
   "autoload": {

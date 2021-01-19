@@ -5,8 +5,7 @@
   "license": "AFL - Academic Free License (AFL 3.0)",
   "authors": [
     {
-      "name": "PrestaShop SA",
-      "email": "contact@prestashop.com"
+      "name": "PrestaShop Core Team"
     }
   ],
   "autoload": {
