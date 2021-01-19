@@ -31,7 +31,7 @@ class DemoExtendSymfonyForm1 extends Module
     {
         $this->name = 'demoextendsymfonyform1';
         $this->version = '1.1.0';
-        $this->author = 'Tomas Ilginis';
+        $this->author = 'PrestaShop';
         $this->need_instance = 0;
 
         parent::__construct();
