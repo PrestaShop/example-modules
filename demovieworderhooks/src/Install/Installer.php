@@ -133,6 +133,7 @@ class Installer
             'displayAdminOrderSide',
             'displayAdminOrderSideBottom',
             'displayAdminOrder',
+            'displayOrderPreview',
             'displayAdminOrderTop',
             'actionGetAdminOrderButtons',
         ];
