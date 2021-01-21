@@ -32,16 +32,16 @@ class CustomerReviewController extends FrameworkBundleAdminController
      *
      * @return RedirectResponse
      */
-    public function toggleIsAllowedForReviewAction($customerId)
+    public function toggleIsAllowedForReviewAction(int $customerId)
     {
         try {
             $reviewerId = $this->get('ps_demoextendsymfonyform.repository.reviewer')->findIdByCustomer($customerId);
 
-            $reviewer = new Reviewer($reviewerId);
+            $reviewer = new Reviewer((int) $reviewerId);
             if (0 >= $reviewer->id) {
                 $reviewer = $this->createReviewerIfNeeded($customerId);
             }
-            $reviewer->is_allowed_for_review = (bool)!$reviewer->is_allowed_for_review;
+            $reviewer->is_allowed_for_review = (bool) !$reviewer->is_allowed_for_review;
 
             try {
                 if (false === $reviewer->update()) {
@@ -90,13 +90,13 @@ class CustomerReviewController extends FrameworkBundleAdminController
     /**
      * Creates a reviewer. Used when toggle action is used on customer whose data is empty.
      *
-     * @param $customerId
+     * @param int $customerId
      *
      * @return Reviewer
      *
      * @throws CannotCreateReviewerException
      */
-    protected function createReviewerIfNeeded($customerId)
+    protected function createReviewerIfNeeded(int $customerId)
     {
         try {
             $reviewer = new Reviewer();
