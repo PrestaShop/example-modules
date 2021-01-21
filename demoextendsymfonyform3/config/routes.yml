@@ -1,0 +1,8 @@
+# @see https://devdocs.prestashop.com/1.7/modules/concepts/controllers/admin-controllers/#how-to-map-an-action-of-your-controller-to-a-uri
+ps_democqrshooksusage_toggle_is_allowed_for_review:
+  path: demo-cqrs-hook-usage/{customerId}/toggle-is-allowed-for-review
+  methods: [POST]
+  defaults:
+    _controller: 'DemoCQRSHooksUsage\Controller\Admin\CustomerReviewController::toggleIsAllowedForReviewAction'
+  requirements:
+    customerId: \d+
