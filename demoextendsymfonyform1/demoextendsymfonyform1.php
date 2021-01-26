@@ -44,7 +44,7 @@ class DemoExtendSymfonyForm1 extends Module
 
         $this->description =
             $this->getTranslator()->trans(
-                'Help developers to understand how to create module using Symfony page hooks',
+                'Help developers to understand how to create module using few Symfony hooks available in PrestaShop',
                 [],
                 'Modules.DemoHowToExtendSymfonyForm.Admin'
             );
@@ -188,7 +188,7 @@ class DemoExtendSymfonyForm1 extends Module
 
         $result = false;
         if (null !== $params['id']) {
-            $result = $this->get('ps_demoextendsymfonyform.repository.reviewer')->getIsAllowedToReviewStatus($params['id']);
+            $result = $this->get('ps_demoextendsymfonyform.repository.reviewer')->getIsAllowedToReviewStatus((int) $params['id']);
         }
 
         $params['data']['is_allowed_for_review'] = $result;
@@ -230,7 +230,7 @@ class DemoExtendSymfonyForm1 extends Module
         $customerId = $params['id'];
         /** @var array $customerFormData */
         $customerFormData = $params['form_data'];
-        $isAllowedForReview = (bool)$customerFormData['is_allowed_for_review'];
+        $isAllowedForReview = (bool) $customerFormData['is_allowed_for_review'];
 
         $reviewerId = $this->get('ps_demoextendsymfonyform.repository.reviewer')->findIdByCustomer($customerId);
 
@@ -287,13 +287,13 @@ class DemoExtendSymfonyForm1 extends Module
     /**
      * Creates a reviewer.
      *
-     * @param $customerId
+     * @param int $customerId
      *
      * @return Reviewer
      *
      * @throws CannotCreateReviewerException
      */
-    protected function createReviewer($customerId)
+    protected function createReviewer(int $customerId)
     {
         try {
             $reviewer = new Reviewer();
