@@ -15,5 +15,8 @@
     }
   },
   "license": "MIT",
-  "type": "prestashop-module"
+  "type": "prestashop-module",
+  "config": {
+    "prepend-autoloader": false
+  }
 }
