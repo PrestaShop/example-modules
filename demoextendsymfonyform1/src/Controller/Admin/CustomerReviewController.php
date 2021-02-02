@@ -8,12 +8,12 @@
  * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
  */
 
-namespace DemoCQRSHooksUsage\Controller\Admin;
+namespace PrestaShop\Module\DemoHowToExtendSymfonyForm\Controller\Admin;
 
-use DemoCQRSHooksUsage\Domain\Reviewer\Command\ToggleIsAllowedToReviewCommand;
-use DemoCQRSHooksUsage\Domain\Reviewer\Exception\CannotCreateReviewerException;
-use DemoCQRSHooksUsage\Domain\Reviewer\Exception\CannotToggleAllowedToReviewStatusException;
-use DemoCQRSHooksUsage\Domain\Reviewer\Exception\ReviewerException;
+use PrestaShop\Module\DemoHowToExtendSymfonyForm\Exception\CannotCreateReviewerException;
+use PrestaShop\Module\DemoHowToExtendSymfonyForm\Exception\CannotToggleAllowedToReviewStatusException;
+use PrestaShop\Module\DemoHowToExtendSymfonyForm\Exception\ReviewerException;
+use PrestaShop\Module\DemoHowToExtendSymfonyForm\Entity\Reviewer;
 use PrestaShop\PrestaShop\Core\Domain\Customer\Exception\CustomerException;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -32,17 +32,28 @@ class CustomerReviewController extends FrameworkBundleAdminController
      *
      * @return RedirectResponse
      */
-    public function toggleIsAllowedForReviewAction($customerId)
+    public function toggleIsAllowedForReviewAction(int $customerId)
     {
         try {
-            /*
-             * This part demonstrates the usage of CQRS pattern command to perform write operation for Reviewer entity.
-             * @see https://devdocs.prestashop.com/1.7/development/architecture/cqrs/ for more detailed information.
-             *
-             * As this is our recommended approach of writing the data but we not force to use this pattern in modules -
-             * you can use directly an entity here or wrap it in custom service class.
-             */
-            $this->getCommandBus()->handle(new ToggleIsAllowedToReviewCommand((int) $customerId));
+            $reviewerId = $this->get('ps_demoextendsymfonyform.repository.reviewer')->findIdByCustomer($customerId);
+
+            $reviewer = new Reviewer((int) $reviewerId);
+            if (0 >= $reviewer->id) {
+                $reviewer = $this->createReviewerIfNeeded($customerId);
+            }
+            $reviewer->is_allowed_for_review = (bool) !$reviewer->is_allowed_for_review;
+
+            try {
+                if (false === $reviewer->update()) {
+                    throw new CannotToggleAllowedToReviewStatusException(
+                        sprintf('Failed to change status for reviewer with id "%s"', $reviewer->id)
+                    );
+                }
+            } catch (\PrestaShopException $exception) {
+                throw new CannotToggleAllowedToReviewStatusException(
+                    'An unexpected error occurred when updating reviewer status'
+                );
+            }
 
             $this->addFlash('success', $this->trans('Successful update.', 'Admin.Notifications.Success'));
         } catch (ReviewerException $e) {
@@ -56,8 +67,6 @@ class CustomerReviewController extends FrameworkBundleAdminController
      * Gets error message mappings which are later used to display friendly user error message instead of the
      * exception message.
      *
-     * @see https://devdocs.prestashop.com/1.7/development/architecture/domain-exceptions/ for more detailed explanation
-     *
      * @return array
      */
     private function getErrorMessageMapping()
@@ -65,16 +74,54 @@ class CustomerReviewController extends FrameworkBundleAdminController
         return [
             CustomerException::class => $this->trans(
                 'Something bad happened when trying to get customer id',
-                'Modules.Democqrshooksusage.Customerreviewcontroller'
+                'Modules.DemoHowToExtendSymfonyForm.Customerreviewcontroller'
             ),
             CannotCreateReviewerException::class => $this->trans(
                 'Failed to create reviewer',
-                'Modules.Democqrshooksusage.Customerreviewcontroller'
+                'Modules.DemoHowToExtendSymfonyForm.Customerreviewcontroller'
             ),
             CannotToggleAllowedToReviewStatusException::class => $this->trans(
                 'An error occurred while updating the status.',
-                'Modules.Democqrshooksusage.Customerreviewcontroller'
+                'Modules.DemoHowToExtendSymfonyForm.Customerreviewcontroller'
             ),
         ];
+    }
+
+    /**
+     * Creates a reviewer. Used when toggle action is used on customer whose data is empty.
+     *
+     * @param int $customerId
+     *
+     * @return Reviewer
+     *
+     * @throws CannotCreateReviewerException
+     */
+    protected function createReviewerIfNeeded(int $customerId)
+    {
+        try {
+            $reviewer = new Reviewer();
+            $reviewer->id_customer = $customerId;
+            $reviewer->is_allowed_for_review = 0;
+
+            if (false === $reviewer->save()) {
+                throw new CannotCreateReviewerException(
+                    sprintf(
+                        'An error occurred when creating reviewer with customer id "%s"',
+                        $customerId
+                    )
+                );
+            }
+        } catch (\PrestaShopException $exception) {
+            throw new CannotCreateReviewerException(
+                sprintf(
+                    'An unexpected error occurred when creating reviewer with customer id "%s"',
+                    $customerId
+                ),
+                0,
+                $exception
+            );
+        }
+
+        return $reviewer;
     }
 }

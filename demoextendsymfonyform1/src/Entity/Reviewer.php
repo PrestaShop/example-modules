@@ -8,7 +8,7 @@
  * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
  */
 
-namespace DemoCQRSHooksUsage\Entity;
+namespace PrestaShop\Module\DemoHowToExtendSymfonyForm\Entity;
 
 use PrestaShop\PrestaShop\Adapter\Entity\ObjectModel;
 
@@ -28,7 +28,7 @@ class Reviewer extends ObjectModel
     public $is_allowed_for_review;
 
     public static $definition = [
-        'table' => 'democqrshooksusage_reviewer',
+        'table' => 'demoextendsymfonyform_reviewer',
         'primary' => 'id_reviewer',
         'fields' => [
             'id_customer' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],

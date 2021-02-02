@@ -8,7 +8,7 @@
  * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
  */
 
-namespace DemoCQRSHooksUsage\Repository;
+namespace PrestaShop\Module\DemoHowToExtendSymfonyForm\Repository;
 
 use Doctrine\DBAL\Connection;
 use PDO;
@@ -48,7 +48,7 @@ class ReviewerRepository
 
         $queryBuilder
             ->select('`id_reviewer`')
-            ->from($this->dbPrefix . 'democqrshooksusage_reviewer')
+            ->from($this->dbPrefix . 'demoextendsymfonyform_reviewer')
             ->where('`id_customer` = :customer_id')
         ;
 
@@ -70,7 +70,7 @@ class ReviewerRepository
 
         $queryBuilder
             ->select('`is_allowed_for_review`')
-            ->from($this->dbPrefix . 'democqrshooksusage_reviewer')
+            ->from($this->dbPrefix . 'demoextendsymfonyform_reviewer')
             ->where('`id_customer` = :customer_id')
         ;
 

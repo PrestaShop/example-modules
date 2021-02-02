@@ -8,7 +8,7 @@
  * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
  */
 
-namespace DemoCQRSHooksUsage\Domain\Reviewer\Exception;
+namespace PrestaShop\Module\DemoHowToExtendSymfonyForm\Exception;
 
 class CannotToggleAllowedToReviewStatusException extends ReviewerException
 {
