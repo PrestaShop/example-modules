@@ -1,0 +1,65 @@
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+{% trans_default_domain "Admin.Design.Feature" %}
+
+{% block content %}
+  {% block darkThemeFormBlock %}
+    <div class="row justify-content-center">
+      <div class="col-xl-10">
+        {{ form_start(darkThemeForm, {'action': path('admin_example_module_mailtheme_save_settings')}) }}
+        <div class="card">
+          <h3 class="card-header">
+            <i class="material-icons">settings</i> {{ 'Dark Theme'|trans({}, 'Modules.ExampleModuleMailtheme') }}
+          </h3>
+
+          <div class="card-block row">
+            <div class="card-text">
+
+              {{ ps.form_group_row(darkThemeForm.custom_message, darkThemeForm.custom_message.vars, {
+                'label': 'Custom message'|trans({}, 'Modules.ExampleModuleMailtheme'),
+              }) }}
+
+              {{ ps.form_group_row(darkThemeForm.primary_background_color, darkThemeForm.primary_background_color.vars, {
+                'label': 'Primary background color'|trans({}, 'Modules.ExampleModuleMailtheme'),
+              }) }}
+
+              {{ ps.form_group_row(darkThemeForm.secondary_background_color, darkThemeForm.secondary_background_color.vars, {
+                'label': 'Secondary background color'|trans({}, 'Modules.ExampleModuleMailtheme'),
+              }) }}
+
+              {{ ps.form_group_row(darkThemeForm.primary_text_color, darkThemeForm.primary_text_color.vars, {
+                'label': 'Primary text color'|trans({}, 'Modules.ExampleModuleMailtheme'),
+              }) }}
+
+              {{ ps.form_group_row(darkThemeForm.secondary_text_color, darkThemeForm.secondary_text_color.vars, {
+                'label': 'Secondary text color'|trans({}, 'Modules.ExampleModuleMailtheme'),
+              }) }}
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <a href="{{ path('admin_example_module_mailtheme_reset_default_settings') }}" class="btn btn-outline-secondary">
+              {{ 'Reset default settings'|trans({}, 'Modules.ExampleModuleMailtheme') }}
+            </a>
+            <a href="{{ path('admin_example_module_mailtheme_generate') }}" class="btn btn-outline-secondary">
+              {{ 'Generate Dark Theme emails'|trans({}, 'Modules.ExampleModuleMailtheme') }}
+            </a>
+            <button class="btn btn-primary float-right">
+              {{ 'Save'|trans({}, 'Admin.Actions') }}
+            </button>
+          </div>
+        </div>
+        {{ form_end(darkThemeForm) }}
+      </div>
+    </div>
+  {% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('../modules/example_module_mailtheme/views/js/main.bundle.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('../modules/example_module_mailtheme/views/css/main.css') }}" />
+{% endblock %}

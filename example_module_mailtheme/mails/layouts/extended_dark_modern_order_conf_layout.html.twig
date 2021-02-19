@@ -1,0 +1,15 @@
+{% extends '@Modules/example_module_mailtheme/mails/themes/dark_modern/core/order_conf.html.twig' %}
+
+{% block content %}
+  {{ parent() }}
+  <table width="100%">
+    <tr>
+      <td align="center" class="titleblock" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; direction: ltr; font-size: 0px; padding: 0 50px; text-align: center; vertical-align: top;">
+        <div style="font-family:Open sans, arial, sans-serif;font-size:14px;line-height:25px;text-align:left;color:{{ primary_text_color }};">
+          {{ 'Thank you for purchasing this product on our store. Feel free to leave us a review if you are happy of this product:'|trans({}, 'EmailsBody', locale)|raw }}
+          <a href="{shop_url}/post_review">{{ 'Post a review'|trans({}, 'EmailsBody', locale)|raw }}</a>
+        </div>
+      </td>
+    </tr>
+  </table>
+{% endblock %}
