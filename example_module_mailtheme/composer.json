@@ -1,0 +1,27 @@
+{
+  "name": "prestashop/example_module_mailtheme",
+  "description": "Example module to add a Mail theme to PrestaShop.",
+  "homepage": "https://github.com/PrestaShop/ps_linklist",
+  "license": "AFL-3.0",
+  "authors": [
+    {
+      "name": "PrestaShop SA",
+      "email": "contact@prestashop.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "PrestaShop\\Module\\ExampleModuleMailtheme\\": "src/"
+    },
+    "classmap": ["example_module_mailtheme.php"],
+    "exclude-from-classmap": []
+  },
+  "config": {
+    "preferred-install": "dist",
+    "prepend-autoloader": false
+  },
+  "type": "prestashop-module"
+}
