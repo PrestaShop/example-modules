@@ -11,3 +11,4 @@ These modules demonstrate usecases useful for developers willing to customize th
 - [Demo Using PrestaShop Symfony Form Types](https://github.com/PrestaShop/example-modules/tree/master/demosymfonyform)
 - [Demo Creating modern Controllers and associate Tabs to them](https://github.com/PrestaShop/example-modules/tree/master/democontrollertabs)
 - [Demo Using Doctrine entities](https://github.com/PrestaShop/example-modules/tree/master/demodoctrine)
+- [Demo Adding a Mail Theme](https://github.com/PrestaShop/example-modules/tree/master/example_module_mailtheme)
