@@ -1,4 +1,4 @@
-Demo View Order Hooks
+Demo Doctrine
 =====================
 
 This module demonstrates how to use Doctrine entities in PrestaShop 1.7.7.
