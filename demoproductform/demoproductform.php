@@ -11,12 +11,14 @@
 declare(strict_types=1);
 
 use PrestaShop\Module\DemoProductForm\Install\Installer;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 class DemoProductForm extends Module
 {
@@ -47,8 +49,29 @@ class DemoProductForm extends Module
         return $installer->install($this);
     }
 
+    /**
+     * Add custom field to product form at the end of tabs
+     *
+     * @param array $params
+     */
     public function hookActionProductFormBuilderModifier(array $params): void
     {
-        var_dump($params);die;
+        /** @var FormBuilderInterface $productFormBuilder */
+        $productFormBuilder = $params['form_builder'];
+        $basicTabFormBuilder = $productFormBuilder->get('basic');
+
+        // adds simple text field add the end of Basic tab
+        $basicTabFormBuilder->add('demo_module_custom_field', TextType::class, [
+            // you can remove the label if you dont need it by passing 'label' => false
+            'label' => $this->l('Demo custom field'),
+            // customize label by any html attribute
+            'label_attr' => [
+                'title' => 'h2',
+                'class' => 'text-info',
+            ],
+            'attr' => [
+                'placeholder' => 'Your example text here',
+            ],
+        ]);
     }
 }
