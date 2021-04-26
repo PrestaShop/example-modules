@@ -1,0 +1,21 @@
+{
+  "name": "prestashop/skeleton",
+  "authors": [
+    {
+      "name": "Julius Zukauskas",
+      "email": "julius.zukauskas@invertus.eu"
+    },
+    {
+      "name": "PrestaShop Core team"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "PrestaShop\\Module\\Skeleton\\": "src/"
+    },
+    "config": {
+      "prepend-autoloader": false
+    },
+    "type": "prestashop-module"
+  }
+}
