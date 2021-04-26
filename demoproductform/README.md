@@ -3,8 +3,8 @@
 ## About
 
 This is example module explaining various extendability options in product page form (from v1.7.8):
-1. Add custom form field in Basic settings tab
-    - Add free text field after the description field
+1. Add custom text field in product form basic tab
+2. Show usage of new translation system
 
 ### Supported PrestaShop versions
 

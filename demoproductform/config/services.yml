@@ -4,3 +4,6 @@ services:
         class: PrestaShop\Module\DemoProductForm\Form\Modifier\ProductFormModifier
         arguments:
             - '@translator'
+
+    PrestaShop\Module\DemoProductForm\Form\Handler\ProductFormHandler:
+        class: PrestaShop\Module\DemoProductForm\Form\Handler\ProductFormHandler
