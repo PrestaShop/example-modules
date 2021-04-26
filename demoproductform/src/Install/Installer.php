@@ -45,9 +45,8 @@ class Installer
     private function registerHooks(Module $module): bool
     {
         $hooks = [
-            //@todo: register hooks used in module e.g.:
-            'displayHeader',
-            'actionDispatcherBefore'
+            //@todo: hook not yet registered in core
+            'actionProductFormBuilderModifier',
         ];
 
         return (bool) $module->registerHook($hooks);

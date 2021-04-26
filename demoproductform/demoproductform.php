@@ -46,4 +46,9 @@ class DemoProductForm extends Module
 
         return $installer->install($this);
     }
+
+    public function hookActionProductFormBuilderModifier(array $params): void
+    {
+        var_dump($params);die;
+    }
 }

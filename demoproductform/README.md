@@ -2,7 +2,9 @@
 
 ## About
 
-This is example module explaining various extendability options in product page form (from v1.7.8)
+This is example module explaining various extendability options in product page form (from v1.7.8):
+1. Add custom form field in Basic settings tab
+    - Add free text field after the description field
 
 ### Supported PrestaShop versions
 
