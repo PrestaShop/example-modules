@@ -1,2 +1,6 @@
 #https://devdocs.prestashop.com/1.7/modules/concepts/services/
-#todo: Services definitions goes here
+services:
+    PrestaShop\Module\DemoProductForm\Form\Modifier\ProductFormModifier:
+        class: PrestaShop\Module\DemoProductForm\Form\Modifier\ProductFormModifier
+        arguments:
+            - '@translator'

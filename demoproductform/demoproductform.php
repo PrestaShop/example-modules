@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
+use PrestaShop\Module\DemoProductForm\Form\Modifier\ProductFormModifier;
 use PrestaShop\Module\DemoProductForm\Install\Installer;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -22,6 +22,11 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 class DemoProductForm extends Module
 {
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
     public function __construct()
     {
         $this->name = 'demoproductform';
@@ -31,8 +36,9 @@ class DemoProductForm extends Module
 
         parent::__construct();
 
-        $this->displayName = $this->l('DemoProductForm');
-        $this->description = $this->l('DemoProductForm module description');
+        $this->translator = $this->get('translator');
+        $this->displayName = $this->translator->trans('DemoProductForm', [], 'Modules.Demoproductform.Config');
+        $this->description = $this->translator->trans('DemoProductForm module description', [], 'Modules.Demoproductform.Config');
     }
 
     /**
@@ -50,28 +56,24 @@ class DemoProductForm extends Module
     }
 
     /**
-     * Add custom field to product form at the end of tabs
+     * @see https://devdocs.prestashop.com/1.7/modules/creation/module-translation/new-system/#translating-your-module
+     *
+     * @return bool
+     */
+    public function isUsingNewTranslationSystem(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Modify product form builder
      *
      * @param array $params
      */
     public function hookActionProductFormBuilderModifier(array $params): void
     {
-        /** @var FormBuilderInterface $productFormBuilder */
-        $productFormBuilder = $params['form_builder'];
-        $basicTabFormBuilder = $productFormBuilder->get('basic');
-
-        // adds simple text field add the end of Basic tab
-        $basicTabFormBuilder->add('demo_module_custom_field', TextType::class, [
-            // you can remove the label if you dont need it by passing 'label' => false
-            'label' => $this->l('Demo custom field'),
-            // customize label by any html attribute
-            'label_attr' => [
-                'title' => 'h2',
-                'class' => 'text-info',
-            ],
-            'attr' => [
-                'placeholder' => 'Your example text here',
-            ],
-        ]);
+        /** @var ProductFormModifier $productFormModifier */
+        $productFormModifier = $this->get(ProductFormModifier::class);
+        $productFormModifier->modify($params['form_builder']);
     }
 }
