@@ -13,14 +13,33 @@ declare(strict_types=1);
 namespace PrestaShop\Module\DemoProductForm\CQRS\CommandHandler;
 
 use PrestaShop\Module\DemoProductForm\CQRS\Command\AddMyModuleCustomFieldCommand;
+use PrestaShop\PrestaShop\Core\ConfigurationInterface;
 
+/**
+ * Handles @see AddMyModuleCustomFieldCommand
+ */
 final class AddMyModuleCustomFieldHandler
 {
+    /**
+     * @var ConfigurationInterface
+     */
+    private $configuration;
+
+    /**
+     * @param ConfigurationInterface $configuration
+     */
+    public function __construct(
+        ConfigurationInterface $configuration
+    ) {
+        $this->configuration = $configuration;
+    }
+
     /**
      * @param AddMyModuleCustomFieldCommand $command
      */
     public function handle(AddMyModuleCustomFieldCommand $command): void
     {
-        // perform actions to add the field to database.
+        // do what you need with your command here. For example we are saving it to configuration
+        $this->configuration->set('DEMOPRODUCTFORM_CUSTOM_FIELD', $command->getValue());
     }
 }

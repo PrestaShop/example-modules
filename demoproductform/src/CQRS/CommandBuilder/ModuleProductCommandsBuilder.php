@@ -19,6 +19,11 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\Product\Pr
  * This class is responsible for building cqrs commands from product form data.
  * Once you tag this service as "core.product_command_builder" (check module services.yml)
  * the core ProductCommandsBuilder will start using this builder
+ *
+ * Don't forget you can also handle your custom fields like any other identifiable object
+ * by using following product form hooks instead of CQRS commands builder:
+ *  - actionAfterUpdateProductFormHandler
+ *  - actionBeforeUpdateProductFormHandler
  */
 final class ModuleProductCommandsBuilder implements ProductCommandsBuilderInterface
 {

@@ -5,9 +5,6 @@ services:
         arguments:
             - '@translator'
 
-    PrestaShop\Module\DemoProductForm\Form\Handler\ProductFormHandler:
-        class: PrestaShop\Module\DemoProductForm\Form\Handler\ProductFormHandler
-
     PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\AddMyModuleCustomFieldHandler:
         class: PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\AddMyModuleCustomFieldHandler
         tags:

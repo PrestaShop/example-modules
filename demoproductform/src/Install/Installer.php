@@ -45,9 +45,7 @@ class Installer
     private function registerHooks(Module $module): bool
     {
         $hooks = [
-            //@todo: hook not yet registered in core
             'actionProductFormBuilderModifier',
-            'actionAfterUpdateProductFormHandler',
         ];
 
         return (bool) $module->registerHook($hooks);

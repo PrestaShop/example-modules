@@ -10,7 +10,6 @@
 
 declare(strict_types=1);
 
-use PrestaShop\Module\DemoProductForm\Form\Handler\ProductFormHandler;
 use PrestaShop\Module\DemoProductForm\Form\Modifier\ProductFormModifier;
 use PrestaShop\Module\DemoProductForm\Install\Installer;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -76,18 +75,5 @@ class DemoProductForm extends Module
         /** @var ProductFormModifier $productFormModifier */
         $productFormModifier = $this->get(ProductFormModifier::class);
         $productFormModifier->modify($params['form_builder']);
-    }
-
-    /**
-     * Handle custom fields update after product update has been performed
-     * @todo: there is another way to do it with product (using CQRS and commands collector)
-     *
-     * @param array $params
-     */
-    public function hookActionAfterUpdateProductFormHandler(array $params): void
-    {
-        /** @var ProductFormHandler $productFormHandler */
-        $productFormHandler = $this->get(ProductFormHandler::class);
-        $productFormHandler->handleUpdate($params['form_data']);
     }
 }

@@ -12,9 +12,13 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoProductForm\Form\Modifier;
 
+use PrestaShop\Module\DemoProductForm\CQRS\Command\AddMyModuleCustomFieldCommand;
+use PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\ModuleProductCommandsBuilder;
+use PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\AddMyModuleCustomFieldHandler;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use const http\Client\Curl\POSTREDIR_301;
 
 final class ProductFormModifier
 {
@@ -33,6 +37,7 @@ final class ProductFormModifier
     }
 
     /**
+     *
      * @param FormBuilderInterface $productFormBuilder
      */
     public function modify(FormBuilderInterface $productFormBuilder): void
@@ -44,6 +49,8 @@ final class ProductFormModifier
     }
 
     /**
+     * @see AddMyModuleCustomFieldHandler to check how the field is handled on form POST
+     *
      * @param FormBuilderInterface $basicTabFormBuilder
      */
     private function modifyBasicTab(FormBuilderInterface $basicTabFormBuilder): void
