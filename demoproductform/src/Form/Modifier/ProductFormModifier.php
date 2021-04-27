@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace PrestaShop\Module\DemoProductForm\Form\Modifier;
 
 use PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\SaveMyModuleCustomFieldHandler;
-use PrestaShop\PrestaShop\Core\ConfigurationInterface;
+use PrestaShop\Module\DemoProductForm\Entity\CustomProduct;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -26,39 +26,35 @@ final class ProductFormModifier
     private $translator;
 
     /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * @param TranslatorInterface $translator
-     * @param ConfigurationInterface $configuration
      */
     public function __construct(
-        TranslatorInterface $translator,
-        ConfigurationInterface $configuration
+        TranslatorInterface $translator
     ) {
         $this->translator = $translator;
-        $this->configuration = $configuration;
     }
 
     /**
+     * @param int|null $productId
      * @param FormBuilderInterface $productFormBuilder
      */
-    public function modify(FormBuilderInterface $productFormBuilder): void
+    public function modify(?int $productId, FormBuilderInterface $productFormBuilder): void
     {
         $basicTabFormBuilder = $productFormBuilder->get('basic');
 
-        $this->modifyBasicTab($basicTabFormBuilder);
+        $this->modifyBasicTab($productId, $basicTabFormBuilder);
     }
 
     /**
+     * @param int|null $productId
      * @param FormBuilderInterface $basicTabFormBuilder
      *
-     *@see SaveMyModuleCustomFieldHandler to check how the field is handled on form POST
+     * @see SaveMyModuleCustomFieldHandler to check how the field is handled on form POST
      */
-    private function modifyBasicTab(FormBuilderInterface $basicTabFormBuilder): void
+    private function modifyBasicTab(?int $productId, FormBuilderInterface $basicTabFormBuilder): void
     {
+        $customProduct = new CustomProduct($productId);
+
         // adds simple text field at the end of Basic tab in product form
         $basicTabFormBuilder->add('demo_module_custom_field', TextType::class, [
             // you can remove the label if you dont need it by passing 'label' => false
@@ -71,7 +67,8 @@ final class ProductFormModifier
             'attr' => [
                 'placeholder' => 'Your example text here',
             ],
-            'data' => $this->configuration->get('DEMO_MODULE_CUSTOM_FIELD'),
+            // this is just an example, but in real case scenario you could have some data provider class to wrap more complex cases
+            'data' => $customProduct->custom_field,
         ]);
     }
 }

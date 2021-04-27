@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace PrestaShop\Module\DemoProductForm\CQRS\CommandHandler;
 
 use PrestaShop\Module\DemoProductForm\CQRS\Command\SaveMyModuleCustomFieldCommand;
+use PrestaShop\Module\DemoProductForm\Entity\CustomProduct;
 use PrestaShop\PrestaShop\Core\ConfigurationInterface;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataHandler\ProductFormDataHandler;
 
@@ -49,7 +50,20 @@ final class SaveMyModuleCustomFieldHandler
      */
     public function handle(SaveMyModuleCustomFieldCommand $command): void
     {
-        // do what you need with your command here. For example we are saving it to configuration
-        $this->configuration->set('DEMO_MODULE_CUSTOM_FIELD', $command->getValue());
+        $productId = $command->getProductId()->getValue();
+
+        $customProduct = new CustomProduct($productId);
+        $customProduct->custom_field = $command->getValue();
+
+        if ($customProduct->id === $productId) {
+            $customProduct->update();
+
+            return;
+        }
+
+        $customProduct->id = $productId;
+        $customProduct->add();
+
+        return;
     }
 }

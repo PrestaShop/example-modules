@@ -56,6 +56,20 @@ class DemoProductForm extends Module
     }
 
     /**
+     * @return bool
+     */
+    public function uninstall()
+    {
+        if (!parent::uninstall()) {
+            return false;
+        }
+
+        $installer = new Installer();
+
+        return $installer->uninstall($this);
+    }
+
+    /**
      * @see https://devdocs.prestashop.com/1.7/modules/creation/module-translation/new-system/#translating-your-module
      *
      * @return bool
@@ -74,6 +88,9 @@ class DemoProductForm extends Module
     {
         /** @var ProductFormModifier $productFormModifier */
         $productFormModifier = $this->get(ProductFormModifier::class);
-        $productFormModifier->modify($params['form_builder']);
+
+        $productId = isset($params['id']) ? (int) $params['id'] : null;
+
+        $productFormModifier->modify($productId, $params['form_builder']);
     }
 }

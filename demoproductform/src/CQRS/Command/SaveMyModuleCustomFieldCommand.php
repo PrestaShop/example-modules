@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace PrestaShop\Module\DemoProductForm\CQRS\Command;
 
 use PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\ModuleProductCommandsBuilder;
+use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 
 /**
  * Product form is quite big so we have multiple command handlers that saves the fields and performs other required actions
@@ -29,16 +30,31 @@ use PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\ModuleProductCommandsB
 final class SaveMyModuleCustomFieldCommand
 {
     /**
+     * @var ProductId
+     */
+    private $productId;
+
+    /**
      * @var string
      */
     private $value;
 
     /**
+     * @param int $productId
      * @param string $value
      */
-    public function __construct(string $value)
+    public function __construct(int $productId, string $value)
     {
+        $this->productId = new ProductId($productId);
         $this->value = $value;
+    }
+
+    /**
+     * @return ProductId
+     */
+    public function getProductId(): ProductId
+    {
+        return $this->productId;
     }
 
     /**

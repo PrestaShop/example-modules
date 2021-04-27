@@ -14,6 +14,7 @@ namespace PrestaShop\Module\DemoProductForm\Install;
 
 use Db;
 use Module;
+use Tools;
 
 class Installer
 {
@@ -29,8 +30,21 @@ class Installer
         if (!$this->registerHooks($module)) {
             return false;
         }
+        if (!$this->executeSqlFromFile($module->getLocalPath() . 'src/Install/install.sql')) {
+            return false;
+        }
 
         return true;
+    }
+
+    /**
+     * @param Module $module
+     *
+     * @return bool
+     */
+    public function uninstall(Module $module): bool
+    {
+        return $this->executeSqlFromFile($module->getLocalPath() . 'src/Install/uninstall.sql');
     }
 
     /**
@@ -52,20 +66,24 @@ class Installer
     }
 
     /**
-     * A helper that executes multiple database queries.
-     *
-     * @param array $queries
+     * @param string $filepath
      *
      * @return bool
      */
-    private function executeQueries(array $queries): bool
+    private function executeSqlFromFile(string $filepath): bool
     {
-        foreach ($queries as $query) {
-            if (!Db::getInstance()->execute($query)) {
-                return false;
-            }
+        if (!file_exists($filepath)) {
+            return true;
         }
 
-        return true;
+        $sql = Tools::file_get_contents($filepath);
+
+        if (!$sql) {
+            return false;
+        }
+
+        $sql = str_replace(['_DB_PREFIX_', '_MYSQL_ENGINE_'], [_DB_PREFIX_, _MYSQL_ENGINE_], $sql);
+
+        return (bool) Db::getInstance()->execute($sql);
     }
 }
