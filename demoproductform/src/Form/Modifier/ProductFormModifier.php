@@ -14,6 +14,7 @@ namespace PrestaShop\Module\DemoProductForm\Form\Modifier;
 
 use PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\SaveMyModuleCustomFieldHandler;
 use PrestaShop\Module\DemoProductForm\Entity\CustomProduct;
+use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -35,10 +36,10 @@ final class ProductFormModifier
     }
 
     /**
-     * @param int|null $productId
+     * @param ProductId|null $productId
      * @param FormBuilderInterface $productFormBuilder
      */
-    public function modify(?int $productId, FormBuilderInterface $productFormBuilder): void
+    public function modify(?ProductId $productId, FormBuilderInterface $productFormBuilder): void
     {
         $basicTabFormBuilder = $productFormBuilder->get('basic');
 
@@ -46,14 +47,15 @@ final class ProductFormModifier
     }
 
     /**
-     * @param int|null $productId
+     * @param ProductId|null $productId
      * @param FormBuilderInterface $basicTabFormBuilder
      *
      * @see SaveMyModuleCustomFieldHandler to check how the field is handled on form POST
      */
-    private function modifyBasicTab(?int $productId, FormBuilderInterface $basicTabFormBuilder): void
+    private function modifyBasicTab(?ProductId $productId, FormBuilderInterface $basicTabFormBuilder): void
     {
-        $customProduct = new CustomProduct($productId);
+        $idValue = $productId ? $productId->getValue() : null;
+        $customProduct = new CustomProduct($idValue);
 
         // adds simple text field at the end of Basic tab in product form
         $basicTabFormBuilder->add('demo_module_custom_field', TextType::class, [

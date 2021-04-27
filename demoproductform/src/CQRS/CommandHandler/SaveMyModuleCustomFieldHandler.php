@@ -50,12 +50,14 @@ final class SaveMyModuleCustomFieldHandler
      */
     public function handle(SaveMyModuleCustomFieldCommand $command): void
     {
+        // Command handlers should contain as less logic as possible, that should be wrapped in dedicated services instead,
+        // but for simplicity of example lets just leave the entity saving logic here
         $productId = $command->getProductId()->getValue();
 
         $customProduct = new CustomProduct($productId);
         $customProduct->custom_field = $command->getValue();
 
-        if ($customProduct->id === $productId) {
+        if ((int) $customProduct->id === $productId) {
             $customProduct->update();
 
             return;

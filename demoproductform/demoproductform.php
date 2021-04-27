@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 use PrestaShop\Module\DemoProductForm\Form\Modifier\ProductFormModifier;
 use PrestaShop\Module\DemoProductForm\Install\Installer;
+use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 use Symfony\Component\Translation\TranslatorInterface;
 
 if (!defined('_PS_VERSION_')) {
@@ -89,7 +90,7 @@ class DemoProductForm extends Module
         /** @var ProductFormModifier $productFormModifier */
         $productFormModifier = $this->get(ProductFormModifier::class);
 
-        $productId = isset($params['id']) ? (int) $params['id'] : null;
+        $productId = isset($params['id']) ? new ProductId((int) $params['id']) : null;
 
         $productFormModifier->modify($productId, $params['form_builder']);
     }
