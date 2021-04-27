@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoProductForm\Form\Modifier;
 
-use PrestaShop\Module\DemoProductForm\CQRS\Command\SaveMyModuleCustomFieldCommand;
-use PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\ModuleProductCommandsBuilder;
 use PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\SaveMyModuleCustomFieldHandler;
+use PrestaShop\PrestaShop\Core\ConfigurationInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use const http\Client\Curl\POSTREDIR_301;
 
 final class ProductFormModifier
 {
@@ -28,21 +26,27 @@ final class ProductFormModifier
     private $translator;
 
     /**
+     * @var ConfigurationInterface
+     */
+    private $configuration;
+
+    /**
      * @param TranslatorInterface $translator
+     * @param ConfigurationInterface $configuration
      */
     public function __construct(
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        ConfigurationInterface $configuration
     ) {
         $this->translator = $translator;
+        $this->configuration = $configuration;
     }
 
     /**
-     *
      * @param FormBuilderInterface $productFormBuilder
      */
     public function modify(FormBuilderInterface $productFormBuilder): void
     {
-        /** @var FormBuilderInterface $productFormBuilder */
         $basicTabFormBuilder = $productFormBuilder->get('basic');
 
         $this->modifyBasicTab($basicTabFormBuilder);
@@ -50,8 +54,8 @@ final class ProductFormModifier
 
     /**
      * @param FormBuilderInterface $basicTabFormBuilder
-     *@see SaveMyModuleCustomFieldHandler to check how the field is handled on form POST
      *
+     *@see SaveMyModuleCustomFieldHandler to check how the field is handled on form POST
      */
     private function modifyBasicTab(FormBuilderInterface $basicTabFormBuilder): void
     {
@@ -67,6 +71,7 @@ final class ProductFormModifier
             'attr' => [
                 'placeholder' => 'Your example text here',
             ],
+            'data' => $this->configuration->get('DEMO_MODULE_CUSTOM_FIELD'),
         ]);
     }
 }

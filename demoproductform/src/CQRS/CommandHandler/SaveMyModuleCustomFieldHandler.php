@@ -50,6 +50,6 @@ final class SaveMyModuleCustomFieldHandler
     public function handle(SaveMyModuleCustomFieldCommand $command): void
     {
         // do what you need with your command here. For example we are saving it to configuration
-        $this->configuration->set('DEMOPRODUCTFORM_CUSTOM_FIELD', $command->getValue());
+        $this->configuration->set('DEMO_MODULE_CUSTOM_FIELD', $command->getValue());
     }
 }
