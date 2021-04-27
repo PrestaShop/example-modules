@@ -12,13 +12,14 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoProductForm\CQRS\CommandHandler;
 
-use PrestaShop\Module\DemoProductForm\CQRS\Command\AddMyModuleCustomFieldCommand;
+use PrestaShop\Module\DemoProductForm\CQRS\Command\SaveMyModuleCustomFieldCommand;
 use PrestaShop\PrestaShop\Core\ConfigurationInterface;
+use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataHandler\ProductFormDataHandler;
 
 /**
- * Handles @see AddMyModuleCustomFieldCommand
+ * Handles @see SaveMyModuleCustomFieldCommand
  */
-final class AddMyModuleCustomFieldHandler
+final class SaveMyModuleCustomFieldHandler
 {
     /**
      * @var ConfigurationInterface
@@ -35,9 +36,18 @@ final class AddMyModuleCustomFieldHandler
     }
 
     /**
-     * @param AddMyModuleCustomFieldCommand $command
+     * This method will be triggered when related command is dispatched
+     * (more about cqrs https://devdocs.prestashop.com/1.7/development/architecture/domain/cqrs/)
+     *
+     * Note - product form data handler create() method is a little unique
+     * @see ProductFormDataHandler::create()
+     *
+     * It will create the product with couple required fields and then call the update method,
+     * so you don't actually need to hook on ProductFormDataHandler::create() method
+     *
+     * @param SaveMyModuleCustomFieldCommand $command
      */
-    public function handle(AddMyModuleCustomFieldCommand $command): void
+    public function handle(SaveMyModuleCustomFieldCommand $command): void
     {
         // do what you need with your command here. For example we are saving it to configuration
         $this->configuration->set('DEMOPRODUCTFORM_CUSTOM_FIELD', $command->getValue());

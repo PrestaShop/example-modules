@@ -24,9 +24,9 @@ use PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\ModuleProductCommandsB
  * Command is used to pass the information and call related handler, it doesnt actually do anything by itself.
  * The name of command should reflect the actual use case and should be handled by a handler
  *
- * @see AddMyModuleCustomFieldHandler
+ * @see SaveMyModuleCustomFieldHandler
  */
-final class AddMyModuleCustomFieldCommand
+final class SaveMyModuleCustomFieldCommand
 {
     /**
      * @var string

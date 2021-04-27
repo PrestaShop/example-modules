@@ -5,11 +5,13 @@ services:
         arguments:
             - '@translator'
 
-    PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\AddMyModuleCustomFieldHandler:
-        class: PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\AddMyModuleCustomFieldHandler
+    PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\SaveMyModuleCustomFieldHandler:
+        class: PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\SaveMyModuleCustomFieldHandler
+        arguments:
+            - '@prestashop.adapter.legacy.configuration'
         tags:
             - name: tactician.handler
-              command: PrestaShop\Module\DemoProductForm\CQRS\Command\AddMyModuleCustomFieldCommand
+              command: PrestaShop\Module\DemoProductForm\CQRS\Command\SaveMyModuleCustomFieldCommand
 
     PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\ModuleProductCommandsBuilder:
         class: PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\ModuleProductCommandsBuilder

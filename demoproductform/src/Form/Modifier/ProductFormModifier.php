@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoProductForm\Form\Modifier;
 
-use PrestaShop\Module\DemoProductForm\CQRS\Command\AddMyModuleCustomFieldCommand;
+use PrestaShop\Module\DemoProductForm\CQRS\Command\SaveMyModuleCustomFieldCommand;
 use PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\ModuleProductCommandsBuilder;
-use PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\AddMyModuleCustomFieldHandler;
+use PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\SaveMyModuleCustomFieldHandler;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -49,9 +49,9 @@ final class ProductFormModifier
     }
 
     /**
-     * @see AddMyModuleCustomFieldHandler to check how the field is handled on form POST
-     *
      * @param FormBuilderInterface $basicTabFormBuilder
+     *@see SaveMyModuleCustomFieldHandler to check how the field is handled on form POST
+     *
      */
     private function modifyBasicTab(FormBuilderInterface $basicTabFormBuilder): void
     {

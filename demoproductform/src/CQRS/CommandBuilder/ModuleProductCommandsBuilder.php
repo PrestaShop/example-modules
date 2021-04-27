@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder;
 
-use PrestaShop\Module\DemoProductForm\CQRS\Command\AddMyModuleCustomFieldCommand;
+use PrestaShop\Module\DemoProductForm\CQRS\Command\SaveMyModuleCustomFieldCommand;
 use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\Product\ProductCommandsBuilderInterface;
 
@@ -32,7 +32,7 @@ final class ModuleProductCommandsBuilder implements ProductCommandsBuilderInterf
         $commands = [];
 
         if (isset($formData['basic']['demo_module_custom_field'])) {
-            $commands[] = new AddMyModuleCustomFieldCommand($formData['basic']['demo_module_custom_field']);
+            $commands[] = new SaveMyModuleCustomFieldCommand($formData['basic']['demo_module_custom_field']);
         }
 
         return $commands;
