@@ -7,3 +7,14 @@ services:
 
     PrestaShop\Module\DemoProductForm\Form\Handler\ProductFormHandler:
         class: PrestaShop\Module\DemoProductForm\Form\Handler\ProductFormHandler
+
+    PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\AddMyModuleCustomFieldHandler:
+        class: PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\AddMyModuleCustomFieldHandler
+        tags:
+            - name: tactician.handler
+              command: PrestaShop\Module\DemoProductForm\CQRS\Command\AddMyModuleCustomFieldCommand
+
+    PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\ModuleProductCommandsBuilder:
+        class: PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\ModuleProductCommandsBuilder
+#        This tag is important. Core product command builder finds this builder by the tag
+        tags: ['core.product_command_builder']
