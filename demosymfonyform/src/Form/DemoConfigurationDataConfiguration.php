@@ -28,9 +28,8 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoSymfonyForm\Form;
 
-use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
 use PrestaShop\PrestaShop\Core\ConfigurationInterface;
-use PrestaShop\PrestaShop\Core\Tax\Ecotax\ProductEcotaxResetterInterface;
+use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
 
 /**
  * Handles configuration data for tax options.
