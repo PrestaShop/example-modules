@@ -57,20 +57,36 @@ final class ProductFormModifier
         $idValue = $productId ? $productId->getValue() : null;
         $customProduct = new CustomProduct($idValue);
 
-        // adds simple text field at the end of Basic tab in product form
-        $basicTabFormBuilder->add('demo_module_custom_field', TextType::class, [
-            // you can remove the label if you dont need it by passing 'label' => false
-            'label' => $this->translator->trans('Demo custom field', [], 'Modules.Demoproductform.Admin'),
-            // customize label by any html attribute
-            'label_attr' => [
-                'title' => 'h2',
-                'class' => 'text-info',
-            ],
-            'attr' => [
-                'placeholder' => 'Your example text here',
-            ],
-            // this is just an example, but in real case scenario you could have some data provider class to wrap more complex cases
-            'data' => $customProduct->custom_field,
-        ]);
+        $formTypes = [];
+        /** @var FormBuilderInterface $formType */
+        foreach ($basicTabFormBuilder->all() as $formType) {
+            $typeName = $formType->getName();
+            // collect all the form child into local variable and remove them from
+            $formTypes[$typeName] = $formType;
+            $basicTabFormBuilder->remove($typeName);
+        }
+
+        foreach ($formTypes as $name => $type) {
+            // add the type again
+            $basicTabFormBuilder->add($type);
+
+            if ($name === 'description') {
+                // once we find the description field, we add our custom field right after it.
+                $basicTabFormBuilder->add('demo_module_custom_field', TextType::class, [
+                    // you can remove the label if you dont need it by passing 'label' => false
+                    'label' => $this->translator->trans('Demo custom field', [], 'Modules.Demoproductform.Admin'),
+                    // customize label by any html attribute
+                    'label_attr' => [
+                        'title' => 'h2',
+                        'class' => 'text-info',
+                    ],
+                    'attr' => [
+                        'placeholder' => 'Your example text here',
+                    ],
+                    // this is just an example, but in real case scenario you could have some data provider class to wrap more complex cases
+                    'data' => $customProduct->custom_field,
+                ]);
+            }
+        }
     }
 }
