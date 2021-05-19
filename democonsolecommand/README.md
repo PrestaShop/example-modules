@@ -2,7 +2,7 @@
 
 ## About
 
-Example module showing how to implement Symfony console command
+Example module showing how to implement Symfony console command. For more info check Symfony docs https://symfony.com/doc/current/console.
 
 ### Supported PrestaShop versions
 
