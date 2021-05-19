@@ -1,5 +1,5 @@
 {
-  "name": "prestashop/demodecoratehandler",
+  "name": "prestashop/demooverrideobjectmodel",
   "authors": [
     {
       "name": "Julius Zukauskas",
@@ -11,7 +11,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "PrestaShop\\Module\\DemoDecorateHandler\\": "src/"
+      "PrestaShop\\Module\\DemoOverrideObjectModel\\": "src/"
     },
     "config": {
       "prepend-autoloader": false

@@ -1,0 +1,1 @@
+ALTER TABLE _DB_PREFIX_manufacturer ADD `code` VARCHAR(64) NOT NULL DEFAULT '';
