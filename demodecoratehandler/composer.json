@@ -1,0 +1,21 @@
+{
+  "name": "prestashop/demodecoratehandler",
+  "authors": [
+    {
+      "name": "Julius Zukauskas",
+      "email": "julius.zukauskas@invertus.eu"
+    },
+    {
+      "name": "PrestaShop Core team"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "PrestaShop\\Module\\DemoDecorateHandler\\": "src/"
+    },
+    "config": {
+      "prepend-autoloader": false
+    },
+    "type": "prestashop-module"
+  }
+}
