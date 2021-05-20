@@ -28,9 +28,9 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoSymfonyForm\Controller;
 
+use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 
 class DemoConfigurationController extends FrameworkBundleAdminController
 {
@@ -47,6 +47,7 @@ class DemoConfigurationController extends FrameworkBundleAdminController
 
             if (empty($errors)) {
                 $this->addFlash('success', $this->trans('Successful update.', 'Admin.Notifications.Success'));
+
                 return $this->redirectToRoute('demo_configuration_form');
             }
 

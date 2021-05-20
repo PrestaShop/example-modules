@@ -33,10 +33,8 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 
 /**
  * Provider ir responsible for providing form data, in this case it's as simple as using configuration to do that
- * 
- * Class DemoConfigurationTextFormDataProvider
  *
- * @package PrestaShop\Module\DemoSymfonyForm\Form
+ * Class DemoConfigurationTextFormDataProvider
  */
 class DemoConfigurationTextFormDataProvider implements FormDataProviderInterface
 {
@@ -69,4 +67,3 @@ class DemoConfigurationTextFormDataProvider implements FormDataProviderInterface
         return $this->demoConfigurationTextDataConfiguration->updateConfiguration($data);
     }
 }
-
