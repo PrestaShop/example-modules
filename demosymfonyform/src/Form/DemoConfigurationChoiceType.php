@@ -36,7 +36,6 @@ use PrestaShopBundle\Form\Admin\Type\Material\MaterialMultipleChoiceTableType;
 use PrestaShopBundle\Form\Admin\Type\ShopChoiceTreeType;
 use PrestaShopBundle\Form\Admin\Type\SwitchType;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
-use PrestaShopBundle\Form\Admin\Type\YesAndNoChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class DemoConfigurationChoiceType extends TranslatorAwareType
@@ -151,13 +150,6 @@ class DemoConfigurationChoiceType extends TranslatorAwareType
                 SwitchType::class,
                 [
                     'label' => $this->trans('Switch type', 'Modules.DemoSymfonyForm.Admin'),
-                ]
-            )
-            ->add(
-                'yes_and_no_type',
-                YesAndNoChoiceType::class,
-                [
-                    'label' => $this->trans('Yes and no type', 'Modules.DemoSymfonyForm.Admin'),
                 ]
             );
     }

@@ -43,7 +43,6 @@ final class DemoConfigurationChoiceDataConfiguration implements DataConfiguratio
     public const MATERIAL_CHOICE_MULTIPLE_CHOICES_TABLE = 'DEMO_SYMFONY_FORM_MATERIAL_CHOICE_MULTIPLE_CHOICES_TABLE';
     public const SHOP_CHOICES_TREE_TYPE = 'DEMO_SYMFONY_FORM_SHOP_CHOICES_TREE_TYPE';
     public const SWITCH_TYPE = 'DEMO_SYMFONY_FORM_SWITCH_TYPE';
-    public const YES_AND_NO_TYPE = 'DEMO_SYMFONY_FORM_YES_AND_NO_TYPE';
 
     /**
      * @var ConfigurationInterface
@@ -86,9 +85,6 @@ final class DemoConfigurationChoiceDataConfiguration implements DataConfiguratio
         if ($switchType = $this->configuration->get(static::SWITCH_TYPE)) {
             $return['switch_type'] = $switchType;
         }
-        if ($yesAndNoType = $this->configuration->get(static::YES_AND_NO_TYPE)) {
-            $return['yes_and_no_type'] = $yesAndNoType;
-        }
 
         return $return;
     }
@@ -105,7 +101,6 @@ final class DemoConfigurationChoiceDataConfiguration implements DataConfiguratio
         $this->configuration->set(static::MATERIAL_CHOICE_MULTIPLE_CHOICES_TABLE, json_encode($configuration['material_choice_multiple_choices_table']));
         $this->configuration->set(static::SHOP_CHOICES_TREE_TYPE, json_encode($configuration['shop_choices_tree_type']));
         $this->configuration->set(static::SWITCH_TYPE, $configuration['switch_type']);
-        $this->configuration->set(static::YES_AND_NO_TYPE, $configuration['yes_and_no_type']);
 
         return [];
     }

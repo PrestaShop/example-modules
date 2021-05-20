@@ -46,13 +46,6 @@ class DemoConfigurationOtherType extends TranslatorAwareType
     {
         $builder
             ->add(
-                'change_password_type',
-                ChangePasswordType::class,
-                [
-                    'label' => $this->trans('Change password type', 'Modules.DemoSymfonyForm.Admin'),
-                ]
-            )
-            ->add(
                 'money_with_suffix_type',
                 MoneyWithSuffixType::class,
                 [

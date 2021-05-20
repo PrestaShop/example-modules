@@ -36,7 +36,6 @@ use PrestaShop\PrestaShop\Core\ConfigurationInterface;
  */
 final class DemoConfigurationOtherDataConfiguration implements DataConfigurationInterface
 {
-    public const CHANGE_PASSWORD_TYPE = 'DEMO_SYMFONY_FORM_CHANGE_PASSWORD_TYPE';
     public const MONEY_WITH_SUFFIX_TYPE = 'DEMO_SYMFONY_FORM_MONEY_WITH_SUFFIX_TYPE';
     public const DATE_PICKER_TYPE = 'DEMO_SYMFONY_FORM_DATE_PICKER_TYPE';
     public const DATE_RANGE_TYPE = 'DEMO_SYMFONY_FORM_DATE_RANGE_TYPE';
@@ -61,9 +60,7 @@ final class DemoConfigurationOtherDataConfiguration implements DataConfiguration
     public function getConfiguration(): array
     {
         $return = [];
-        if ($changePasswordType = $this->configuration->get(static::CHANGE_PASSWORD_TYPE)) {
-            $return['change_password_type'] = $changePasswordType;
-        }
+
         if ($moneyWithSuffixType = $this->configuration->get(static::MONEY_WITH_SUFFIX_TYPE)) {
             $return['money_with_suffix_type'] = $moneyWithSuffixType;
         }
@@ -88,7 +85,6 @@ final class DemoConfigurationOtherDataConfiguration implements DataConfiguration
      */
     public function updateConfiguration(array $configuration): array
     {
-        $this->configuration->set(static::CHANGE_PASSWORD_TYPE, $configuration['change_password_type']);
         $this->configuration->set(static::MONEY_WITH_SUFFIX_TYPE, $configuration['money_with_suffix_type']);
         $this->configuration->set(static::DATE_PICKER_TYPE, $configuration['date_picker_type']);
         $this->configuration->set(static::DATE_RANGE_TYPE, json_encode($configuration['date_range_type']));
