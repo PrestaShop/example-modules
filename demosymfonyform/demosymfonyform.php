@@ -50,6 +50,18 @@ class DemoSymfonyForm extends Module
         $this->ps_versions_compliancy = array('min' => '1.7.8.0', 'max' => _PS_VERSION_);
     }
 
+    public function getTabs()
+    {
+        return [
+            [
+                'class_name' => 'AdminDemoSymfonyForm',
+                'visible' => true,
+                'name' => 'Admin symfony form single',
+                'parent_class_name' => 'Sell',
+            ],
+        ];
+    }
+
     public function getContent()
     {
         $route = SymfonyContainer::getInstance()->get('router')->generate('demo_configuration_form');
