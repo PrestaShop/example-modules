@@ -26,4 +26,3 @@ demo_configuration_other_form_save:
   methods: [ POST ]
   defaults:
     _controller: 'PrestaShop\Module\DemoSymfonyForm\Controller\DemoConfigurationMultipleFormsController::saveOtherForm'
-
