@@ -31,6 +31,13 @@ namespace PrestaShop\Module\DemoSymfonyForm\Form;
 use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
 use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 
+/**
+ * Provider ir responsible for providing form data, in this case it's as simple as using configuration to do that
+ * 
+ * Class DemoConfigurationTextFormDataProvider
+ *
+ * @package PrestaShop\Module\DemoSymfonyForm\Form
+ */
 class DemoConfigurationTextFormDataProvider implements FormDataProviderInterface
 {
     /**
