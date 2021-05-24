@@ -6,11 +6,11 @@ This is example module explaining various extendability options in product page 
 1. Add custom text field in product form basic tab
 2. Save custom text field into database using dedicated object model
 3. Show how to use ProductCommandsBuilder (specific to new Product page)
-4. Use symfony translation component
+4. Use Module [modern translation system](https://devdocs.prestashop.com/1.7/modules/creation/module-translation/new-system/)
 
 ### Supported PrestaShop versions
 
-Compatible with and 1.7.8.0 and above versions.
+Compatible with 1.7.8.0 and above versions.
 
 ### Requirements
 

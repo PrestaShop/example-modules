@@ -56,6 +56,8 @@ final class SaveMyModuleCustomFieldHandler
 
         $customProduct = new CustomProduct($productId);
         $customProduct->custom_field = $command->getValue();
+        // setFieldsToUpdate can be set to explicitly specify fields for update (other fields would not be updated)
+        $customProduct->setFieldsToUpdate(['custom_field' => true]);
 
         if ((int) $customProduct->id === $productId) {
             $customProduct->update();
