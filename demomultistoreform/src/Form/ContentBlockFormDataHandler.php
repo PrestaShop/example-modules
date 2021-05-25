@@ -13,7 +13,9 @@ namespace PrestaShop\Module\DemoMultistoreForm\Form;
 
 use PrestaShop\Module\DemoMultistoreForm\Entity\ContentBlock;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataHandler\FormDataHandlerInterface;
-use Doctrine\ORM\EntityManagerInterface;;
+use Doctrine\ORM\EntityManagerInterface;
+
+;
 
 class ContentBlockFormDataHandler implements FormDataHandlerInterface
 {

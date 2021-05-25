@@ -31,7 +31,9 @@ namespace PrestaShop\Module\DemoMultistoreForm\Form;
 use PrestaShopBundle\Form\Admin\Type\CommonAbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use PrestaShopBundle\Form\Admin\Type\SwitchType;;
+use PrestaShopBundle\Form\Admin\Type\SwitchType;
+
+;
 use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\TypedRegex;
 use Symfony\Component\Validator\Constraints\Length;
 
@@ -43,7 +45,10 @@ class ContentBlockType extends CommonAbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class, [
+            ->add(
+                'title',
+                TextType::class,
+                [
                     'label' => 'title',
                     'help' => 'Throws error if length is > 20 or text contains <>={}',
                     'constraints' => [
@@ -56,7 +61,10 @@ class ContentBlockType extends CommonAbstractType
                     ],
                 ]
             )
-            ->add('description', TextType::class, [
+            ->add(
+                'description',
+                TextType::class,
+                [
                     'label' => 'Description',
                     'help' => 'Throws error if length is > 50 or text contains <>={}',
                     'constraints' => [
@@ -69,10 +77,12 @@ class ContentBlockType extends CommonAbstractType
                     ],
                 ]
             )
-            ->add('enable', SwitchType::class, [
+            ->add(
+                'enable',
+                SwitchType::class,
+                [
                 'label' => 'Enable',
             ]
-        );
+            );
     }
-
 }

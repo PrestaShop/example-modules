@@ -58,8 +58,8 @@ class DemoMultistoreController extends FrameworkBundleAdminController
         $form = $formDataHandler->getForm();
         $form->handleRequest($request);
 
-        $quoteFormHandler = $this->get('prestashop.module.demo_multistore.form.identifiable_object.handler.content_block_form_handler');
-        $result = $quoteFormHandler->handle($form);
+        $formHandler = $this->get('prestashop.module.demo_multistore.form.identifiable_object.handler.content_block_form_handler');
+        $result = $formHandler->handle($form);
 
         if (null !== $result->getIdentifiableObjectId()) {
             $this->addFlash(
@@ -82,8 +82,8 @@ class DemoMultistoreController extends FrameworkBundleAdminController
         $form = $formBuilder->getFormFor((int) $contentBlockId);
         $form->handleRequest($request);
 
-        $quoteFormHandler = $this->get('prestashop.module.demo_multistore.form.identifiable_object.handler.content_block_form_handler');
-        $result = $quoteFormHandler->handleFor($contentBlockId, $form);
+        $formHandler = $this->get('prestashop.module.demo_multistore.form.identifiable_object.handler.content_block_form_handler');
+        $result = $formHandler->handleFor($contentBlockId, $form);
 
         if (null !== $result->getIdentifiableObjectId()) {
             $this->addFlash(

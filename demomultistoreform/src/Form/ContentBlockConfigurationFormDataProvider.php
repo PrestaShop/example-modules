@@ -62,4 +62,3 @@ class ContentBlockConfigurationFormDataProvider implements FormDataProviderInter
         return $this->contentBlockConfigurationDataConfiguration->updateConfiguration($data);
     }
 }
-

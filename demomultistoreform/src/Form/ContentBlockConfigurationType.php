@@ -32,7 +32,9 @@ use PrestaShopBundle\Form\Admin\Type\ColorPickerType;
 use PrestaShopBundle\Form\Admin\Type\CommonAbstractType;
 use PrestaShopBundle\Form\Admin\Type\MultistoreConfigurationType;
 use Symfony\Component\Form\FormBuilderInterface;
-use PrestaShopBundle\Form\Admin\Type\SwitchType;;
+use PrestaShopBundle\Form\Admin\Type\SwitchType;
+
+;
 
 class ContentBlockConfigurationType extends CommonAbstractType
 {
@@ -49,14 +51,20 @@ class ContentBlockConfigurationType extends CommonAbstractType
                     'multistore_configuration_key' => 'PS_DEMO_MULTISTORE_COLOR',
                 ],
             ])
-            ->add('italic', SwitchType::class, [
+            ->add(
+                'italic',
+                SwitchType::class,
+                [
                     'label' => 'Italic',
                     'attr' => [
                         'multistore_configuration_key' => 'PS_DEMO_MULTISTORE_ITALIC',
                     ],
                 ]
             )
-            ->add('bold', SwitchType::class, [
+            ->add(
+                'bold',
+                SwitchType::class,
+                [
                     'label' => 'Bold',
                     'attr' => [
                         'multistore_configuration_key' => 'PS_DEMO_MULTISTORE_BOLD',
