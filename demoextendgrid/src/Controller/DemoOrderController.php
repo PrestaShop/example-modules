@@ -26,7 +26,7 @@
 
 declare(strict_types=1);
 
-namespace PrestaShop\Module\DemoExtendGrid\FrameworkBundleAdminController;
+namespace PrestaShop\Module\DemoExtendGrid\Controller;
 
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,8 +41,6 @@ class DemoOrderController extends FrameworkBundleAdminController
     public function markOrderAction(int $orderId): Response
     {
         // Do what you need depending on use case
-        $this->addFlash('success', $this->trans('Order was successfully marked', 'Admin.Catalog.Orders'));
-
-        return $this->redirectToRoute('admin_orders_index');
+        return $this->json(sprintf('Marked order %d', $orderId));
     }
 }

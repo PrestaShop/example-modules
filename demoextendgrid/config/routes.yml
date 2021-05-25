@@ -2,6 +2,6 @@ demo_admin_orders_mark_order:
   path: demoextendgrid/{orderId}/mark-order
   methods: [POST]
   defaults:
-    _controller: PrestaShop\Module\DemoExtendGrid\Controller\DemoOrderController::markOrder
+    _controller: PrestaShop\Module\DemoExtendGrid\Controller\DemoOrderController::markOrderAction
   requirements:
       orderId: \d+

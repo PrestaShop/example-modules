@@ -4,6 +4,7 @@
 
 This module demonstrates:
  * how to insert add additional action to existing grid
+ * how to register javascript in admin controller
 
  ### Supported PrestaShop versions
 

@@ -44,6 +44,7 @@ class Installer
     {
         $hooks = [
             'actionOrderGridDefinitionModifier',
+            'actionAdminControllerSetMedia',
         ];
 
         return (bool) $module->registerHook($hooks);
