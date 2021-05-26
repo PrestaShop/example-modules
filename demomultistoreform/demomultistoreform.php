@@ -30,6 +30,8 @@ use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 
 class DemoMultistoreForm extends Module
 {
+    public $multistoreCompatibility = self::MULTISTORE_COMPATIBILITY_YES;
+
     public function __construct()
     {
         $this->name = 'demomultistoreform';
