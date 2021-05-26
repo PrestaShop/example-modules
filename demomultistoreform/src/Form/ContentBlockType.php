@@ -29,11 +29,10 @@ declare(strict_types=1);
 namespace PrestaShop\Module\DemoMultistoreForm\Form;
 
 use PrestaShopBundle\Form\Admin\Type\CommonAbstractType;
+use PrestaShopBundle\Form\Admin\Type\ShopChoiceTreeType;
+use PrestaShopBundle\Form\Admin\Type\SwitchType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use PrestaShopBundle\Form\Admin\Type\SwitchType;
-
-;
 use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\TypedRegex;
 use Symfony\Component\Validator\Constraints\Length;
 
@@ -81,8 +80,12 @@ class ContentBlockType extends CommonAbstractType
                 'enable',
                 SwitchType::class,
                 [
-                'label' => 'Enable',
-            ]
+                    'label' => 'Enable',
+                ]
+            )
+            ->add(
+                'shop_association',
+                ShopChoiceTreeType::class
             );
     }
 }
