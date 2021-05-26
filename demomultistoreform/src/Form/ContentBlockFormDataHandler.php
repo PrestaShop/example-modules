@@ -14,8 +14,7 @@ namespace PrestaShop\Module\DemoMultistoreForm\Form;
 use PrestaShop\Module\DemoMultistoreForm\Entity\ContentBlock;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataHandler\FormDataHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
-
-;
+use PrestaShopBundle\Entity\Shop;
 
 class ContentBlockFormDataHandler implements FormDataHandlerInterface
 {
@@ -37,7 +36,7 @@ class ContentBlockFormDataHandler implements FormDataHandlerInterface
         $contentBlock->setTitle($data['title']);
         $contentBlock->setDescription($data['description']);
         $contentBlock->setEnable($data['enable']);
-
+        $this->addAssociatedShops($contentBlock, $data['shop_association'] ?? null);
         $this->em->persist($contentBlock);
         $this->em->flush();
 
@@ -53,8 +52,27 @@ class ContentBlockFormDataHandler implements FormDataHandlerInterface
         $contentBlock->setTitle($data['title']);
         $contentBlock->setDescription($data['description']);
         $contentBlock->setEnable($data['enable']);
+        $this->addAssociatedShops($contentBlock, $data['shop_association'] ?? null);
         $this->em->flush();
 
         return $contentBlock->getId();
+    }
+
+    /**
+     * @param ContentBlock $contentBlock
+     * @param array|null $shopIdList
+     */
+    private function addAssociatedShops(ContentBlock &$contentBlock, array $shopIdList = null): void
+    {
+        $contentBlock->clearShops();
+
+        if (empty($shopIdList)) {
+            return;
+        }
+
+        foreach ($shopIdList as $shopId) {
+            $shop = $this->em->getRepository(Shop::class)->find($shopId);
+            $contentBlock->addShop($shop);
+        }
     }
 }

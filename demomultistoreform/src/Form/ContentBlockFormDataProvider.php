@@ -54,12 +54,17 @@ class ContentBlockFormDataProvider implements FormDataProviderInterface
      */
     public function getData($id): array
     {
-        $entity = $this->em->getRepository(ContentBlock::class)->find((int) $id);
+        $contentBlock = $this->em->getRepository(ContentBlock::class)->find((int) $id);
+        $shopIds = [];
+        foreach ($contentBlock->getShops() as $shop) {
+            $shopIds[] = $shop->getId();
+        }
 
         return [
-            'title' => $entity->getTitle(),
-            'description' => $entity->getDescription(),
-            'enable' => $entity->getEnable(),
+            'title' => $contentBlock->getTitle(),
+            'description' => $contentBlock->getDescription(),
+            'enable' => $contentBlock->getEnable(),
+            'shop_association' => $shopIds,
         ];
     }
 
@@ -71,7 +76,8 @@ class ContentBlockFormDataProvider implements FormDataProviderInterface
         return [
             'title' => '',
             'description' => '',
-            'enable' => false
+            'enable' => false,
+            'shop_association' => [],
         ];
     }
 }
