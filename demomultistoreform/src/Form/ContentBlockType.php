@@ -85,7 +85,10 @@ class ContentBlockType extends CommonAbstractType
             )
             ->add(
                 'shop_association',
-                ShopChoiceTreeType::class
+                ShopChoiceTreeType::class,
+                [
+                    'label' => 'Shop associations',
+                ]
             );
     }
 }
