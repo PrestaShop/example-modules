@@ -48,3 +48,8 @@
   {{ form_end(contentBlockForm) }}
 {% endblock %}
 
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('../modules/demomultistoreform/views/js/createForm.js') }}"></script>
+{% endblock %}
+
