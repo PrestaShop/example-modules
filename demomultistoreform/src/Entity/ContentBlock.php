@@ -28,7 +28,10 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoMultistoreForm\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use PrestaShopBundle\Entity\Shop;
 
 /**
  * @ORM\Table()
@@ -66,6 +69,20 @@ class ContentBlock
      * @ORM\Column(name="enable", type="boolean")
      */
     private $enable;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="PrestaShopBundle\Entity\Shop", cascade={"persist"})
+     * @ORM\JoinTable(
+     *      joinColumns={@ORM\JoinColumn(name="id_content_block", referencedColumnName="id_content_block")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id_shop", referencedColumnName="id_shop", onDelete="CASCADE")}
+     * )
+     */
+    private $shops;
+
+    public function __construct()
+    {
+        $this->shops = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -121,5 +138,37 @@ class ContentBlock
     public function setEnable(bool $enable): void
     {
         $this->enable = $enable;
+    }
+
+    /**
+     * @param Shop $shop
+     */
+    public function addShop(Shop $shop): void
+    {
+        $this->shops[] = $shop;
+    }
+
+    /**
+     * @param Shop $shop
+     */
+    public function removeShop(Shop $shop): void
+    {
+        $this->shops->removeElement($shop);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getShops(): Collection
+    {
+        return $this->shops;
+    }
+
+    /**
+     * @return void
+     */
+    public function clearShops(): void
+    {
+        $this->shops->clear();
     }
 }
