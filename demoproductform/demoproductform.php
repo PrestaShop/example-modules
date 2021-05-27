@@ -89,9 +89,10 @@ class DemoProductForm extends Module
     {
         /** @var ProductFormModifier $productFormModifier */
         $productFormModifier = $this->get(ProductFormModifier::class);
+        $formData = $params['data'];
 
         $productId = isset($params['id']) ? new ProductId((int) $params['id']) : null;
 
-        $productFormModifier->modify($productId, $params['form_builder']);
+        $productFormModifier->modify($productId, $params['form_builder'], $formData);
     }
 }

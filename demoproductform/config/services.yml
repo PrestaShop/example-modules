@@ -1,9 +1,13 @@
 #https://devdocs.prestashop.com/1.7/modules/concepts/services/
 services:
+    PrestaShop\Module\DemoProductForm\Form\Modifier\FormBuilderModifier:
+        class: PrestaShop\Module\DemoProductForm\Form\Modifier\FormBuilderModifier
+
     PrestaShop\Module\DemoProductForm\Form\Modifier\ProductFormModifier:
         class: PrestaShop\Module\DemoProductForm\Form\Modifier\ProductFormModifier
         arguments:
             - '@translator'
+            - '@PrestaShop\Module\DemoProductForm\Form\Modifier\FormBuilderModifier'
 
     PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\SaveMyModuleCustomFieldHandler:
         class: PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\SaveMyModuleCustomFieldHandler
@@ -15,5 +19,5 @@ services:
 
     PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\ModuleProductCommandsBuilder:
         class: PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\ModuleProductCommandsBuilder
-#        This tag is important. Core product command builder finds this builder by the tag
+        # This tag is important. Core product command builder finds this builder by the tag
         tags: ['core.product_command_builder']

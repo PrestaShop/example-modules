@@ -29,12 +29,12 @@ final class ModuleProductCommandsBuilder implements ProductCommandsBuilderInterf
 {
     public function buildCommands(ProductId $productId, array $formData): array
     {
-        $commands = [];
-
         if (isset($formData['basic']['demo_module_custom_field'])) {
-            $commands[] = new SaveMyModuleCustomFieldCommand($productId->getValue(), $formData['basic']['demo_module_custom_field']);
+            return [
+                new SaveMyModuleCustomFieldCommand($productId->getValue(), $formData['basic']['demo_module_custom_field'])
+            ];
         }
 
-        return $commands;
+        return [];
     }
 }
