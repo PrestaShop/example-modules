@@ -2,10 +2,16 @@ services:
 
   # installer
   prestashop.module.demo_multistore.content_block_installer:
-  class: 'PrestaShop\Module\DemoMultistoreForm\Database\ContentBlockInstaller'
-  arguments:
-     - '@doctrine.dbal.default_connection'
-     - '%database_prefix%'
+    class: 'PrestaShop\Module\DemoMultistoreForm\Database\ContentBlockInstaller'
+    arguments:
+      - '@doctrine.dbal.default_connection'
+      - '%database_prefix%'
+
+  # fixtures
+  prestashop.module.demo_multistore.content_block_generator:
+    class: 'PrestaShop\Module\DemoMultistoreForm\Database\ContentBlockGenerator'
+    arguments:
+      - '@doctrine.orm.default_entity_manager'
 
   #creation/edition form
   prestashop.module.demo_multistore.form.identifiable_object.data_provider.content_block_form_data_provider:
