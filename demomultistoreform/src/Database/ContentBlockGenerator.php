@@ -46,21 +46,29 @@ class ContentBlockGenerator
         $this->entityManager = $entityManager;
     }
 
-    public function generateContentBlockFixtures()
+    public function generateContentBlockFixtures(): bool
     {
-        $this->removeAll();
-        $jsonFile = __DIR__ . '/../../Resources/contentBlocks.json';
-        $contentBlocksData = json_decode(file_get_contents($jsonFile), true);
+        $errors = [];
 
-        foreach ($contentBlocksData as $data) {
-            $contentBlock = new ContentBlock();
-            $contentBlock->setTitle($data['title']);
-            $contentBlock->setDescription($data['description']);
-            $contentBlock->setEnable($data['enable']);
-            $this->entityManager->persist($contentBlock);
+        try {
+            $this->removeAll();
+            $jsonFile = __DIR__ . '/../../Resources/contentBlocks.json';
+            $contentBlocksData = json_decode(file_get_contents($jsonFile), true);
+
+            foreach ($contentBlocksData as $data) {
+                $contentBlock = new ContentBlock();
+                $contentBlock->setTitle($data['title']);
+                $contentBlock->setDescription($data['description']);
+                $contentBlock->setEnable($data['enable']);
+                $this->entityManager->persist($contentBlock);
+            }
+
+            $this->entityManager->flush();
+        } catch (\Exception $e) {
+            return false;
         }
 
-        $this->entityManager->flush();
+        return true;
     }
 
     private function removeAll()

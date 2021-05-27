@@ -53,13 +53,14 @@ class ContentBlockInstaller
         $this->dbPrefix = $dbPrefix;
     }
 
-    public function createTables(): array
+    public function createTables(): bool
     {
         $this->dropTables();
         $sqlFile = __DIR__ . '/../../Resources/install.sql';
         $sqlQueries = explode(PHP_EOL, file_get_contents($sqlFile));
         $sqlQueries = str_replace('PREFIX_', $this->dbPrefix, $sqlQueries);
 
+        $errors = [];
         foreach ($sqlQueries as $query) {
             if (empty($query)) {
                 continue;
@@ -74,10 +75,10 @@ class ContentBlockInstaller
             }
         }
 
-        return $errors;
+        return empty($errors);
     }
 
-    public function dropTables(): array
+    public function dropTables(): bool
     {
         $errors = [];
         $tableNames = [
@@ -96,6 +97,6 @@ class ContentBlockInstaller
             }
         }
 
-        return $errors;
+        return empty($errors);
     }
 }

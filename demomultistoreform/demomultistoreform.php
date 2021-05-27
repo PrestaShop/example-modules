@@ -54,15 +54,22 @@ class DemoMultistoreForm extends Module
         $this->ps_versions_compliancy = array('min' => '1.7.8.0', 'max' => _PS_VERSION_);
     }
 
-    public function install(): void
+    /**
+     * @return bool
+     */
+    public function install(): bool
     {
-        $this->getInstaller()->createTables();
-        $this->getFixturesGenerator()->generateContentBlockFixtures();
+        return $this->getInstaller()->createTables()
+            && $this->getFixturesGenerator()->generateContentBlockFixtures()
+            && parent::install();
     }
 
-    public function uninstall(): void
+    /**
+     * @return bool
+     */
+    public function uninstall(): bool
     {
-        $this->getInstaller()->dropTables();
+        return $this->getInstaller()->dropTables() && parent::uninstall();
     }
 
     public function getContent(): void
