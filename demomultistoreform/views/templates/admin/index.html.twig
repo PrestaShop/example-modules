@@ -23,6 +23,14 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  *#}
 
+{% set layoutHeaderToolbarBtn = {
+  'add' : {
+    'href': path('demo_multistore_create'),
+    'desc': 'Add new content block'|trans({}, 'Admin.International.Feature'),
+    'icon': 'add_circle_outline'
+  }
+} %}
+
 {% extends '@PrestaShop/Admin/layout.html.twig' %}
 {% form_theme configurationForm 'PrestaShopBundle:Admin/TwigTemplateForm:prestashop_ui_kit.html.twig' %}
 
