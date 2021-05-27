@@ -101,7 +101,7 @@ final class DemoConfigurationTextDataConfiguration implements DataConfigurationI
         $this->configuration->set(static::TRANSLATABLE_TEXT_AREA, $configuration['translatable_text_area_type']);
         /* Adding html => true allows for configuration->set to save HTML values */
         $this->configuration->set(static::TRANSLATABLE_FORMATTED_TEXT_AREA, $configuration['translatable_formatted_text_area_type'], null, ['html' => true]);
-        $this->configuration->set(static::FORMATTED_TEXT_AREA_TYPE, $configuration['formatted_text_area_type']);
+        $this->configuration->set(static::FORMATTED_TEXT_AREA_TYPE, $configuration['formatted_text_area_type'], null, ['html' => true]);
         $this->configuration->set(static::GENERATABLE_TEXT_TYPE, $configuration['generatable_text_type']);
         $this->configuration->set(static::TEXT_WITH_LENGTH_COUNTER_TYPE, $configuration['text_with_length_counter_type']);
         $this->configuration->set(static::TEXT_WITH_UNIT_TYPE, $configuration['text_with_unit_type']);

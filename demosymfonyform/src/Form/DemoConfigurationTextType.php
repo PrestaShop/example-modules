@@ -100,7 +100,7 @@ class DemoConfigurationTextType extends TranslatorAwareType
                 'options' => [
                     'constraints' => [
                         new Length([
-                            'max' => 30,
+                            'max' => 130,
                         ]),
                     ],
                 ],
