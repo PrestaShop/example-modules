@@ -62,6 +62,19 @@ class DemoSymfonyForm extends Module
         ];
     }
 
+    public function getTabs()
+    {
+        return [
+            [
+                'class_name' => 'AdminDemoSymfonyFormMultipleForms',
+                'visible' => true,
+                'name' => 'Admin symfony form multiple forms',
+                'parent_class_name' => 'Sell',
+            ],
+        ];
+    }
+
+
     public function getContent()
     {
         $route = SymfonyContainer::getInstance()->get('router')->generate('demo_configuration_form');
