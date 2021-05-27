@@ -2,27 +2,28 @@ services:
   _defaults:
     public: true
 
-  prestashop.module.demosymfonyform.form.type.demo_configuration:
-    class: 'PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationType'
+  # Demo configuration text form
+  prestashop.module.demosymfonyform.form.type.demo_configuration_text:
+    class: 'PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationTextType'
     parent: 'form.type.translatable.aware'
     public: true
     tags:
       - { name: form.type }
 
-  prestashop.module.demosymfonyform.form.demo_configuration_form_data_provider:
-    class: 'PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationFormDataProvider'
+  prestashop.module.demosymfonyform.form.demo_configuration_text_form_data_provider:
+    class: 'PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationTextFormDataProvider'
     arguments:
-      - '@prestashop.module.demosymfonyform.form.demo_configuration_data_configuration'
+      - '@prestashop.module.demosymfonyform.form.demo_configuration_text_data_configuration'
 
-  prestashop.module.demosymfonyform.form.demo_configuration_form_data_handler:
+  prestashop.module.demosymfonyform.form.demo_configuration_text_form_data_handler:
     class: 'PrestaShop\PrestaShop\Core\Form\Handler'
     arguments:
       - '@form.factory'
       - '@prestashop.core.hook.dispatcher'
-      - '@prestashop.module.demosymfonyform.form.demo_configuration_form_data_provider'
-      - 'PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationType'
+      - '@prestashop.module.demosymfonyform.form.demo_configuration_text_form_data_provider'
+      - 'PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationTextType'
       - 'DemoConfiguration'
 
-  prestashop.module.demosymfonyform.form.demo_configuration_data_configuration:
-    class: PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationDataConfiguration
+  prestashop.module.demosymfonyform.form.demo_configuration_text_data_configuration:
+    class: PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationTextDataConfiguration
     arguments: ['@prestashop.adapter.legacy.configuration']

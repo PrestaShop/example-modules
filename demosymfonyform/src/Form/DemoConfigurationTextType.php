@@ -29,14 +29,24 @@ declare(strict_types=1);
 namespace PrestaShop\Module\DemoSymfonyForm\Form;
 
 use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\TypedRegex;
+use PrestaShopBundle\Form\Admin\Type\CategoryChoiceTreeType;
+use PrestaShopBundle\Form\Admin\Type\CountryChoiceType;
+use PrestaShopBundle\Form\Admin\Type\DatePickerType;
+use PrestaShopBundle\Form\Admin\Type\DateRangeType;
 use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
+use PrestaShopBundle\Form\Admin\Type\GeneratableTextType;
+use PrestaShopBundle\Form\Admin\Type\IpAddressType;
+use PrestaShopBundle\Form\Admin\Type\TextWithLengthCounterType;
+use PrestaShopBundle\Form\Admin\Type\TextWithUnitType;
 use PrestaShopBundle\Form\Admin\Type\TranslatableType;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
+use PrestaShopBundle\Form\Admin\Type\YesAndNoChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
-class DemoConfigurationType extends TranslatorAwareType
+class DemoConfigurationTextType extends TranslatorAwareType
 {
     /**
      * {@inheritdoc}
@@ -44,6 +54,20 @@ class DemoConfigurationType extends TranslatorAwareType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('formatted_text_area_type', FormattedTextareaType::class, [
+                'label' => $this->trans('Formatted text area type', 'Modules.DemoSymfonyForm.Admin'),
+            ])
+            ->add('generatable_text_type', GeneratableTextType::class, [
+                'label' => $this->trans('Generatable text type', 'Modules.DemoSymfonyForm.Admin'),
+                'generated_value_length' => 5
+            ])
+            ->add('text_with_length_counter_type', TextWithLengthCounterType::class, [
+                'max_length' => 50,
+                'label' => $this->trans('Text with length counter type', 'Modules.DemoSymfonyForm.Admin'),
+            ])
+            ->add('text_with_unit_type', TextWithUnitType::class, [
+                'label' => $this->trans('Text with unit type', 'Modules.DemoSymfonyForm.Admin'),
+            ])
             ->add('translatable_type', TranslatableType::class, [
                     'label' => $this->trans('Translatable type', 'Modules.DemoSymfonyForm.Admin'),
                     'help' => $this->trans('Throws error if length is > 10 or text contains <>={}', 'Modules.DemoSymfonyForm.Admin'),
@@ -88,5 +112,6 @@ class DemoConfigurationType extends TranslatorAwareType
                     ],
                 ],
             ]);
+
     }
 }
