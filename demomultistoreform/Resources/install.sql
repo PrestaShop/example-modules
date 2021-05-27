@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS PREFIX_content_block (id_content_block INT AUTO_INCREMENT NOT NULL, title VARCHAR(255) NOT NULL, description LONGTEXT NOT NULL, enable TINYINT(1) NOT NULL, PRIMARY KEY(id_content_block)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS PREFIX_content_block_shop (id_content_block INT NOT NULL, id_shop INT NOT NULL, INDEX IDX_80518F36D6F01295 (id_content_block), INDEX IDX_80518F36274A50A0 (id_shop), PRIMARY KEY(id_content_block, id_shop)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
+ALTER TABLE PREFIX_content_block_shop ADD CONSTRAINT FK_80518F36D6F01295 FOREIGN KEY (id_content_block) REFERENCES PREFIX_content_block (id_content_block);
+ALTER TABLE PREFIX_content_block_shop ADD CONSTRAINT FK_80518F36274A50A0 FOREIGN KEY (id_shop) REFERENCES PREFIX_shop (id_shop) ON DELETE CASCADE;
