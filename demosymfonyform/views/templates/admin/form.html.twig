@@ -24,14 +24,19 @@
  *#}
 
 {% extends '@PrestaShop/Admin/layout.html.twig' %}
-{% form_theme demoConfigurationForm 'PrestaShopBundle:Admin/TwigTemplateForm:prestashop_ui_kit.html.twig' %}
+
+{# PrestaShop made some modifications to the way forms are displayed to work well with PrestaShop in order to benefit from those you need to use ui kit as theme#}
+{% form_theme demoConfigurationTextForm 'PrestaShopBundle:Admin/TwigTemplateForm:prestashop_ui_kit.html.twig' %}
 
 {% block content %}
-  {{ form_start(demoConfigurationForm) }}
+  {{ form_start(demoConfigurationTextForm) }}
   <div class="card">
+    <h3 class="card-header">
+      <i class="material-icons">settings</i> {{ 'Text form types'|trans({}, 'Modules.DemoSymfonyForm.Admin') }}
+    </h3>
     <div class="card-block row">
       <div class="card-text">
-          {{ form_widget(demoConfigurationForm) }}
+        {{ form_widget(demoConfigurationTextForm) }}
       </div>
     </div>
     <div class="card-footer">
@@ -42,7 +47,7 @@
       </div>
     </div>
   </div>
-  {{ form_end(demoConfigurationForm) }}
+  {{ form_end(demoConfigurationTextForm) }}
 {% endblock %}
 
 {% block javascripts %}

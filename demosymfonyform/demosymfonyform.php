@@ -40,14 +40,26 @@ class DemoSymfonyForm extends Module
         $this->bootstrap = true;
         parent::__construct();
 
-        $this->displayName = $this->trans('Demo symfony form configuration', array(), 'Modules.DemoSymfonyForm.Admin');
+        $this->displayName = $this->trans('Demo symfony form configuration', [], 'Modules.DemoSymfonyForm.Admin');
         $this->description = $this->trans(
             'Module created for the purpose of showing existing form types within PrestaShop',
-            array(),
+            [],
             'Modules.DemoSymfonyForm.Admin'
         );
 
-        $this->ps_versions_compliancy = array('min' => '1.7.8.0', 'max' => _PS_VERSION_);
+        $this->ps_versions_compliancy = ['min' => '1.7.8.0', 'max' => _PS_VERSION_];
+    }
+
+    public function getTabs()
+    {
+        return [
+            [
+                'class_name' => 'AdminDemoSymfonyForm',
+                'visible' => true,
+                'name' => 'Admin symfony form single',
+                'parent_class_name' => 'CONFIGURE',
+            ],
+        ];
     }
 
     public function getContent()

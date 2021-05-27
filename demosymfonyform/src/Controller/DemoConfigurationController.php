@@ -28,23 +28,26 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoSymfonyForm\Controller;
 
+use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 
 class DemoConfigurationController extends FrameworkBundleAdminController
 {
     public function index(Request $request): Response
     {
-        $formDataHander = $this->get('prestashop.module.demosymfonyform.form.demo_configuration_form_data_handler');
-        $form = $formDataHander->getForm();
-        $form->handleRequest($request);
+        $textFormDataHandler = $this->get('prestashop.module.demosymfonyform.form.demo_configuration_text_form_data_handler');
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $errors = $formDataHander->save($form->getData());
+        $textForm = $textFormDataHandler->getForm();
+        $textForm->handleRequest($request);
+
+        if ($textForm->isSubmitted() && $textForm->isValid()) {
+            /** You can return array of errors in form handler and they can be displayed to user with flashErrors */
+            $errors = $textFormDataHandler->save($textForm->getData());
 
             if (empty($errors)) {
                 $this->addFlash('success', $this->trans('Successful update.', 'Admin.Notifications.Success'));
+
                 return $this->redirectToRoute('demo_configuration_form');
             }
 
@@ -52,7 +55,7 @@ class DemoConfigurationController extends FrameworkBundleAdminController
         }
 
         return $this->render('@Modules/demosymfonyform/views/templates/admin/form.html.twig', [
-            'demoConfigurationForm' => $form->createView(),
+            'demoConfigurationTextForm' => $textForm->createView(),
         ]);
     }
 }
