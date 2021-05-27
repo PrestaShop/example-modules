@@ -30,7 +30,6 @@ namespace PrestaShop\Module\DemoSymfonyForm\Form;
 
 use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
 use PrestaShop\PrestaShop\Core\ConfigurationInterface;
-use PrestaShop\PrestaShop\Core\Tax\Ecotax\ProductEcotaxResetterInterface;
 
 /**
  * Handles configuration data for tax options.
@@ -51,7 +50,8 @@ final class DemoConfigurationOtherDataConfiguration implements DataConfiguration
     /**
      * @param ConfigurationInterface $configuration
      */
-    public function __construct(ConfigurationInterface $configuration) {
+    public function __construct(ConfigurationInterface $configuration)
+    {
         $this->configuration = $configuration;
     }
 
@@ -79,6 +79,7 @@ final class DemoConfigurationOtherDataConfiguration implements DataConfiguration
         if ($numberMinMaxFilterType = $this->configuration->get(static::NUMBER_MIN_MAX_FILTER_TYPE)) {
             $return['number_min_max_filter_type'] = json_decode($numberMinMaxFilterType, true);
         }
+
         return $return;
     }
 
@@ -93,6 +94,7 @@ final class DemoConfigurationOtherDataConfiguration implements DataConfiguration
         $this->configuration->set(static::DATE_RANGE_TYPE, json_encode($configuration['date_range_type']));
         $this->configuration->set(static::INTEGER_MIN_MAX_FILTER_TYPE, json_encode($configuration['integer_min_max_filter_type']));
         $this->configuration->set(static::NUMBER_MIN_MAX_FILTER_TYPE, json_encode($configuration['number_min_max_filter_type']));
+
         return [];
     }
 

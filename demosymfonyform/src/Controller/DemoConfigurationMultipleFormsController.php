@@ -28,9 +28,9 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoSymfonyForm\Controller;
 
+use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 
 class DemoConfigurationMultipleFormsController extends FrameworkBundleAdminController
 {
@@ -47,13 +47,21 @@ class DemoConfigurationMultipleFormsController extends FrameworkBundleAdminContr
         ]);
     }
 
+    /**
+     * When you have multiple forms in one page it's best to have a separate action/route for saving of the route
+     */
     public function saveChoicesForm(Request $request): Response
     {
         $choiceFormDataHandler = $this->get('prestashop.module.demosymfonyform.form.demo_configuration_choice_form_data_handler');
         $choiceForm = $choiceFormDataHandler->getForm();
         $choiceForm->handleRequest($request);
 
-        if ($choiceForm->isSubmitted() && $choiceForm->isValid()) {
+        /*
+         * Not checking for isValid because form is redirected afterwards,
+         * so even if you won't save because of constraints user won't see it
+         * You can validate form inside dataProvider/configuration
+         */
+        if ($choiceForm->isSubmitted()) {
             $errors = $choiceFormDataHandler->save($choiceForm->getData());
 
             if (empty($errors)) {
@@ -62,8 +70,8 @@ class DemoConfigurationMultipleFormsController extends FrameworkBundleAdminContr
                 $this->flashErrors($errors);
             }
         }
-        return $this->redirectToRoute('demo_configuration_multiple_forms');
 
+        return $this->redirectToRoute('demo_configuration_multiple_forms');
     }
 
     public function saveOtherForm(Request $request): Response
@@ -72,7 +80,7 @@ class DemoConfigurationMultipleFormsController extends FrameworkBundleAdminContr
         $otherForm = $otherFormDataHandler->getForm();
         $otherForm->handleRequest($request);
 
-        if ($otherForm->isSubmitted() && $otherForm->isValid()) {
+        if ($otherForm->isSubmitted()) {
             $errors = $otherFormDataHandler->save($otherForm->getData());
 
             if (empty($errors)) {
@@ -81,7 +89,7 @@ class DemoConfigurationMultipleFormsController extends FrameworkBundleAdminContr
                 $this->flashErrors($errors);
             }
         }
-        return $this->redirectToRoute('demo_configuration_multiple_forms');
 
+        return $this->redirectToRoute('demo_configuration_multiple_forms');
     }
 }

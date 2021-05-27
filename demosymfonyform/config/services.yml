@@ -27,3 +27,55 @@ services:
   prestashop.module.demosymfonyform.form.demo_configuration_text_data_configuration:
     class: PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationTextDataConfiguration
     arguments: ['@prestashop.adapter.legacy.configuration']
+
+  # Demo configuration choice form
+  prestashop.module.demosymfonyform.form.type.demo_configuration_choice:
+    class: 'PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationChoiceType'
+    parent: 'form.type.translatable.aware'
+    public: true
+    tags:
+      - { name: form.type }
+
+  prestashop.module.demosymfonyform.form.demo_configuration_choice_form_data_provider:
+    class: 'PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationChoiceFormDataProvider'
+    arguments:
+      - '@prestashop.module.demosymfonyform.form.demo_configuration_choice_data_configuration'
+
+  prestashop.module.demosymfonyform.form.demo_configuration_choice_form_data_handler:
+    class: 'PrestaShop\PrestaShop\Core\Form\Handler'
+    arguments:
+      - '@form.factory'
+      - '@prestashop.core.hook.dispatcher'
+      - '@prestashop.module.demosymfonyform.form.demo_configuration_choice_form_data_provider'
+      - 'PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationChoiceType'
+      - 'DemoConfiguration'
+
+  prestashop.module.demosymfonyform.form.demo_configuration_choice_data_configuration:
+    class: PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationChoiceDataConfiguration
+    arguments: [ '@prestashop.adapter.legacy.configuration' ]
+
+  # Demo configuration other form
+  prestashop.module.demosymfonyform.form.type.demo_configuration_other:
+    class: 'PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationOtherType'
+    parent: 'form.type.translatable.aware'
+    public: true
+    tags:
+      - { name: form.type }
+
+  prestashop.module.demosymfonyform.form.demo_configuration_other_form_data_provider:
+    class: 'PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationOtherFormDataProvider'
+    arguments:
+      - '@prestashop.module.demosymfonyform.form.demo_configuration_other_data_configuration'
+
+  prestashop.module.demosymfonyform.form.demo_configuration_other_form_data_handler:
+    class: 'PrestaShop\PrestaShop\Core\Form\Handler'
+    arguments:
+      - '@form.factory'
+      - '@prestashop.core.hook.dispatcher'
+      - '@prestashop.module.demosymfonyform.form.demo_configuration_other_form_data_provider'
+      - 'PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationOtherType'
+      - 'DemoConfiguration'
+
+  prestashop.module.demosymfonyform.form.demo_configuration_other_data_configuration:
+    class: PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationOtherDataConfiguration
+    arguments: [ '@prestashop.adapter.legacy.configuration' ]

@@ -59,12 +59,6 @@ class DemoSymfonyForm extends Module
                 'name' => 'Admin symfony form single',
                 'parent_class_name' => 'CONFIGURE',
             ],
-        ];
-    }
-
-    public function getTabs()
-    {
-        return [
             [
                 'class_name' => 'AdminDemoSymfonyFormMultipleForms',
                 'visible' => true,
@@ -73,7 +67,6 @@ class DemoSymfonyForm extends Module
             ],
         ];
     }
-
 
     public function getContent()
     {

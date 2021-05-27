@@ -45,56 +45,69 @@ class DemoConfigurationOtherType extends TranslatorAwareType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('change_password_type', ChangePasswordType::class, [
+            ->add(
+                'change_password_type',
+                ChangePasswordType::class,
+                [
                     'label' => $this->trans('Change password type', 'Modules.DemoSymfonyForm.Admin'),
                 ]
             )
-            ->add('money_with_suffix_type', MoneyWithSuffixType::class, [
+            ->add(
+                'money_with_suffix_type',
+                MoneyWithSuffixType::class,
+                [
                     'label' => $this->trans('Money with suffix', 'Modules.DemoSymfonyForm.Admin'),
-                    'help' => $this->trans(
-                        'https://devdocs.prestashop.com/1.7/development/components/form/types-reference/money-with-suffix/',
-                        'Modules.DemoSymfonyForm.Admin'
-                    )
                 ]
             )
-            ->add('date_picker_type', DatePickerType::class, [
+            ->add(
+                'date_picker_type',
+                DatePickerType::class,
+                [
                     'label' => $this->trans('Date picker type', 'Modules.DemoSymfonyForm.Admin'),
                 ]
             )
-            ->add('date_range_type', DateRangeType::class, [
+            ->add(
+                'date_range_type',
+                DateRangeType::class,
+                [
                     'label' => $this->trans('Date range type', 'Modules.DemoSymfonyForm.Admin'),
                 ]
             )
-            ->add('integer_min_max_filter_type', IntegerMinMaxFilterType::class, [
+            ->add(
+                'integer_min_max_filter_type',
+                IntegerMinMaxFilterType::class,
+                [
                     'label' => $this->trans('Integer min max filter type', 'Modules.DemoSymfonyForm.Admin'),
                     'min_field_options' => [
                         'attr' => [
-                            'placeholder' => $this->trans('Min','Admin.Global'),
+                            'placeholder' => $this->trans('Min', 'Admin.Global'),
                             'min' => 0,
                             'step' => 1,
                         ],
                     ],
                     'max_field_options' => [
                         'attr' => [
-                            'placeholder' => $this->trans('Max','Admin.Global'),
+                            'placeholder' => $this->trans('Max', 'Admin.Global'),
                             'min' => 100,
                             'step' => 3,
                         ],
-                    ]
-
+                    ],
                 ]
             )
-            ->add('number_min_max_filter_type', NumberMinMaxFilterType::class, [
+            ->add(
+                'number_min_max_filter_type',
+                NumberMinMaxFilterType::class,
+                [
                     'label' => $this->trans('Number min max filter type', 'Modules.DemoSymfonyForm.Admin'),
                     'min_field_options' => [
                         'attr' => [
-                            'placeholder'=> $this->trans('Min', 'Admin.Global')
-                        ]
+                            'placeholder' => $this->trans('Min', 'Admin.Global'),
+                        ],
                     ],
                     'max_field_options' => [
                         'attr' => [
-                            'placeholder'=> $this->trans('Max', 'Admin.Global')
-                        ]
+                            'placeholder' => $this->trans('Max', 'Admin.Global'),
+                        ],
                     ],
                 ]
             );

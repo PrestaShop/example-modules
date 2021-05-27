@@ -27,8 +27,8 @@
 {% form_theme demoConfigurationChoiceForm 'PrestaShopBundle:Admin/TwigTemplateForm:prestashop_ui_kit.html.twig' %}
 {% form_theme demoConfigurationOtherForm 'PrestaShopBundle:Admin/TwigTemplateForm:prestashop_ui_kit.html.twig' %}
 
-
 {% block content %}
+  {#  If you want form to use other url for saving you can set it here as path parameter(has to be route registered in routes.yml#}
   {{ form_start(demoConfigurationChoiceForm, {attr : {class: 'form'}, action: path('demo_configuration_choices_form_save') }) }}
   <div class="card">
     <h3 class="card-header">

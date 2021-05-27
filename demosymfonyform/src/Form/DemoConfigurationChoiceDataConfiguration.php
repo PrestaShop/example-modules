@@ -30,7 +30,6 @@ namespace PrestaShop\Module\DemoSymfonyForm\Form;
 
 use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
 use PrestaShop\PrestaShop\Core\ConfigurationInterface;
-use PrestaShop\PrestaShop\Core\Tax\Ecotax\ProductEcotaxResetterInterface;
 
 /**
  * Handles configuration data for tax options.
@@ -54,7 +53,8 @@ final class DemoConfigurationChoiceDataConfiguration implements DataConfiguratio
     /**
      * @param ConfigurationInterface $configuration
      */
-    public function __construct(ConfigurationInterface $configuration) {
+    public function __construct(ConfigurationInterface $configuration)
+    {
         $this->configuration = $configuration;
     }
 
@@ -106,6 +106,7 @@ final class DemoConfigurationChoiceDataConfiguration implements DataConfiguratio
         $this->configuration->set(static::SHOP_CHOICES_TREE_TYPE, json_encode($configuration['shop_choices_tree_type']));
         $this->configuration->set(static::SWITCH_TYPE, $configuration['switch_type']);
         $this->configuration->set(static::YES_AND_NO_TYPE, $configuration['yes_and_no_type']);
+
         return [];
     }
 

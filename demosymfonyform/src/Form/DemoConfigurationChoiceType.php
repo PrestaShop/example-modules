@@ -28,24 +28,16 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoSymfonyForm\Form;
 
-use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\TypedRegex;
 use PrestaShopBundle\Form\Admin\Type\CategoryChoiceTreeType;
 use PrestaShopBundle\Form\Admin\Type\CountryChoiceType;
-use PrestaShopBundle\Form\Admin\Type\DatePickerType;
-use PrestaShopBundle\Form\Admin\Type\DateRangeType;
-use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
 use PrestaShopBundle\Form\Admin\Type\Material\MaterialChoiceTableType;
 use PrestaShopBundle\Form\Admin\Type\Material\MaterialChoiceTreeType;
 use PrestaShopBundle\Form\Admin\Type\Material\MaterialMultipleChoiceTableType;
 use PrestaShopBundle\Form\Admin\Type\ShopChoiceTreeType;
 use PrestaShopBundle\Form\Admin\Type\SwitchType;
-use PrestaShopBundle\Form\Admin\Type\TranslatableType;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
 use PrestaShopBundle\Form\Admin\Type\YesAndNoChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class DemoConfigurationChoiceType extends TranslatorAwareType
 {
@@ -57,32 +49,45 @@ class DemoConfigurationChoiceType extends TranslatorAwareType
         $disabledCategories = [5];
 
         $builder
-            ->add('category_choice_tree_type', CategoryChoiceTreeType::class, [
-                'label' => $this->trans('Category choice type', 'Modules.DemoSymfonyForm.Admin'),
-                'disabled_values' => $disabledCategories,
-            ])
-            ->add('country_choice_type', CountryChoiceType::class, [
-                'label' => $this->trans('Country choice type', 'Modules.DemoSymfonyForm.Admin'),
-                'required' => true,
-                'with_dni_attr' => true,
-                'with_postcode_attr' => true,
+            ->add(
+                'category_choice_tree_type',
+                CategoryChoiceTreeType::class,
+                [
+                    'label' => $this->trans('Category choice type', 'Modules.DemoSymfonyForm.Admin'),
+                    'disabled_values' => $disabledCategories,
                 ]
             )
-            ->add('material_choice_table_type', MaterialChoiceTableType::class, [
+            ->add(
+                'country_choice_type',
+                CountryChoiceType::class,
+                [
+                    'label' => $this->trans('Country choice type', 'Modules.DemoSymfonyForm.Admin'),
+                    'required' => true,
+                    'with_dni_attr' => true,
+                    'with_postcode_attr' => true,
+                ]
+            )
+            ->add(
+                'material_choice_table_type',
+                MaterialChoiceTableType::class,
+                [
                     'label' => $this->trans('Material choice table type', 'Modules.DemoSymfonyForm.Admin'),
                     'choices' => [
                         $this->trans('Choice 1', 'Modules.DemoSymfonyForm.Admin') => '1',
                         $this->trans('Choice 2', 'Modules.DemoSymfonyForm.Admin') => '2',
-                    ]
+                    ],
                 ]
             )
-            ->add('material_choice_tree_type', MaterialChoiceTreeType::class, [
+            ->add(
+                'material_choice_tree_type',
+                MaterialChoiceTreeType::class,
+                [
                     'label' => $this->trans('Material choice tree type', 'Modules.DemoSymfonyForm.Admin'),
                     'choice_value' => 'id_choice',
                     'choices_tree' => [
                         '1' => [
                             'id_choice' => 1,
-                            'name' => $this->trans('Choice 1', 'Modules.DemoSymfonyForm.Admin')
+                            'name' => $this->trans('Choice 1', 'Modules.DemoSymfonyForm.Admin'),
                         ],
                         '2' => [
                             'id_choice' => 2,
@@ -90,18 +95,21 @@ class DemoConfigurationChoiceType extends TranslatorAwareType
                             'children' => [
                                 '3' => [
                                     'id_choice' => 3,
-                                    'name' => $this->trans('Choice 3', 'Modules.DemoSymfonyForm.Admin')
+                                    'name' => $this->trans('Choice 3', 'Modules.DemoSymfonyForm.Admin'),
                                 ],
                                 '4' => [
                                     'id_choice' => 4,
-                                    'name' => $this->trans('Choice 4', 'Modules.DemoSymfonyForm.Admin')
+                                    'name' => $this->trans('Choice 4', 'Modules.DemoSymfonyForm.Admin'),
                                 ],
-                            ]
+                            ],
                         ],
-                    ]
+                    ],
                 ]
             )
-            ->add('material_choice_multiple_choices_table', MaterialMultipleChoiceTableType::class, [
+            ->add(
+                'material_choice_multiple_choices_table',
+                MaterialMultipleChoiceTableType::class,
+                [
                     'label' => $this->trans('Material choice multiple choices table type', 'Modules.DemoSymfonyForm.Admin'),
                     'choices' => [
                         $this->trans('Vertical choice 1', 'Modules.DemoSymfonyForm.Admin') => '1',
@@ -113,7 +121,7 @@ class DemoConfigurationChoiceType extends TranslatorAwareType
                             'name' => 'choice_1',
                             'label' => $this->trans('Horizontal choice 1', 'Modules.DemoSymfonyForm.Admin'),
                             'multiple' => true,
-                            /** You need choices array for the second time to be able to choose which horizontal choices are available for this vertical choice  */
+                            /* You need choices array for the second time to be able to choose which horizontal choices are available for this vertical choice  */
                             'choices' => [
                                 $this->trans('Vertical choice 1', 'Modules.DemoSymfonyForm.Admin') => '1',
                                 $this->trans('Vertical choice 2', 'Modules.DemoSymfonyForm.Admin') => '2',
@@ -132,15 +140,23 @@ class DemoConfigurationChoiceType extends TranslatorAwareType
                     ],
                 ]
             )
-            ->add('shop_choices_tree_type', ShopChoiceTreeType::class, [
+            ->add('shop_choices_tree_type',
+                ShopChoiceTreeType::class,
+                [
                     'label' => $this->trans('Material choice tree type', 'Modules.DemoSymfonyForm.Admin'),
                 ]
             )
-            ->add('switch_type', SwitchType::class, [
+            ->add(
+                'switch_type',
+                SwitchType::class,
+                [
                     'label' => $this->trans('Switch type', 'Modules.DemoSymfonyForm.Admin'),
                 ]
             )
-            ->add('yes_and_no_type', YesAndNoChoiceType::class, [
+            ->add(
+                'yes_and_no_type',
+                YesAndNoChoiceType::class,
+                [
                     'label' => $this->trans('Yes and no type', 'Modules.DemoSymfonyForm.Admin'),
                 ]
             );
