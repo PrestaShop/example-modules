@@ -28,7 +28,6 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoSymfonyForm\Form;
 
-use PrestaShopBundle\Form\Admin\Type\ChangePasswordType;
 use PrestaShopBundle\Form\Admin\Type\DatePickerType;
 use PrestaShopBundle\Form\Admin\Type\DateRangeType;
 use PrestaShopBundle\Form\Admin\Type\IntegerMinMaxFilterType;

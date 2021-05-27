@@ -35,3 +35,4 @@ $(document).ready(function () {
     new window.prestashop.component.ChoiceTree('#form_material_choice_tree_type');
     new window.prestashop.component.ChoiceTree('#form_shop_choices_tree_type').enableAutoCheckChildren();
 });
+
