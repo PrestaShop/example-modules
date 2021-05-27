@@ -27,6 +27,7 @@
 declare(strict_types=1);
 
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
+use PrestaShop\Module\DemoMultistoreForm\Database\ContentBlockInstaller;
 
 class DemoMultistoreForm extends Module
 {
@@ -50,11 +51,43 @@ class DemoMultistoreForm extends Module
         );
 
         $this->ps_versions_compliancy = array('min' => '1.7.8.0', 'max' => _PS_VERSION_);
+        $this->install();
     }
 
-    public function getContent()
+    public function install(): void
+    {
+        $this->getInstaller()->createTables();
+    }
+
+    public function uninstall(): void
+    {
+        $this->getInstaller()->dropTables();
+    }
+
+    public function getContent(): void
     {
         $route = SymfonyContainer::getInstance()->get('router')->generate('demo_multistore');
         Tools::redirectAdmin($route);
+    }
+
+    /**
+     * @return ContentBlockInstaller
+     */
+    private function getInstaller(): ContentBlockInstaller
+    {
+        try {
+            $installer = $this->get('prestashop.module.demo_multistore.content_block_installer');
+        } catch (Exception $e) {
+            $installer = null;
+        }
+
+        if (empty($installer)) {
+            $installer = new ContentBlockInstaller(
+                $this->get('doctrine.dbal.default_connection'),
+                $this->getContainer()->getParameter('database_prefix')
+            );
+        }
+
+        return $installer;
     }
 }
