@@ -26,6 +26,10 @@
 
 declare(strict_types=1);
 
+if (file_exists(__DIR__.'/vendor/autoload.php')) {
+    require_once __DIR__.'/vendor/autoload.php';
+}
+
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 use PrestaShop\Module\DemoMultistoreForm\Database\ContentBlockInstaller;
 use PrestaShop\Module\DemoMultistoreForm\Database\ContentBlockGenerator;
@@ -60,7 +64,6 @@ class DemoMultistoreForm extends Module
     public function install(): bool
     {
         return $this->getInstaller()->createTables()
-            && $this->getFixturesGenerator()->generateContentBlockFixtures()
             && parent::install();
     }
 
@@ -97,27 +100,6 @@ class DemoMultistoreForm extends Module
                 $this->getContainer()->getParameter('database_prefix')
             );
         }
-
         return $installer;
-    }
-
-    /**
-     * Gets the ContentBlockGenerator from service container if possible, otherwise instantiate class directly
-     *
-     * @return ContentBlockGenerator
-     */
-    private function getFixturesGenerator(): ContentBlockGenerator
-    {
-        try {
-            $generator = $this->get('prestashop.module.demo_multistore.content_block_generator');
-        } catch (Exception $e) {
-            $generator = null;
-        }
-
-        if (empty($generator)) {
-            $generator = new ContentBlockGenerator($this->get('doctrine.orm.default_entity_manager'));
-        }
-
-        return $generator;
     }
 }
