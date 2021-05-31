@@ -28,6 +28,11 @@
     'href': path('demo_multistore_create'),
     'desc': 'Add new content block'|trans({}, 'Admin.International.Feature'),
     'icon': 'add_circle_outline'
+  },
+  'generate fixtures': {
+    href: path('demo_multistore_fixtures', {}),
+    desc: 'Generate fixtures'|trans({}, 'Modules.DemoMultistoreForm.Admin'),
+    icon: 'add_circle_outline',
   }
 } %}
 
@@ -38,28 +43,28 @@
 {% block content %}
   {% include '@PrestaShop/Admin/Common/Grid/grid_panel.html.twig' with {'grid': contentBlockGrid} %}
   {{ form_start(configurationForm) }}
-  <div class="row justify-content-center">
-      <div class="col-xl-12">
-        <div class="card">
-          <h3 class="card-header">
-            <i class="material-icons">business_center</i> {{ 'Content blocks configuration'|trans({}, 'Modules.DemoMultistoreForm.Admin') }}
-          </h3>
-          <div class="card-block row">
-            <div class="card-text">
-              {{ form_widget(configurationForm) }}
-              {{ form_rest(configurationForm) }}
-            </div>
-          </div>
-          <div class="card-footer">
-            <div class="d-flex justify-content-end">
-              <button class="btn btn-primary" id="form-maintenance-save-button">{{ 'Save'|trans({}, 'Admin.Actions') }}</button>
-            </div>
-          </div>
+<div class="row justify-content-center">
+  <div class="col-xl-12">
+    <div class="card">
+      <h3 class="card-header">
+        <i class="material-icons">business_center</i> {{ 'Content blocks configuration'|trans({}, 'Modules.DemoMultistoreForm.Admin') }}
+      </h3>
+      <div class="card-block row">
+        <div class="card-text">
+          {{ form_widget(configurationForm) }}
+          {{ form_rest(configurationForm) }}
         </div>
       </div>
-{% endblock %}
+      <div class="card-footer">
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-primary" id="form-maintenance-save-button">{{ 'Save'|trans({}, 'Admin.Actions') }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
 
-{% block javascripts %}
-  {{ parent() }}
-  <script src="{{ asset('../modules/demomultistoreform/views/js/form.js') }}"></script>
-{% endblock %}
+  {% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('../modules/demomultistoreform/views/js/form.js') }}"></script>
+  {% endblock %}
