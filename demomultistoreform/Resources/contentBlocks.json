@@ -18,5 +18,10 @@
     "title": "Fourth block title",
     "description": "Description Fourth block",
     "enable": false
+  },
+  {
+    "title": "Fifth block title",
+    "description": "Description Fifth block",
+    "enable": false
   }
 ]

@@ -154,4 +154,23 @@ class DemoMultistoreController extends FrameworkBundleAdminController
 
         return $redirectResponse;
     }
+
+    public function generateFixtures(Request $request)
+    {
+        $redirectResponse = $this->redirectToRoute('demo_multistore');
+
+        try {
+            $generator = $this->get('prestashop.module.demo_multistore.content_block_generator');
+            $generator->generateContentBlockFixtures();
+        } catch (\Exception $e) {
+            $this->addFlash('error', $this->trans('There was a problem while generating contet block fixtures', 'Modules.DemoMultistoreForm.Admin'));
+
+            return $redirectResponse;
+        }
+
+        $this->addFlash('success', $this->trans('Successful content block fixtures generation.', 'Modules.DemoMultistoreForm.Admin'));
+
+
+        return $redirectResponse;
+    }
 }

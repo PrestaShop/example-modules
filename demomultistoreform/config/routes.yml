@@ -27,3 +27,9 @@ demo_multistore_delete:
     methods: [GET, POST]
     defaults:
         _controller: 'PrestaShop\Module\DemoMultistoreForm\Controller\DemoMultistoreController::delete'
+
+demo_multistore_fixtures:
+    path: /demomultistoreform/contentBlock/fixtures
+    methods: [GET, POST]
+    defaults:
+        _controller: 'PrestaShop\Module\DemoMultistoreForm\Controller\DemoMultistoreController::generateFixtures'

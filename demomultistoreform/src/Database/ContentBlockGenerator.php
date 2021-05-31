@@ -26,6 +26,8 @@
 
 declare(strict_types=1);
 
+
+
 namespace PrestaShop\Module\DemoMultistoreForm\Database;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,12 +43,14 @@ class ContentBlockGenerator
     /**
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
 
-    public function generateContentBlockFixtures(): bool
+    /**
+     * @return array
+     */
+    public function generateContentBlockFixtures(): array
     {
         $errors = [];
 
@@ -65,15 +69,16 @@ class ContentBlockGenerator
 
             $this->entityManager->flush();
         } catch (\Exception $e) {
-            return false;
+            $errors[] = $e->getMessage();
         }
 
-        return true;
+        return $errors;
     }
 
-    private function removeAll()
+    private function removeAll(): void
     {
         $contentBlocks = $this->entityManager->getRepository(ContentBlock::class)->findAll();
+
         foreach ($contentBlocks as $contentBlock) {
             $this->entityManager->remove($contentBlock);
         }
