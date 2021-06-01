@@ -32,17 +32,6 @@ final class ContentBlockQueryBuilder extends AbstractDoctrineQueryBuilder
             ->setFirstResult($searchCriteria->getOffset())
             ->setMaxResults($searchCriteria->getLimit());
 
-        foreach ($searchCriteria->getFilters() as $filterName => $filterValue) {
-            if ('id_content_block' === $filterName) {
-                $qb->andWhere("cb.id_content_block = :$filterName");
-                $qb->setParameter($filterName, $filterValue);
-
-                continue;
-            }
-
-            $qb->andWhere("$filterName LIKE :$filterName");
-            $qb->setParameter($filterName, '%'.$filterValue.'%');
-        }
         $qb->orderBy('id_content_block');
 
         return $qb;
