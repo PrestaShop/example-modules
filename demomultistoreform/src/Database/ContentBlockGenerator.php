@@ -80,6 +80,7 @@ class ContentBlockGenerator
         $contentBlocks = $this->entityManager->getRepository(ContentBlock::class)->findAll();
 
         foreach ($contentBlocks as $contentBlock) {
+            $contentBlock->clearShops();
             $this->entityManager->remove($contentBlock);
         }
 
