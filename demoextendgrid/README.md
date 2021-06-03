@@ -3,18 +3,22 @@
 ## About
 
 This module demonstrates:
- * how to insert add additional action to existing grid
+ * how to insert an additional row action to existing grid
  * how to register javascript in admin controller
 
- ### Supported PrestaShop versions
+The above items are done to add a small 'mark' action in Back Office Orders listing:
+
+
+
+### Supported PrestaShop versions
 
  This module is compatible with and 1.7.7.0 and above versions.
  
- ### Requirements
+### Requirements
  
   1. Composer, see [Composer](https://getcomposer.org/) to learn more
  
- ### How to install
+### How to install
  
   1. Download or clone module into `modules` directory of your PrestaShop installation
   2. Rename the directory to make sure that module directory is named `demoextendgrid`*
@@ -22,6 +26,7 @@ This module demonstrates:
       - `composer install` - to download dependencies into vendor folder
   4. Install module from Back Office
  
- *Because the name of the directory and the name of the main module file must match.
- 
+*Because the name of the directory and the name of the main module file must match.
+
+
 
