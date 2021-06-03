@@ -8,7 +8,7 @@ This module demonstrates:
 
 The above items are done to add a small 'mark' action in Back Office Orders listing:
 
-
+![Mark action screenshot](mark-action-screenshot.png)
 
 ### Supported PrestaShop versions
 
