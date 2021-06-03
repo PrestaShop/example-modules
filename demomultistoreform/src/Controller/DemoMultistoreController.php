@@ -130,7 +130,11 @@ class DemoMultistoreController extends FrameworkBundleAdminController
         return $this->redirectToRoute('demo_multistore');
     }
 
-    public function saveConfiguration(Request $request)
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function saveConfiguration(Request $request): Response
     {
         $redirectResponse = $this->redirectToRoute('demo_multistore');
 
@@ -155,7 +159,11 @@ class DemoMultistoreController extends FrameworkBundleAdminController
         return $redirectResponse;
     }
 
-    public function generateFixtures(Request $request)
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function generateFixtures(Request $request): Response
     {
         $redirectResponse = $this->redirectToRoute('demo_multistore');
 
