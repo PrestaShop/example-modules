@@ -1,11 +1,20 @@
 <?php
 /**
- * 2007-2020 PrestaShop
+ * Copyright since 2007 PrestaShop SA and Contributors
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the Academic Free License 3.0 (AFL-3.0).
- * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  */
 
 declare(strict_types=1);
@@ -29,7 +38,7 @@ class DemoExtendGrid extends Module
     {
         $this->name = 'demoextendgrid';
         $this->author = 'PrestaShop';
-        $this->version = '1.0.0';
+        $this->version = '1.1.0';
         $this->ps_versions_compliancy = ['min' => '1.7.7.0', 'max' => _PS_VERSION_];
 
         parent::__construct();
@@ -50,6 +59,23 @@ class DemoExtendGrid extends Module
         $installer = new Installer();
 
         return $installer->install($this);
+    }
+
+    public function hookActionAdminControllerSetMedia(array $params)
+    {
+        // check if it is orders controller
+        if ($this->context->controller->controller_name !== 'AdminOrders') {
+            return;
+        }
+        $action = Tools::getValue('action');
+
+        // check if it is orders index page (we want to skip if it is `order create` or `order view` page)
+        if ($action === 'vieworder' || $action === 'addorder') {
+            return;
+        }
+
+        // now we are sure it is Orders index (listing) page where we need our javascript
+        $this->context->controller->addJS('modules/' . $this->name . '/views/js/orders-listing.js');
     }
 
     /**
@@ -75,7 +101,9 @@ class DemoExtendGrid extends Module
                     'use_inline_display' => true,
                 ])
         );
-        //@todo: actually button is not working yet, because javascript part is missing (SubmitRowActionExtension)
+        // Button is not working by default, because SubmitRowActionExtension component is not loaded in Orders grid javascript part.
+        // To replace that behavior there is an example of custom javascript in views/orders-listing.js
+        // Adding grid extension in non-compiled javascript is not supported yet, we hope to fix it in future.
     }
 
     private function getActionsColumn(GridDefinitionInterface $gridDefinition): ColumnInterface

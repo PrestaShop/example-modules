@@ -1,4 +1,3 @@
-<?php
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  *
@@ -16,24 +15,13 @@
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  */
-
-declare(strict_types=1);
-
-namespace PrestaShop\Module\DemoExtendGrid\Controller;
-
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
-use Symfony\Component\HttpFoundation\Response;
-
-class DemoOrderController extends FrameworkBundleAdminController
-{
-    /**
-     * @param int $orderId
-     *
-     * @return Response
-     */
-    public function markOrderAction(int $orderId): Response
-    {
-        // Do what you need depending on use case
-        return $this->json(sprintf('Marked order %d', $orderId));
-    }
-}
+$(() => {
+  $(document).on('click', '.grid-mark-row-link', (event) => {
+    event.preventDefault();
+    var $currentTarget = $(event.currentTarget)
+    $.post($currentTarget.data('url')).then((data) => {
+      // For example we mark the icon by green color when the ajax succeeds
+      $currentTarget.find('i').addClass('text-success');
+    });
+  });
+});
