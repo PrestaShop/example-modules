@@ -82,7 +82,8 @@ class DemoMultistoreForm extends Module
     }
 
     /**
-     * Gets the ContentBlockInstaller from service container if possible, otherwise instantiate class directly
+     * Gets the ContentBlockInstaller from service container if possible (at uninstall),
+     * otherwise instantiate class directly (at install)
      *
      * @return ContentBlockInstaller
      */
