@@ -2,10 +2,12 @@
 
 ## About
 
-This module demonstrates how to make your forms multistore compatible in your module, it includes:
+This module demonstrates how to make your forms multistore compatible in your module, in a CRUD context, it includes:
 
-- A CRUD implementation with a shop association mechanism (grid list, edit/create form, deletion link)
-- A multistore compatible configuration form (with multistore checkboxes and dropdowns)
+- A listing of elements using Prestashop's [grid component](https://devdocs.prestashop.com/1.7/development/components/grid/)
+- A create/edit form, using [doctrine](https://devdocs.prestashop.com/1.7/modules/concepts/doctrine/) and a shop association block, via Prestashop's [ShopChoiceTreeType](https://devdocs.prestashop.com/1.7/development/components/form/types-reference/shop-choice-tree/)
+- A multistore compatible form with multistore checkboxes and dropdowns, using Prestashop's [multistore form extension](https://devdocs.prestashop.com/1.7/development/multistore/configuration-forms/)
+- A fixtures generation mechanism, using [doctrine](https://devdocs.prestashop.com/1.7/modules/concepts/doctrine/)
 
  ### Supported PrestaShop versions
 
