@@ -67,15 +67,11 @@ class ContentBlockInstaller
             }
             $statement = $this->connection->executeQuery($query);
             if (0 != (int) $statement->errorCode()) {
-                $errors[] = [
-                    'key' => json_encode($statement->errorInfo()),
-                    'parameters' => [],
-                    'domain' => 'Admin.Modules.Notification',
-                ];
+                return false;
             }
         }
 
-        return empty($errors);
+        return true;
     }
 
     public function dropTables(): bool
@@ -89,14 +85,10 @@ class ContentBlockInstaller
             $sql = 'DROP TABLE IF EXISTS ' . $this->dbPrefix . $tableName;
             $statement = $this->connection->executeQuery($sql);
             if ($statement instanceof Statement && 0 != (int) $statement->errorCode()) {
-                $errors[] = [
-                    'key' => json_encode($statement->errorInfo()),
-                    'parameters' => [],
-                    'domain' => 'Admin.Modules.Notification',
-                ];
+                return false;
             }
         }
 
-        return empty($errors);
+        return true;
     }
 }
