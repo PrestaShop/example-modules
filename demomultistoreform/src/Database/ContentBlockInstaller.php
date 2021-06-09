@@ -53,6 +53,13 @@ class ContentBlockInstaller
         $this->dbPrefix = $dbPrefix;
     }
 
+    /**
+     * For now, we cannot use our module's doctrine entities during the installation's process, because our
+     * new entities are not recognized by Doctrine yet.
+     * This is why we execute an sql query to create our tables.
+     *
+     * @return bool
+     */
     public function createTables(): bool
     {
         $this->dropTables();
@@ -60,7 +67,6 @@ class ContentBlockInstaller
         $sqlQueries = explode(PHP_EOL, file_get_contents($sqlFile));
         $sqlQueries = str_replace('PREFIX_', $this->dbPrefix, $sqlQueries);
 
-        $errors = [];
         foreach ($sqlQueries as $query) {
             if (empty($query)) {
                 continue;
@@ -74,9 +80,11 @@ class ContentBlockInstaller
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function dropTables(): bool
     {
-        $errors = [];
         $tableNames = [
             'content_block_shop',
             'content_block',
