@@ -26,12 +26,11 @@
 
 declare(strict_types=1);
 
-
-
 namespace PrestaShop\Module\DemoMultistoreForm\Database;
 
 use Doctrine\ORM\EntityManagerInterface;
 use PrestaShop\Module\DemoMultistoreForm\Entity\ContentBlock;
+use Exception;
 
 class ContentBlockGenerator
 {
@@ -41,10 +40,18 @@ class ContentBlockGenerator
     private $entityManager;
 
     /**
-     * @param EntityManagerInterface $entityManager
+     * @var string
      */
-    public function __construct(EntityManagerInterface $entityManager) {
+    private $jsonFilePath;
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param string $jsonFilePath
+     */
+    public function __construct(EntityManagerInterface $entityManager, string $jsonFilePath)
+    {
         $this->entityManager = $entityManager;
+        $this->jsonFilePath = $jsonFilePath;
     }
 
     /**
@@ -56,7 +63,7 @@ class ContentBlockGenerator
 
         try {
             $this->removeAll();
-            $jsonFile = __DIR__ . '/../../Resources/contentBlocks.json';
+            $jsonFile = __DIR__ . $this->jsonFilePath;
             $contentBlocksData = json_decode(file_get_contents($jsonFile), true);
 
             foreach ($contentBlocksData as $data) {
@@ -68,7 +75,7 @@ class ContentBlockGenerator
             }
 
             $this->entityManager->flush();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errors[] = $e->getMessage();
         }
 
