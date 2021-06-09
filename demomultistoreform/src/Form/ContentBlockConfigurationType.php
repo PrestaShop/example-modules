@@ -34,8 +34,6 @@ use PrestaShopBundle\Form\Admin\Type\MultistoreConfigurationType;
 use Symfony\Component\Form\FormBuilderInterface;
 use PrestaShopBundle\Form\Admin\Type\SwitchType;
 
-;
-
 class ContentBlockConfigurationType extends CommonAbstractType
 {
     /**
