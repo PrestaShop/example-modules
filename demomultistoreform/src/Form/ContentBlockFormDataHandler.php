@@ -21,11 +21,11 @@ class ContentBlockFormDataHandler implements FormDataHandlerInterface
     /**
      * @var EntityManagerInterface
      */
-    private $em;
+    private $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->em = $entityManager;
+        $this->entityManager = $entityManager;
     }
     /**
      * {@inheritdoc}
@@ -37,8 +37,8 @@ class ContentBlockFormDataHandler implements FormDataHandlerInterface
         $contentBlock->setDescription($data['description']);
         $contentBlock->setEnable($data['enable']);
         $this->addAssociatedShops($contentBlock, $data['shop_association'] ?? null);
-        $this->em->persist($contentBlock);
-        $this->em->flush();
+        $this->entityManager->persist($contentBlock);
+        $this->entityManager->flush();
 
         return $contentBlock->getId();
     }
@@ -48,12 +48,12 @@ class ContentBlockFormDataHandler implements FormDataHandlerInterface
      */
     public function update($id, array $data): int
     {
-        $contentBlock = $this->em->getRepository(ContentBlock::class)->find($id);
+        $contentBlock = $this->entityManager->getRepository(ContentBlock::class)->find($id);
         $contentBlock->setTitle($data['title']);
         $contentBlock->setDescription($data['description']);
         $contentBlock->setEnable($data['enable']);
         $this->addAssociatedShops($contentBlock, $data['shop_association'] ?? null);
-        $this->em->flush();
+        $this->entityManager->flush();
 
         return $contentBlock->getId();
     }
@@ -71,7 +71,7 @@ class ContentBlockFormDataHandler implements FormDataHandlerInterface
         }
 
         foreach ($shopIdList as $shopId) {
-            $shop = $this->em->getRepository(Shop::class)->find($shopId);
+            $shop = $this->entityManager->getRepository(Shop::class)->find($shopId);
             $contentBlock->addShop($shop);
         }
     }
