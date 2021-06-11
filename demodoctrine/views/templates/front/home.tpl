@@ -22,7 +22,7 @@
   * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
   * International Registered Trademark & Property of PrestaShop SA
   *}
-<link href="/modules/demodoctrine/views/css/quotes.css" rel="stylesheet">
+<link href="../modules/demodoctrine/views/css/quotes.css" rel="stylesheet">
 <div class="row demo-doctrine-quotes">
     {foreach $quotes as $quote}
     <div class="col col-sm-4">
