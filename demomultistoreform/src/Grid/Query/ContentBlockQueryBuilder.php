@@ -24,6 +24,13 @@ final class ContentBlockQueryBuilder extends AbstractDoctrineQueryBuilder
      */
     private $shopContext;
 
+    /**
+     * ContentBlockQueryBuilder constructor.
+     *
+     * @param Connection $connection
+     * @param $dbPrefix
+     * @param Context $shopContext
+     */
     public function __construct(Connection $connection, $dbPrefix, Context $shopContext)
     {
         parent::__construct($connection, $dbPrefix);
