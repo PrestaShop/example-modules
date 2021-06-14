@@ -11,12 +11,26 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoMultistoreForm\Grid\Query;
 
+use Doctrine\DBAL\Connection;
 use PrestaShop\PrestaShop\Core\Grid\Query\AbstractDoctrineQueryBuilder;
 use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 use \Doctrine\DBAL\Query\QueryBuilder;
+use PrestaShop\PrestaShop\Adapter\Shop\Context;
 
 final class ContentBlockQueryBuilder extends AbstractDoctrineQueryBuilder
 {
+    /**
+     * @var Context
+     */
+    private $shopContext;
+
+    public function __construct(Connection $connection, $dbPrefix, Context $shopContext)
+    {
+        parent::__construct($connection, $dbPrefix);
+
+        $this->shopContext = $shopContext;
+    }
+
     /**
      * @param SearchCriteriaInterface $searchCriteria
      * @return QueryBuilder
@@ -24,11 +38,17 @@ final class ContentBlockQueryBuilder extends AbstractDoctrineQueryBuilder
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getBaseQuery();
-        $qb->select('cb.id_content_block, cb.title, cb.description')
-            ->orderBy(
-                $searchCriteria->getOrderBy(),
-                $searchCriteria->getOrderWay()
-            )
+        $qb->select('cb.id_content_block, cb.title, cb.description');
+
+        if ($this->shopContext->isSingleShopContext() || $this->shopContext->isGroupShopContext()) {
+            $qb->join('cb', $this->dbPrefix . 'content_block_shop', 'cbs', 'cbs.id_content_block = cb.id_content_block');
+            $qb->where('cbs.id_shop in (' . implode(', ', $this->shopContext->getContextListShopID()) . ')');
+        }
+
+        $qb->orderBy(
+            $searchCriteria->getOrderBy(),
+            $searchCriteria->getOrderWay()
+        )
             ->setFirstResult($searchCriteria->getOffset())
             ->setMaxResults($searchCriteria->getLimit());
 

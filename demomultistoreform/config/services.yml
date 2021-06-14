@@ -46,6 +46,8 @@ services:
   prestashop.module.demo_multistore.grid.query.content_block_query_builder:
     class: 'PrestaShop\Module\DemoMultistoreForm\Grid\Query\ContentBlockQueryBuilder'
     parent: 'prestashop.core.grid.abstract_query_builder'
+    arguments:
+      - '@prestashop.adapter.shop.context'
 
   prestashop.module.demo_multistore.grid.data.factory.content_block_data_factory:
     class: 'PrestaShop\PrestaShop\Core\Grid\Data\Factory\DoctrineGridDataFactory'
