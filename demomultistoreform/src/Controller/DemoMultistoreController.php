@@ -33,6 +33,7 @@ class DemoMultistoreController extends FrameworkBundleAdminController
             'title' => 'Content block list',
             'contentBlockGrid' => $this->presentGrid($contentBlockGrid),
             'configurationForm' => $configurationForm->createView(),
+            'help_link' => false,
         ]);
     }
 
@@ -56,7 +57,8 @@ class DemoMultistoreController extends FrameworkBundleAdminController
 
         return $this->render('@Modules/demomultistoreform/views/templates/admin/form.html.twig', [
             'contentBlockForm' => $form->createView(),
-            'title' => 'Content block creation'
+            'title' => 'Content block creation',
+            'help_link' => false,
         ]);
     }
 
@@ -80,7 +82,8 @@ class DemoMultistoreController extends FrameworkBundleAdminController
 
         return $this->render('@Modules/demomultistoreform/views/templates/admin/form.html.twig', [
             'contentBlockForm' => $form->createView(),
-            'title' => 'Content block edition'
+            'title' => 'Content block edition',
+            'help_link' => false,
         ]);
     }
 
