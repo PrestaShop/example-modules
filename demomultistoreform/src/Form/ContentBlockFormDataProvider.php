@@ -21,7 +21,7 @@ class ContentBlockFormDataProvider implements FormDataProviderInterface
     /**
      * @var EntityManagerInterface
      */
-    private $em;
+    private $entityManager;
 
     /**
      * ContentBlockFormDataProvider constructor.
@@ -29,7 +29,7 @@ class ContentBlockFormDataProvider implements FormDataProviderInterface
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->em = $entityManager;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -38,7 +38,7 @@ class ContentBlockFormDataProvider implements FormDataProviderInterface
      */
     public function getData($id): array
     {
-        $contentBlock = $this->em->getRepository(ContentBlock::class)->find((int) $id);
+        $contentBlock = $this->entityManager->getRepository(ContentBlock::class)->find((int) $id);
         $shopIds = [];
         foreach ($contentBlock->getShops() as $shop) {
             $shopIds[] = $shop->getId();
