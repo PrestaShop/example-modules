@@ -21,6 +21,12 @@
 {% form_theme contentBlockForm 'PrestaShopBundle:Admin/TwigTemplateForm:prestashop_ui_kit.html.twig' %}
 
 {% block content %}
+<div class="alert alert-info" role="alert">
+  <p class="alert-text">
+    The following form allows you to create or edit a content block and link it to the shops or group shops of your choice.
+    It will appear in the grid if the shop context matches the shop association you chose in this form.
+  </p>
+</div>
 {{ form_start(contentBlockForm) }}
 <div class="row justify-content-center">
   <div class="col-xl-12">
