@@ -34,7 +34,20 @@
 
 
 {% block content %}
+<div class="alert alert-info" role="alert">
+  <p class="alert-text">
+    The following grid contains a list of elements that you can edit or delete. All elements that you will create will be displayed
+    in this list, if they are associated to a shop related to the current shop context.
+  </p>
+</div>
   {% include '@PrestaShop/Admin/Common/Grid/grid_panel.html.twig' with {'grid': contentBlockGrid} %}
+<div class="alert alert-info" role="alert">
+  <p class="alert-text">
+    The following configuration form is multistore compatible, it means that if multistore is used, fields will be preceded by multistore checkboxes,
+    and followed by a multistore dropdown if values have been overridden below the current shop context.
+    See module's README file for more informations and links to the relevant documentation.
+  </p>
+</div>
   {{ form_start(configurationForm) }}
 <div class="row justify-content-center">
   <div class="col-xl-12">
