@@ -38,18 +38,14 @@ class ContentBlockConfigurationType extends CommonAbstractType
             ->add('color', ColorPickerType::class, [
                 'required' => false,
                 'label' => 'Color',
-                'attr' => [
-                    'multistore_configuration_key' => 'PS_DEMO_MULTISTORE_COLOR',
-                ],
-            ])
+                'multistore_configuration_key' => 'PS_DEMO_MULTISTORE_COLOR',
+                ])
             ->add(
                 'italic',
                 SwitchType::class,
                 [
                     'label' => 'Italic',
-                    'attr' => [
-                        'multistore_configuration_key' => 'PS_DEMO_MULTISTORE_ITALIC',
-                    ],
+                    'multistore_configuration_key' => 'PS_DEMO_MULTISTORE_ITALIC',
                 ]
             )
             ->add(
@@ -57,9 +53,7 @@ class ContentBlockConfigurationType extends CommonAbstractType
                 SwitchType::class,
                 [
                     'label' => 'Bold',
-                    'attr' => [
-                        'multistore_configuration_key' => 'PS_DEMO_MULTISTORE_BOLD',
-                    ],
+                    'multistore_configuration_key' => 'PS_DEMO_MULTISTORE_BOLD',
                 ]
             );
     }
