@@ -107,6 +107,7 @@ final class DemoConfigurationChoiceDataConfiguration implements DataConfiguratio
 
     /**
      * Ensure the parameters passed are valid.
+     * This function can be used to validate updateConfiguration(array $configuration) data input.
      *
      * @param array $configuration
      *
