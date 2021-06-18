@@ -57,8 +57,9 @@ final class ContentBlockQueryBuilder extends AbstractDoctrineQueryBuilder
         $qb->select('cb.id_content_block, cb.title, cb.description');
 
         if ($this->shopContext->isSingleShopContext() || $this->shopContext->isGroupShopContext()) {
-            $qb->join('cb', $this->dbPrefix . 'content_block_shop', 'cbs', 'cbs.id_content_block = cb.id_content_block');
-            $qb->where('cbs.id_shop in (' . implode(', ', $this->shopContext->getContextListShopID()) . ')');
+            $qb->join('cb', $this->dbPrefix . 'content_block_shop', 'cbs', 'cbs.id_content_block = cb.id_content_block')
+                ->where('cbs.id_shop in (' . implode(', ', $this->shopContext->getContextListShopID()) . ')')
+                ->groupBy('cb.id_content_block');
         }
 
         $qb->orderBy(
