@@ -91,14 +91,4 @@ class DemoMultistoreForm extends Module
         }
         return $installer;
     }
-
-    /**
-     * Use new translation system
-     *
-     * @return bool
-     */
-    public function isUsingNewTranslationSystem(): bool
-    {
-        return true;
-    }
 }
