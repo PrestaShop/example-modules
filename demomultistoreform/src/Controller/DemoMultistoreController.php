@@ -117,10 +117,9 @@ class DemoMultistoreController extends FrameworkBundleAdminController
 
         $this->addFlash(
             'error',
-            $this->trans(
-                'Cannot find content block %contentBlock%',
-                'Modules.DemoMultistoreForm.Admin',
-                ['%contentBlock%' => $contentBlockId]
+            sprintf(
+                'Cannot find content block %d',
+                $contentBlockId
             )
         );
 
@@ -168,12 +167,12 @@ class DemoMultistoreController extends FrameworkBundleAdminController
             $generator = $this->get('prestashop.module.demo_multistore.content_block_generator');
             $generator->generateContentBlockFixtures();
         } catch (\Exception $e) {
-            $this->addFlash('error', $this->trans('There was a problem while generating contet block fixtures', 'Modules.DemoMultistoreForm.Admin'));
+            $this->addFlash('error', 'There was a problem while generating contet block fixtures.');
 
             return $redirectResponse;
         }
 
-        $this->addFlash('success', $this->trans('Successful content block fixtures generation.', 'Modules.DemoMultistoreForm.Admin'));
+        $this->addFlash('success', 'Successful content block fixtures generation.');
 
 
         return $redirectResponse;
