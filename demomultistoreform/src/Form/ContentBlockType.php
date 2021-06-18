@@ -41,7 +41,7 @@ class ContentBlockType extends CommonAbstractType
                 'title',
                 TextType::class,
                 [
-                    'label' => 'title',
+                    'label' => 'Title',
                     'help' => 'Throws error if length is > 20 or text contains <>={}',
                     'constraints' => [
                         new TypedRegex([
