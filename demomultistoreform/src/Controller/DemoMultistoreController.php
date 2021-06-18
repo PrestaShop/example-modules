@@ -103,9 +103,10 @@ class DemoMultistoreController extends FrameworkBundleAdminController
             ->find($contentBlockId);
 
         if (!empty($contentBlock)) {
-            $em = $this->get('doctrine.orm.entity_manager');
-            $em->remove($contentBlock);
-            $em->flush();
+            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $contentBlock->clearShops();
+            $entityManager->remove($contentBlock);
+            $entityManager->flush();
             $this->addFlash(
                 'success',
                 $this->trans('Successful deletion.', 'Admin.Notifications.Success')
