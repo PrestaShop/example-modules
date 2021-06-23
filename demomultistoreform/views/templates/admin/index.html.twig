@@ -15,39 +15,35 @@
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  */#}
-
-{% set layoutHeaderToolbarBtn = {
-  'add' : {
-    'href': path('demo_multistore_create'),
-    'desc': 'Add new content block'|trans({}, 'Admin.International.Feature'),
-    'icon': 'add_circle_outline'
-  },
-  'generate fixtures': {
-    href: path('demo_multistore_fixtures', {}),
-    desc: 'Generate fixtures',
-    icon: 'add_circle_outline',
-  }
-} %}
+{% if displayFixtureGeneratorLink %}
+  {% set layoutHeaderToolbarBtn = {
+    'add' : {
+      'href': path('demo_multistore_create'),
+      'desc': 'Add new content block',
+      'icon': 'add_circle_outline'
+    },
+    'generate fixtures': {
+      href: path('demo_multistore_fixtures', {}),
+      desc: 'Generate fixtures',
+      icon: 'add_circle_outline',
+    }
+  } %}
+{% else %}
+  {% set layoutHeaderToolbarBtn = {
+    'add' : {
+      'href': path('demo_multistore_create'),
+      'desc': 'Add new content block',
+      'icon': 'add_circle_outline'
+    }
+  } %}
+{% endif %}
 
 {% extends '@PrestaShop/Admin/layout.html.twig' %}
 {% form_theme configurationForm 'PrestaShopBundle:Admin/TwigTemplateForm:prestashop_ui_kit.html.twig' %}
 
 
 {% block content %}
-<div class="alert alert-info" role="alert">
-  <p class="alert-text">
-    The following grid contains a list of elements that you can edit or delete. All elements that you will create will be displayed
-    in this list, if they are associated to a shop related to the current shop context.
-  </p>
-</div>
   {% include '@PrestaShop/Admin/Common/Grid/grid_panel.html.twig' with {'grid': contentBlockGrid} %}
-<div class="alert alert-info" role="alert">
-  <p class="alert-text">
-    The following configuration form is multistore compatible, it means that if multistore is used, fields will be preceded by multistore checkboxes,
-    and followed by a multistore dropdown if values have been overridden below the current shop context.
-    See module's README file for more informations and links to the relevant documentation.
-  </p>
-</div>
   {{ form_start(configurationForm) }}
 <div class="row justify-content-center">
   <div class="col-xl-12">
