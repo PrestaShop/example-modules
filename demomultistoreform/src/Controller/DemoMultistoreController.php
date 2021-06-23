@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteria;
 use PrestaShop\Module\DemoMultistoreForm\Entity\ContentBlock;
+use PrestaShopBundle\Entity\Shop;
 
 class DemoMultistoreController extends FrameworkBundleAdminController
 {
@@ -38,11 +39,16 @@ class DemoMultistoreController extends FrameworkBundleAdminController
         // configuration form
         $configurationForm = $this->get('prestashop.module.demo_multistore.content_block_configuration.form_handler')->getForm();
 
+        $contentBlocCount = $this->getDoctrine()
+            ->getRepository(ContentBlock::class)
+            ->count([]);
+
         return $this->render('@Modules/demomultistoreform/views/templates/admin/index.html.twig', [
             'title' => 'Content block list',
             'contentBlockGrid' => $this->presentGrid($contentBlockGrid),
             'configurationForm' => $configurationForm->createView(),
             'help_link' => false,
+            'displayFixtureGeneratorLink' => $contentBlocCount === 0,
         ]);
     }
 
@@ -103,9 +109,19 @@ class DemoMultistoreController extends FrameworkBundleAdminController
             ->find($contentBlockId);
 
         if (!empty($contentBlock)) {
+            $multistoreContext = $this->get('prestashop.adapter.shop.context');
             $entityManager = $this->get('doctrine.orm.entity_manager');
-            $contentBlock->clearShops();
-            $entityManager->remove($contentBlock);
+            if ($multistoreContext->isAllShopContext()) {
+                $contentBlock->clearShops();
+                $entityManager->remove($contentBlock);
+            } else {
+                $shopList = $this->getDoctrine()
+                    ->getRepository(Shop::class)
+                    ->findBy(['id' => $multistoreContext->getContextListShopID()]);
+                foreach ($shopList as $shop) {
+                    $contentBlock->removeShop($shop);
+                }
+            }
             $entityManager->flush();
             $this->addFlash(
                 'success',
@@ -167,7 +183,7 @@ class DemoMultistoreController extends FrameworkBundleAdminController
             $generator = $this->get('prestashop.module.demo_multistore.content_block_generator');
             $generator->generateContentBlockFixtures();
         } catch (\Exception $e) {
-            $this->addFlash('error', 'There was a problem while generating contet block fixtures.');
+            $this->addFlash('error', 'There was a problem while generating context block fixtures');
 
             return $redirectResponse;
         }
