@@ -24,6 +24,7 @@ namespace PrestaShop\Module\DemoMultistoreForm\Database;
 use Doctrine\ORM\EntityManagerInterface;
 use PrestaShop\Module\DemoMultistoreForm\Entity\ContentBlock;
 use Exception;
+use PrestaShopBundle\Entity\Shop;
 
 class ContentBlockGenerator
 {
@@ -58,12 +59,15 @@ class ContentBlockGenerator
             $this->removeAll();
             $jsonFile = __DIR__ . $this->jsonFilePath;
             $contentBlocksData = json_decode(file_get_contents($jsonFile), true);
-
+            $shop = $this->getFirstShop();
             foreach ($contentBlocksData as $data) {
                 $contentBlock = new ContentBlock();
                 $contentBlock->setTitle($data['title']);
                 $contentBlock->setDescription($data['description']);
                 $contentBlock->setEnable($data['enable']);
+                if ($shop !== null) {
+                    $contentBlock->addShop($shop);
+                }
                 $this->entityManager->persist($contentBlock);
             }
 
@@ -85,5 +89,20 @@ class ContentBlockGenerator
         }
 
         $this->entityManager->flush();
+    }
+
+    /**
+     * Returns first shop in the list, it could be any shop, doesn't matter, it's for fixtures
+     *
+     * @return Shop|null
+     */
+    private function getFirstShop(): ?Shop
+    {
+        $shopList = $this->entityManager->getRepository(Shop::class)->findAll();
+        foreach ($shopList as $shop) {
+            return $shop;
+        }
+
+        return null;
     }
 }
