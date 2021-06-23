@@ -24,6 +24,7 @@ namespace PrestaShop\Module\DemoMultistoreForm\Form;
 use Doctrine\ORM\EntityManagerInterface;
 use PrestaShop\Module\DemoMultistoreForm\Entity\ContentBlock;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataProvider\FormDataProviderInterface;
+use PrestaShop\PrestaShop\Adapter\Shop\Context;
 
 class ContentBlockFormDataProvider implements FormDataProviderInterface
 {
@@ -33,12 +34,18 @@ class ContentBlockFormDataProvider implements FormDataProviderInterface
     private $entityManager;
 
     /**
+     * @var Context
+     */
+    private $shopContext;
+
+    /**
      * ContentBlockFormDataProvider constructor.
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, Context $shopContext)
     {
         $this->entityManager = $entityManager;
+        $this->shopContext = $shopContext;
     }
 
     /**
@@ -70,7 +77,7 @@ class ContentBlockFormDataProvider implements FormDataProviderInterface
             'title' => '',
             'description' => '',
             'enable' => false,
-            'shop_association' => [],
+            'shop_association' => $this->shopContext->getContextListShopID(),
         ];
     }
 }

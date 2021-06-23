@@ -19,6 +19,7 @@ services:
     class: 'PrestaShop\Module\DemoMultistoreForm\Form\ContentBlockFormDataProvider'
     arguments:
       - '@doctrine.orm.default_entity_manager'
+      - '@prestashop.adapter.shop.context'
 
   prestashop.module.demo_multistore.form.identifiable_object.builder.content_block_form_builder:
     class: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Builder\FormBuilder'
