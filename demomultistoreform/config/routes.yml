@@ -28,6 +28,12 @@ demo_multistore_delete:
     defaults:
         _controller: 'PrestaShop\Module\DemoMultistoreForm\Controller\DemoMultistoreController::delete'
 
+demo_multistore_toggle_status:
+    path: /demomultistoreform/contentblock/{contentBlockId}/toggle
+    methods: [POST]
+    defaults:
+        _controller: 'PrestaShop\Module\DemoMultistoreForm\Controller\DemoMultistoreController::toggleStatus'
+
 demo_multistore_fixtures:
     path: /demomultistoreform/contentBlock/fixtures
     methods: [GET, POST]

@@ -17,9 +17,12 @@
  */
 
 $(document).ready(function () {
-  window.prestashop.component.initComponents(
-    [
-      'MultistoreConfigField'
-    ],
-  );
+    window.prestashop.component.initComponents(
+        [
+            'MultistoreConfigField',
+            'Grid',
+        ],
+    );
+    const contentBlockGrid = new window.prestashop.component.Grid('block_content');
+    contentBlockGrid.addExtension(new prestashop.component.GridExtensions.AsyncToggleColumnExtension());
 });

@@ -193,4 +193,45 @@ class DemoMultistoreController extends FrameworkBundleAdminController
 
         return $redirectResponse;
     }
+
+    /**
+     * @param Request $request
+     * @param int $contentBlockId
+     *
+     * @return Response
+     */
+    public function toggleStatus(Request $request, int $contentBlockId): Response
+    {
+        $entityManager = $this->get('doctrine.orm.entity_manager');
+        $contentBlock = $entityManager
+            ->getRepository(ContentBlock::class)
+            ->findOneBy(['id' => $contentBlockId]);
+
+        if (empty($contentBlock)) {
+            return $this->json([
+                'status' => false,
+                'message' => sprintf('Content block %d doesn\'t exist', $contentBlockId)
+            ]);
+        }
+
+        try {
+            $contentBlock->setEnable(!$contentBlock->getEnable());
+            $entityManager->flush();
+            $response = [
+                'status' => true,
+                'message' => $this->trans('The status has been successfully updated.', 'Admin.Notifications.Success'),
+            ];
+        } catch (\Exception $e) {
+            $response = [
+                'status' => false,
+                'message' => sprintf(
+                    'There was an error while updating the status of content block %d: %s',
+                    $contentBlockId,
+                    $e->getMessage()
+                ),
+            ];
+        }
+
+        return $this->json($response);
+    }
 }

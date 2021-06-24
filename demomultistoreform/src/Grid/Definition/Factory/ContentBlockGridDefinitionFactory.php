@@ -26,6 +26,7 @@ use PrestaShop\PrestaShop\Core\Grid\Action\Row\RowActionCollection;
 use PrestaShop\PrestaShop\Core\Grid\Action\Row\Type\LinkRowAction;
 use PrestaShop\PrestaShop\Core\Grid\Column\ColumnCollection;
 use PrestaShop\PrestaShop\Core\Grid\Column\Type\Common\ActionColumn;
+use PrestaShop\PrestaShop\Core\Grid\Column\Type\Common\ToggleColumn;
 use PrestaShop\PrestaShop\Core\Grid\Column\Type\DataColumn;
 use PrestaShop\PrestaShop\Core\Grid\Definition\Factory\AbstractGridDefinitionFactory;
 use PrestaShop\PrestaShop\Core\Grid\Filter\FilterCollection;
@@ -56,28 +57,43 @@ class ContentBlockGridDefinitionFactory extends AbstractGridDefinitionFactory
     protected function getColumns()
     {
         return (new ColumnCollection())
-            ->add((new DataColumn('id_content_block'))
+            ->add(
+                (new DataColumn('id_content_block'))
                 ->setName($this->trans('ID', [], 'Admin.Global'))
                 ->setOptions([
                     'field' => 'id_content_block',
                 ])
             )
-            ->add((new DataColumn('title'))
+            ->add(
+                (new DataColumn('title'))
                 ->setName($this->trans('Title', [], 'Admin.Global'))
                 ->setOptions([
                     'field' => 'title',
                 ])
             )
-            ->add((new DataColumn('description'))
+            ->add(
+                (new DataColumn('description'))
                 ->setName($this->trans('Description', [], 'Admin.Global'))
                 ->setOptions([
                     'field' => 'description',
                 ])
             )
-            ->add((new ActionColumn('actions'))
+            ->add(
+                (new ToggleColumn('enable'))
+                ->setName($this->trans('Displayed', [], 'Admin.Global'))
+                ->setOptions([
+                    'field' => 'enable',
+                    'primary_field' => 'id_content_block',
+                    'route' => 'demo_multistore_toggle_status',
+                    'route_param_name' => 'contentBlockId',
+                ])
+            )
+            ->add(
+                (new ActionColumn('actions'))
                 ->setOptions([
                     'actions' => (new RowActionCollection())
-                        ->add((new LinkRowAction('edit'))
+                        ->add(
+                            (new LinkRowAction('edit'))
                             ->setIcon('edit')
                             ->setOptions([
                                 'route' => 'demo_multistore_edit',
@@ -85,7 +101,8 @@ class ContentBlockGridDefinitionFactory extends AbstractGridDefinitionFactory
                                 'route_param_field' => 'id_content_block',
                             ])
                         )
-                        ->add((new LinkRowAction('delete'))
+                        ->add(
+                            (new LinkRowAction('delete'))
                             ->setName($this->trans('Delete', [], 'Admin.Actions'))
                             ->setIcon('delete')
                             ->setOptions([
@@ -127,4 +144,3 @@ class ContentBlockGridDefinitionFactory extends AbstractGridDefinitionFactory
         return (new BulkActionCollection());
     }
 }
-
