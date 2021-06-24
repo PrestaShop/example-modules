@@ -54,7 +54,7 @@ final class ContentBlockQueryBuilder extends AbstractDoctrineQueryBuilder
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getBaseQuery();
-        $qb->select('cb.id_content_block, cb.title, cb.description');
+        $qb->select('cb.id_content_block, cb.title, cb.description, cb.enable');
 
         if ($this->shopContext->isSingleShopContext() || $this->shopContext->isGroupShopContext()) {
             $qb->join('cb', $this->dbPrefix . 'content_block_shop', 'cbs', 'cbs.id_content_block = cb.id_content_block')
