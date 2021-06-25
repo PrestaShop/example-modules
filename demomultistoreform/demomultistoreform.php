@@ -103,10 +103,10 @@ class DemoMultistoreForm extends Module
     public function hookdisplayFooterBefore($params): string
     {
         $this->context->smarty->assign([
-            'contentBlocks' => $this->getContentBlocksForFrontOffice(),
-            'color' => \Configuration::get('PS_DEMO_MULTISTORE_COLOR'),
-            'italic' => \Configuration::get('PS_DEMO_MULTISTORE_ITALIC'),
-            'bold' => \Configuration::get('PS_DEMO_MULTISTORE_BOLD'),
+            'contentBlockList' => $this->getContentBlocksForFrontOffice(),
+            'color' => Configuration::get('PS_DEMO_MULTISTORE_COLOR'),
+            'italic' => Configuration::get('PS_DEMO_MULTISTORE_ITALIC'),
+            'bold' => Configuration::get('PS_DEMO_MULTISTORE_BOLD'),
         ]);
 
         return $this->display(__FILE__, 'views/templates/hook/displayBlockContent.tpl');
