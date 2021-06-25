@@ -23,9 +23,11 @@ if (file_exists(__DIR__.'/vendor/autoload.php')) {
     require_once __DIR__.'/vendor/autoload.php';
 }
 
+use PrestaShop\Module\DemoMultistoreForm\Entity\ContentBlock;
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 use PrestaShop\Module\DemoMultistoreForm\Database\ContentBlockInstaller;
 use PrestaShop\Module\DemoMultistoreForm\Database\ContentBlockGenerator;
+use Configuration;
 
 class DemoMultistoreForm extends Module
 {
@@ -52,7 +54,8 @@ class DemoMultistoreForm extends Module
     public function install(): bool
     {
         return $this->getInstaller()->createTables()
-            && parent::install();
+            && parent::install()
+            && $this->registerHook('displayFooterBefore');
     }
 
     /**
@@ -90,5 +93,38 @@ class DemoMultistoreForm extends Module
             );
         }
         return $installer;
+    }
+
+    /**
+     * @param array $params
+     *
+     * @return string
+     */
+    public function hookdisplayFooterBefore($params): string
+    {
+        $this->context->smarty->assign([
+            'contentBlocks' => $this->getContentBlocksForFrontOffice(),
+            'color' => \Configuration::get('PS_DEMO_MULTISTORE_COLOR'),
+            'italic' => \Configuration::get('PS_DEMO_MULTISTORE_ITALIC'),
+            'bold' => \Configuration::get('PS_DEMO_MULTISTORE_BOLD'),
+        ]);
+
+        return $this->display(__FILE__, 'views/templates/hook/displayBlockContent.tpl');
+    }
+
+    /**
+     * @return array
+     */
+    private function getContentBlocksForFrontOffice(): array
+    {
+        $dbPrefix = $this->getContainer()->getParameter('database_prefix');
+        $connexion = $this->get('doctrine.dbal.default_connection');
+        $qb = $connexion->createQueryBuilder()
+            ->from($dbPrefix . 'content_block', 'cb')
+            ->select('cb.id_content_block, cb.title, cb.description, cb.enable')
+            ->join('cb', $dbPrefix . 'content_block_shop', 'cbs', 'cbs.id_content_block = cb.id_content_block')
+            ->where('cbs.id_shop = ' . $this->context->shop->id  . ' and cb.enable = true');
+
+        return $qb->execute()->fetchAll();
     }
 }
