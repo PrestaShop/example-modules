@@ -120,6 +120,10 @@ class DemoMultistoreController extends FrameworkBundleAdminController
                     ->findBy(['id' => $multistoreContext->getContextListShopID()]);
                 foreach ($shopList as $shop) {
                     $contentBlock->removeShop($shop);
+                    $entityManager->flush();
+                }
+                if (count($contentBlock->getShops()) === 0) {
+                    $entityManager->remove($contentBlock);
                 }
             }
             $entityManager->flush();
