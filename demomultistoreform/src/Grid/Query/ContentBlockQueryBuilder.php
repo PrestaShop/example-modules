@@ -56,7 +56,7 @@ final class ContentBlockQueryBuilder extends AbstractDoctrineQueryBuilder
         $qb = $this->getBaseQuery();
         $qb->select('cb.id_content_block, cb.title, cb.description, cb.enable');
 
-        if ($this->shopContext->isSingleShopContext() || $this->shopContext->isGroupShopContext()) {
+        if (!$this->shopContext->isAllShopContext()) {
             $qb->join('cb', $this->dbPrefix . 'content_block_shop', 'cbs', 'cbs.id_content_block = cb.id_content_block')
                 ->where('cbs.id_shop in (' . implode(', ', $this->shopContext->getContextListShopID()) . ')')
                 ->groupBy('cb.id_content_block');
@@ -81,7 +81,11 @@ final class ContentBlockQueryBuilder extends AbstractDoctrineQueryBuilder
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getBaseQuery();
-        $qb->select('COUNT(cb.id_content_block)');
+        $qb->select('COUNT(DISTINCT cb.id_content_block)');
+        if (!$this->shopContext->isAllShopContext()) {
+            $qb->join('cb', $this->dbPrefix . 'content_block_shop', 'cbs', 'cbs.id_content_block = cb.id_content_block')
+                ->where('cbs.id_shop in (' . implode(', ', $this->shopContext->getContextListShopID()) . ')');
+        }
 
         return $qb;
     }
