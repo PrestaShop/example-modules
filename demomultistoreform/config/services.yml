@@ -1,4 +1,5 @@
 services:
+  _defaults: { public: true }
 
   # installer
   prestashop.module.demo_multistore.content_block_installer:
@@ -43,10 +44,12 @@ services:
   prestashop.module.demo_multistore.grid.definition.factory.content_blocks:
     class: 'PrestaShop\Module\DemoMultistoreForm\Grid\Definition\Factory\ContentBlockGridDefinitionFactory'
     parent: 'prestashop.core.grid.definition.factory.abstract_grid_definition'
+    public: true
 
   prestashop.module.demo_multistore.grid.query.content_block_query_builder:
     class: 'PrestaShop\Module\DemoMultistoreForm\Grid\Query\ContentBlockQueryBuilder'
     parent: 'prestashop.core.grid.abstract_query_builder'
+    public: true
     arguments:
       - '@prestashop.adapter.shop.context'
 
