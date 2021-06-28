@@ -90,3 +90,13 @@ services:
       - '@prestashop.module.demo_multistore.content_block_configuration.form_provider'
       - 'PrestaShop\Module\DemoMultistoreForm\Form\ContentBlockConfigurationType'
       - 'ConfigurationForm'
+
+  # content block form
+  prestashop.module.demo_multistore.form.content_block_type:
+    class: 'PrestaShop\Module\DemoMultistoreForm\Form\ContentBlockType'
+    parent: 'form.type.translatable.aware'
+    arguments:
+      - '@=service("prestashop.adapter.multistore_feature").isUsed()'
+    public: true
+    tags:
+      - { name: form.type }

@@ -21,16 +21,38 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoMultistoreForm\Form;
 
-use PrestaShopBundle\Form\Admin\Type\CommonAbstractType;
 use PrestaShopBundle\Form\Admin\Type\ShopChoiceTreeType;
 use PrestaShopBundle\Form\Admin\Type\SwitchType;
+use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\TypedRegex;
+use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ContentBlockType extends CommonAbstractType
+class ContentBlockType extends TranslatorAwareType
 {
+    /**
+     * @var bool
+     */
+    private $isMultistoreUsed;
+
+    /**
+     * @param TranslatorInterface $translator
+     * @param array $locales
+     * @param bool $isMultistoreUsed
+     */
+    public function __construct(
+        TranslatorInterface $translator,
+        array $locales,
+        bool $isMultistoreUsed
+    ) {
+        parent::__construct($translator, $locales);
+
+        $this->isMultistoreUsed = $isMultistoreUsed;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -42,13 +64,13 @@ class ContentBlockType extends CommonAbstractType
                 TextType::class,
                 [
                     'label' => 'Title',
-                    'help' => 'Throws error if length is > 20 or text contains <>={}',
+                    'help' => 'Throws error if length is > 50 or text contains <>={}',
                     'constraints' => [
                         new TypedRegex([
                             'type' => 'generic_name',
                         ]),
                         new Length([
-                            'max' => 20,
+                            'max' => 50,
                         ]),
                     ],
                 ]
@@ -58,7 +80,7 @@ class ContentBlockType extends CommonAbstractType
                 TextType::class,
                 [
                     'label' => 'Description',
-                    'help' => 'Throws error if length is > 50 or text contains <>={}',
+                    'help' => 'Throws error if length is > 100 or text contains <>={}',
                     'constraints' => [
                         new TypedRegex([
                             'type' => 'generic_name',
@@ -75,13 +97,23 @@ class ContentBlockType extends CommonAbstractType
                 [
                     'label' => 'Enable',
                 ]
-            )
-            ->add(
+            );
+        if ($this->isMultistoreUsed) {
+            $builder->add(
                 'shop_association',
                 ShopChoiceTreeType::class,
                 [
                     'label' => 'Shop associations',
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => $this->trans(
+                                'You have to select at least one shop to associate this item with',
+                                'Admin.Notifications.Error'
+                            ),
+                        ])
+                    ]
                 ]
             );
+        }
     }
 }
