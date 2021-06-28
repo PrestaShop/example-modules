@@ -58,6 +58,12 @@ class ContentBlockGenerator
         try {
             $this->removeAll();
             $jsonFile = __DIR__ . $this->jsonFilePath;
+            if (!file_exists($jsonFile)) {
+                $errors[] = sprintf(
+                    'File %s was not found.',
+                    $jsonFile
+                );
+            }
             $contentBlocksData = json_decode(file_get_contents($jsonFile), true);
             $shop = $this->getFirstShop();
             foreach ($contentBlocksData as $data) {

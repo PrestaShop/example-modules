@@ -58,9 +58,16 @@ class ContentBlockFormDataHandler implements FormDataHandlerInterface
     public function update($id, array $data): int
     {
         $contentBlock = $this->entityManager->getRepository(ContentBlock::class)->find($id);
-        $contentBlock->setTitle($data['title']);
-        $contentBlock->setDescription($data['description']);
-        $contentBlock->setEnable($data['enable']);
+        if (isset($data['title']) && is_string($data['title'])) {
+            $contentBlock->setTitle($data['title']);
+        }
+        if (isset($data['description']) && is_string($data['description'])) {
+            $contentBlock->setDescription($data['description']);
+        }
+        if (isset($data['enable']) && is_bool($data['enable'])) {
+            $contentBlock->setEnable($data['enable']);
+        }
+
         $this->addAssociatedShops($contentBlock, $data['shop_association'] ?? null);
         $this->entityManager->flush();
 

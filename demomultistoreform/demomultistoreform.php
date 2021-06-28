@@ -19,14 +19,16 @@
 
 declare(strict_types=1);
 
+if (!defined('_PS_VERSION_')) {
+    exit;
+}
+
 if (file_exists(__DIR__.'/vendor/autoload.php')) {
     require_once __DIR__.'/vendor/autoload.php';
 }
 
-use PrestaShop\Module\DemoMultistoreForm\Entity\ContentBlock;
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 use PrestaShop\Module\DemoMultistoreForm\Database\ContentBlockInstaller;
-use PrestaShop\Module\DemoMultistoreForm\Database\ContentBlockGenerator;
 use Configuration;
 
 class DemoMultistoreForm extends Module

@@ -65,7 +65,7 @@ class ContentBlockInstaller
                 continue;
             }
             $statement = $this->connection->executeQuery($query);
-            if (0 != (int) $statement->errorCode()) {
+            if (0 !== (int) $statement->errorCode()) {
                 return false;
             }
         }
@@ -85,7 +85,7 @@ class ContentBlockInstaller
         foreach ($tableNames as $tableName) {
             $sql = 'DROP TABLE IF EXISTS ' . $this->dbPrefix . $tableName;
             $statement = $this->connection->executeQuery($sql);
-            if ($statement instanceof Statement && 0 != (int) $statement->errorCode()) {
+            if ($statement instanceof Statement && 0 !== (int) $statement->errorCode()) {
                 return false;
             }
         }
