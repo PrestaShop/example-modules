@@ -25,5 +25,4 @@ $(document).ready(function () {
     );
     const contentBlockGrid = new window.prestashop.component.Grid('block_content');
     contentBlockGrid.addExtension(new prestashop.component.GridExtensions.AsyncToggleColumnExtension());
-    $('.colorpicker input[type="text"]').colorpicker();
 });
