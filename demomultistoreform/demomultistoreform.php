@@ -124,7 +124,8 @@ class DemoMultistoreForm extends Module
             ->from($dbPrefix . 'content_block', 'cb')
             ->select('cb.id_content_block, cb.title, cb.description, cb.enable')
             ->join('cb', $dbPrefix . 'content_block_shop', 'cbs', 'cbs.id_content_block = cb.id_content_block')
-            ->where('cbs.id_shop = ' . $this->context->shop->id  . ' and cb.enable = true');
+            ->where('cbs.id_shop = :shopId AND cb.enable = true')
+            ->setParameter('shopId', (int) $this->context->shop->id);
 
         return $qb->execute()->fetchAll();
     }
