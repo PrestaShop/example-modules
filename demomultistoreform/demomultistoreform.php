@@ -119,8 +119,8 @@ class DemoMultistoreForm extends Module
     private function getContentBlocksForFrontOffice(): array
     {
         $dbPrefix = $this->getContainer()->getParameter('database_prefix');
-        $connexion = $this->get('doctrine.dbal.default_connection');
-        $qb = $connexion->createQueryBuilder()
+        $connection = $this->get('doctrine.dbal.default_connection');
+        $qb = $connection->createQueryBuilder()
             ->from($dbPrefix . 'content_block', 'cb')
             ->select('cb.id_content_block, cb.title, cb.description, cb.enable')
             ->join('cb', $dbPrefix . 'content_block_shop', 'cbs', 'cbs.id_content_block = cb.id_content_block')
