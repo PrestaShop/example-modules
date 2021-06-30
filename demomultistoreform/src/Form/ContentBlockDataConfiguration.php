@@ -35,10 +35,11 @@ final class ContentBlockDataConfiguration extends AbstractMultistoreConfiguratio
     public function getConfiguration(): array
     {
         $return = [];
+        $shopConstraint = $this->getShopConstraint();
 
-        $return['color'] = $this->configuration->get('PS_DEMO_MULTISTORE_COLOR');
-        $return['italic'] = $this->configuration->get('PS_DEMO_MULTISTORE_ITALIC');
-        $return['bold'] = $this->configuration->get('PS_DEMO_MULTISTORE_BOLD');
+        $return['color'] = $this->configuration->get('PS_DEMO_MULTISTORE_COLOR', null, $shopConstraint);
+        $return['italic'] = $this->configuration->get('PS_DEMO_MULTISTORE_ITALIC', null, $shopConstraint);
+        $return['bold'] = $this->configuration->get('PS_DEMO_MULTISTORE_BOLD', null, $shopConstraint);
 
         return $return;
     }
