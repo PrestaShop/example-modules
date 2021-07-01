@@ -46,7 +46,7 @@ class DemoMultistoreForm extends Module
 
         $this->displayName = 'Demo multistore configuration form';
         $this->description = 'Module created for the purpose of showing an example of multistore configuration form';
-        $this->ps_versions_compliancy = array('min' => '1.7.8.0', 'max' => _PS_VERSION_);
+        $this->ps_versions_compliancy = array('min' => '1.7.8.0', 'max' => '1.7.8.0');
     }
 
     /**
