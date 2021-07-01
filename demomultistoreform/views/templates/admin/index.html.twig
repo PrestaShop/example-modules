@@ -1,0 +1,74 @@
+{#/**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
+ */#}
+{% if displayFixtureGeneratorLink %}
+  {% set layoutHeaderToolbarBtn = {
+    'add' : {
+      'href': path('demo_multistore_create'),
+      'desc': 'Add new content block',
+      'icon': 'add_circle_outline'
+    },
+    'generate fixtures': {
+      href: path('demo_multistore_fixtures', {}),
+      desc: 'Generate fixtures',
+      icon: 'add_circle_outline',
+    }
+  } %}
+{% else %}
+  {% set layoutHeaderToolbarBtn = {
+    'add' : {
+      'href': path('demo_multistore_create'),
+      'desc': 'Add new content block',
+      'icon': 'add_circle_outline'
+    }
+  } %}
+{% endif %}
+
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+{% form_theme configurationForm 'PrestaShopBundle:Admin/TwigTemplateForm:prestashop_ui_kit.html.twig' %}
+
+
+{% block content %}
+  {% include '@PrestaShop/Admin/Common/Grid/grid_panel.html.twig' with {'grid': contentBlockGrid} %}
+  {{ form_start(configurationForm) }}
+<div class="row justify-content-center">
+  <div class="col-xl-12">
+    <div class="card">
+      <h3 class="card-header">
+        <i class="material-icons">business_center</i> Content blocks configuration
+      </h3>
+      <div class="card-block row">
+        <div class="card-text">
+          {{ form_widget(configurationForm) }}
+          {{ form_rest(configurationForm) }}
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-primary" id="form-maintenance-save-button">{{ 'Save'|trans({}, 'Admin.Actions') }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  {% endblock %}
+
+  {% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.4.0/js/bootstrap-colorpicker.min.js"></script>
+    <script src="{{ asset('../modules/demomultistoreform/views/js/form.js') }}"></script>
+  {% endblock %}

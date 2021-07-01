@@ -1,0 +1,102 @@
+services:
+  _defaults: { public: true }
+
+  # installer
+  prestashop.module.demo_multistore.content_block_installer:
+    class: 'PrestaShop\Module\DemoMultistoreForm\Database\ContentBlockInstaller'
+    arguments:
+      - '@doctrine.dbal.default_connection'
+      - '%database_prefix%'
+
+  # fixtures
+  prestashop.module.demo_multistore.content_block_generator:
+    class: 'PrestaShop\Module\DemoMultistoreForm\Database\ContentBlockGenerator'
+    arguments:
+      - '@doctrine.orm.default_entity_manager'
+      - '/../../Resources/contentBlocks.json'
+
+  #creation/edition form
+  prestashop.module.demo_multistore.form.identifiable_object.data_provider.content_block_form_data_provider:
+    class: 'PrestaShop\Module\DemoMultistoreForm\Form\ContentBlockFormDataProvider'
+    arguments:
+      - '@doctrine.orm.default_entity_manager'
+      - '@prestashop.adapter.shop.context'
+
+  prestashop.module.demo_multistore.form.identifiable_object.builder.content_block_form_builder:
+    class: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Builder\FormBuilder'
+    factory: 'prestashop.core.form.builder.form_builder_factory:create'
+    arguments:
+      - 'PrestaShop\Module\DemoMultistoreForm\Form\ContentBlockType'
+      - '@prestashop.module.demo_multistore.form.identifiable_object.data_provider.content_block_form_data_provider'
+
+  prestashop.module.demo_multistore.form.identifiable_object.data_handler.content_block_form_data_handler:
+    class: 'PrestaShop\Module\DemoMultistoreForm\Form\ContentBlockFormDataHandler'
+    arguments:
+      - '@doctrine.orm.default_entity_manager'
+
+  prestashop.module.demo_multistore.form.identifiable_object.handler.content_block_form_handler:
+    class: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Handler\FormHandler'
+    factory: 'prestashop.core.form.identifiable_object.handler.form_handler_factory:create'
+    arguments:
+      - '@prestashop.module.demo_multistore.form.identifiable_object.data_handler.content_block_form_data_handler'
+
+  #grid services
+  prestashop.module.demo_multistore.grid.definition.factory.content_blocks:
+    class: 'PrestaShop\Module\DemoMultistoreForm\Grid\Definition\Factory\ContentBlockGridDefinitionFactory'
+    parent: 'prestashop.core.grid.definition.factory.abstract_grid_definition'
+    public: true
+
+  prestashop.module.demo_multistore.grid.query.content_block_query_builder:
+    class: 'PrestaShop\Module\DemoMultistoreForm\Grid\Query\ContentBlockQueryBuilder'
+    parent: 'prestashop.core.grid.abstract_query_builder'
+    public: true
+    arguments:
+      - '@prestashop.adapter.shop.context'
+
+  prestashop.module.demo_multistore.grid.data.factory.content_block_data_factory:
+    class: 'PrestaShop\PrestaShop\Core\Grid\Data\Factory\DoctrineGridDataFactory'
+    arguments:
+      - '@prestashop.module.demo_multistore.grid.query.content_block_query_builder'
+      - '@prestashop.core.hook.dispatcher'
+      - '@prestashop.core.grid.query.doctrine_query_parser'
+      - 'block_content'
+
+  prestashop.module.demo_multistore.grid.content_block_grid_factory:
+    class: 'PrestaShop\PrestaShop\Core\Grid\GridFactory'
+    arguments:
+      - '@prestashop.module.demo_multistore.grid.definition.factory.content_blocks'
+      - '@prestashop.module.demo_multistore.grid.data.factory.content_block_data_factory'
+      - '@prestashop.core.grid.filter.form_factory'
+      - '@prestashop.core.hook.dispatcher'
+
+  # config form
+  prestashop.module.demo_multistore.content_block.configuration:
+    class: 'PrestaShop\Module\DemoMultistoreForm\Form\ContentBlockDataConfiguration'
+    arguments:
+      - '@prestashop.adapter.legacy.configuration'
+      - '@prestashop.adapter.shop.context'
+      - '@prestashop.adapter.multistore_feature'
+
+  prestashop.module.demo_multistore.content_block_configuration.form_provider:
+    class: 'PrestaShop\Module\DemoMultistoreForm\Form\ContentBlockConfigurationFormDataProvider'
+    arguments:
+      - '@prestashop.module.demo_multistore.content_block.configuration'
+
+  prestashop.module.demo_multistore.content_block_configuration.form_handler:
+    class: 'PrestaShop\PrestaShop\Core\Form\Handler'
+    arguments:
+      - '@form.factory'
+      - '@prestashop.core.hook.dispatcher'
+      - '@prestashop.module.demo_multistore.content_block_configuration.form_provider'
+      - 'PrestaShop\Module\DemoMultistoreForm\Form\ContentBlockConfigurationType'
+      - 'ConfigurationForm'
+
+  # content block form
+  prestashop.module.demo_multistore.form.content_block_type:
+    class: 'PrestaShop\Module\DemoMultistoreForm\Form\ContentBlockType'
+    parent: 'form.type.translatable.aware'
+    arguments:
+      - '@=service("prestashop.adapter.multistore_feature").isUsed()'
+    public: true
+    tags:
+      - { name: form.type }

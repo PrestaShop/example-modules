@@ -1,0 +1,27 @@
+[
+  {
+    "title": "First block title",
+    "description": "Description first block",
+    "enable": true
+  },
+  {
+    "title": "Second block title",
+    "description": "Description second block",
+    "enable": true
+  },
+  {
+    "title": "Third block title",
+    "description": "Description third block",
+    "enable": false
+  },
+  {
+    "title": "Fourth block title",
+    "description": "Description Fourth block",
+    "enable": false
+  },
+  {
+    "title": "Fifth block title",
+    "description": "Description Fifth block",
+    "enable": false
+  }
+]

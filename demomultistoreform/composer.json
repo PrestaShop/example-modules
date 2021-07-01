@@ -1,0 +1,24 @@
+{
+  "name": "prestashop/demomultistoreform",
+  "description": "PrestaShop - multistore form example",
+  "homepage": "https://github.com/PrestaShop/example-modules",
+  "license": "AFL-3.0",
+  "authors": [
+    {
+      "name": "PrestaShop Core Team"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "PrestaShop\\Module\\DemoMultistoreForm\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=7.1.0"
+  },
+  "config": {
+    "preferred-install": "dist",
+    "prepend-autoloader": false
+  },
+  "type": "prestashop-module"
+}

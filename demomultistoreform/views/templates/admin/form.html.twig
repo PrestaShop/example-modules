@@ -1,0 +1,56 @@
+{#
+/**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
+#}
+
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+{% form_theme contentBlockForm 'PrestaShopBundle:Admin/TwigTemplateForm:prestashop_ui_kit.html.twig' %}
+
+{% block content %}
+<div class="alert alert-info" role="alert">
+  <p class="alert-text">
+    The following form allows you to create or edit a content block and link it to the shops or group shops of your choice.
+    It will appear in the grid if the shop context matches the shop association you chose in this form.
+  </p>
+</div>
+{{ form_start(contentBlockForm) }}
+<div class="row justify-content-center">
+  <div class="col-xl-12">
+    <div class="card">
+      <h3 class="card-header">
+        <i class="material-icons">business_center</i> Content block
+      </h3>
+      <div class="card-block row">
+        <div class="card-text">
+          {{ form_widget(contentBlockForm) }}
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="{{ path('demo_multistore') }}" class="btn btn-outline-secondary">{{ 'Cancel'|trans({}, 'Admin.Actions') }}</a>
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-primary" id="form-demomultistoreform-save-button">{{ 'Save'|trans({}, 'Admin.Actions') }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{ form_end(contentBlockForm) }}
+  {% endblock %}
+
+  {% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('../modules/demomultistoreform/views/js/createForm.js') }}"></script>
+  {% endblock %}
