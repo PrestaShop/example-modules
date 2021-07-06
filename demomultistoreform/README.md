@@ -26,7 +26,7 @@ If the selected context is 'all shops', all elements of all the shops are displa
 
 #### Checkboxes
 
-The user should be able to apply a specific configuration for a specific shop or group. To do this, checkboxes should be added before each element when a specific shop context or a group is selected as context.
+The user should be able to apply a specific configuration for a specific shop or group. This is implemented by checkboxes that are added before each element when a specific shop context or a group is selected as context.
 
 #### Specific settings drop-down
 
