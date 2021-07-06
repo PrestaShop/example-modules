@@ -40,7 +40,7 @@ The enable / disable action made from the listing enable/disable the element for
 
 #### Delete from the listing
 
-If an element is associated with several shops, then if I delete it from the listing, it will be disassociated from the selected context(s) and deleted if it is no longer associated with any store.
+If an element is associated with several shops, then a user deletes it from the listing, it will be dissociated from the selected context(s) and deleted if it is no longer associated with any store.
 
  ### Supported PrestaShop versions
 
