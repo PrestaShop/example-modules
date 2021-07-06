@@ -59,6 +59,12 @@ class DemoSymfonyForm extends Module
                 'name' => 'Admin symfony form single',
                 'parent_class_name' => 'CONFIGURE',
             ],
+            [
+                'class_name' => 'AdminDemoSymfonyFormMultipleForms',
+                'visible' => true,
+                'name' => 'Admin symfony form multiple forms',
+                'parent_class_name' => 'CONFIGURE',
+            ],
         ];
     }
 
