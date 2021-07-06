@@ -30,9 +30,9 @@ The user should be able to apply a specific configuration for a specific shop or
 
 #### Specific settings drop-down
 
-The user should be able to see which parameters have a specific configuration for a shop or a group when he is in 'all shops' context. The parameter configured specifically for a shop or a group is not impacted by changes done in 'all shops' context.
+The user should be able to see which parameters have a specific configuration for a shop or a group when he is in the 'all shops' context. The parameter(s) configured specifically for a shop or a group is/are not impacted by changes done in the 'all shops' context.
 
-This information helps the user know, when using 'all shops' context, whether the changes he is doing will be applied. This is implemented with specific settings drop-down that are added, in 'all shops' context and in group context.
+This information helps the user know, when using the 'all shops' context, whether the changes he is doing will be applied. This is implemented with specific settings drop-down that are added, in the 'all shops' context and in group context.
  
 #### Enable / disable from the listing
 
@@ -53,9 +53,9 @@ If an element is associated with several shops, then a user deletes it from the 
  ### How to install
 
   1. Download or clone module into `modules` directory of your PrestaShop installation
-  2. Rename the directory to make sure that module directory is named `demomultistoreform`*
+  2. Rename the directory to make sure that the module directory is named `demomultistoreform`*
   3. `cd` into module's directory and run following commands:
-      - `composer install` - to download dependencies into vendor folder
+      - `composer install` - to download dependencies into the vendor folder
   4. Install module from Back Office
   5. In the BO, activate multistore in Shop parameters > Preferences
   6. Create and configure at least one second shop
