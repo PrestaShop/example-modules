@@ -21,6 +21,7 @@ You should display it as soon as the user wishes to add an element. It allows hi
 #### Listing
 
 The elements displayed in the listing depend on the store selected in the context.
+
 The all shops context displays the elements of all the shops. 
 
 #### Checkboxes
