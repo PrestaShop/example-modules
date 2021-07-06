@@ -30,7 +30,9 @@ The user should be able to apply a specific configuration for a specific shop or
 
 #### Specific settings drop-down
 
-The user should be able to see which parameters have a specific configuration for a shop or a group when he is in all shops context. This information let him know that the change he will make in all shops context will not be applied for shops that already have a parameter configured specifically. To do this, specific settings drop-down should be added in all shops context and in group context.
+The user should be able to see which parameters have a specific configuration for a shop or a group when he is in 'all shops' context. The parameter configured specifically for a shop or a group is not impacted by changes done in 'all shops' context.
+
+This information helps the user know, when using 'all shops' context, whether the changes he is doing will be applied. This is implemented with specific settings drop-down that are added, in 'all shops' context and in group context.
  
 #### Enable / disable from the listing
 
