@@ -2,7 +2,7 @@
 
 ## About
 
-The goal of this module is to help developers to make their modules compatible with the multistore feature. You can find in this module all the multistore features that you should implement in your modules if you want to make them compatible with the multistore feature.
+The goal of this module is to help developers to make their modules compatible with the multistore feature. You can find in this module all the multistore features that you should implement in your modules if you want to make them compatible with the multistore feature, starting from 1.7.8 .
 
 This module demonstrates how to make your forms multistore compatible in your module, in a CRUD context, it includes:
 
