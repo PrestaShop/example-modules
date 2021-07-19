@@ -1,0 +1,26 @@
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+
+{% block content %}
+  <div>
+    <label for="demo_search_customer">Search for customer</label>
+    <input type="text" id="demo_search_customer">
+    <button type="button" id="demo_search_customer_btn">Search</button>
+  </div>
+  <div id="info-block" class="d-none"></div>
+  <div id="customers-results" class="d-none">
+    <table>
+      <thead>
+        <tr>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('../modules/demojsrouting/views/js/demo-page.js') }}"></script>
+{% endblock %}
