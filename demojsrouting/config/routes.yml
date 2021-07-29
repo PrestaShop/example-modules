@@ -1,0 +1,7 @@
+demo_page_index:
+    path: demo-page/
+    methods: [GET]
+    defaults:
+        _controller: PrestaShop\Module\DemoJsRouting\Controller\DemoPageController::indexAction
+        _legacy_controller: 'DemoPageController'
+        _legacy_link: 'DemoPageController'

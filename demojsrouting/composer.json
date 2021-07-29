@@ -1,0 +1,24 @@
+{
+  "name": "prestashop/demojsrouting",
+  "description": "PrestaShop - Javascript component router example",
+  "homepage": "https://github.com/PrestaShop/example-modules",
+  "license": "AFL-3.0",
+  "authors": [
+    {
+      "name": "Julius Zukauskas",
+      "email": "julius.zukauskas@invertus.eu"
+    },
+    {
+      "name": "PrestaShop Core team"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "PrestaShop\\Module\\DemoJsRouting\\": "src/"
+    },
+    "config": {
+      "prepend-autoloader": false
+    },
+    "type": "prestashop-module"
+  }
+}
