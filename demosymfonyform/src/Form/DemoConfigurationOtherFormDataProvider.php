@@ -25,24 +25,19 @@ namespace PrestaShop\Module\DemoSymfonyForm\Form;
 use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
 use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 
-/**
- * Provider ir responsible for providing form data, in this case it's as simple as using configuration to do that
- *
- * Class DemoConfigurationTextFormDataProvider
- */
-class DemoConfigurationTextFormDataProvider implements FormDataProviderInterface
+class DemoConfigurationOtherFormDataProvider implements FormDataProviderInterface
 {
     /**
      * @var DataConfigurationInterface
      */
-    private $demoConfigurationTextDataConfiguration;
+    private $demoConfigurationDataConfiguration;
 
     /**
-     * @param DataConfigurationInterface $demoConfigurationTextDataConfiguration
+     * @param DataConfigurationInterface $demoConfigurationDataConfiguration
      */
-    public function __construct(DataConfigurationInterface $demoConfigurationTextDataConfiguration)
+    public function __construct(DataConfigurationInterface $demoConfigurationDataConfiguration)
     {
-        $this->demoConfigurationTextDataConfiguration = $demoConfigurationTextDataConfiguration;
+        $this->demoConfigurationDataConfiguration = $demoConfigurationDataConfiguration;
     }
 
     /**
@@ -50,7 +45,7 @@ class DemoConfigurationTextFormDataProvider implements FormDataProviderInterface
      */
     public function getData(): array
     {
-        return $this->demoConfigurationTextDataConfiguration->getConfiguration();
+        return $this->demoConfigurationDataConfiguration->getConfiguration();
     }
 
     /**
@@ -58,6 +53,6 @@ class DemoConfigurationTextFormDataProvider implements FormDataProviderInterface
      */
     public function setData(array $data): array
     {
-        return $this->demoConfigurationTextDataConfiguration->updateConfiguration($data);
+        return $this->demoConfigurationDataConfiguration->updateConfiguration($data);
     }
 }

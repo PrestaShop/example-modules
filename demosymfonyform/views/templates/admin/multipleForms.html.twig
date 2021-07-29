@@ -1,0 +1,77 @@
+{#**
+  * Copyright since 2007 PrestaShop SA and Contributors
+  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+  *
+  * NOTICE OF LICENSE
+  *
+  * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
+  * that is bundled with this package in the file LICENSE.md.
+  * It is also available through the world-wide-web at this URL:
+  * https://opensource.org/licenses/AFL-3.0
+  * If you did not receive a copy of the license and are unable to
+  * obtain it through the world-wide-web, please send an email
+  * to license@prestashop.com so we can send you a copy immediately.
+  *
+  * @author    PrestaShop SA <contact@prestashop.com>
+  * @copyright Since 2007 PrestaShop SA and Contributors
+  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
+  *#}
+{% set layoutHeaderToolbarBtn = {
+  'add' : {
+    'href': path('demo_configuration_form'),
+    'desc': 'Switch to Simple Forms',
+    'icon': 'add_to_photos'
+  }
+} %}
+
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+{% form_theme demoConfigurationChoiceForm 'PrestaShopBundle:Admin/TwigTemplateForm:prestashop_ui_kit.html.twig' %}
+{% form_theme demoConfigurationOtherForm 'PrestaShopBundle:Admin/TwigTemplateForm:prestashop_ui_kit.html.twig' %}
+
+{% block content %}
+  {#  If you want form to use other url for saving you can set it here as path parameter(has to be route registered in routes.yml#}
+  {{ form_start(demoConfigurationChoiceForm, {attr : {class: 'form'}, action: path('demo_configuration_choices_form_save') }) }}
+  <div class="card">
+    <h3 class="card-header">
+      <i class="material-icons">settings</i> {{ 'Choice form types'|trans({}, 'Modules.DemoSymfonyForm.Admin') }}
+    </h3>
+    <div class="card-block row">
+      <div class="card-text">
+          {{ form_widget(demoConfigurationChoiceForm) }}
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-primary float-right" id="demo-configuration-choices-form-save-button">
+          {{ 'Save'|trans({}, 'Admin.Actions') }}
+        </button>
+      </div>
+    </div>
+  </div>
+  {{ form_end(demoConfigurationChoiceForm) }}
+
+  {{ form_start(demoConfigurationOtherForm, {attr : {class: 'form'}, action: path('demo_configuration_other_form_save') }) }}
+  <div class="card">
+    <h3 class="card-header">
+      <i class="material-icons">settings</i> {{ 'Other form types'|trans({}, 'Modules.DemoSymfonyForm.Admin') }}
+    </h3>
+    <div class="card-block row">
+      <div class="card-text">
+        {{ form_widget(demoConfigurationOtherForm) }}
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-primary float-right" id="save-button">
+          {{ 'Save'|trans({}, 'Admin.Actions') }}
+        </button>
+      </div>
+    </div>
+  </div>
+  {{ form_end(demoConfigurationOtherForm) }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('../modules/demosymfonyform/views/js/multipleForms.js') }}"></script>
+{% endblock %}

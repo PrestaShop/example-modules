@@ -6,3 +6,23 @@ demo_configuration_form:
     # Needed to work with tab system
     _legacy_controller: AdminDemoSymfonyForm
     _legacy_link: AdminDemoSymfonyForm
+
+demo_configuration_multiple_forms:
+  path: /demosymfonyform/configurationMultipleForms
+  methods: [GET]
+  defaults:
+    _controller: 'PrestaShop\Module\DemoSymfonyForm\Controller\DemoConfigurationMultipleFormsController::index'
+    _legacy_controller: AdminDemoSymfonyFormMultipleForms
+    _legacy_link: AdminDemoSymfonyFormMultipleForms
+
+demo_configuration_choices_form_save:
+  path: /demosymfonyform/configurationMultipleForms/saveChoices
+  methods: [ POST ]
+  defaults:
+    _controller: 'PrestaShop\Module\DemoSymfonyForm\Controller\DemoConfigurationMultipleFormsController::saveChoicesForm'
+
+demo_configuration_other_form_save:
+  path: /demosymfonyform/configurationMultipleForms/saveOther
+  methods: [ POST ]
+  defaults:
+    _controller: 'PrestaShop\Module\DemoSymfonyForm\Controller\DemoConfigurationMultipleFormsController::saveOtherForm'
