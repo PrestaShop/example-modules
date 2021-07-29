@@ -34,12 +34,12 @@ class DemoJsRouting extends Module
         $this->name = 'demojsrouting';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '1.7.7.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '1.7.8.0', 'max' => _PS_VERSION_];
 
         parent::__construct();
 
-        $this->displayName = $this->l('Demo js routing');
-        $this->description = $this->l('Example module of javascript router usage in BO');
+        $this->displayName = $this->l('Demo Javascript routing');
+        $this->description = $this->l('Example module of Javascript component Router usage in BO');
     }
 
     /**
@@ -54,5 +54,11 @@ class DemoJsRouting extends Module
         $installer = new Installer();
 
         return $installer->install($this);
+    }
+
+    public function getContent()
+    {
+        $moduleAdminLink = Context::getContext()->link->getAdminLink('DemoPageController', true);
+        Tools::redirectAdmin($moduleAdminLink);
     }
 }
