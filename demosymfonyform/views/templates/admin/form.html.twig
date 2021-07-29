@@ -16,6 +16,13 @@
   * @copyright Since 2007 PrestaShop SA and Contributors
   * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
   *#}
+{% set layoutHeaderToolbarBtn = {
+  'add' : {
+    'href': path('demo_configuration_multiple_forms'),
+    'desc': 'Switch to Multiple Forms',
+    'icon': 'add_to_photos'
+  }
+} %}
 
 {% extends '@PrestaShop/Admin/layout.html.twig' %}
 
