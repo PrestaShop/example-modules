@@ -2,11 +2,9 @@
 
 ## About
 
-Explains how to use javascript routing component in a module
+This module illustrates how to use Javascript Router [component](https://devdocs.prestashop.com/1.7/development/components/global-components/) in a module
 
-### Supported PrestaShop versions
-
-Compatible with and 1.7.7.0 and above versions.
+It provides a demo page which relies on the Router to allow customers search.
 
 ### Requirements
 
@@ -15,10 +13,6 @@ Compatible with and 1.7.7.0 and above versions.
 ### Supported PrestaShop versions
 
 Compatible with and 1.7.8.0 and above versions.
-
-### Requirements
-
-1. Composer, see [Composer](https://getcomposer.org/) to learn more
 
 #### How to install:
 1. Copy the module into `modules` directory of your PrestaShop installation
