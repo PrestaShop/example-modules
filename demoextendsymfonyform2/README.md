@@ -1,4 +1,4 @@
-# Demonstration of how to insert an inputs inside the Symfony form - 2
+# Demonstration of how to insert an input inside a Symfony form - 2
 
 ## About
 
