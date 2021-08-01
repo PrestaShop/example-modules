@@ -1,4 +1,4 @@
-# Demonstration of how to insert an inputs inside the Symfony form
+# Demonstration of how to insert an input inside a Symfony form
 
 Learn using identifiable object and grid hooks.
 
