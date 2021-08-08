@@ -18,7 +18,7 @@ These modules demonstrate usecases useful for developers willing to customize th
 
 ### Symfony
 
-- [Demo implement Symfony console command](https://github.com/PrestaShop/example-modules/tree/master/democonsolecommand)
+- [Demo Creating a Symfony Console command](https://github.com/PrestaShop/example-modules/tree/master/democonsolecommand)
 - [Demo Using PrestaShop Symfony Form Types](https://github.com/PrestaShop/example-modules/tree/master/demosymfonyform)
 - [Demo Creating modern Controllers and associate Tabs to them](https://github.com/PrestaShop/example-modules/tree/master/democontrollertabs)
 
