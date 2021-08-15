@@ -1,5 +1,6 @@
 {
   "name": "prestashop/demoextendsymfonyform1",
+  "license": "AFL-3.0",
   "authors": [
     {
       "name": "Tomas Ilginis"

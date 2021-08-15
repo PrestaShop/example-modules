@@ -1,5 +1,6 @@
 {
   "name": "prestashop/demoextendsymfonyform2",
+  "license": "AFL-3.0",
   "authors": [
     {
       "name": "Tadas Davidsonas",
