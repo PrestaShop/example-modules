@@ -1,5 +1,6 @@
 {
   "name": "prestashop/demoextendgrid",
+  "license": "AFL-3.0",
   "authors": [
     {
       "name": "Julius Zukauskas",

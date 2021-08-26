@@ -1,7 +1,7 @@
 {
   "name": "prestashop/example_module_mailtheme",
   "description": "Example module to add a Mail theme to PrestaShop.",
-  "homepage": "https://github.com/PrestaShop/ps_linklist",
+  "homepage": "https://github.com/PrestaShop/example-modules/tree/master/example_module_mailtheme",
   "license": "AFL-3.0",
   "authors": [
     {

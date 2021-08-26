@@ -1,8 +1,7 @@
 {
   "name": "prestashop/demosymfonyform",
   "description": "PrestaShop - Form Examples",
-  "homepage": "https://github.com/PrestaShop/demosymfonyform",
-  "license": "AFL - Academic Free License (AFL 3.0)",
+  "license": "AFL-3.0",
   "authors": [
     {
       "name": "PrestaShop Core Team"

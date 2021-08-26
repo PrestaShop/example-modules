@@ -1,5 +1,6 @@
 {
   "name": "prestashop/democontrollertabs",
+  "license": "AFL-3.0",
   "authors": [
     {
       "name": "Jonathan Lelievre",

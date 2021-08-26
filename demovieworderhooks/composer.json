@@ -1,5 +1,7 @@
-{
+{  
     "name": "prestashop/demovieworderhooks",
+    "description": "Demonstration of new hooks in PrestaShop 1.7.7 order view page.",
+    "license": "AFL-3.0",
     "authors": [
         {
             "name": "Rokas Zygmantas",
