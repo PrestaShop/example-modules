@@ -5,7 +5,7 @@ These modules demonstrate usecases useful for developers willing to customize th
 
 ## Modules list
 
-## Extensing Symfony pages
+## Extending Symfony pages
 
 - [Demo Extending a Symfony Form - 1](https://github.com/PrestaShop/example-modules/tree/master/demoextendsymfonyform1) - how to insert an input inside a Symfony form
 - [Demo Extending a Symfony Form - 2](https://github.com/PrestaShop/example-modules/tree/master/demoextendsymfonyform2) - how to insert an input inside a Symfony form - 2
