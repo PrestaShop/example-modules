@@ -12,7 +12,7 @@ It provides a demo page which relies on the Router to allow customers search.
 
 ### Supported PrestaShop versions
 
-Compatible with and 1.7.8.0 and above versions.
+Compatible with 1.7.8.0 and above versions.
 
 #### How to install:
 1. Copy the module into `modules` directory of your PrestaShop installation
