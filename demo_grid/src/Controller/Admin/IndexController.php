@@ -37,7 +37,7 @@ class IndexController extends FrameworkBundleAdminController
             '@Modules/demo_grid/views/templates/admin/index.html.twig',
             [
                 'enableSidebar' => true,
-                'layoutTitle' => $this->trans('Product listing', 'Modules.Demodoctrine.Admin'),
+                'layoutTitle' => $this->trans('Product listing', 'Modules.Demogrid.Admin'),
                 'quoteGrid' => $this->presentGrid($quoteGrid),
             ]
         );
