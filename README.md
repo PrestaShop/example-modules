@@ -32,3 +32,4 @@ These modules demonstrate usecases useful for developers willing to customize th
 - [Demo Adding a Mail Theme](https://github.com/PrestaShop/example-modules/tree/master/example_module_mailtheme)
 - [Demo Javascript Router component usage](https://github.com/PrestaShop/example-modules/tree/master/demojsrouting)
 - [Demo Multistore form](https://github.com/PrestaShop/example-modules/tree/master/demomultistoreform)
+- [Demo Grid](https://github.com/PrestaShop/example-modules/tree/master/demo_grid)

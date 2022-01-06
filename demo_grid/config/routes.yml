@@ -1,0 +1,16 @@
+# @see https://devdocs.prestashop.com/1.7/modules/concepts/controllers/admin-controllers/#how-to-map-an-action-of-your-controller-to-a-uri
+demo_grid_index:
+    path: /demo-grid
+    methods: [GET]
+    defaults:
+        _controller: 'Module\DemoGrid\Controller\Admin\IndexController::indexAction'
+        _legacy_controller: 'AdminDemoGrid'
+        _legacy_link: 'AdminDemoGrid'
+
+demo_grid_search:
+    path: /demo-grid
+    methods: [POST]
+    defaults:
+        _controller: 'Module\DemoGrid\Controller\Admin\IndexController::searchAction'
+        _legacy_controller: 'AdminDemoGrid'
+        _legacy_link: 'AdminDemoGrid:search'

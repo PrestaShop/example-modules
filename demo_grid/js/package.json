@@ -1,0 +1,21 @@
+{
+  "name": "prestashop/demo_grid",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "webpack --progress --mode=production",
+    "dev": "webpack --progress --debug --display-chunks --watch --mode=development"
+  },
+  "author": "PrestaShop",
+  "license": "AFL-3.0",
+  "devDependencies": {
+    "esbuild-loader": "^2.18.0",
+    "path": "^0.12.7",
+    "terser-webpack-plugin": "^3.0.6",
+    "ts-loader": "^8.0.16",
+    "uglify-save-license": "^0.4.1",
+    "webpack": "^4.41",
+    "webpack-cli": "^3.3.10",
+    "webpack-merge": "^5.7.3"
+  }
+}
