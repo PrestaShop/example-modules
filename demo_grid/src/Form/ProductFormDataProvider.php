@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoDoctrine\Form;
 
-use PrestaShop\Module\DemoDoctrine\Entity\Quote;
-use PrestaShop\Module\DemoDoctrine\Entity\QuoteLang;
 use PrestaShop\Module\DemoDoctrine\Repository\QuoteRepository;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataProvider\FormDataProviderInterface;
 

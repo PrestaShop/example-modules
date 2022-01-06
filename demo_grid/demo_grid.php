@@ -9,14 +9,12 @@
  */
 declare(strict_types=1);
 
-use PrestaShop\Module\DemoDoctrine\Database\QuoteInstaller;
-
 if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-if (file_exists(__DIR__.'/vendor/autoload.php')) {
-    require_once __DIR__.'/vendor/autoload.php';
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
 }
 
 class Demo_Grid extends Module

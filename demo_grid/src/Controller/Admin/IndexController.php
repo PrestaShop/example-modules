@@ -11,18 +11,10 @@ declare(strict_types=1);
 
 namespace Module\DemoGrid\Controller\Admin;
 
-use Doctrine\DBAL\Driver\Connection;
-use Doctrine\DBAL\Exception\TableExistsException;
-use Doctrine\DBAL\Exception\TableNotFoundException;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityNotFoundException;
 use Module\DemoGrid\Grid\Definition\Factory\ProductGridDefinitionFactory;
 use Module\DemoGrid\Grid\Filters\ProductFilters;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
-use PrestaShopBundle\Entity\Lang;
-use PrestaShopBundle\Entity\Repository\LangRepository;
 use PrestaShopBundle\Service\Grid\ResponseBuilder;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

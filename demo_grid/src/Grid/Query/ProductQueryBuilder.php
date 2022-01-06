@@ -14,11 +14,11 @@ namespace Module\DemoGrid\Grid\Query;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use PrestaShop\PrestaShop\Adapter\Configuration;
+use PrestaShop\PrestaShop\Core\Grid\Query\AbstractDoctrineQueryBuilder;
+use PrestaShop\PrestaShop\Core\Grid\Query\DoctrineSearchCriteriaApplicatorInterface;
 use PrestaShop\PrestaShop\Core\Grid\Query\Filter\DoctrineFilterApplicatorInterface;
 use PrestaShop\PrestaShop\Core\Grid\Query\Filter\SqlFilters;
 use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
-use PrestaShop\PrestaShop\Core\Grid\Query\AbstractDoctrineQueryBuilder;
-use PrestaShop\PrestaShop\Core\Grid\Query\DoctrineSearchCriteriaApplicatorInterface;
 
 /**
  * Defines all required sql statements to render products list.

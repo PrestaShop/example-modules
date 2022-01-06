@@ -41,7 +41,7 @@ class QuoteType extends TranslatorAwareType
                         ),
                     ]),
                     new NotBlank(),
-                ]
+                ],
             ])
             ->add('content', TranslatableType::class, [
                 'label' => 'Content',
