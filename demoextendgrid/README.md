@@ -12,7 +12,7 @@ The above items are done to add a small 'mark' action in Back Office Orders list
 
 ### Supported PrestaShop versions
 
- This module is compatible with and 1.7.7.0 and above versions.
+ This module is compatible with PrestaShop 1.7.8.0 and above versions.
  
 ### Requirements
  
