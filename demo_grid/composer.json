@@ -1,0 +1,18 @@
+{
+    "name": "prestashop/demogrid",
+    "license": "AFL-3.0",
+    "authors": [
+        {
+            "name": "PrestaShop Core Team"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+        "Module\\DemoGrid\\": "src/"
+      },
+      "config": {
+        "prepend-autoloader": false
+      },
+      "type": "prestashop-module"
+    }
+}
