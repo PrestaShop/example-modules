@@ -41,7 +41,7 @@ class DemoSymfonyForm extends Module
             'Modules.DemoSymfonyForm.Admin'
         );
 
-        $this->ps_versions_compliancy = ['min' => '1.7.8.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '1.7.8.0', 'max' => '8.99.99'];
     }
 
     public function getTabs()

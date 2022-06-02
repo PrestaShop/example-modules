@@ -37,7 +37,7 @@ class DemoExtendSymfonyForm2 extends Module
         $this->name = 'demoextendsymfonyform2';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '1.7.7.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '1.7.7.0', 'max' => '8.99.99'];
 
         parent::__construct();
 

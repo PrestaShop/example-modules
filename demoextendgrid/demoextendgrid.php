@@ -39,7 +39,7 @@ class DemoExtendGrid extends Module
         $this->name = 'demoextendgrid';
         $this->author = 'PrestaShop';
         $this->version = '1.1.0';
-        $this->ps_versions_compliancy = ['min' => '1.7.8', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '1.7.8', 'max' => '8.99.99'];
 
         parent::__construct();
 

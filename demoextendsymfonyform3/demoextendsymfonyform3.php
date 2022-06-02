@@ -56,7 +56,7 @@ class DemoExtendSymfonyForm3 extends Module
 
         $this->ps_versions_compliancy = [
             'min' => '1.7.6.0',
-            'max' => _PS_VERSION_,
+            'max' => '8.99.99',
         ];
     }
 
