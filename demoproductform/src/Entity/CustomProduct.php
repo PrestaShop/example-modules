@@ -28,6 +28,11 @@ final class CustomProduct extends ObjectModel
     public $custom_field = '';
 
     /**
+     * @var float
+     */
+    public $custom_price = 0.0;
+
+    /**
      * @var string
      */
     public $date_add;
@@ -47,6 +52,7 @@ final class CustomProduct extends ObjectModel
         'primary' => 'id',
         'fields' => [
             'custom_field' => ['type' => self::TYPE_STRING],
+            'price' => ['type' => self::TYPE_FLOAT, 'shop' => true, 'validate' => 'isPrice', 'required' => true],
             'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
             'date_upd' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
         ],

@@ -14,6 +14,7 @@ namespace PrestaShop\Module\DemoProductForm\Form\Modifier;
 
 use PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\SaveMyModuleCustomFieldHandler;
 use PrestaShop\Module\DemoProductForm\Entity\CustomProduct;
+use PrestaShop\Module\DemoProductForm\Form\Type\CustomTabType;
 use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 use PrestaShopBundle\Form\Admin\Type\SwitchType;
 use PrestaShopBundle\Form\FormBuilderModifier;
@@ -56,21 +57,21 @@ final class ProductFormModifier
         FormBuilderInterface $productFormBuilder,
         array $formData
     ): void {
-        $this->modifyDescriptionTab($productId, $productFormBuilder);
+        $idValue = $productId ? $productId->getValue() : null;
+        $customProduct = new CustomProduct($idValue);
+        $this->modifyDescriptionTab($customProduct, $productFormBuilder);
+        $this->addCustomTab($customProduct, $productFormBuilder);
         $this->modifyFooter($productFormBuilder);
     }
 
     /**
-     * @param ProductId|null $productId
+     * @param CustomProduct $customProduct
      * @param FormBuilderInterface $productFormBuilder
      *
      * @see SaveMyModuleCustomFieldHandler to check how the field is handled on form POST
      */
-    private function modifyDescriptionTab(?ProductId $productId, FormBuilderInterface $productFormBuilder): void
+    private function modifyDescriptionTab(CustomProduct $customProduct, FormBuilderInterface $productFormBuilder): void
     {
-        $idValue = $productId ? $productId->getValue() : null;
-        $customProduct = new CustomProduct($idValue);
-
         $descriptionTabFormBuilder = $productFormBuilder->get('description');
         $this->formBuilderModifier->addAfter(
             $descriptionTabFormBuilder,
@@ -92,6 +93,25 @@ final class ProductFormModifier
                 'data' => $customProduct->custom_field,
                 'empty_data' => '',
                 'form_theme' => '@PrestaShop/Admin/TwigTemplateForm/prestashop_ui_kit_base.html.twig',
+            ]
+        );
+    }
+
+    /**
+     * @param CustomProduct $customProduct
+     * @param FormBuilderInterface $productFormBuilder
+     */
+    private function addCustomTab(CustomProduct $customProduct, FormBuilderInterface $productFormBuilder): void
+    {
+        $this->formBuilderModifier->addAfter(
+            $productFormBuilder,
+            'pricing',
+            'custom_tab',
+            CustomTabType::class,
+            [
+                'data' => [
+                    'custom_price' => $customProduct->custom_price,
+                ],
             ]
         );
     }

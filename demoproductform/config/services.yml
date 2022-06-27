@@ -19,3 +19,10 @@ services:
         class: PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\ModuleProductCommandsBuilder
         # This tag is important. Core product command builder finds this builder by the tag
         tags: ['core.product_command_builder']
+
+    PrestaShop\Module\DemoProductForm\Form\Type\CustomTabType:
+        class: PrestaShop\Module\DemoProductForm\Form\Type\CustomTabType
+        parent: 'form.type.translatable.aware'
+        public: true
+        tags:
+            - { name: form.type }
