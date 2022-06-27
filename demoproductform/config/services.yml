@@ -1,13 +1,11 @@
 #https://devdocs.prestashop.com/1.7/modules/concepts/services/
 services:
-    PrestaShop\Module\DemoProductForm\Form\Modifier\FormBuilderModifier:
-        class: PrestaShop\Module\DemoProductForm\Form\Modifier\FormBuilderModifier
-
     PrestaShop\Module\DemoProductForm\Form\Modifier\ProductFormModifier:
         class: PrestaShop\Module\DemoProductForm\Form\Modifier\ProductFormModifier
+        public: true
         arguments:
             - '@translator'
-            - '@PrestaShop\Module\DemoProductForm\Form\Modifier\FormBuilderModifier'
+            - '@form.form_builder_modifier'
 
     PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\SaveMyModuleCustomFieldHandler:
         class: PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\SaveMyModuleCustomFieldHandler
