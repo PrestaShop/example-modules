@@ -60,6 +60,7 @@ class Installer
     {
         $hooks = [
             'actionProductFormBuilderModifier',
+            'displayAdminProductsExtra',
         ];
 
         return (bool) $module->registerHook($hooks);

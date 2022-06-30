@@ -10,9 +10,11 @@
 
 declare(strict_types=1);
 
+use PrestaShop\Module\DemoProductForm\Entity\CustomProduct;
 use PrestaShop\Module\DemoProductForm\Form\Modifier\ProductFormModifier;
 use PrestaShop\Module\DemoProductForm\Install\Installer;
 use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
+use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 if (!defined('_PS_VERSION_')) {
@@ -94,5 +96,18 @@ class DemoProductForm extends Module
         $productId = isset($params['id']) ? new ProductId((int) $params['id']) : null;
 
         $productFormModifier->modify($productId, $params['form_builder'], $formData);
+    }
+
+    public function hookDisplayAdminProductsExtra($params)
+    {
+        $productId = $params['id_product'];
+        $customProduct = new CustomProduct($productId);
+
+        /** @var EngineInterface $twig */
+        $twig = $this->get('twig');
+
+        return $twig->render('@Modules/demoproductform/views/templates/admin/extra_module.html.twig', [
+            'customProduct' => $customProduct,
+        ]);
     }
 }
