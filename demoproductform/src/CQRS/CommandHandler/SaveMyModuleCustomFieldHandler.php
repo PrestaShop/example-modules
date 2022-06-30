@@ -41,6 +41,7 @@ final class SaveMyModuleCustomFieldHandler
      * (more about cqrs https://devdocs.prestashop.com/1.7/development/architecture/domain/cqrs/)
      *
      * Note - product form data handler create() method is a little unique
+     *
      * @see ProductFormDataHandler::create()
      *
      * It will create the product with couple required fields and then call the update method,

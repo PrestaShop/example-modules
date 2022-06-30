@@ -31,7 +31,7 @@ final class ModuleProductCommandsBuilder implements ProductCommandsBuilderInterf
     {
         if (isset($formData['basic']['demo_module_custom_field'])) {
             return [
-                new SaveMyModuleCustomFieldCommand($productId->getValue(), $formData['basic']['demo_module_custom_field'])
+                new SaveMyModuleCustomFieldCommand($productId->getValue(), $formData['basic']['demo_module_custom_field']),
             ];
         }
 

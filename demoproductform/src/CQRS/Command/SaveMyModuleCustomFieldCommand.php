@@ -24,7 +24,6 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
  * It is example command, you can call it whatever you need depending on use case.
  * Command is used to pass the information and call related handler, it doesnt actually do anything by itself.
  * The name of command should reflect the actual use case and should be handled by a handler
- *
  * @see SaveMyModuleCustomFieldHandler
  */
 final class SaveMyModuleCustomFieldCommand

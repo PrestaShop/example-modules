@@ -29,7 +29,6 @@ declare(strict_types=1);
 namespace PrestaShop\Module\DemoProductForm\Form\Type;
 
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -37,7 +36,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CustomTabType extends TranslatorAwareType
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -52,7 +51,7 @@ class CustomTabType extends TranslatorAwareType
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
