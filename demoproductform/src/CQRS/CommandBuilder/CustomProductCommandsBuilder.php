@@ -22,7 +22,7 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder;
 
-use PrestaShop\Module\DemoProductForm\CQRS\Command\SaveMyModuleCustomFieldCommand;
+use PrestaShop\Module\DemoProductForm\CQRS\Command\UpdateCustomProductCommand;
 use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\Product\ProductCommandsBuilderInterface;
 
@@ -36,16 +36,27 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\Product\Pr
  *  - actionAfterUpdateProductFormHandler
  *  - actionBeforeUpdateProductFormHandler
  */
-final class ModuleProductCommandsBuilder implements ProductCommandsBuilderInterface
+final class CustomProductCommandsBuilder implements ProductCommandsBuilderInterface
 {
     public function buildCommands(ProductId $productId, array $formData): array
     {
-        if (isset($formData['basic']['demo_module_custom_field'])) {
-            return [
-                new SaveMyModuleCustomFieldCommand($productId->getValue(), $formData['basic']['demo_module_custom_field']),
-            ];
+        $command = null;
+        if (isset($formData['description']['demo_module_custom_field'])) {
+            $command = $this->getCommand($command, $productId->getValue())->setCustomerField($formData['description']['demo_module_custom_field']);
+        }
+        if (isset($formData['custom_tab']['custom_price'])) {
+            $command = $this->getCommand($command, $productId->getValue())->setCustomPrice((string) $formData['custom_tab']['custom_price']);
         }
 
-        return [];
+        return null !== $command ? [$command] : [];
+    }
+
+    private function getCommand(?UpdateCustomProductCommand $existingCommand, int $productId): UpdateCustomProductCommand
+    {
+        if (null !== $existingCommand) {
+            return $existingCommand;
+        }
+
+        return new UpdateCustomProductCommand($productId);
     }
 }

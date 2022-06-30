@@ -22,7 +22,7 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoProductForm\Form\Modifier;
 
-use PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\SaveMyModuleCustomFieldHandler;
+use PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\UpdateCustomProductCommandHandler;
 use PrestaShop\Module\DemoProductForm\Entity\CustomProduct;
 use PrestaShop\Module\DemoProductForm\Form\Type\CustomTabType;
 use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
@@ -77,7 +77,7 @@ final class ProductFormModifier
      * @param CustomProduct $customProduct
      * @param FormBuilderInterface $productFormBuilder
      *
-     * @see SaveMyModuleCustomFieldHandler to check how the field is handled on form POST
+     * @see UpdateCustomProductCommandHandler to check how the field is handled on form POST
      */
     private function modifyDescriptionTab(CustomProduct $customProduct, FormBuilderInterface $productFormBuilder): void
     {

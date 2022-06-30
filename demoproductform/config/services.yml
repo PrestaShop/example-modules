@@ -7,16 +7,14 @@ services:
             - '@translator'
             - '@form.form_builder_modifier'
 
-    PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\SaveMyModuleCustomFieldHandler:
-        class: PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\SaveMyModuleCustomFieldHandler
-        arguments:
-            - '@prestashop.adapter.legacy.configuration'
+    PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\UpdateCustomProductCommandHandler:
+        class: PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\UpdateCustomProductCommandHandler
         tags:
             - name: tactician.handler
-              command: PrestaShop\Module\DemoProductForm\CQRS\Command\SaveMyModuleCustomFieldCommand
+              command: PrestaShop\Module\DemoProductForm\CQRS\Command\UpdateCustomProductCommand
 
-    PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\ModuleProductCommandsBuilder:
-        class: PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\ModuleProductCommandsBuilder
+    PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\CustomProductCommandsBuilder:
+        class: PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\CustomProductCommandsBuilder
         # This tag is important. Core product command builder finds this builder by the tag
         tags: ['core.product_command_builder']
 

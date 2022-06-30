@@ -120,29 +120,4 @@ class DemoProductForm extends Module
             'customProduct' => $customProduct,
         ]);
     }
-
-    public function hookActionAfterUpdateProductFormHandler(array $params): void
-    {
-        $productId = $params['id'];
-
-        // We use the same ID for CustomProduct as the product ID this way the relation is direct
-        $customProduct = new CustomProduct($productId);
-        $formData = $params['form_data'];
-        if (isset($formData['description']['demo_module_custom_field'])) {
-            $customProduct->custom_field = $formData['description']['demo_module_custom_field'];
-        }
-
-        if (isset($formData['custom_tab']['custom_price'])) {
-            $customProduct->custom_price = $formData['custom_tab']['custom_price'];
-        }
-
-        if (empty($customProduct->id)) {
-            // If custom is not found it has not been created yet, so we force its ID to match the product ID
-            $customProduct->id = $productId;
-            $customProduct->force_id = true;
-            $customProduct->add();
-        } else {
-            $customProduct->update();
-        }
-    }
 }
