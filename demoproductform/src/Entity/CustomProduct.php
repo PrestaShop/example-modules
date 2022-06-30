@@ -52,7 +52,7 @@ final class CustomProduct extends ObjectModel
         'primary' => 'id',
         'fields' => [
             'custom_field' => ['type' => self::TYPE_STRING],
-            'price' => ['type' => self::TYPE_FLOAT, 'shop' => true, 'validate' => 'isPrice', 'required' => true],
+            'custom_price' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice'],
             'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
             'date_upd' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
         ],
