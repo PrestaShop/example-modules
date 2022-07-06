@@ -26,8 +26,10 @@ use PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\UpdateCustomProductCom
 use PrestaShop\Module\DemoProductForm\Entity\CustomProduct;
 use PrestaShop\Module\DemoProductForm\Form\Type\CustomTabType;
 use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
+use PrestaShopBundle\Form\Admin\Type\IconButtonType;
 use PrestaShopBundle\Form\Admin\Type\SwitchType;
 use PrestaShopBundle\Form\FormBuilderModifier;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -131,20 +133,12 @@ final class ProductFormModifier
     private function modifyFooter(FormBuilderInterface $productFormBuilder): void
     {
         $headerFormBuilder = $productFormBuilder->get('footer');
-        $headerFormBuilder->add('forms_info', SwitchType::class, [
-            'label' => false,
-            'choices' => [
-                $this->translator->trans('Hide form infos', [], 'Modules.Demoproductform.Admin') => false,
-                $this->translator->trans('Show form infos', [], 'Modules.Demoproductform.Admin') => true,
-            ],
-            'label_help_box' => $this->translator->trans(
-                'You can display information about each form part to see where it is included in the Product form structure, the information is shown when mouse is over the element.',
-                [],
-                'Modules.Demoproductform.Admin'
-            ),
-            'data' => false,
-            'row_attr' => [
-                'class' => 'col-1 m-0 p-0',
+        $headerFormBuilder->add('forms_info', IconButtonType::class, [
+            'label' => $this->translator->trans('Open supplier website'),
+            'type' => 'link',
+            'attr' => [
+                'href' => 'http://www.prestashop.com',
+                'target' => '_blank',
             ],
         ]);
     }
