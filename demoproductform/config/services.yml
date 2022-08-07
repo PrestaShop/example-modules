@@ -22,5 +22,7 @@ services:
         class: PrestaShop\Module\DemoProductForm\Form\Type\CustomTabType
         parent: 'form.type.translatable.aware'
         public: true
+        arguments:
+            - '@=service("prestashop.adapter.data_provider.currency").getDefaultCurrency()'
         tags:
             - { name: form.type }

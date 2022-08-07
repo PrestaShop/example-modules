@@ -22,16 +22,37 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoProductForm\Form\Type;
 
+use Currency;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\PositiveOrZero;
 use Symfony\Component\Validator\Constraints\Type;
 
 class CustomTabType extends TranslatorAwareType
 {
+    /**
+     * @var Currency
+     */
+    private $defaultCurrency;
+
+    /**
+     * @param TranslatorInterface $translator
+     * @param array $locales
+     * @param Currency $defaultCurrency
+     */
+    public function __construct(
+        TranslatorInterface $translator,
+        array $locales,
+        Currency $defaultCurrency
+    ) {
+        parent::__construct($translator, $locales);
+        $this->defaultCurrency = $defaultCurrency;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -42,6 +63,7 @@ class CustomTabType extends TranslatorAwareType
             ->add('custom_price', MoneyType::class, [
                 'label' => $this->trans('My custom price', 'Modules.Demoproductform.Admin'),
                 'label_tag_name' => 'h3',
+                'currency' => $this->defaultCurrency->iso_code,
                 'required' => false,
                 'constraints' => [
                     new NotBlank(),
