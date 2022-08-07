@@ -25,7 +25,6 @@ use PrestaShop\Module\DemoProductForm\Form\Modifier\ProductFormModifier;
 use PrestaShop\Module\DemoProductForm\Install\Installer;
 use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 use Symfony\Component\Templating\EngineInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -35,11 +34,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 class DemoProductForm extends Module
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
     public function __construct()
     {
         $this->name = 'demoproductform';
@@ -49,9 +43,8 @@ class DemoProductForm extends Module
 
         parent::__construct();
 
-        $this->translator = $this->get('translator');
-        $this->displayName = $this->translator->trans('DemoProductForm', [], 'Modules.Demoproductform.Config');
-        $this->description = $this->translator->trans('DemoProductForm module description', [], 'Modules.Demoproductform.Config');
+        $this->displayName = $this->trans('DemoProductForm', [], 'Modules.Demoproductform.Config');
+        $this->description = $this->trans('DemoProductForm module description', [], 'Modules.Demoproductform.Config');
     }
 
     /**
@@ -105,7 +98,7 @@ class DemoProductForm extends Module
 
         $productId = isset($params['id']) ? new ProductId((int) $params['id']) : null;
 
-        $productFormModifier->modify($productId, $params['form_builder'], $formData);
+        $productFormModifier->modify($productId, $params['form_builder']);
     }
 
     public function hookDisplayAdminProductsExtra(array $params): string

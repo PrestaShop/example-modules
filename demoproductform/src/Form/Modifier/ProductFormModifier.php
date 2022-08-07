@@ -61,12 +61,10 @@ final class ProductFormModifier
     /**
      * @param ProductId|null $productId
      * @param FormBuilderInterface $productFormBuilder
-     * @param $formData
      */
     public function modify(
         ?ProductId $productId,
-        FormBuilderInterface $productFormBuilder,
-        array $formData
+        FormBuilderInterface $productFormBuilder
     ): void {
         $idValue = $productId ? $productId->getValue() : null;
         $customProduct = new CustomProduct($idValue);
@@ -98,7 +96,7 @@ final class ProductFormModifier
                     'class' => 'text-info',
                 ],
                 'attr' => [
-                    'placeholder' => 'Your example text here',
+                    'placeholder' => $this->translator->trans('Your example text here', [], 'Modules.Demoproductform.Admin'),
                 ],
                 // this is just an example, but in real case scenario you could have some data provider class to wrap more complex cases
                 'data' => $customProduct->custom_field,
