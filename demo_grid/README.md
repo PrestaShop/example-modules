@@ -5,6 +5,8 @@ This module demonstrates how to use Grid in PrestaShop 1.7.7+
 
 Please note this module is an example only, not a mandatory structure.
 
+![Demo Grid screenshot](demo_grid_screenshot.png)
+
 ## Requirements
 
  1. Composer, see [Composer](https://getcomposer.org/) to learn more
