@@ -64,6 +64,20 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
                     ])
             )
             ->add(
+                (new DataColumn('name'))
+                    ->setName($this->trans('Name', [], 'Modules.Demogrid.Admin'))
+                    ->setOptions([
+                        'field' => 'name',
+                    ])
+            )
+            ->add(
+                (new DataColumn('price_tax_excluded'))
+                    ->setName($this->trans('Price', [], 'Modules.Demogrid.Admin'))
+                    ->setOptions([
+                        'field' => 'price_tax_excluded',
+                    ])
+            )
+            ->add(
                 (new DataColumn('reference'))
                     ->setName($this->trans('Reference', [], 'Modules.Demogrid.Admin'))
                     ->setOptions([
@@ -98,6 +112,37 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
                         ],
                     ])
                     ->setAssociatedColumn('id_product')
+            )
+            ->add(
+                (new Filter('name', TextType::class))
+                    ->setTypeOptions([
+                        'required' => false,
+                        'attr' => [
+                            'placeholder' => $this->trans('Name', [], 'Admin.Global'),
+                        ],
+                    ])
+                    ->setAssociatedColumn('name')
+            )
+            ->add(
+                (new Filter('price_tax_excluded', NumberMinMaxFilterType::class, [
+                    'min_field_options' => [
+                        'attr' => [
+                            'placeholder' => $this->trans('Min', [], 'Admin.Global'),
+                        ],
+                    ],
+                    'max_field_options' => [
+                        'attr' => [
+                            'placeholder' => $this->trans('Max', [], 'Admin.Global'),
+                        ],
+                    ],
+                ]))
+                    ->setTypeOptions([
+                        'required' => false,
+                        'attr' => [
+                            'placeholder' => $this->trans('Price', [], 'Admin.Global'),
+                        ],
+                    ])
+                    ->setAssociatedColumn('price_tax_excluded')
             )
             ->add(
                 (new Filter('reference', TextType::class))
