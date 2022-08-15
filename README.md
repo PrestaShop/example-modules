@@ -12,6 +12,7 @@ These modules demonstrate usecases useful for developers willing to customize th
 - [Demo Extending a Symfony Form - 3](https://github.com/PrestaShop/example-modules/tree/master/demoextendsymfonyform3) - how to use CQRS in a module
 - [Demo View Order Hooks](https://github.com/PrestaShop/example-modules/tree/master/demovieworderhooks)
 - [Demo Extend a Grid](https://github.com/PrestaShop/example-modules/tree/master/demoextendgrid)
+- [Demo Extend Product Form V2](https://github.com/PrestaShop/example-modules/tree/master/demoproductform)
 
 
 ## Using a tool / concept
