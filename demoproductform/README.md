@@ -10,7 +10,7 @@ This is example module explaining various extendability options in product page 
 
 ### Supported PrestaShop versions
 
-Compatible with 8.0.0.0 and above versions.
+Compatible with 8.0.0 and above versions.
 
 ### Requirements
 
