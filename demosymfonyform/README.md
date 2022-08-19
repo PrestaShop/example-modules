@@ -9,7 +9,7 @@ are being used. You can use these pages as examples of how to integrate these in
 
 ### Supported PrestaShop versions
 
-This module is compatible with and 1.7.8.0 and above versions.
+This module is compatible with 1.7.8.x only.
  
 ### Requirements
  
