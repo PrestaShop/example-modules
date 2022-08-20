@@ -36,7 +36,7 @@ final class DemoConfigurationTextDataConfiguration implements DataConfigurationI
     public const FORMATTED_TEXT_AREA_TYPE = 'DEMO_SYMFONY_FORM_FORMATTED_TEXT_AREA_TYPE';
     public const GENERATABLE_TEXT_TYPE = 'DEMO_SYMFONY_FORM_GENERATABLE_TEXT_TYPE';
     public const TEXT_WITH_LENGTH_COUNTER_TYPE = 'DEMO_SYMFONY_FORM_TEXT_WITH_LENGTH_COUNTER_TYPE';
-    public const TEXT_WITH_UNIT_TYPE = 'DEMO_SYMFONY_FORM_TEXT_WITH_UNIT_TYPE';
+    public const NUMBER_TYPE_WITH_UNIT = 'DEMO_SYMFONY_FORM_NUMBER_TYPE_WITH_UNIT';
 
     /**
      * @var ConfigurationInterface
@@ -79,8 +79,8 @@ final class DemoConfigurationTextDataConfiguration implements DataConfigurationI
         if ($textWithLengthCounterType = $this->configuration->get(static::TEXT_WITH_LENGTH_COUNTER_TYPE)) {
             $return['text_with_length_counter_type'] = $textWithLengthCounterType;
         }
-        if ($textWithUnitType = $this->configuration->get(static::TEXT_WITH_UNIT_TYPE)) {
-            $return['text_with_unit_type'] = $textWithUnitType;
+        if ($numberTypeWithUnit = $this->configuration->get(static::NUMBER_TYPE_WITH_UNIT)) {
+            $return['number_type_with_unit'] = $numberTypeWithUnit;
         }
 
         return $return;
@@ -98,7 +98,7 @@ final class DemoConfigurationTextDataConfiguration implements DataConfigurationI
         $this->configuration->set(static::FORMATTED_TEXT_AREA_TYPE, $configuration['formatted_text_area_type'], null, ['html' => true]);
         $this->configuration->set(static::GENERATABLE_TEXT_TYPE, $configuration['generatable_text_type']);
         $this->configuration->set(static::TEXT_WITH_LENGTH_COUNTER_TYPE, $configuration['text_with_length_counter_type']);
-        $this->configuration->set(static::TEXT_WITH_UNIT_TYPE, $configuration['text_with_unit_type']);
+        $this->configuration->set(static::NUMBER_TYPE_WITH_UNIT, $configuration['number_type_with_unit']);
 
         /* Errors are returned here. */
         return [];
