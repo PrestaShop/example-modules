@@ -23,6 +23,6 @@ This module is compatible with and 1.7.8.0 and above versions.
   - `composer install` - to download dependencies into vendor folder
 4. Install module from Back Office
  
-*Because the name of the directory and the name of the main module file must match.
+_* Because the name of the directory and the name of the main module file must match._
  
 
