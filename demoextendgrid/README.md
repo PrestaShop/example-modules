@@ -26,7 +26,7 @@ The above items are done to add a small 'mark' action in Back Office Orders list
       - `composer install` - to download dependencies into vendor folder
   4. Install module from Back Office
  
-*Because the name of the directory and the name of the main module file must match.
+_* Because the name of the directory and the name of the main module file must match._
 
 
 
