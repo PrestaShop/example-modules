@@ -21,6 +21,6 @@ Please note this module is an example only, not a mandatory structure.
   - from Back Office in Module Catalog
   - using the command `php ./bin/console prestashop:module install demo_grid`
 
-*Because the name of the directory and the name of the main module file must match.*
+_* Because the name of the directory and the name of the main module file must match._
 
 
