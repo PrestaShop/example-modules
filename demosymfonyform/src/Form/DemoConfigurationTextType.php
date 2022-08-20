@@ -53,7 +53,7 @@ class DemoConfigurationTextType extends TranslatorAwareType
                 'label' => $this->trans('Text with length counter type', 'Modules.DemoSymfonyForm.Admin'),
             ])
             ->add('number_type_with_unit', NumberType::class, [
-                'label' => $this->trans('NumberType with Unit extension', 'Modules.DemoSymfonyForm.Admin'),
+                'label' => $this->trans('Number type with Unit extension', 'Modules.DemoSymfonyForm.Admin'),
                 'unit' => 'kg',
             ])
             ->add('translatable_type', TranslatableType::class, [
