@@ -9,7 +9,7 @@ are being used. You can use these pages as examples of how to integrate these in
 
 ### Supported PrestaShop versions
 
-This module is compatible with and 1.7.8.0 and above versions.
+This module is compatible with PS 8.0.x versions only.
  
 ### Requirements
  
@@ -23,6 +23,6 @@ This module is compatible with and 1.7.8.0 and above versions.
   - `composer install` - to download dependencies into vendor folder
 4. Install module from Back Office
  
-*Because the name of the directory and the name of the main module file must match.
+_* Because the name of the directory and the name of the main module file must match._
  
 
