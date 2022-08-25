@@ -16,7 +16,7 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  */
 $(() => {
-  $(document).on('click', '.grid-mark-row-link', (event) => {
+  $(document).on('click', '.grid-mark-row-link, .js-submit-row-action', (event) => {
     event.preventDefault();
     var $currentTarget = $(event.currentTarget)
     $.post($currentTarget.data('url')).then((data) => {

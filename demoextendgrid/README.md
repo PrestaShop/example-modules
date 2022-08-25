@@ -8,11 +8,11 @@ This module demonstrates:
 
 The above items are done to add a small 'mark' action in Back Office Orders listing:
 
-![Mark action screenshot](mark-action-screenshot.png)
+![Extend Grid Screenshot](extend_grid_screenshot.png)
 
 ### Supported PrestaShop versions
 
- This module is compatible with PrestaShop 1.7.8.0 and above versions.
+ This module is compatible with PrestaShop 1.7.7.0 and above versions.
  
 ### Requirements
  
@@ -26,7 +26,7 @@ The above items are done to add a small 'mark' action in Back Office Orders list
       - `composer install` - to download dependencies into vendor folder
   4. Install module from Back Office
  
-*Because the name of the directory and the name of the main module file must match.
+_* Because the name of the directory and the name of the main module file must match._
 
 
 

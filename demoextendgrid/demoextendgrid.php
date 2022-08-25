@@ -39,7 +39,7 @@ class DemoExtendGrid extends Module
         $this->name = 'demoextendgrid';
         $this->author = 'PrestaShop';
         $this->version = '1.1.0';
-        $this->ps_versions_compliancy = ['min' => '1.7.8', 'max' => '8.99.99'];
+        $this->ps_versions_compliancy = ['min' => '1.7.7', 'max' => '8.99.99'];
 
         parent::__construct();
 
@@ -87,7 +87,7 @@ class DemoExtendGrid extends Module
         $orderGridDefinition = $params['definition'];
 
         /** @var RowActionCollectionInterface $actionsCollection */
-        $actionsCollection = $this->getActionsColumn($orderGridDefinition)->getOption('actions');
+        $actionsCollection = $this->getActionsColumn($orderGridDefinition)->getOptions()['actions'];
         $actionsCollection->add(
             // mark order is just an example of some custom action
             (new SubmitRowAction('mark_order'))
@@ -109,7 +109,12 @@ class DemoExtendGrid extends Module
     private function getActionsColumn(GridDefinitionInterface $gridDefinition): ColumnInterface
     {
         try {
-            return $gridDefinition->getColumnById('actions');
+            /** @var ColumnInterface $column */
+            foreach ($gridDefinition->getColumns() as $column) {
+                if ('actions' === $column->getId()) {
+                    return $column;
+                }
+            }
         } catch (ColumnNotFoundException $e) {
             // It is possible that not every grid will have actions column.
             // In this case you can create a new column or throw exception depending on your needs
