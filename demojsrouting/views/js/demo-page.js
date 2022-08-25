@@ -1,6 +1,7 @@
 $(() => {
-  // initialize the Router component
-  window.prestashop.component.initComponents(['Router']);
+  // initialize the Router component in PS 1.7.8+ 
+  if (typeof window.prestashop.component !== 'undefined') { window.prestashop.component.initComponents(['Router']); }
+ 
   // initiate the search on button click
   $(document).on('click', '#demo_search_customer_btn', () => search($('#demo_search_customer').val()));
 
@@ -10,14 +11,27 @@ $(() => {
    * @param searchPhrase
    */
   function search(searchPhrase) {
-    // use the router component to generate the existing route
-    var route = window.prestashop.instance.router.generate('admin_customers_search');
-
+    var route;
+    var getParams = {'customer_search': searchPhrase};
+    
+    if (typeof window.prestashop.component !== 'undefined') {
+      // use the router component to generate the existing route in PS 1.7.8+
+      route = window.prestashop.instance.router.generate('admin_customers_search');
+    } else {
+      // use pure JS functions and bare PS search route if component is unavailable
+      const locationSearch = new URLSearchParams(window.location.search);
+      const locationPathname = window.location.pathname.split('/');
+      
+      for (const param of locationSearch) {
+        if (param[0] === '_token') getParams[param[0]] = param[1];
+      }
+      route = `${locationPathname[0]}/${locationPathname[1]}/sell/customers/search`;
+	}
+    
     // use the ajax request to get customers
-    $.get(route, {
-      'customer_search': searchPhrase,
+    $.get(route, getParams
       // render the customers
-    }).then((data) => renderResults(data));
+    ).then((data) => renderResults(data));
   }
 
   /**
@@ -44,7 +58,7 @@ $(() => {
 
     for (const id in data.customers) {
       const customer = data.customers[id];
-      $resultsBody.append(`<tr><td>${customer.email}</td></tr>`);
+      $resultsBody.append(`<tr><td>${customer.email}</td><td>${customer.firstname} ${customer.lastname}</td></tr>`);
     }
   }
 });
