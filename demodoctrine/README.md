@@ -1,9 +1,11 @@
 Demo Doctrine
 =====================
 
-This module demonstrates how to use Doctrine entities in PrestaShop 1.7.7.
+This module demonstrates how to use Doctrine entities in PrestaShop 1.7.7+.
 
 Please note this module is an example only, not a mandatory structure.
+
+![Demo Doctrine Screenshot](demodoctrine-screenshot.png)
 
 ## Requirements
 
