@@ -211,17 +211,6 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
                     'ps.`price`',
                     SqlFilters::MIN_MAX
                 );
-            /*
-            if ($isStockManagementEnabled) {
-                $sqlFilters
-                    ->addFilter(
-                        'quantity',
-                        'sa.`quantity`',
-                        SqlFilters::MIN_MAX
-                    )
-                ;
-            }
-            */
         }
         $this->filterApplicator->apply($qb, $sqlFilters, $filterValues);
 
