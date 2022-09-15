@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>demoextendtemplates</name>
+    <displayName><![CDATA[DemoExtendTemplates]]></displayName>
+    <version><![CDATA[1.0.0]]></version>
+    <description><![CDATA[Demonstrates various templating extension examples]]></description>
+    <author><![CDATA[PrestaShop]]></author>
+    <tab><![CDATA[]]></tab>
+    <is_configurable>0</is_configurable>
+    <need_instance>1</need_instance>
+</module>
