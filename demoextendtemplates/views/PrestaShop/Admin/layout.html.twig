@@ -1,12 +1,13 @@
 {#
   Example to modify layout (lets say you want to add your own custom flash message).
-  It is important to follow the path for layout.html.twig as it is in prestashop.
+  It is important to follow the path for layout.html.twig as it is in prestashop, so that your template is loaded instead of the original one.
+  Keep in mind that the changes in layout.html.twig will affect the whole back office, because it is one of the base templates that are extended by all other pages.
 #}
 
-{# first, we extend the original layoyt.html.twig #}
+{# First, we extend the original layout.html.twig #}
 {% extends '@PrestaShopCore/Admin/layout.html.twig' %}
 
-{# Then, we override the block we want to change#}
+{# Then, we override the block we want to change #}
 {% block session_alert %}
   {# import _self as layout is important, else the layout variable wouldn't be recognized #}
   {% import _self as layout %}
@@ -22,7 +23,7 @@
 
   {#
     We can even override the macro and change how the layout.alert works inside.
-    Be aware that this will change the behavior for all the falsh messages.
+    Be aware that this will change the behavior of all the flash messages in the whole back office.
   #}
   {% macro alert(type, flashbagContent) %}
     {#
@@ -53,7 +54,7 @@
   {% endmacro %}
 
   {#
-    now in our controllers we can flash our custom message using the type "demoextendtemplates-success".
+    Now in our controllers we can flash our custom message using the type "demoextendtemplates-success".
     See example in DecoratedOrderController
   #}
 

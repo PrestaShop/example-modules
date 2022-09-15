@@ -1,3 +1,4 @@
+{# It is important to follow the path for index.html.twig as it is in prestashop, so that your template is loaded instead of the original one. #}
 {% extends '@PrestaShopCore/Admin/Sell/Order/Order/index.html.twig' %}
 
 {# modify the content block #}
@@ -19,6 +20,11 @@
   #}
   {% embed '@PrestaShop/Admin/Common/Grid/grid_panel.html.twig' with {'grid': orderGrid} %}
     {% block grid_panel_header %}
+    {#
+      Note: Current example focuses on the concept of extending twig blocks,
+      but the grid itself can be also modified using hooks
+      like displayAdminGridTableBefore, displayAdminGridTableAfter, actionOrderGridDefinitionModifier etc.
+    #}
       <div>
         <div class="float-right m-5">
           <i class="material-icons mi-shopping_basket">shopping_basket</i>
