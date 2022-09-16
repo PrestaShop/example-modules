@@ -1,8 +1,0 @@
-admin_orders_index:
-  path: /sell/orders
-  methods: [ GET ]
-  defaults:
-    _disable_module_prefix: true
-    _controller: PrestaShop\Module\DemoExtendTemplates\Controller\DecoratedOrderController::indexAction
-    _legacy_controller: AdminOrders
-    _legacy_link: AdminOrders
