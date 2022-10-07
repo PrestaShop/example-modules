@@ -250,7 +250,6 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
                         $qb->setParameter('price_max', $filter['max_field']);
                     }
 
-                    continue;
                 }
             }
             /*
