@@ -38,7 +38,7 @@ class QuoteLang
 
     /**
      * @var string
-     * @ORM\Column(name="content", type="string", nullable=false)
+     * @ORM\Column(name="content", type="string", nullable=true)
      */
     private $content;
 
@@ -92,7 +92,7 @@ class QuoteLang
      * @param string $content
      * @return $this
      */
-    public function setContent(string $content)
+    public function setContent(?string $content)
     {
         $this->content = $content;
 
