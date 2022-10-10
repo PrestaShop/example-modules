@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoMultistoreForm\Form;
 
-use PrestaShopBundle\Form\Admin\Type\ColorPickerType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use PrestaShopBundle\Form\Admin\Type\CommonAbstractType;
 use PrestaShopBundle\Form\Admin\Type\MultistoreConfigurationType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,7 +35,8 @@ class ContentBlockConfigurationType extends CommonAbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('color', ColorPickerType::class, [
+            ->add('color', ColorType::class, [
+                'attr' => ['class' => 'col-md-4 col-lg-2 p-1 h-25 w-50'],
                 'required' => false,
                 'label' => 'Color',
                 'multistore_configuration_key' => 'PS_DEMO_MULTISTORE_COLOR',

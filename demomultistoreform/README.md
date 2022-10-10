@@ -2,7 +2,7 @@
 
 ## About
 
-The goal of this module is to help developers to make their modules compatible with the multistore feature. You can find in this module all the multistore features that you should implement in your modules if you want to make them compatible with the multistore feature, starting from 1.7.8 .
+The goal of this module is to help developers to make their modules compatible with the multistore feature. You can find in this module all the multistore features that you should implement in your modules if you want to make them compatible with the multistore feature, starting from 1.7.8.0.
 
 This module demonstrates how to make your forms multistore compatible in your module, in a CRUD context, it includes:
 
@@ -11,7 +11,7 @@ This module demonstrates how to make your forms multistore compatible in your mo
 - A multistore compatible form with multistore checkboxes and dropdowns, using Prestashop's [multistore form extension](https://devdocs.prestashop.com/1.7/development/multistore/configuration-forms/)
 - A fixtures generation mechanism, using [doctrine](https://devdocs.prestashop.com/1.7/modules/concepts/doctrine/)
 - Displaying the configured blocks on Front Office
-
+![Demo Multistore Screenshot](demomultistore_screenshot.png)
 ### Multistore features
 
 #### The shop association block 
@@ -44,7 +44,7 @@ If an element is associated with several shops, then a user deletes it from the 
 
  ### Supported PrestaShop versions
 
- This module is compatible with and 1.7.8.0 only. Next version compatibility is expected for future versions.
+ This module is compatible with 1.7.8.x only. Next version compatibility is expected for future versions.
 
  ### Requirements
 
@@ -60,4 +60,4 @@ If an element is associated with several shops, then a user deletes it from the 
   5. In the BO, activate multistore in Shop parameters > Preferences
   6. Create and configure at least one second shop
 
- *Because the name of the directory and the name of the main module file must match.
+ _* Because the name of the directory and the name of the main module file must match._
