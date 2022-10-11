@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-namespace PrestaShop\Module\DemoDoctrine\Grid\Definition\Factory;
+namespace Module\DemoDoctrine\Grid\Definition\Factory;
 
 use PrestaShop\PrestaShop\Core\Grid\Action\Bulk\BulkActionCollection;
 use PrestaShop\PrestaShop\Core\Grid\Action\Bulk\Type\SubmitBulkAction;

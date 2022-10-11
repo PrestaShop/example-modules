@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-namespace PrestaShop\Module\DemoDoctrine\Entity;
+namespace Module\DemoDoctrine\Entity;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="PrestaShop\Module\DemoDoctrine\Repository\QuoteRepository")
+ * @ORM\Entity(repositoryClass="Module\DemoDoctrine\Repository\QuoteRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Quote
@@ -39,7 +39,7 @@ class Quote
     private $author;
 
     /**
-     * @ORM\OneToMany(targetEntity="PrestaShop\Module\DemoDoctrine\Entity\QuoteLang", cascade={"persist", "remove"}, mappedBy="quote")
+     * @ORM\OneToMany(targetEntity="Module\DemoDoctrine\Entity\QuoteLang", cascade={"persist", "remove"}, mappedBy="quote")
      */
     private $quoteLangs;
 

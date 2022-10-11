@@ -3,7 +3,7 @@ ps_demodoctrine_quote_index:
     path: /demo-doctrine/quotes
     methods: [GET]
     defaults:
-        _controller: 'PrestaShop\Module\DemoDoctrine\Controller\Admin\QuotesController::indexAction'
+        _controller: 'Module\DemoDoctrine\Controller\Admin\QuotesController::indexAction'
         _legacy_controller: 'AdminDemodoctrineQuote'
         _legacy_link: 'AdminDemodoctrineQuote'
 
@@ -11,7 +11,7 @@ ps_demodoctrine_quote_search:
     path: /demo-doctrine/quotes
     methods: [POST]
     defaults:
-        _controller: 'PrestaShop\Module\DemoDoctrine\Controller\Admin\QuotesController::searchAction'
+        _controller: 'Module\DemoDoctrine\Controller\Admin\QuotesController::searchAction'
         _legacy_controller: 'AdminDemodoctrineQuote'
         _legacy_link: 'AdminDemodoctrineQuote:search'
 
@@ -19,7 +19,7 @@ ps_demodoctrine_quote_generate:
     path: /demo-doctrine/generate
     methods: [GET, POST]
     defaults:
-        _controller: 'PrestaShop\Module\DemoDoctrine\Controller\Admin\QuotesController::generateAction'
+        _controller: 'Module\DemoDoctrine\Controller\Admin\QuotesController::generateAction'
         _legacy_controller: 'AdminDemodoctrineQuote'
         _legacy_link: 'AdminDemodoctrineQuote:generate'
 
@@ -27,7 +27,7 @@ ps_demodoctrine_quote_create:
     path: /demo-doctrine/quotes/new
     methods: [GET, POST]
     defaults:
-        _controller: 'PrestaShop\Module\DemoDoctrine\Controller\Admin\QuotesController::createAction'
+        _controller: 'Module\DemoDoctrine\Controller\Admin\QuotesController::createAction'
         _legacy_controller: 'AdminDemodoctrineQuote'
         _legacy_link: 'AdminDemodoctrineQuote:add'
 
@@ -35,7 +35,7 @@ ps_demodoctrine_quote_edit:
     path: /demo-doctrine/quotes/{quoteId}/edit
     methods: [GET, POST]
     defaults:
-        _controller: 'PrestaShop\Module\DemoDoctrine\Controller\Admin\QuotesController::editAction'
+        _controller: 'Module\DemoDoctrine\Controller\Admin\QuotesController::editAction'
         _legacy_controller: 'AdminDemodoctrineQuote'
         _legacy_link: 'AdminDemodoctrineQuote:update'
     requirements:
@@ -45,7 +45,7 @@ ps_demodoctrine_quote_delete:
     path: /demo-doctrine/quotes/{quoteId}/delete
     methods: [DELETE]
     defaults:
-        _controller: 'PrestaShop\Module\DemoDoctrine\Controller\Admin\QuotesController::deleteAction'
+        _controller: 'Module\DemoDoctrine\Controller\Admin\QuotesController::deleteAction'
         _legacy_controller: 'AdminDemodoctrineQuote'
         _legacy_link: 'AdminDemodoctrineQuote:deletequote'
     requirements:
@@ -55,6 +55,6 @@ ps_demodoctrine_quote_bulk_delete:
     path: /demo-doctrine/quotes/bulkDelete
     methods: [POST]
     defaults:
-        _controller: 'PrestaShop\Module\DemoDoctrine\Controller\Admin\QuotesController::deleteBulkAction'
+        _controller: 'Module\DemoDoctrine\Controller\Admin\QuotesController::deleteBulkAction'
         _legacy_controller: 'AdminDemodoctrineQuote'
         _legacy_link: 'AdminDemodoctrineQuote:submitBulkdeletequote'

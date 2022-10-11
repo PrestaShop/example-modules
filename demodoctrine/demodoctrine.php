@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-use PrestaShop\Module\DemoDoctrine\Database\QuoteInstaller;
+use Module\DemoDoctrine\Database\QuoteInstaller;
 
 if (!defined('_PS_VERSION_')) {
     exit;

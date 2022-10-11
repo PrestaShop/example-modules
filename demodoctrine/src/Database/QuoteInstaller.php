@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-namespace PrestaShop\Module\DemoDoctrine\Database;
+namespace Module\DemoDoctrine\Database;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;

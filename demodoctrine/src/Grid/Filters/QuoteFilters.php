@@ -9,9 +9,9 @@
  */
 declare(strict_types=1);
 
-namespace PrestaShop\Module\DemoDoctrine\Grid\Filters;
+namespace Module\DemoDoctrine\Grid\Filters;
 
-use PrestaShop\Module\DemoDoctrine\Grid\Definition\Factory\QuoteGridDefinitionFactory;
+use Module\DemoDoctrine\Grid\Definition\Factory\QuoteGridDefinitionFactory;
 use PrestaShop\PrestaShop\Core\Search\Filters;
 
 class QuoteFilters extends Filters

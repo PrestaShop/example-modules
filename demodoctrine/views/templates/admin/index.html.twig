@@ -7,7 +7,9 @@
  * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
  *#}
 
-{% extends '@PrestaShop/Admin/layout.html.twig' %}
+{% extends '@!PrestaShop/Admin/layout.html.twig' %}
+{# Since PS 8.0.0 you can use @PrestaShopCore instead of @!Prestashop
+(https://devdocs.prestashop-project.org/8/modules/concepts/templating/admin-views/#override-templates) #}
 
 {% block content %}
     {% block quotes_list_panel %}

@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-namespace PrestaShop\Module\DemoDoctrine\Entity;
+namespace Module\DemoDoctrine\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use PrestaShopBundle\Entity\Lang;
@@ -23,7 +23,7 @@ class QuoteLang
     /**
      * @var Quote
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="PrestaShop\Module\DemoDoctrine\Entity\Quote", inversedBy="quoteLangs")
+     * @ORM\ManyToOne(targetEntity="Module\DemoDoctrine\Entity\Quote", inversedBy="quoteLangs")
      * @ORM\JoinColumn(name="id_quote", referencedColumnName="id_quote", nullable=false)
      */
     private $quote;
