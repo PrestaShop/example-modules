@@ -2,6 +2,7 @@ services:
 
   prestashop.module.demoextendsymfonyform.uploader.supplier_extra_image_uploader:
     class: PrestaShop\Module\DemoExtendSymfonyForm\Uploader\SupplierExtraImageUploader
+    public: true
     arguments:
       - '@prestashop.module.demoextendsymfonyform.repository.supplier_extra_image_repository'
 
