@@ -252,14 +252,6 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
 
                 }
             }
-            /*
-            if ('category' === $filterName) {
-                $qb->andWhere('cl.`name` LIKE :category');
-                $qb->setParameter('category', '%' . $filter . '%');
-
-                continue;
-            }
-            */
         }
 
         return $qb;
