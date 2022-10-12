@@ -22,12 +22,17 @@ declare(strict_types=1);
 namespace PrestaShop\Module\DemoMultistoreForm\Form;
 
 use PrestaShop\PrestaShop\Core\Configuration\AbstractMultistoreConfiguration;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Handles configuration data for demo multistore configuration options.
  */
 final class ContentBlockDataConfiguration extends AbstractMultistoreConfiguration
 {
+    /**
+     * @var array<int, string>
+     */
+    private const CONFIGURATION_FIELDS = ['color', 'italic', 'bold'];
 
     /**
      * {@inheritdoc}
@@ -66,4 +71,17 @@ final class ContentBlockDataConfiguration extends AbstractMultistoreConfiguratio
     {
         return true;
     }
+
+    protected function buildResolver(): OptionsResolver
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefined(self::CONFIGURATION_FIELDS);
+        $resolver->setAllowedTypes('color', 'string');
+        $resolver->setAllowedTypes('italic', 'bool');
+        $resolver->setAllowedTypes('bold', 'bool');
+
+        return $resolver;
+    }
+
+
 }
