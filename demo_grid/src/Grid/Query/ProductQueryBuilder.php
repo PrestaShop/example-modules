@@ -202,25 +202,16 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
             ->addFilter(
                 'id_product',
                 'p.`id_product`',
-                SqlFilters::MIN_MAX
-            )
-            ->addFilter(
-                'price_tax_excluded',
-                'ps.`price`',
-                SqlFilters::MIN_MAX
-            )
-        ;
-
-        if ($isStockManagementEnabled) {
+                SqlFilters::WHERE_STRICT
+            );
+        if (version_compare(_PS_VERSION_, '8.0', '>=')) {
             $sqlFilters
                 ->addFilter(
-                    'quantity',
-                    'sa.`quantity`',
+                    'price_tax_excluded',
+                    'ps.`price`',
                     SqlFilters::MIN_MAX
-                )
-            ;
+                );
         }
-
         $this->filterApplicator->apply($qb, $sqlFilters, $filterValues);
 
         $qb->setParameter('id_shop', $this->contextShopId);
@@ -248,11 +239,18 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
                 continue;
             }
 
-            if ('category' === $filterName) {
-                $qb->andWhere('cl.`name` LIKE :category');
-                $qb->setParameter('category', '%' . $filter . '%');
+            if (version_compare(_PS_VERSION_, '8.0', '<')) {
+                if ('price_tax_excluded' === $filterName) {
+                    if (isset($filter['min_field'])) {
+                        $qb->andWhere('ps.`price` >= :price_min');
+                        $qb->setParameter('price_min', $filter['min_field']);
+                    }
+                    if (isset($filter['max_field'])) {
+                        $qb->andWhere('ps.`price` <= :price_max');
+                        $qb->setParameter('price_max', $filter['max_field']);
+                    }
 
-                continue;
+                }
             }
         }
 
