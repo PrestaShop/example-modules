@@ -16,8 +16,8 @@
             <i class="material-icons">mail_outline</i>
             {{ 'Quotes'|trans({}, 'Modules.Demodoctrine.Admin') }}
         </h3>
-        <div class="card-block row">
-            <div class="card-text">
+        <div class="card-body card-block">
+            <div class="form-wrapper card-text">
                 {{ form_errors(quoteForm) }}
 
                 {% block quote_form_rest %}

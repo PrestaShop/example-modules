@@ -9,17 +9,17 @@
  */
 declare(strict_types=1);
 
-namespace PrestaShop\Module\DemoDoctrine\Controller\Admin;
+namespace Module\DemoDoctrine\Controller\Admin;
 
 use Doctrine\DBAL\Driver\Connection;
 use Doctrine\DBAL\Exception\TableExistsException;
 use Doctrine\DBAL\Exception\TableNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
-use PrestaShop\Module\DemoDoctrine\Entity\Quote;
-use PrestaShop\Module\DemoDoctrine\Entity\QuoteLang;
-use PrestaShop\Module\DemoDoctrine\Grid\Definition\Factory\QuoteGridDefinitionFactory;
-use PrestaShop\Module\DemoDoctrine\Grid\Filters\QuoteFilters;
+use Module\DemoDoctrine\Entity\Quote;
+use Module\DemoDoctrine\Entity\QuoteLang;
+use Module\DemoDoctrine\Grid\Definition\Factory\QuoteGridDefinitionFactory;
+use Module\DemoDoctrine\Grid\Filters\QuoteFilters;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use PrestaShopBundle\Entity\Lang;
 use PrestaShopBundle\Entity\Repository\LangRepository;

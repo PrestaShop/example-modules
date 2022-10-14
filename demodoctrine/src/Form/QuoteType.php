@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-namespace PrestaShop\Module\DemoDoctrine\Form;
+namespace Module\DemoDoctrine\Form;
 
 use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\DefaultLanguage;
 use PrestaShopBundle\Form\Admin\Type\TranslatableType;

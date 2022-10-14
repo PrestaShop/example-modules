@@ -12,7 +12,7 @@
     ],
     "autoload": {
       "psr-4": {
-        "PrestaShop\\Module\\DemoDoctrine\\": "src/"
+        "Module\\DemoDoctrine\\": "src/"
       },
       "config": {
         "prepend-autoloader": false
