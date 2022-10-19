@@ -25,7 +25,6 @@ use PrestaShopBundle\Form\Admin\Type\SwitchType;
 use PrestaShopBundle\Form\Admin\Type\YesAndNoChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 /**
  * Class DemoExtendSymfonyForm1 demonstrates the usage of CQRS pattern and hooks.
@@ -41,14 +40,14 @@ class DemoExtendSymfonyForm3 extends Module
 
         parent::__construct();
 
-        $this->displayName = $this->getTranslator()->trans(
+        $this->displayName = $this->trans(
             'Demo Symfony Forms #3',
             [],
             'Modules.Democqrshooksusage.Admin'
         );
 
         $this->description =
-            $this->getTranslator()->trans(
+            $this->trans(
                 'Help developers to understand how to create module using CQRS',
                 [],
                 'Modules.Democqrshooksusage.Admin'
@@ -116,14 +115,12 @@ class DemoExtendSymfonyForm3 extends Module
         /** @var GridDefinitionInterface $definition */
         $definition = $params['definition'];
 
-        $translator = $this->getTranslator();
-
         $definition
             ->getColumns()
             ->addAfter(
                 'optin',
                 (new ToggleColumn('is_allowed_for_review'))
-                    ->setName($translator->trans('Allowed for review', [], 'Modules.Democqrshooksusage.Admin'))
+                    ->setName($this->trans('Allowed for review', [], 'Modules.Democqrshooksusage.Admin'))
                     ->setOptions([
                         'field' => 'is_allowed_for_review',
                         'primary_field' => 'id_customer',
@@ -189,7 +186,7 @@ class DemoExtendSymfonyForm3 extends Module
         /** @var FormBuilderInterface $formBuilder */
         $formBuilder = $params['form_builder'];
         $formBuilder->add('is_allowed_for_review', SwitchType::class, [
-            'label' => $this->getTranslator()->trans('Allow reviews', [], 'Modules.Democqrshooksusage.Admin'),
+            'label' => $this->trans('Allow reviews', [], 'Modules.Democqrshooksusage.Admin'),
             'required' => false,
         ]);
 
@@ -257,7 +254,7 @@ class DemoExtendSymfonyForm3 extends Module
         try {
             /*
              * This part demonstrates the usage of CQRS pattern command to perform write operation for Reviewer entity.
-             * @see https://devdocs.prestashop.com/1.7/development/architecture/cqrs/ for more detailed information.
+             * @see https://devdocs.prestashop.com/1.7/development/architecture/domain/cqrs/ for more detailed information.
              *
              * As this is our recommended approach of writing the data but we not force to use this pattern in modules -
              * you can use directly an entity here or wrap it in custom service class.
@@ -312,12 +309,12 @@ class DemoExtendSymfonyForm3 extends Module
     private function handleException(ReviewerException $exception)
     {
         $exceptionDictionary = [
-            CannotCreateReviewerException::class => $this->getTranslator()->trans(
+            CannotCreateReviewerException::class => $this->trans(
                 'Failed to create a record for customer',
                 [],
                 'Modules.Democqrshooksusage.Admin'
             ),
-            CannotToggleAllowedToReviewStatusException::class => $this->getTranslator()->trans(
+            CannotToggleAllowedToReviewStatusException::class => $this->trans(
                 'Failed to toggle is allowed to review status',
                 [],
                 'Modules.Democqrshooksusage.Admin'
@@ -329,7 +326,7 @@ class DemoExtendSymfonyForm3 extends Module
         if (isset($exceptionDictionary[$exceptionType])) {
             $message = $exceptionDictionary[$exceptionType];
         } else {
-            $message = $this->getTranslator()->trans(
+            $message = $this->trans(
                 'An unexpected error occurred. [%type% code %code%]',
                 [
                     '%type%' => $exceptionType,
