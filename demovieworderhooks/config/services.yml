@@ -10,45 +10,54 @@ services:
 
   prestashop.module.demovieworderhooks.repository.order_repository:
     class: PrestaShop\Module\DemoViewOrderHooks\Repository\OrderRepository
+    public: true
 
   prestashop.module.demovieworderhooks.repository.order_signature_repository:
     class: PrestaShop\Module\DemoViewOrderHooks\Repository\OrderSignatureRepository
+    public: true
     factory: ['@doctrine.orm.default_entity_manager', getRepository]
     arguments:
       - PrestaShop\Module\DemoViewOrderHooks\Entity\OrderSignature
 
   prestashop.module.demovieworderhooks.repository.order_review_repository:
     class: PrestaShop\Module\DemoViewOrderHooks\Repository\OrderReviewRepository
+    public: true
     factory: ['@doctrine.orm.default_entity_manager', getRepository]
     arguments:
       - PrestaShop\Module\DemoViewOrderHooks\Entity\OrderReview
 
   prestashop.module.demovieworderhooks.repository.package_location_repository:
     class: PrestaShop\Module\DemoViewOrderHooks\Repository\PackageLocationRepository
+    public: true
     factory: ['@doctrine.orm.default_entity_manager', getRepository]
     arguments:
       - PrestaShop\Module\DemoViewOrderHooks\Entity\PackageLocation
 
   prestashop.module.demovieworderhooks.presenter.orders_presenter:
     class: PrestaShop\Module\DemoViewOrderHooks\Presenter\OrdersPresenter
+    public: true
     arguments:
       - '@router.default'
       - '@prestashop.core.localization.locale.context_locale'
 
   prestashop.module.demovieworderhooks.presenter.order_signature_presenter:
     class: PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderSignaturePresenter
+    public: true
     arguments:
       - '@=service("prestashop.module.demovieworderhooks").getPathUri() ~ parameter("signatureImgDirectory")'
 
   prestashop.module.demovieworderhooks.presenter.order_review_presenter:
     class: PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderReviewPresenter
+    public: true
 
   prestashop.module.demovieworderhooks.presenter.package_locations_presenter:
     class: PrestaShop\Module\DemoViewOrderHooks\Presenter\PackageLocationsPresenter
+    public: true
     calls:
       - { method: setTranslator, arguments: ['@translator'] }
 
   prestashop.module.demovieworderhooks.presenter.order_link_presenter:
     class: PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderLinkPresenter
+    public: true
     arguments:
       - '@router.default'
