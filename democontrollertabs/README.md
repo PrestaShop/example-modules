@@ -3,6 +3,8 @@ Demo Controller Tabs
 
 This module demonstrates how to create modern Controllers and associate Tabs, it was designed for test purposes and as an example.
 
+Tested with PS 8.0.0 and below.
+
 Please note this module is an example only, not a mandatory structure.
 
  1. Symfony Controller with permission
