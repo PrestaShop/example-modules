@@ -10,7 +10,6 @@
 
 namespace DemoCQRSHooksUsage\Domain\Reviewer\Command;
 
-use PrestaShop\PrestaShop\Core\Domain\Customer\Exception\CustomerException;
 use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerId;
 
 /**
