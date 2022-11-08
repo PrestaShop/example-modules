@@ -182,7 +182,7 @@ class example_module_mailtheme extends Module
 
             $theme->getLayouts()->add(new Layout(
                 'customized_template',
-                __DIR__ . '/mails/layouts/customized_' . $theme->getName() . '_layout.html.twig',
+                '@Modules/example_module_mailtheme/mails/layouts/customized_' . $theme->getName() . '_layout.html.twig',
                 '',
                 $this->name
             ));
@@ -211,7 +211,7 @@ class example_module_mailtheme extends Module
             $orderIndex = $theme->getLayouts()->indexOf($orderConfLayout);
             $theme->getLayouts()->offsetSet($orderIndex, new Layout(
                 $orderConfLayout->getName(),
-                __DIR__ . '/mails/layouts/extended_' . $theme->getName() . '_order_conf_layout.html.twig',
+                 '@Modules/example_module_mailtheme/mails/layouts/extended_' . $theme->getName() . '_order_conf_layout.html.twig',
                 ''
             ));
         }
