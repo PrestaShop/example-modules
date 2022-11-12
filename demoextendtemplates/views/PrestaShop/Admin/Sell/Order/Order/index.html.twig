@@ -34,15 +34,3 @@
     {% endblock %}
   {% endembed %}
 {% endblock %}
-
-{% block stylesheets %}
-  {{ parent() }}
-  {#
-    Include our custom css for layout.
-
-    @todo: there is a bug in prestashop orders page, it doesn't call parent() in stylesheets block,
-           so until that is fixed, we include the layout css directly here.
-           Once its fixed this stylesheets override can be removed and only left in layout.css
-  #}
-  <link rel="stylesheet" href="{{ asset('../modules/demoextendtemplates/views/css/layout.css') }}"/>
-{% endblock %}
