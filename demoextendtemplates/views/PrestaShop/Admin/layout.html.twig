@@ -1,0 +1,67 @@
+{#
+  Example to modify layout (lets say you want to add your own custom flash message).
+  It is important to follow the path for layout.html.twig as it is in prestashop, so that your template is loaded instead of the original one.
+  Keep in mind that the changes in layout.html.twig will affect the whole back office, because it is one of the base templates that are extended by all other pages.
+#}
+
+{# First, we extend the original layout.html.twig #}
+{% extends '@PrestaShopCore/Admin/layout.html.twig' %}
+
+{# Then, we override the block we want to change #}
+{% block session_alert %}
+  {# import _self as layout is important, else the layout variable wouldn't be recognized #}
+  {% import _self as layout %}
+  {# render the original content from parent #}
+  {{ parent() }}
+  {# add our own custom flash #}
+  {% if app.session.flashbag.peek('demoextendtemplates-success')|length() > 0 %}
+    {# you can modify the css of "my-custom-class" however you want in your module css files  #}
+    <div class="some-kind-of-wrapper-class-if-needed">
+        {{ layout.alert('demoextendtemplates-success', app.session.flashbag.get('demoextendtemplates-success')) }}
+    </div>
+  {% endif %}
+
+  {#
+    We can even override the macro and change how the layout.alert works inside.
+    Be aware that this will change the behavior of all the flash messages in the whole back office.
+  #}
+  {% macro alert(type, flashbagContent) %}
+    {#
+      the "alert-{{ type }}" will end up rendering class "alert-demoextendtemplates-success",
+      which you can modify however you want in your module css files.
+      See demoextendtemplates/views/layout.css for example
+    #}
+    <div class="alert alert-{{ type }} d-print-none" role="alert">
+      {% if flashbagContent|length > 1 %}
+        <ul class="alert-text">
+          {% for flashMessage in flashbagContent %}
+            <li>{{ flashMessage|raw }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="alert-text">
+          {% for flashMessage in flashbagContent %}
+            {# lets say we want to add a link when there is only one flash message #}
+            <a href="#">
+              <i class="material-icons mi-chat">chat</i>
+              {# note the "|raw" - it means you can provide html content as a message and it will be rendered #}
+              {{ flashMessage|raw }}
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  {% endmacro %}
+
+  {#
+    Now in our controllers we can flash our custom message using the type "demoextendtemplates-success".
+    See example in DecoratedOrderController
+  #}
+
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {# Include our custom css for layout #}
+  <link rel="stylesheet" href="{{ asset('../modules/demoextendtemplates/views/css/layout.css') }}"/>
+{% endblock %}

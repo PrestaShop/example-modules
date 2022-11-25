@@ -1,0 +1,36 @@
+{# It is important to follow the path for index.html.twig as it is in prestashop, so that your template is loaded instead of the original one. #}
+{% extends '@PrestaShopCore/Admin/Sell/Order/Order/index.html.twig' %}
+
+{# modify the content block #}
+{% block content %}
+  {# call parent if you want to see all the original content rendered#}
+  {{ parent() }}
+  <div class="text-success">
+    <p>Extended block content in demoextendtemplates module</p>
+  </div>
+{% endblock %}
+
+
+{% block order_grid_row %}
+  {#
+    Modify a block which is not directly rendered in extended template, but in some included file.
+    We need to "embed" the same file that is included in original index.html.twig
+    and then we can modify the blocks inside it.
+    Note that we also need to pass the variables as the orderGrid in this example.
+  #}
+  {% embed '@PrestaShop/Admin/Common/Grid/grid_panel.html.twig' with {'grid': orderGrid} %}
+    {% block grid_panel_header %}
+    {#
+      Note: Current example focuses on the concept of extending twig blocks,
+      but the grid itself can be also modified using hooks
+      like displayAdminGridTableBefore, displayAdminGridTableAfter, actionOrderGridDefinitionModifier etc.
+    #}
+      <div>
+        <div class="float-right m-5">
+          <i class="material-icons mi-shopping_basket">shopping_basket</i>
+          <a href="#">My custom header for orders grid from a demoextendtemplates module</a>
+        </div>
+      </div>
+    {% endblock %}
+  {% endembed %}
+{% endblock %}
