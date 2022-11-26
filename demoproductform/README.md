@@ -15,6 +15,7 @@ Compatible with 8.0.0 and above versions.
 ### Requirements
 
 1. Composer, see [Composer](https://getcomposer.org/) to learn more
+2. Switch on the new product page feature flag in the backoffice configuration UI
 
 #### How to install:
 1. Copy the module into `modules` directory of your PrestaShop installation
