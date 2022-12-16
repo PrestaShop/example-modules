@@ -227,7 +227,7 @@ class example_module_mailtheme extends Module
      */
     private function addDarkTheme(ThemeCollectionInterface $themes)
     {
-        $scanner = new FolderThemeScanner();
+        $scanner = new FolderThemeScanner(_PS_MODULE_DIR_);
         $darkTheme = $scanner->scan(__DIR__ . '/mails/themes/dark_modern');
         if (null !== $darkTheme && $darkTheme->getLayouts()->count() > 0) {
             $themes->add($darkTheme);
