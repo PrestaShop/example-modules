@@ -20,7 +20,7 @@ class Manufacturer extends ManufacturerCore
         $id = null,
         $idLang = null
     ) {
-        parent::__construct($id, $idLang);
         self::$definition['fields']['code'] = ['type' => self::TYPE_STRING, 'size' => 64];
+        parent::__construct($id, $idLang);
     }
 }
