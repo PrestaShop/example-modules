@@ -7,7 +7,6 @@ $finder = PhpCsFixer\Finder::create()->in([
 ]);
 
 return (new PhpCsFixer\Config())
-    ->setUsingCache(false)
     ->setRiskyAllowed(true)
     ->setRules([
         '@Symfony' => true,
@@ -43,4 +42,4 @@ return (new PhpCsFixer\Config())
         'no_alias_language_construct_call' => false,
     ])
     ->setFinder($finder)
-    ->setCacheFile(__DIR__.'/var/.php_cs.cache');
+    ->setCacheFile(__DIR__.'/.php_cs.cache');
