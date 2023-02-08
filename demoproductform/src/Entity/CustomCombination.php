@@ -21,9 +21,9 @@
 namespace PrestaShop\Module\DemoProductForm\Entity;
 
 /**
- * Example object model for module custom product fields
+ * Example object model for module custom combination fields
  */
-final class CustomProduct extends \ObjectModel
+final class CustomCombination extends \ObjectModel
 {
     /**
      * @var int
@@ -56,7 +56,7 @@ final class CustomProduct extends \ObjectModel
     public $force_id = true;
 
     public static $definition = [
-        'table' => 'demoproductform_custom_product',
+        'table' => 'demoproductform_custom_product_attribute',
         'primary' => 'id',
         'fields' => [
             'custom_field' => ['type' => self::TYPE_STRING],

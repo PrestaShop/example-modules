@@ -22,7 +22,6 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoProductForm\Form\Type;
 
-use Currency;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,19 +34,19 @@ use Symfony\Component\Validator\Constraints\Type;
 class CustomTabType extends TranslatorAwareType
 {
     /**
-     * @var Currency
+     * @var \Currency
      */
     private $defaultCurrency;
 
     /**
      * @param TranslatorInterface $translator
      * @param array $locales
-     * @param Currency $defaultCurrency
+     * @param \Currency $defaultCurrency
      */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        Currency $defaultCurrency
+        \Currency $defaultCurrency
     ) {
         parent::__construct($translator, $locales);
         $this->defaultCurrency = $defaultCurrency;
