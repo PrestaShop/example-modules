@@ -42,7 +42,7 @@ class DemoProductForm extends Module
         $this->name = 'demoproductform';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '8.0.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '8.1.0', 'max' => _PS_VERSION_];
 
         parent::__construct();
 
