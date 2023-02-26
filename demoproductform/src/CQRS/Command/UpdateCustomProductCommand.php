@@ -48,10 +48,10 @@ final class UpdateCustomProductCommand
     /**
      * @var string
      */
-    private $customerField;
+    private $customerField = '';
 
     /**
-     * @var DecimalNumber
+     * @var DecimalNumber|null
      */
     private $customPrice;
 
@@ -90,9 +90,9 @@ final class UpdateCustomProductCommand
     }
 
     /**
-     * @return DecimalNumber
+     * @return DecimalNumber|null
      */
-    public function getCustomPrice(): DecimalNumber
+    public function getCustomPrice(): ?DecimalNumber
     {
         return $this->customPrice;
     }

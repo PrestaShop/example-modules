@@ -22,20 +22,19 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoProductForm\Install;
 
-use Db;
 use Module;
-use Tools;
+use PrestaShopBundle\Install\SqlLoader;
 
 class Installer
 {
     /**
      * Module's installation entry point.
      *
-     * @param Module $module
+     * @param \Module $module
      *
      * @return bool
      */
-    public function install(Module $module): bool
+    public function install(\Module $module): bool
     {
         if (!$this->registerHooks($module)) {
             return false;
@@ -48,11 +47,11 @@ class Installer
     }
 
     /**
-     * @param Module $module
+     * @param \Module $module
      *
      * @return bool
      */
-    public function uninstall(Module $module): bool
+    public function uninstall(\Module $module): bool
     {
         return $this->executeSqlFromFile($module->getLocalPath() . 'src/Install/uninstall.sql');
     }
@@ -62,14 +61,16 @@ class Installer
      *
      * @see https://devdocs.prestashop.com/8/modules/concepts/hooks/
      *
-     * @param Module $module
+     * @param \Module $module
      *
      * @return bool
      */
-    private function registerHooks(Module $module): bool
+    private function registerHooks(\Module $module): bool
     {
         $hooks = [
             'actionProductFormBuilderModifier',
+            'actionCombinationFormFormBuilderModifier',
+            'actionAfterUpdateCombinationFormFormHandler',
             'displayAdminProductsExtra',
         ];
 
@@ -87,14 +88,15 @@ class Installer
             return true;
         }
 
-        $sql = Tools::file_get_contents($filepath);
+        $allowedCollations = ['utf8mb4_general_ci', 'utf8mb4_unicode_ci'];
+        $databaseCollation = \Db::getInstance()->getValue('SELECT @@collation_database');
+        $sqlLoader = new SqlLoader();
+        $sqlLoader->setMetaData([
+            'PREFIX_' => _DB_PREFIX_,
+            'ENGINE_TYPE' => _MYSQL_ENGINE_,
+            'COLLATION' => (empty($databaseCollation) || !in_array($databaseCollation, $allowedCollations)) ? '' : 'COLLATE ' . $databaseCollation,
+        ]);
 
-        if (!$sql) {
-            return false;
-        }
-
-        $sql = str_replace(['_DB_PREFIX_', '_MYSQL_ENGINE_'], [_DB_PREFIX_, _MYSQL_ENGINE_], $sql);
-
-        return (bool) Db::getInstance()->execute($sql);
+        return $sqlLoader->parseFile($filepath);
     }
 }

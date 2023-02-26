@@ -19,5 +19,5 @@ Compatible with 8.0.0 and above versions.
 
 #### How to install:
 1. Copy the module into `modules` directory of your PrestaShop installation
-2. `cd` into the module's directory and run `composer install` to download dependencies into vendor directory
+2. `cd` into the module's directory and run `composer install --no-dev` (the --no-dev is important) to download dependencies into vendor directory
 3. Install the module from Back Office
