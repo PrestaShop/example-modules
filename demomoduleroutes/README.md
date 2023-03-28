@@ -2,15 +2,15 @@
 
 ## About
 
-This module illustrates how to use the [moduleRoutes hook](https://devdocs.prestashop-project.org/8/modules/concepts/hooks/list-of-hooks/moduleroutes/) in a module.
+This module illustrates using the [moduleRoutes hook](https://devdocs.prestashop-project.org/8/modules/concepts/hooks/list-of-hooks/moduleroutes/) in a module.
 
-It creates two `ModuleFrontController` controllers, and extend default PrestaShop routes with two custom ones and map them to the `ModuleFrontController` controllers.
+It creates two `ModuleFrontController` controllers, extends default PrestaShop routes with two custom ones, and maps them to those controllers.
 
-More explainations about usage in [moduleRoutes hook on devdocs](https://devdocs.prestashop-project.org/8/modules/concepts/hooks/list-of-hooks/moduleroutes/).
+You can find more information in [moduleRoutes hook on the devdocs](https://devdocs.prestashop-project.org/8/modules/concepts/hooks/list-of-hooks/moduleroutes/).
 
 ## Supported PrestaShop versions
 
-Compatible with 1.5.3.0 and above versions.
+`hookModuleRoutes` was added in PrestaShop 1.5.3, but this module is compatible with 8.0.0 and above versions.
 
 ### How to install
 

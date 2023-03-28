@@ -27,7 +27,7 @@ class DemoModuleRoutes extends Module
         $this->name = 'demomoduleroutes';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '1.5.3.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '8.0.0', 'max' => _PS_VERSION_];
 
         parent::__construct();
 
@@ -43,15 +43,6 @@ class DemoModuleRoutes extends Module
         return parent::install() && $this->registerHook('moduleRoutes');
     }
 
-    /**
-     * @return bool
-     */
-    public function uninstall()
-    {
-        if (!parent::uninstall()) {
-            return false;
-        }
-    }
 
     public function hookModuleRoutes()
     {
