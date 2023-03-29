@@ -1,0 +1,1 @@
+Show template, id is {$id}, slug is {$slug}
