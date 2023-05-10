@@ -79,3 +79,11 @@ services:
   prestashop.module.demosymfonyform.form.demo_configuration_other_data_configuration:
     class: PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationOtherDataConfiguration
     arguments: [ '@prestashop.adapter.legacy.configuration' ]
+
+  prestashop.module.demosymfonyform.form.demo_configuration_geocoordinates:
+    class: PrestaShop\Module\DemoSymfonyForm\Form\GeoCoordinatesType
+    arguments:
+      - '@translator'
+    public: true
+    tags:
+      - { name: form.type }
