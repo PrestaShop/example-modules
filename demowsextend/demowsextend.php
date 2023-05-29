@@ -4,7 +4,7 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-include_once _PS_MODULE_DIR_ . 'demowsextend/src/Entity/Article.php';
+require_once _PS_MODULE_DIR_ . 'demowsextend/src/Entity/Article.php';
 
 class DemoWsExtend extends Module
 {
@@ -49,21 +49,18 @@ class DemoWsExtend extends Module
             PRIMARY KEY  (`id_article`, `id_lang`)
         ) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci';
 
-        if (Db::getInstance()->execute($sql) && Db::getInstance()->execute($sql_lang)) {
-            return true;
-        }
-        
-        return false;
+        return Db::getInstance()->execute($sql) && 
+            Db::getInstance()->execute($sql_lang);
     }
 
     public function hookAddWebserviceResources($params)
     {
         return [
-            'articles' => array(
+            'articles' => [
                 'description' => 'Blog articles', // The description for those who access to this resource through WS
                 'class' => 'Article', // The classname of your Entity
                 //'forbidden_method' => array('DELETE') // Optional, if you want to forbid some methods
-            )
+            ]
         ];
     }
 }
