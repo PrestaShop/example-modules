@@ -20,7 +20,7 @@ class DemoWsExtend extends Module
 
         parent::__construct();
 
-        $this->displayName = $this->getTranslator()->trans('Extend WS demo module', array(), 'Modules.DemoWsExtend.Admin');
+        $this->displayName = $this->trans('Extend WS demo module', [], 'Modules.DemoWsExtend.Admin');
     }
 
     public function install()
