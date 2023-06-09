@@ -1,0 +1,28 @@
+{
+    "name": "prestashop/api_module",
+    "description": "PrestaShop - API Module Example",
+    "homepage": "https://github.com/PrestaShop",
+    "license": "AFL-3.0",
+    "authors": [
+      {
+        "name": "PrestaShop SA",
+        "email": "contact@prestashop.com"
+      }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PrestaShop\\Module\\ApiExample\\": "src/"
+        }
+    },
+    "require-dev": {
+        "prestashop/php-dev-tools": "^4.3",
+        "phpstan/phpstan": "^1.9"
+    },
+    "config": {
+      "preferred-install": "dist",
+      "classmap-authoritative": true,
+      "optimize-autoloader": true,
+      "prepend-autoloader": false
+    },
+    "type": "prestashop-module"
+}
