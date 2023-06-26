@@ -1,0 +1,4 @@
+vendor/
+composer.lock
+js/node_modules
+.php_cs.cache

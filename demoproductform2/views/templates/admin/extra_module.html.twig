@@ -1,0 +1,31 @@
+{#**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License version 3.0
+ * that is bundled with this package in the file LICENSE.md.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
+ *#}
+
+<div class="form-group" id="demoproductform-extra-module">
+    <h3>{{ 'Custom product details'|trans({}, 'Modules.Demoproductform.Admin') }}</h3>
+
+    <div class="form-group text-widget">
+        <label>{{ 'Custom field'|trans({}, 'Modules.Demoproductform.Admin') }}</label>
+        <div>{{ customProduct.custom_field }}</div>
+    </div>
+    <div class="form-group text-widget">
+        <label>{{ 'Custom price'|trans({}, 'Modules.Demoproductform.Admin') }}</label>
+        <div>{{ customProduct.custom_price|price_format }}</div>
+    </div>
+</div>
