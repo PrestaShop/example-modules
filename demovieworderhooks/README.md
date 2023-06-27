@@ -1,7 +1,8 @@
-Demo View Order Hooks
-=====================
+## Demo View Order Hooks
 
-This module was created in order to demonstrate how to use the new hooks introduced with the new "View an Order" back-office page in PrestaShop 8.0.0 and below.
+## About
+
+This module was created in order to demonstrate how to use the new hooks introduced with the new "View an Order" back office page in PrestaShop 8.0.0 and below.
 
 It uses the following hooks:
 - displayAdminOrderTabContent
