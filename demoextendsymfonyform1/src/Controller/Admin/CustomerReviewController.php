@@ -55,9 +55,19 @@ class CustomerReviewController extends FrameworkBundleAdminController
                 );
             }
 
-            $this->addFlash('success', $this->trans('Successful update.', 'Admin.Notifications.Success'));
+            return $this->json(
+                [
+                    'status' => true,
+                    'message' => $this->trans('Successful update.', 'Admin.Notifications.Success')
+                ]
+            );
         } catch (ReviewerException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessageMapping()));
+            return $this->json(
+                [
+                    'status' => false,
+                    'message' => $this->getErrorMessageForException($e, $this->getErrorMessageMapping())
+                ]
+            );
         }
 
         return $this->redirectToRoute('admin_customers_index');
