@@ -4,7 +4,8 @@
 
 This module illustrates how to use Javascript Router [component](https://devdocs.prestashop.com/1.7/development/components/global-components/) in a module
 
-It provides a demo page which relies on the Router to allow customers search in PS 1.7.8+. It provides an alternative way when the Router is unavailable in PS 1.7.7 also :)
+It provides a demo page which relies on the Router to allow customers search in PS 1.7.8+.
+For PrestaShop 1.7.7, it provides an alternative way as router component is not available.
 
 ![DemoJSrouting screenshot](demojsrouting_screenshot.png)
 
