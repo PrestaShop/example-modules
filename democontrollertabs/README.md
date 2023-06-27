@@ -12,6 +12,8 @@ Please note this module is an example only, not a mandatory structure.
  4. Manual Tab creation
  5. Silent Tab creation for other controllers (not visible)
 
+![Demo Controller Tabs Screenshot](democontrollertabs-screenshot.jpeg)
+
 ### Supported PrestaShop versions
 
 PrestaShop 1.7.7 to PrestaShop 8.1.

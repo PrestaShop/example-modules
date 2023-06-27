@@ -4,6 +4,8 @@
 
 Example module showing how to implement Symfony console command. For more info check Symfony docs https://symfony.com/doc/current/console.
 
+![Demo Console Command Screenshot](democonsolecommand-screenshot.png)
+
 ### Supported PrestaShop versions
 
 PrestaShop 1.7.7 to PrestaShop 8.1.0

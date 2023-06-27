@@ -14,6 +14,9 @@ This modules demonstrates
 properties using modern hooks in Symfony pages
  - how to use Translator inside modern Symfony module
 
+![Demo Extended Symfony Form Screenshot - List view](demo_list.png)
+![Demo Extended Symfony Form Screenshot - Form view](demo_form.png)
+
 ### Details
 
 This module uses an ObjectModel entity to persist the data submitted by the user.

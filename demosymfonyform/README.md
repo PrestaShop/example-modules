@@ -7,6 +7,8 @@ This module demonstrates how to use existing PrestaShop Symfony form types insid
 It provides two demo pages where all possible [form types](https://symfony.com/doc/current/reference/forms/types.html)
 are being used. You can use these pages as examples of how to integrate these inputs in a module.
 
+![Demo Symfony Form Screenshot](demosymfonyform-screenshot.jpeg)
+
 ### Supported PrestaShop versions
 
 This module is compatible with PS 8.0.x versions only.
