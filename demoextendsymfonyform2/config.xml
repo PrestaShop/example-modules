@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>demoextendsymfonyform2</name>
+    <displayName><![CDATA[Demo Symfony Forms #2]]></displayName>
+    <version><![CDATA[1.0.0]]></version>
+    <description><![CDATA[Demonstration of how to add an image upload field inside the Symfony form]]></description>
+    <author><![CDATA[PrestaShop]]></author>
+    <tab><![CDATA[]]></tab>
+    <is_configurable>0</is_configurable>
+    <need_instance>1</need_instance>
+</module>

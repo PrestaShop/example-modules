@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>demomultistoreform</name>
+    <displayName><![CDATA[Demo multistore configuration form]]></displayName>
+    <version><![CDATA[1.0.0]]></version>
+    <description><![CDATA[Module created for the purpose of showing an example of multistore configuration form]]></description>
+    <author><![CDATA[PrestaShop]]></author>
+    <tab><![CDATA[]]></tab>
+    <is_configurable>1</is_configurable>
+    <need_instance>0</need_instance>
+</module>

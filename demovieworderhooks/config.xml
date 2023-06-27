@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>demovieworderhooks</name>
+    <displayName><![CDATA[Demo view order hooks]]></displayName>
+    <version><![CDATA[1.0.0]]></version>
+    <description><![CDATA[Demonstration of new hooks in PrestaShop 1.7.7 order view page]]></description>
+    <author><![CDATA[PrestaShop]]></author>
+    <tab><![CDATA[]]></tab>
+    <is_configurable>0</is_configurable>
+    <need_instance>1</need_instance>
+</module>
