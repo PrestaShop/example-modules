@@ -21,7 +21,7 @@ properties using modern hooks in Symfony pages
 
  ### Supported PrestaShop versions
 
- This module is compatible with and 1.7.6.0 and above versions.
+PrestaShop 1.7.6 to PrestaShop 8.1.
  
  ### Requirements
  
