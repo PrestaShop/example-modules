@@ -40,7 +40,7 @@ class Demo_Grid extends Module
         parent::__construct();
 
         $this->displayName = $this->l('Demo grid');
-        $this->description = $this->l('Demonstration of Grid in PrestaShop 1.7.7');
+        $this->description = $this->l('Demonstration of Grid in PrestaShop');
     }
 
     public function getContent()
