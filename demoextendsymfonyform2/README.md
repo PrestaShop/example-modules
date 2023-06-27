@@ -8,7 +8,7 @@ This module demonstrates:
 
  ### Supported PrestaShop versions
 
- This module is compatible with and 1.7.7.0 and above versions.
+ PrestaShop 1.7.7 to PrestaShop 8.1.
  
  ### Requirements
  
