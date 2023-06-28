@@ -18,8 +18,6 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
-use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
-
 if (!defined('_PS_VERSION_')) {
     exit;
 }
@@ -28,9 +26,9 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
     require_once __DIR__ . '/vendor/autoload.php';
 }
 
-class api_module extends \Module
+class Api_Module extends \Module
 {
-    public function __construct($name = null, Context $context = null)
+    public function __construct()
     {
         $this->name = 'api_module';
         $this->displayName = 'API Module';
@@ -38,8 +36,8 @@ class api_module extends \Module
         $this->author = 'PrestaShop';
         $this->description = 'Demo module of how to modify the new API';
         $this->need_instance = 0;
-        $this->bootstrap = true;
-        $this->ps_versions_compliancy = ['min' => '8.0.0', 'max' => _PS_VERSION_];
-        parent::__construct($name, $context);
+        $this->bootstrap = false;
+        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => _PS_VERSION_];
+        parent::__construct();
     }
 }
