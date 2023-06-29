@@ -14,6 +14,9 @@ This modules demonstrates
 properties using modern hooks in Symfony pages
  - how to use Translator inside modern Symfony module
 
+![Demo Extended Symfony Form Screenshot - List view](demo_list.png)
+![Demo Extended Symfony Form Screenshot - Form view](demo_form.png)
+
 ### Details
 
 This module uses an ObjectModel entity to persist the data submitted by the user.
@@ -22,7 +25,7 @@ how to use DoctrineORM.
 
 ### Supported PrestaShop versions
 
- This module is compatible with and 1.7.6.0 and above versions.
+PrestaShop 1.7.6 to PrestaShop 8.1.
  
 ### Requirements
  

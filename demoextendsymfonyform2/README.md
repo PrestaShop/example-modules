@@ -6,9 +6,11 @@ This module demonstrates:
  * how to insert an "upload image" input field inside the Symfony form managing "Edit a Supplier" page
  * how to use [DoctrineORM](https://www.doctrine-project.org/projects/orm.html) to manage the database state of a custom object
 
+![Demo Extended Symfony Form Screenshot](demoextendedsymfonyform2-screenshot.jpeg)
+
  ### Supported PrestaShop versions
 
- This module is compatible with and 1.7.7.0 and above versions.
+ PrestaShop 1.7.7 to PrestaShop 8.1.
  
  ### Requirements
  

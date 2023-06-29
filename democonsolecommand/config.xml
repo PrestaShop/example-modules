@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>democonsolecommand</name>
+    <displayName><![CDATA[Demo - implement Symfony command for console]]></displayName>
+    <version><![CDATA[1.0.0]]></version>
+    <description><![CDATA[Shows example how to implement Symfony command for console]]></description>
+    <author><![CDATA[PrestaShop]]></author>
+    <tab><![CDATA[]]></tab>
+    <is_configurable>0</is_configurable>
+    <need_instance>1</need_instance>
+</module>

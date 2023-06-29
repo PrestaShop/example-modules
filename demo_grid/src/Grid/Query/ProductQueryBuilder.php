@@ -249,7 +249,6 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
                         $qb->andWhere('ps.`price` <= :price_max');
                         $qb->setParameter('price_max', $filter['max_field']);
                     }
-
                 }
             }
         }

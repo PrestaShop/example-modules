@@ -6,10 +6,10 @@ The goal of this module is to help developers to make their modules compatible w
 
 This module demonstrates how to make your forms multistore compatible in your module, in a CRUD context, it includes:
 
-- A listing of elements using Prestashop's [grid component](https://devdocs.prestashop.com/1.7/development/components/grid/)
-- A create/edit form, using [doctrine](https://devdocs.prestashop.com/1.7/modules/concepts/doctrine/) and a shop association block, via Prestashop's [ShopChoiceTreeType](https://devdocs.prestashop.com/1.7/development/components/form/types-reference/shop-choice-tree/)
-- A multistore compatible form with multistore checkboxes and dropdowns, using Prestashop's [multistore form extension](https://devdocs.prestashop.com/1.7/development/multistore/configuration-forms/)
-- A fixtures generation mechanism, using [doctrine](https://devdocs.prestashop.com/1.7/modules/concepts/doctrine/)
+- A listing of elements using Prestashop's [grid component](https://devdocs.prestashop-project.org/1.7/development/components/grid/)
+- A create/edit form, using [doctrine](https://devdocs.prestashop-project.org/1.7/modules/concepts/doctrine/) and a shop association block, via Prestashop's [ShopChoiceTreeType](https://devdocs.prestashop-project.org/1.7/development/components/form/types-reference/shop-choice-tree/)
+- A multistore compatible form with multistore checkboxes and dropdowns, using Prestashop's [multistore form extension](https://devdocs.prestashop-project.org/1.7/development/multistore/configuration-forms/)
+- A fixtures generation mechanism, using [doctrine](https://devdocs.prestashop-project.org/1.7/modules/concepts/doctrine/)
 - Displaying the configured blocks on Front Office
 ![Demo Multistore Screenshot](demomultistore_screenshot.png)
 ### Multistore features
@@ -44,7 +44,7 @@ If an element is associated with several shops, then a user deletes it from the 
 
  ### Supported PrestaShop versions
 
- This module is compatible with 1.7.8.x only. Next version compatibility is expected for future versions.
+ This module is compatible with PrestaShop 1.7.8 to PrestaShop 8.1.
 
  ### Requirements
 

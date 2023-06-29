@@ -17,6 +17,10 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
+// Since PrestaShop 1.7.8 you can import components below directly from the window object.
+// This is the recommended way to use them as you won't have to do any extra configuration or compilation.
+// We keep the old way of importing them for backward compatibility.
+// @see: https://devdocs.prestashop-project.org/1.7/development/components/global-components/
 import Grid from '@PSJs/components/grid/grid';
 import LinkRowActionExtension from '@PSJs/components/grid/extension/link-row-action-extension';
 import SubmitRowActionExtension from '@PSJs/components/grid/extension/action/row/submit-row-action-extension';

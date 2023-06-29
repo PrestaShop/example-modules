@@ -31,7 +31,7 @@ class DemoDoctrine extends Module
         parent::__construct();
 
         $this->displayName = $this->l('Demo doctrine');
-        $this->description = $this->l('Demonstration of Doctrine entities in PrestaShop 1.7.7');
+        $this->description = $this->l('Demonstration of Doctrine entities in PrestaShop');
     }
 
     public function install()

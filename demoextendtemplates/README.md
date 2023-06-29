@@ -9,6 +9,8 @@ This is example module explaining various extendability options of templates
 4. Add custom flash message type (also includes decoration of controller to show example of custom flash message)
 5. Override flash messages html using macro
 
+![Demo Extend Templates Screenshot](demoextendedtemplates-screenshot.jpeg)
+
 ### Supported PrestaShop versions
 
 Compatible with 8.0.0 and above versions.
