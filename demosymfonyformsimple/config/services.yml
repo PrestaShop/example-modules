@@ -1,0 +1,29 @@
+services:
+  _defaults:
+    public: true
+
+  # Demo configuration text form
+  prestashop.module.demosymfonyformsimple.form.type.demo_configuration_text:
+    class: 'PrestaShop\Module\DemoSymfonyFormSimple\Form\DemoConfigurationFormType'
+    parent: 'form.type.translatable.aware'
+    public: true
+    tags:
+      - { name: form.type }
+
+  prestashop.module.demosymfonyformsimple.form.demo_configuration_text_data_configuration:
+    class: PrestaShop\Module\DemoSymfonyFormSimple\Form\DemoConfigurationTextDataConfiguration
+    arguments: ['@prestashop.adapter.legacy.configuration']
+
+  prestashop.module.demosymfonyformsimple.form.demo_configuration_text_form_data_provider:
+    class: 'PrestaShop\Module\DemoSymfonyFormSimple\Form\DemoConfigurationTextFormDataProvider'
+    arguments:
+      - '@prestashop.module.demosymfonyformsimple.form.demo_configuration_text_data_configuration'
+
+  prestashop.module.demosymfonyformsimple.form.demo_configuration_text_form_data_handler:
+    class: 'PrestaShop\PrestaShop\Core\Form\Handler'
+    arguments:
+      - '@form.factory'
+      - '@prestashop.core.hook.dispatcher'
+      - '@prestashop.module.demosymfonyformsimple.form.demo_configuration_text_form_data_provider'
+      - 'PrestaShop\Module\DemoSymfonyFormSimple\Form\DemoConfigurationFormType'
+      - 'DemoConfiguration'
