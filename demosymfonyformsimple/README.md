@@ -10,7 +10,7 @@ It provides a simple configuration page for a module, with a Text Field.
 
 ## Supported PrestaShop versions
 
-This module is compatible with PS 8.0.x versions only.
+This module has been tested with PrestaShop 8.
 
 ## Requirements
 
