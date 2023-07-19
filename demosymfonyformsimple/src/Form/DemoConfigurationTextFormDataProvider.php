@@ -7,7 +7,7 @@ use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
 use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 
 /**
- * Provider ir responsible for providing form data, in this case it's as simple as using configuration to do that
+ * Provider is responsible for providing form data, in this case, it is returned from the configuration component
  *
  * Class DemoConfigurationTextFormDataProvider
  */
