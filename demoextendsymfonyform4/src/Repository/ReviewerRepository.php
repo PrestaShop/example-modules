@@ -40,7 +40,7 @@ class ReviewerRepository
 
         $queryBuilder->setParameter('customer_id', $customerId);
 
-        return (int) $queryBuilder->execute()->fetch(PDO::FETCH_COLUMN);
+        return (int) $queryBuilder->execute()->fetchOne(PDO::FETCH_COLUMN);
     }
 
     /**
@@ -58,6 +58,6 @@ class ReviewerRepository
 
         $queryBuilder->setParameter('customer_id', $customerId);
 
-        return (bool) $queryBuilder->execute()->fetch(PDO::FETCH_COLUMN);
+        return (bool) $queryBuilder->execute()->fetchOne(PDO::FETCH_COLUMN);
     }
 }
