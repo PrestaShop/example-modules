@@ -50,10 +50,7 @@ class DemoProductForm2 extends Module
         $this->description = $this->trans('DemoProductForm module description', [], 'Modules.Demoproductform.Config');
     }
 
-    /**
-     * @return bool
-     */
-    public function install()
+    public function install(): bool
     {
         if (!parent::install()) {
             return false;
@@ -64,10 +61,7 @@ class DemoProductForm2 extends Module
         return $installer->install($this);
     }
 
-    /**
-     * @return bool
-     */
-    public function uninstall()
+    public function uninstall(): bool
     {
         if (!parent::uninstall()) {
             return false;
@@ -80,8 +74,6 @@ class DemoProductForm2 extends Module
 
     /**
      * @see https://devdocs.prestashop.com/8/modules/creation/module-translation/new-system/#translating-your-module
-     *
-     * @return bool
      */
     public function isUsingNewTranslationSystem(): bool
     {
@@ -107,7 +99,6 @@ class DemoProductForm2 extends Module
      *
      * @param array $params
      *
-     * @return string
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      */
