@@ -10,7 +10,7 @@ class DemoSymfonyFormSimple extends Module
     {
         $this->name = 'demosymfonyformsimple';
         $this->author = 'PrestaShop';
-        $this->version = '1.1.0';
+        $this->version = '1.0.0';
         $this->need_instance = 0;
 
         $this->bootstrap = true;
@@ -28,7 +28,7 @@ class DemoSymfonyFormSimple extends Module
 
     public function getContent()
     {
-        $route = $this->get('router')->generate('demo_configuration_form');
+        $route = $this->get('router')->generate('demo_configuration_form_simple');
         Tools::redirectAdmin($route);
     }
 }

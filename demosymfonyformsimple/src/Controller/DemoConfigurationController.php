@@ -32,7 +32,6 @@ class DemoConfigurationController extends FrameworkBundleAdminController
 
         return $this->render('@Modules/demosymfonyformsimple/views/templates/admin/form.html.twig', [
             'demoConfigurationForm' => $textForm->createView(),
-            'formTheme' => '@PrestaShop/Admin/TwigTemplateForm/prestashop_ui_kit.html.twig',
         ]);
     }
 }

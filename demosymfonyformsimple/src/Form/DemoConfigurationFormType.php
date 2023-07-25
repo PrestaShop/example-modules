@@ -15,6 +15,7 @@ class DemoConfigurationFormType extends TranslatorAwareType
         $builder
             ->add('config_text', TextType::class, [
                 'label' => $this->trans('Configuration text', 'Modules.DemoSymfonyFormSimple.Admin'),
+                'help' => $this->trans('Maximum 32 characters', 'Modules.DemoSymfonyFormSimple.Admin'),
             ]);
     }
 }
