@@ -16,7 +16,7 @@ class DemoConfigurationController extends FrameworkBundleAdminController
 
         $textForm = $textFormDataHandler->getForm();
         $textForm->handleRequest($request);
-        
+
         if ($textForm->isSubmitted() && $textForm->isValid()) {
             /** You can return array of errors in form handler and they can be displayed to user with flashErrors */
             $errors = $textFormDataHandler->save($textForm->getData());
@@ -32,6 +32,7 @@ class DemoConfigurationController extends FrameworkBundleAdminController
 
         return $this->render('@Modules/demosymfonyformsimple/views/templates/admin/form.html.twig', [
             'demoConfigurationForm' => $textForm->createView(),
+            'formTheme' => '@PrestaShop/Admin/TwigTemplateForm/prestashop_ui_kit.html.twig',
         ]);
     }
 }

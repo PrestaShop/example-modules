@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
- * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA.
  *
  * NOTICE OF LICENSE
  *
@@ -26,7 +26,7 @@ use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
 use PrestaShop\PrestaShop\Core\ConfigurationInterface;
 
 /**
- * Configuration is used to save data to configuration table and retrieve from it
+ * Configuration is used to save data to configuration table and retrieve from it.
  */
 final class DemoConfigurationTextDataConfiguration implements DataConfigurationInterface
 {
@@ -38,17 +38,11 @@ final class DemoConfigurationTextDataConfiguration implements DataConfigurationI
      */
     private $configuration;
 
-    /**
-     * @param ConfigurationInterface $configuration
-     */
     public function __construct(ConfigurationInterface $configuration)
     {
         $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration(): array
     {
         $return = [];
@@ -58,18 +52,15 @@ final class DemoConfigurationTextDataConfiguration implements DataConfigurationI
         return $return;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration): array
     {
         $errors = [];
 
-        if($this->validateConfiguration($configuration)){
-            if(strlen($configuration['config_text']) <= static::CONFIG_MAXLENGTH){
+        if ($this->validateConfiguration($configuration)) {
+            if (strlen($configuration['config_text']) <= static::CONFIG_MAXLENGTH) {
                 $this->configuration->set(static::DEMO_SYMFONY_FORM_SIMPLE_TEXT_TYPE, $configuration['config_text']);
             } else {
-                $errors[] = "DEMO_SYMFONY_FORM_SIMPLE_TEXT_TYPE value is too long";
+                $errors[] = 'DEMO_SYMFONY_FORM_SIMPLE_TEXT_TYPE value is too long';
             }
         }
 
@@ -79,8 +70,6 @@ final class DemoConfigurationTextDataConfiguration implements DataConfigurationI
 
     /**
      * Ensure the parameters passed are valid.
-     *
-     * @param array $configuration
      *
      * @return bool Returns true if no exception are thrown
      */

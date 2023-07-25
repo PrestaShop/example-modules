@@ -1,8 +1,5 @@
 {% extends '@PrestaShop/Admin/layout.html.twig' %}
 
-{# PrestaShop made some modifications to the way forms are displayed to work well with PrestaShop in order to benefit from those you need to use ui kit as theme#}
-{% form_theme demoConfigurationForm '@PrestaShop/Admin/TwigTemplateForm/prestashop_ui_kit.html.twig' %}
-
 {% block content %}
   {{ form_start(demoConfigurationForm) }}
   <div class="card">
