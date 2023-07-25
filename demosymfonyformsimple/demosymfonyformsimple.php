@@ -28,7 +28,7 @@ class DemoSymfonyFormSimple extends Module
 
     public function getContent()
     {
-        $route = SymfonyContainer::getInstance()->get('router')->generate('demo_configuration_form_simple');
+        $route = $this->get('router')->generate('demo_configuration_form');
         Tools::redirectAdmin($route);
     }
 }
