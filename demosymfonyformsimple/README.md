@@ -2,15 +2,15 @@
 
 ## About
 
-This module demonstrates how to use Symfony form types for Module configuration pages.
+In this module, you will learn how to utilize Symfony form types to create configuration pages for your module.
 
-[It is the module created by this complete guide on devdocs](https://devdocs.prestashop-project.org/8/modules/creation/adding-configuration-page-modern/).
+[This module has been created by following a guide from the developer documentation](https://devdocs.prestashop-project.org/8/modules/creation/adding-configuration-page-modern/).
 
-It provides a simple configuration page for a module, with a Text Field. 
+It provides a simple configuration page for a module with a Text Field. This text field value is stored [using the Configuration component](https://devdocs.prestashop-project.org/8/development/components/configuration/). 
 
 ## Supported PrestaShop versions
 
-This module is compatible with PS 8.0.x versions only.
+This module has been tested with PrestaShop 8.
 
 ## Requirements
 
@@ -18,11 +18,11 @@ Composer
 
 ## How to install
 
-Download or clone module into modules directory of your PrestaShop installation
-Rename the directory to make sure that module directory is named demosymfonyformsimple
+Download or clone the module into the modules directory of your PrestaShop installation.
+Rename the directory to make sure that the module directory is named `demosymfonyformsimple`.
 
 `cd` into module's directory and run following commands:
 
 `composer install` - to download dependencies into vendor folder
 
-Install module from Back Office or via CLI.
+Install the module from Back Office or via CLI.

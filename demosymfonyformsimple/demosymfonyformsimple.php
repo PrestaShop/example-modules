@@ -16,9 +16,9 @@ class DemoSymfonyFormSimple extends Module
         $this->bootstrap = true;
         parent::__construct();
 
-        $this->displayName = $this->trans('Demo symfony form configuration simple', [], 'Modules.DemoSymfonyFormSimple.Admin');
+        $this->displayName = $this->trans('Demo of the Symfony-based configuration form', [], 'Modules.DemoSymfonyFormSimple.Admin');
         $this->description = $this->trans(
-            'Module created for the purpose of showing existing form types within PrestaShop',
+            'Module demonstrates a simple module\'s configuration page made with Symfony.',
             [],
             'Modules.DemoSymfonyFormSimple.Admin'
         );
