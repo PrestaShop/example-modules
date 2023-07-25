@@ -1,0 +1,23 @@
+{
+    "name": "prestashop/demosymfonyformsimple",
+    "description": "PrestaShop - Settings Form Examples",
+    "license": "AFL-3.0",
+    "authors": [
+      {
+        "name": "PrestaShop Core Team"
+      }
+    ],
+    "autoload": {
+      "psr-4": {
+        "PrestaShop\\Module\\DemoSymfonyFormSimple\\": "src/"
+      }
+    },
+    "require": {
+      "php": ">=7.2.5"
+    },
+    "config": {
+      "preferred-install": "dist",
+      "prepend-autoloader": false
+    },
+    "type": "prestashop-module"
+  }
