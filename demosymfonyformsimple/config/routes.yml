@@ -1,0 +1,8 @@
+demo_configuration_form_simple:
+  path: /demosymfonyformsimple/configuration
+  methods: [GET, POST]
+  defaults:
+    _controller: 'PrestaShop\Module\DemoSymfonyFormSimple\Controller\DemoConfigurationController::index'
+    # Needed to work with tab system
+    _legacy_controller: AdminDemoSymfonyFormSimple
+    _legacy_link: AdminDemoSymfonyFormSimple

@@ -37,7 +37,7 @@ ps_demodoctrine_quote_edit:
     defaults:
         _controller: 'Module\DemoDoctrine\Controller\Admin\QuotesController::editAction'
         _legacy_controller: 'AdminDemodoctrineQuote'
-        _legacy_link: 'AdminDemodoctrineQuote:update'
+        _legacy_link: 'AdminDemodoctrineQuote:edit'
     requirements:
         quoteId: \d+
 

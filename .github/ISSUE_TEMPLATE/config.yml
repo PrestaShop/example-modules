@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Start a discussion
+    url: https://github.com/PrestaShop/PrestaShop/discussions/new?category=q-a
+    about: We use Discussions to discuss example modules, tutorials, ask questions, and more.

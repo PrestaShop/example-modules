@@ -23,7 +23,7 @@ namespace PrestaShop\Module\DemoMultistoreForm\Grid\Query;
 use Doctrine\DBAL\Connection;
 use PrestaShop\PrestaShop\Core\Grid\Query\AbstractDoctrineQueryBuilder;
 use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
-use \Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\DBAL\Query\QueryBuilder;
 use PrestaShop\PrestaShop\Adapter\Shop\Context;
 
 final class ContentBlockQueryBuilder extends AbstractDoctrineQueryBuilder

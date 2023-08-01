@@ -19,9 +19,10 @@ $(() => {
   $(document).on('click', '.grid-mark-row-link, .js-submit-row-action', (event) => {
     event.preventDefault();
     var $currentTarget = $(event.currentTarget)
-    $.post($currentTarget.data('url')).then((data) => {
+    $.post($currentTarget.data('url')).then((response) => {
       // For example we mark the icon by green color when the ajax succeeds
       $currentTarget.find('i').addClass('text-success');
+      $.growl({ message: response });
     });
   });
 });

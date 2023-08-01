@@ -19,7 +19,7 @@ class DemoConsoleCommand extends Module
 
         parent::__construct();
 
-        $this->displayName = $this->l('Demo - implement symfony command for console');
-        $this->description = $this->l('Shows example how to implement symfony command for console');
+        $this->displayName = $this->l('Demo - implement Symfony command for console');
+        $this->description = $this->l('Shows example how to implement Symfony command for console');
     }
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>demoextendsymfonyform1</name>
+    <displayName><![CDATA[Demo Symfony Forms #1]]></displayName>
+    <version><![CDATA[1.1.0]]></version>
+    <description><![CDATA[Help developers to understand how to create module using few Symfony hooks available in PrestaShop]]></description>
+    <author><![CDATA[PrestaShop]]></author>
+    <tab><![CDATA[]]></tab>
+    <is_configurable>0</is_configurable>
+    <need_instance>0</need_instance>
+</module>
