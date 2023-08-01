@@ -23,12 +23,32 @@
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  */
-header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+declare(strict_types=1);
 
-header('Cache-Control: no-store, no-cache, must-revalidate');
-header('Cache-Control: post-check=0, pre-check=0', false);
-header('Pragma: no-cache');
+namespace PrestaShop\Module\DemoSymfonyForm\Form;
 
-header('Location: ../');
-exit;
+use PrestaShopBundle\Form\Admin\Type\GeoCoordinatesType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+/**
+ * This form class is responsible to use a geolocation latitude/longitude coordinates field.
+ */
+class DemoConfigurationGeoCoordinatesType extends AbstractType
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('latitude', GeoCoordinatesType::class)
+            ->add('submit', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn-sm btn-primary float-right',
+                ]
+            ])
+        ;
+    }
+}

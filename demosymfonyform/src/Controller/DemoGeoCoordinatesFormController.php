@@ -22,16 +22,16 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoSymfonyForm\Controller;
 
-use PrestaShop\Module\DemoSymfonyForm\Form\GeoCoordinatesType;
+use PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationGeoCoordinatesType;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DemoGeoCoordinatesFormController extends FrameworkBundleAdminController
 {
-    public function index(Request $request): Response
+    public function index(): Response
     {
-        $form = $this->createForm(GeoCoordinatesType::class, []);
+        $form = $this->createForm(DemoConfigurationGeoCoordinatesType::class);
 
         return $this->render('@Modules/demosymfonyform/views/templates/admin/formGeoCoordinates.html.twig', [
             'demoGeoCoordinatesForm' => $form->createView(),
