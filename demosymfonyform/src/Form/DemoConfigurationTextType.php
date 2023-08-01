@@ -25,10 +25,11 @@ namespace PrestaShop\Module\DemoSymfonyForm\Form;
 use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\TypedRegex;
 use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
 use PrestaShopBundle\Form\Admin\Type\GeneratableTextType;
+use PrestaShopBundle\Form\Admin\Type\GeoCoordinatesType;
 use PrestaShopBundle\Form\Admin\Type\TextWithLengthCounterType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use PrestaShopBundle\Form\Admin\Type\TranslatableType;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
@@ -99,6 +100,9 @@ class DemoConfigurationTextType extends TranslatorAwareType
                         ]),
                     ],
                 ],
+            ])
+            ->add('coordinates', GeoCoordinatesType::class,[
+                'label' => $this->trans('Geocoordinates type', 'Modules.DemoSymfonyForm.Admin'),
             ]);
     }
 }

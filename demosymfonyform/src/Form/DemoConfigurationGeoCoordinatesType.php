@@ -43,7 +43,7 @@ class DemoConfigurationGeoCoordinatesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('latitude', GeoCoordinatesType::class)
+            ->add('coordinates', GeoCoordinatesType::class)
             ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn-sm btn-primary float-right',
