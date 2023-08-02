@@ -37,6 +37,8 @@ final class DemoConfigurationTextDataConfiguration implements DataConfigurationI
     public const GENERATABLE_TEXT_TYPE = 'DEMO_SYMFONY_FORM_GENERATABLE_TEXT_TYPE';
     public const TEXT_WITH_LENGTH_COUNTER_TYPE = 'DEMO_SYMFONY_FORM_TEXT_WITH_LENGTH_COUNTER_TYPE';
     public const NUMBER_TYPE_WITH_UNIT = 'DEMO_SYMFONY_FORM_NUMBER_TYPE_WITH_UNIT';
+    public const GEOCOORDINATES_TYPE_LAT = 'DEMO_SYMFONY_FORM_GEOCOORDINATES_TYPE_LAT';
+    public const GEOCOORDINATES_TYPE_LON = 'DEMO_SYMFONY_FORM_GEOCOORDINATES_TYPE_LON';
 
     /**
      * @var ConfigurationInterface
@@ -82,6 +84,12 @@ final class DemoConfigurationTextDataConfiguration implements DataConfigurationI
         if ($numberTypeWithUnit = $this->configuration->get(static::NUMBER_TYPE_WITH_UNIT)) {
             $return['number_type_with_unit'] = $numberTypeWithUnit;
         }
+        if ($geoCoordinatesLat = $this->configuration->get(static::GEOCOORDINATES_TYPE_LAT)) {
+            $return['latitude'] = $geoCoordinatesLat;
+        }
+        if ($geoCoordinatesLon = $this->configuration->get(static::GEOCOORDINATES_TYPE_LON)) {
+            $return['longitude'] = $geoCoordinatesLon;
+        }
 
         return $return;
     }
@@ -99,6 +107,8 @@ final class DemoConfigurationTextDataConfiguration implements DataConfigurationI
         $this->configuration->set(static::GENERATABLE_TEXT_TYPE, $configuration['generatable_text_type']);
         $this->configuration->set(static::TEXT_WITH_LENGTH_COUNTER_TYPE, $configuration['text_with_length_counter_type']);
         $this->configuration->set(static::NUMBER_TYPE_WITH_UNIT, $configuration['number_type_with_unit']);
+        $this->configuration->set(static::GEOCOORDINATES_TYPE_LAT, $configuration['latitude']);
+        $this->configuration->set(static::GEOCOORDINATES_TYPE_LON, $configuration['longitude']);
 
         /* Errors are returned here. */
         return [];

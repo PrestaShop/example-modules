@@ -17,12 +17,24 @@
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  */
-header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
 
-header('Cache-Control: no-store, no-cache, must-revalidate');
-header('Cache-Control: post-check=0, pre-check=0', false);
-header('Pragma: no-cache');
+declare(strict_types=1);
 
-header('Location: ../');
-exit;
+namespace PrestaShop\Module\DemoSymfonyForm\Controller;
+
+use PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationGeoCoordinatesType;
+use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class DemoGeoCoordinatesFormController extends FrameworkBundleAdminController
+{
+    public function index(): Response
+    {
+        $form = $this->createForm(DemoConfigurationGeoCoordinatesType::class);
+
+        return $this->render('@Modules/demosymfonyform/views/templates/admin/formGeoCoordinates.html.twig', [
+            'demoGeoCoordinatesForm' => $form->createView(),
+        ]);
+    }
+}
