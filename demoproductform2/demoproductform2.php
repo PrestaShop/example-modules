@@ -110,7 +110,7 @@ class DemoProductForm2 extends Module
         /** @var EngineInterface $twig */
         $twig = $this->get('twig');
 
-        return $twig->render('@Modules/demoproductform/views/templates/admin/extra_module.html.twig', [
+        return $twig->render('@Modules/demoproductform2/views/templates/admin/extra_module.html.twig', [
             'customProduct' => $customProduct,
         ]);
     }
