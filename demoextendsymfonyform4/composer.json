@@ -1,0 +1,12 @@
+{
+  "name": "prestashop/demoextendsymfonyform4",
+  "description": "Help developers to understand how to create module using new hooks and apply best practices when using CQRS",
+  "license": "AFL-3.0",
+  "autoload": {
+    "psr-4": {
+      "DemoCQRSHooksUsage\\": "src/"
+    }
+  },
+  "license": "MIT",
+  "type": "prestashop-module"
+}

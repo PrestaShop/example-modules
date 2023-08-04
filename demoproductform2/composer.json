@@ -1,0 +1,24 @@
+{
+  "name": "prestashop/demoproductform2",
+  "authors": [
+    {
+      "name": "Julius Zukauskas",
+      "email": "julius.zukauskas@invertus.eu"
+    },
+    {
+      "name": "PrestaShop Core team"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "PrestaShop\\Module\\DemoProductForm\\": "src/"
+    },
+    "config": {
+      "prepend-autoloader": false
+    },
+    "type": "prestashop-module"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.14"
+  }
+}
