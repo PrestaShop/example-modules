@@ -27,14 +27,14 @@
     "bootstrap-colorpicker": "^3.1.2"
   },
   "devDependencies": {
-    "autoprefixer": "^9.6.0",
+    "autoprefixer": "^10.4.16",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
-    "css-loader": "^3.0.0",
+    "css-loader": "^6.8.1",
     "mini-css-extract-plugin": "^0.7.0",
     "node-sass": "^7.0.0",
-    "postcss-loader": "^3.0.0",
+    "postcss-loader": "^7.3.3",
     "sass-loader": "^10.1.1",
     "style-loader": "^0.23.1",
     "webpack": "^4.35.0",
