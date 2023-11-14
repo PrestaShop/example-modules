@@ -48,30 +48,20 @@ class DemoProductExtraContent extends Module
             return false;
         }
 
-        $this->registerHook('displayProductExtraContent');
+        return $this->registerHook('displayProductExtraContent');
     }
 
     /**
-     * @return bool
-     */
-    public function uninstall()
-    {
-        if (!parent::uninstall()) {
-            return false;
-        }
-    }
-
-    /**
-     * Add extra content to the product page
+     * Add extra content to the product page, by default, it renders as tabs on the product page.
      */
     public function hookDisplayProductExtraContent($params) {
         return [
             (new PrestaShop\PrestaShop\Core\Product\ProductExtraContent())
-                ->setTitle('my first field')
-                ->setContent('my first content'),
+                ->setTitle('First custom tab')
+                ->setContent('Content of the first custom tab'),
             (new PrestaShop\PrestaShop\Core\Product\ProductExtraContent())
-                ->setTitle('my second field')
-                ->setContent('my second content')
+                ->setTitle('Second custom tab')
+                ->setContent('Content of the second custom tab')
         ];
     }
         
