@@ -24,6 +24,7 @@ These modules demonstrate usecases useful for developers willing to customize th
 | [demomultistoreform](https://github.com/PrestaShop/example-modules/tree/master/demomultistoreform) | This module demonstrates how to make your forms multistore compatible in your module, in a CRUD context. | v1.7.8 |
 | [demooldproductpagehooks](https://github.com/PrestaShop/example-modules/tree/master/demooldproductpagehooks) | This module illustrates the hooks on the old product page. | v1.7.8 |
 | [demooverrideobjectmodel](https://github.com/PrestaShop/example-modules/tree/master/demooverrideobjectmodel) | Example module showing how to override an ObjectModel (in this case the manufacturer) and add a custom field in the database table. | v1.7.7 |
+| [demoproductextracontent](https://github.com/PrestaShop/example-modules/tree/master/demoproductextracontent) | Example module to add extra content to the product page on the front office | v1.7.0 |
 | [demoproductform](https://github.com/PrestaShop/example-modules/tree/master/demoproductform) | This is an example module explaining various extendability options in product page form | v8.1.0 |
 | [demoproductform2](https://github.com/PrestaShop/example-modules/tree/master/demoproductform2) | This is an example module explaining various extendability options in product page form | v9.0.0 |
 | [demosymfonyform](https://github.com/PrestaShop/example-modules/tree/master/demosymfonyform) | This module demonstrates how to use existing PrestaShop Symfony form types inside a new page. | v8.0.0 |
