@@ -24,6 +24,7 @@ namespace PrestaShop\Module\DemoProductForm\Form\Modifier;
 
 use PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\UpdateCustomProductCommandHandler;
 use PrestaShop\Module\DemoProductForm\Entity\CustomProduct;
+use PrestaShop\Module\DemoProductForm\Form\Type\CustomTabContentType;
 use PrestaShop\Module\DemoProductForm\Form\Type\CustomTabType;
 use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 use PrestaShopBundle\Form\Admin\Type\IconButtonType;
@@ -93,6 +94,17 @@ final class ProductFormModifier
                     'custom_price' => $customProduct->custom_price,
                 ],
             ]
+        );
+        $this->formBuilderModifier->addAfter(
+            $productFormBuilder,
+            'custom_tab',
+            'custom_tab_content',
+            CustomTabContentType::class,
+            [
+                'data' => [
+                    'custom_price' => $customProduct->custom_price,
+                ],
+            ],
         );
     }
 
