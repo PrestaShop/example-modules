@@ -33,8 +33,7 @@ class CustomTabContentType extends TranslatorAwareType
     {
         parent::buildView($view, $form, $options);
 
-        $custom_price = $options['data']['custom_price'] ?? null;
-        $view->vars['custom_price'] = $custom_price;
+        $view->vars['custom_price'] = $options['data']['custom_price'] ?? null;
     }
 
     /**
