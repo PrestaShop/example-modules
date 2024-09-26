@@ -53,7 +53,7 @@ class QuoteInstaller
         $errors = [];
         $this->dropTables();
         $sqlInstallFile = __DIR__ . '/../../Resources/data/install.sql';
-        $sqlQueries = explode(PHP_EOL, file_get_contents($sqlInstallFile));
+        $sqlQueries = preg_split('/\r\n|\r|\n/', file_get_contents($sqlInstallFile));
         $sqlQueries = str_replace('PREFIX_', $this->dbPrefix, $sqlQueries);
 
         foreach ($sqlQueries as $query) {
