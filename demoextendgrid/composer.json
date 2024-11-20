@@ -10,7 +10,6 @@
       "name": "PrestaShop Core team"
     }
   ],
-  "license": "AFL-3.0",
   "autoload": {
     "psr-4": {
       "PrestaShop\\Module\\DemoExtendGrid\\": "src/"
