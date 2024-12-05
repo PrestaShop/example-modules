@@ -21,6 +21,8 @@ use PrestaShop\Module\DemoViewOrderHooks\Repository\OrderRepository;
 use PrestaShop\Module\DemoViewOrderHooks\Repository\OrderReviewRepository;
 use PrestaShop\Module\DemoViewOrderHooks\Repository\PackageLocationRepository;
 use PrestaShop\Module\DemoViewOrderHooks\Repository\OrderSignatureRepository;
+use PrestaShop\PrestaShop\Core\Action\ActionsBarButton;
+use PrestaShop\PrestaShop\Core\Action\ActionsBarButtonsCollection;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -37,8 +39,8 @@ class DemoViewOrderHooks extends Module
     {
         $this->name = 'demovieworderhooks';
         $this->author = 'PrestaShop';
-        $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '1.7.7.0', 'max' => _PS_VERSION_];
+        $this->version = '2.0.0';
+        $this->ps_versions_compliancy = ['min' => '8.0.0', 'max' => _PS_VERSION_];
 
         parent::__construct();
 
@@ -74,28 +76,28 @@ class DemoViewOrderHooks extends Module
         /** @var \Symfony\Bundle\FrameworkBundle\Routing\Router $router */
         $router = $this->get('router');
 
-        /** @var \PrestaShopBundle\Controller\Admin\Sell\Order\ActionsBarButtonsCollection $bar */
+        /** @var ActionsBarButtonsCollection $bar */
         $bar = $params['actions_bar_buttons_collection'];
 
         $viewCustomerUrl = $router->generate('admin_customers_view', ['customerId'=> (int)$order->id_customer]);
         $bar->add(
-            new \PrestaShopBundle\Controller\Admin\Sell\Order\ActionsBarButton(
+            new ActionsBarButton(
                 'btn-secondary', ['href' => $viewCustomerUrl], 'View customer'
             )
         );
         $bar->add(
-            new \PrestaShopBundle\Controller\Admin\Sell\Order\ActionsBarButton(
+            new ActionsBarButton(
                 'btn-info', ['href' => 'https://www.prestashop.com/'], 'Go to prestashop'
             )
         );
         $bar->add(
-            new \PrestaShopBundle\Controller\Admin\Sell\Order\ActionsBarButton(
+            new ActionsBarButton(
                 'btn-dark', ['href' => 'https://github.com/PrestaShop/example-modules/tree/master/demovieworderhooks'], 'Go to GitHub'
             )
         );
         $createAnOrderUrl = $router->generate('admin_orders_create');
         $bar->add(
-            new \PrestaShopBundle\Controller\Admin\Sell\Order\ActionsBarButton(
+            new ActionsBarButton(
                 'btn-link', ['href' => $createAnOrderUrl], 'Create an order'
             )
         );
