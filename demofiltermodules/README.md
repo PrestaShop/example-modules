@@ -4,6 +4,8 @@
 
 This module demonstrates how to use a new feature introduced in PrestaShop 8.2.1 to handle filtering of the modules in the front office.
 
+In this example module, we demonstrate how to filter the list of modules executed for a given hook based on the module's name. Specifically, the module filters `ps_linklist` from the `displayFooter` hook, and both `ps_contactinfo` and `ps_customeraccountlinks` from the `displayFooter` hook when the visited page is the contact page.
+
 ### Supported PrestaShop versions
 
 PrestaShop 8.2.1+
