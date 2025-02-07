@@ -1,0 +1,22 @@
+{
+    "name": "prestashop/demofiltermodules",
+    "license": "AFL-3.0",
+    "authors": [
+        {
+            "name": "Krystian Podemski",
+            "email": "krystian.podemski@prestashop.com"
+        },
+        {
+            "name": "PrestaShop Team"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+        "Module\\DemoFilterModules\\": "src/"
+      },
+      "config": {
+        "prepend-autoloader": false
+      },
+      "type": "prestashop-module"
+    }
+}

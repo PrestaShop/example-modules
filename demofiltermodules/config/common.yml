@@ -1,0 +1,4 @@
+services:
+  Module\DemoFilterModules\Service\CustomModuleList:
+    tags:
+      - 'core.hook_module_exec_filter'
