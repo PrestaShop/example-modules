@@ -28,28 +28,20 @@ namespace PrestaShop\Module\ExampleModuleMailtheme\Controller\Admin;
 
 use PrestaShop\Module\ExampleModuleMailtheme\DarkThemeSettings;
 use PrestaShop\Module\ExampleModuleMailtheme\Form\DarkThemeSettingsType;
-use PrestaShop\PrestaShop\Adapter\LegacyContext;
-use PrestaShop\PrestaShop\Core\CommandBus\CommandBusInterface;
-use PrestaShop\PrestaShop\Core\ConfigurationInterface;
 use PrestaShop\PrestaShop\Core\Domain\MailTemplate\Command\GenerateThemeMailTemplatesCommand;
 use PrestaShop\PrestaShop\Core\Exception\CoreException;
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
+use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
+use PrestaShopBundle\Entity\Repository\LangRepository;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class DarkThemeController extends FrameworkBundleAdminController
+class DarkThemeController extends PrestaShopAdminController
 {
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function indexAction(Request $request)
-    {
-        /** @var DarkThemeSettings $darkThemeSettings */
-        $darkThemeSettings = $this->get('prestashop.module.example_module_mailtheme.dark_theme_settings');
-
+    public function indexAction(
+        Request $request,
+        DarkThemeSettings $darkThemeSettings,
+    ): Response {
         $form = $this->createForm(DarkThemeSettingsType::class, $darkThemeSettings->getSettings());
 
         return $this->render('@Modules/example_module_mailtheme/views/templates/admin/index.html.twig', [
@@ -59,21 +51,15 @@ class DarkThemeController extends FrameworkBundleAdminController
         ]);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function saveSettingsAction(Request $request)
-    {
-        /** @var DarkThemeSettings $darkThemeSettings */
-        $darkThemeSettings = $this->get('prestashop.module.example_module_mailtheme.dark_theme_settings');
-
+    public function saveSettingsAction(
+        Request $request,
+        DarkThemeSettings $darkThemeSettings,
+    ): Response {
         $form = $this->createForm(DarkThemeSettingsType::class, $darkThemeSettings->getSettings());
         $form->handleRequest($request);
         if ($form->isValid()) {
             $darkThemeSettings->saveSettings($form->getData());
-            $this->addFlash('success', $this->trans('Your settings for Dark Theme are saved.', 'Modules.ExampleModuleMailtheme'));
+            $this->addFlash('success', $this->trans('Your settings for Dark Theme are saved.', [], 'Modules.ExampleModuleMailtheme'));
 
             return $this->redirectToRoute('admin_example_module_mailtheme');
         }
@@ -85,56 +71,37 @@ class DarkThemeController extends FrameworkBundleAdminController
         ]);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
-    public function resetDefaultSettingsAction(Request $request)
-    {
-        /** @var DarkThemeSettings $darkThemeSettings */
-        $darkThemeSettings = $this->get('prestashop.module.example_module_mailtheme.dark_theme_settings');
+    public function resetDefaultSettingsAction(
+        DarkThemeSettings $darkThemeSettings,
+    ): RedirectResponse {
         $darkThemeSettings->initSettings();
 
-        $this->addFlash('success', $this->trans('The default settings for Dark Theme are reset.', 'Modules.ExampleModuleMailtheme'));
+        $this->addFlash('success', $this->trans('The default settings for Dark Theme are reset.', [], 'Modules.ExampleModuleMailtheme'));
 
         return $this->redirectToRoute('admin_example_module_mailtheme');
     }
 
-    /**
-     * @return RedirectResponse
-     */
-    public function generateAction()
-    {
-        /** @var ConfigurationInterface $configuration */
-        $configuration = $this->get('prestashop.adapter.legacy.configuration');
-        $configuration->set('PS_MAIL_THEME', 'dark_modern');
-
-        /** @var LegacyContext $legacyContext */
-        $legacyContext = $this->get('prestashop.adapter.legacy.context');
-        $languages = $legacyContext->getLanguages();
-
-        /** @var CommandBusInterface $commandBus */
-        $commandBus = $this->get('prestashop.core.command_bus');
+    public function generateAction(
+        LangRepository $langRepository,
+    ): RedirectResponse {
+        $this->getConfiguration()->set('PS_MAIL_THEME', 'dark_modern');
 
         try {
-            /** @var array $language */
-            foreach ($languages as $language) {
-                /** @var GenerateThemeMailTemplatesCommand $generateCommand */
+            foreach ($langRepository->getMapping() as $language) {
                 $generateCommand = new GenerateThemeMailTemplatesCommand(
                     'dark_modern',
                     $language['locale'],
                     true
                 );
 
-                $commandBus->handle($generateCommand);
+                $this->dispatchCommand($generateCommand);
             }
-            $this->addFlash('success', $this->trans('The Dark Theme is generated and set as default theme.', 'Modules.ExampleModuleMailtheme'));
+            $this->addFlash('success', $this->trans('The Dark Theme is generated and set as default theme.', [], 'Modules.ExampleModuleMailtheme'));
         } catch (CoreException $e) {
             $this->addFlash('error', $this->trans(
                 'The Dark Theme cannot be generated: %error%.',
+                ['%error%' => $e->getMessage()],
                 'Modules.ExampleModuleMailtheme',
-                ['%error%' => $e->getMessage()]
             ));
         }
 
