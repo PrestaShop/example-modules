@@ -23,9 +23,6 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * International Registered Trademark & Property of PrestaShop SA
  */
-if (!defined('_CAN_LOAD_FILES_')) {
-    exit;
-}
 
 use PrestaShop\PrestaShop\Core\MailTemplate\FolderThemeScanner;
 use PrestaShop\PrestaShop\Core\MailTemplate\Layout\Layout;
@@ -64,7 +61,7 @@ class example_module_mailtheme extends Module
 
         $this->displayName = $this->trans('Example Module Email Theme', array(), 'Modules.ExampleModuleMailtheme.Admin');
         $this->description = $this->trans('Example module to deal with an Email theme in PrestaShop.', array(), 'Modules.ExampleModuleMailtheme.Admin');
-        $this->secure_key = Tools::encrypt($this->name);
+        $this->secure_key = Tools::hash($this->name);
 
         $this->ps_versions_compliancy = array('min' => '1.7.6.0', 'max' => _PS_VERSION_);
         $this->templateFile = 'module:example_module_mailtheme/views/templates/index.tpl';
