@@ -24,18 +24,18 @@
  * International Registered Trademark & Property of PrestaShop SA
  */
 
+use PrestaShop\Module\ExampleModuleMailtheme\DarkThemeSettings;
+use PrestaShop\Module\ExampleModuleMailtheme\MailTemplate\Transformation\CustomMessageColorTransformation;
 use PrestaShop\PrestaShop\Core\MailTemplate\FolderThemeScanner;
 use PrestaShop\PrestaShop\Core\MailTemplate\Layout\Layout;
 use PrestaShop\PrestaShop\Core\MailTemplate\Layout\LayoutInterface;
 use PrestaShop\PrestaShop\Core\MailTemplate\Layout\LayoutVariablesBuilderInterface;
-use PrestaShop\PrestaShop\Core\MailTemplate\MailTemplateRendererInterface;
 use PrestaShop\PrestaShop\Core\MailTemplate\MailTemplateInterface;
-use PrestaShop\PrestaShop\Core\MailTemplate\ThemeInterface;
+use PrestaShop\PrestaShop\Core\MailTemplate\MailTemplateRendererInterface;
 use PrestaShop\PrestaShop\Core\MailTemplate\ThemeCatalogInterface;
 use PrestaShop\PrestaShop\Core\MailTemplate\ThemeCollectionInterface;
+use PrestaShop\PrestaShop\Core\MailTemplate\ThemeInterface;
 use PrestaShop\PrestaShop\Core\MailTemplate\Transformation\TransformationCollectionInterface;
-use PrestaShop\Module\ExampleModuleMailtheme\DarkThemeSettings;
-use PrestaShop\Module\ExampleModuleMailtheme\MailTemplate\Transformation\CustomMessageColorTransformation;
 
 class example_module_mailtheme extends Module
 {
@@ -59,11 +59,11 @@ class example_module_mailtheme extends Module
         $this->bootstrap = true;
         parent::__construct();
 
-        $this->displayName = $this->trans('Example Module Email Theme', array(), 'Modules.ExampleModuleMailtheme.Admin');
-        $this->description = $this->trans('Example module to deal with an Email theme in PrestaShop.', array(), 'Modules.ExampleModuleMailtheme.Admin');
+        $this->displayName = $this->trans('Example Module Email Theme', [], 'Modules.ExampleModuleMailtheme.Admin');
+        $this->description = $this->trans('Example module to deal with an Email theme in PrestaShop.', [], 'Modules.ExampleModuleMailtheme.Admin');
         $this->secure_key = Tools::hash($this->name);
 
-        $this->ps_versions_compliancy = array('min' => '1.7.6.0', 'max' => _PS_VERSION_);
+        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => _PS_VERSION_];
         $this->templateFile = 'module:example_module_mailtheme/views/templates/index.tpl';
         $this->hookList = [
             ThemeCatalogInterface::LIST_MAIL_THEMES_HOOK,
@@ -114,7 +114,7 @@ class example_module_mailtheme extends Module
         $tab = new Tab($tabId);
         $tab->active = 1;
         $tab->class_name = 'ExampleModuleMailtheme';
-        $tab->name = array();
+        $tab->name = [];
         foreach (Language::getLanguages(true) as $lang) {
             $tab->name[$lang['id_lang']] = 'Example Module Email Theme';
         }
@@ -138,8 +138,8 @@ class example_module_mailtheme extends Module
 
     public function getContent()
     {
-        //This controller actually does not exist, it is used in the tab
-        //and is accessible thanks to routing settings with _legacy_link
+        // This controller actually does not exist, it is used in the tab
+        // and is accessible thanks to routing settings with _legacy_link
         Tools::redirectAdmin(
             $this->context->link->getAdminLink('ExampleModuleMailtheme')
         );
@@ -154,7 +154,7 @@ class example_module_mailtheme extends Module
             return;
         }
 
-        //Add the module theme called example_module_theme
+        // Add the module theme called example_module_theme
         /** @var ThemeCollectionInterface $themes */
         $themes = $hookParams['mailThemes'];
 
@@ -179,7 +179,7 @@ class example_module_mailtheme extends Module
 
             $theme->getLayouts()->add(new Layout(
                 'customized_template',
-                __DIR__ . '/mails/layouts/customized_' . $theme->getName() . '_layout.html.twig',
+                '@Modules/example_module_mailtheme/mails/layouts/customized_' . $theme->getName() . '_layout.html.twig',
                 '',
                 $this->name
             ));
@@ -203,12 +203,12 @@ class example_module_mailtheme extends Module
                 return;
             }
 
-            //The layout collection extends from ArrayCollection so it has more feature than it seems..
-            //It allows to REPLACE the existing layout easily
+            // The layout collection extends from ArrayCollection so it has more feature than it seems..
+            // It allows to REPLACE the existing layout easily
             $orderIndex = $theme->getLayouts()->indexOf($orderConfLayout);
             $theme->getLayouts()->offsetSet($orderIndex, new Layout(
                 $orderConfLayout->getName(),
-                __DIR__ . '/mails/layouts/extended_' . $theme->getName() . '_order_conf_layout.html.twig',
+                '@Modules/example_module_mailtheme/mails/layouts/extended_' . $theme->getName() . '_order_conf_layout.html.twig',
                 ''
             ));
         }
@@ -219,13 +219,13 @@ class example_module_mailtheme extends Module
      *
      * @param ThemeCollectionInterface $themes
      *
-     * @throws \PrestaShop\PrestaShop\Core\Exception\FileNotFoundException
-     * @throws \PrestaShop\PrestaShop\Core\Exception\TypeException
+     * @throws PrestaShop\PrestaShop\Core\Exception\FileNotFoundException
+     * @throws PrestaShop\PrestaShop\Core\Exception\TypeException
      */
     private function addDarkTheme(ThemeCollectionInterface $themes)
     {
         $scanner = new FolderThemeScanner();
-        $darkTheme = $scanner->scan(__DIR__ . '/mails/themes/dark_modern');
+        $darkTheme = $scanner->scan(_PS_MODULE_DIR_ . 'example_module_mailtheme/mails/themes/dark_modern');
         if (null !== $darkTheme && $darkTheme->getLayouts()->count() > 0) {
             $themes->add($darkTheme);
         }
@@ -244,7 +244,7 @@ class example_module_mailtheme extends Module
         }
 
         /** @var DarkThemeSettings $darkThemeSettings */
-        $darkThemeSettings = $this->get('prestashop.module.example_module_mailtheme.dark_theme_settings');
+        $darkThemeSettings = $this->get(DarkThemeSettings::class);
 
         /** @var LayoutInterface $mailLayout */
         $mailLayout = $hookParams['mailLayout'];
@@ -263,10 +263,10 @@ class example_module_mailtheme extends Module
      */
     public function hookActionGetMailLayoutTransformations(array $hookParams)
     {
-        if (!isset($hookParams['templateType']) ||
-            MailTemplateInterface::HTML_TYPE !== $hookParams['templateType'] ||
-            !isset($hookParams['mailLayout']) ||
-            !isset($hookParams['layoutTransformations'])) {
+        if (!isset($hookParams['templateType'])
+            || MailTemplateInterface::HTML_TYPE !== $hookParams['templateType']
+            || !isset($hookParams['mailLayout'])
+            || !isset($hookParams['layoutTransformations'])) {
             return;
         }
 
