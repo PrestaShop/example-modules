@@ -2,6 +2,10 @@ services:
   _defaults:
     public: true
 
+  PrestaShop\Module\DemoSymfonyFormSimple\Controller\DemoConfigurationController:
+    autowire: true
+    autoconfigure: true
+
   # Demo configuration text form
   prestashop.module.demosymfonyformsimple.form.type.demo_configuration_text:
     class: 'PrestaShop\Module\DemoSymfonyFormSimple\Form\DemoConfigurationFormType'

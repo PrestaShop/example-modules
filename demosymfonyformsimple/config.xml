@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>demosymfonyformsimple</name>
+    <displayName><![CDATA[Demo of the Symfony-based configuration form]]></displayName>
+    <version><![CDATA[1.0.0]]></version>
+    <description><![CDATA[Module demonstrates a simple module&#039;s configuration page made with Symfony.]]></description>
+    <author><![CDATA[PrestaShop]]></author>
+    <tab><![CDATA[]]></tab>
+    <is_configurable>1</is_configurable>
+    <need_instance>0</need_instance>
+</module>
