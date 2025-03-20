@@ -15,7 +15,7 @@ class DemoWsExtend extends Module
         $this->version = '1.0.0';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
-        $this->secure_key = Tools::encrypt($this->name);
+        $this->secure_key = Tools::hash($this->name);
         $this->bootstrap = true;
 
         parent::__construct();
@@ -49,7 +49,7 @@ class DemoWsExtend extends Module
             PRIMARY KEY  (`id_article`, `id_lang`)
         ) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci';
 
-        return Db::getInstance()->execute($sql) && 
+        return Db::getInstance()->execute($sql) &&
             Db::getInstance()->execute($sql_lang);
     }
 
