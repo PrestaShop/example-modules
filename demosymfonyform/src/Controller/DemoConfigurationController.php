@@ -22,16 +22,20 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoSymfonyForm\Controller;
 
+use PrestaShop\PrestaShop\Core\Form\FormHandlerInterface;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
+use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class DemoConfigurationController extends FrameworkBundleAdminController
+class DemoConfigurationController extends PrestaShopAdminController
 {
-    public function index(Request $request): Response
-    {
-        $textFormDataHandler = $this->get('prestashop.module.demosymfonyform.form.demo_configuration_text_form_data_handler');
-
+    public function index(
+        Request $request,
+        #[Autowire(service: 'prestashop.module.demosymfonyform.form.demo_configuration_text_form_data_handler')]
+        FormHandlerInterface $textFormDataHandler,
+    ): Response {
         $textForm = $textFormDataHandler->getForm();
         $textForm->handleRequest($request);
 
@@ -40,12 +44,12 @@ class DemoConfigurationController extends FrameworkBundleAdminController
             $errors = $textFormDataHandler->save($textForm->getData());
 
             if (empty($errors)) {
-                $this->addFlash('success', $this->trans('Successful update.', 'Admin.Notifications.Success'));
+                $this->addFlash('success', $this->trans('Successful update.', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('demo_configuration_form');
             }
 
-            $this->flashErrors($errors);
+            $this->addFlashErrors($errors);
         }
 
         return $this->render('@Modules/demosymfonyform/views/templates/admin/form.html.twig', [

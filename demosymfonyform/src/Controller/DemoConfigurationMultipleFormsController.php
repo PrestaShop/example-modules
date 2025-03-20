@@ -22,17 +22,21 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoSymfonyForm\Controller;
 
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
+use PrestaShop\PrestaShop\Core\Form\FormHandlerInterface;
+use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class DemoConfigurationMultipleFormsController extends FrameworkBundleAdminController
+class DemoConfigurationMultipleFormsController extends PrestaShopAdminController
 {
-    public function index(Request $request): Response
-    {
-        $choiceFormDataHandler = $this->get('prestashop.module.demosymfonyform.form.demo_configuration_choice_form_data_handler');
+    public function index(
+        #[Autowire(service: 'prestashop.module.demosymfonyform.form.demo_configuration_choice_form_data_handler')]
+        FormHandlerInterface $choiceFormDataHandler,
+        #[Autowire(service: 'prestashop.module.demosymfonyform.form.demo_configuration_other_form_data_handler')]
+        FormHandlerInterface $otherFormDataHandler,
+    ): Response {
         $choiceForm = $choiceFormDataHandler->getForm();
-        $otherFormDataHandler = $this->get('prestashop.module.demosymfonyform.form.demo_configuration_other_form_data_handler');
         $otherForm = $otherFormDataHandler->getForm();
 
         return $this->render('@Modules/demosymfonyform/views/templates/admin/multipleForms.html.twig', [
@@ -44,9 +48,11 @@ class DemoConfigurationMultipleFormsController extends FrameworkBundleAdminContr
     /**
      * When you have multiple forms in one page it's best to have a separate action/route for saving of the route
      */
-    public function saveChoicesForm(Request $request): Response
-    {
-        $choiceFormDataHandler = $this->get('prestashop.module.demosymfonyform.form.demo_configuration_choice_form_data_handler');
+    public function saveChoicesForm(
+        Request $request,
+        #[Autowire(service: 'prestashop.module.demosymfonyform.form.demo_configuration_choice_form_data_handler')]
+        FormHandlerInterface $choiceFormDataHandler,
+    ): Response {
         $choiceForm = $choiceFormDataHandler->getForm();
         $choiceForm->handleRequest($request);
 
@@ -59,18 +65,20 @@ class DemoConfigurationMultipleFormsController extends FrameworkBundleAdminContr
             $errors = $choiceFormDataHandler->save($choiceForm->getData());
 
             if (empty($errors)) {
-                $this->addFlash('success', $this->trans('Successful update.', 'Admin.Notifications.Success'));
+                $this->addFlash('success', $this->trans('Successful update.', [], 'Admin.Notifications.Success'));
             } else {
-                $this->flashErrors($errors);
+                $this->addFlashErrors($errors);
             }
         }
 
         return $this->redirectToRoute('demo_configuration_multiple_forms');
     }
 
-    public function saveOtherForm(Request $request): Response
-    {
-        $otherFormDataHandler = $this->get('prestashop.module.demosymfonyform.form.demo_configuration_other_form_data_handler');
+    public function saveOtherForm(
+        Request $request,
+        #[Autowire(service: 'prestashop.module.demosymfonyform.form.demo_configuration_other_form_data_handler')]
+        FormHandlerInterface $otherFormDataHandler,
+    ): Response {
         $otherForm = $otherFormDataHandler->getForm();
         $otherForm->handleRequest($request);
 
@@ -78,9 +86,9 @@ class DemoConfigurationMultipleFormsController extends FrameworkBundleAdminContr
             $errors = $otherFormDataHandler->save($otherForm->getData());
 
             if (empty($errors)) {
-                $this->addFlash('success', $this->trans('Successful update.', 'Admin.Notifications.Success'));
+                $this->addFlash('success', $this->trans('Successful update.', [], 'Admin.Notifications.Success'));
             } else {
-                $this->flashErrors($errors);
+                $this->addFlashErrors($errors);
             }
         }
 
