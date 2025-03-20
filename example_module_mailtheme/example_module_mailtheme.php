@@ -118,7 +118,7 @@ class example_module_mailtheme extends Module
         foreach (Language::getLanguages(true) as $lang) {
             $tab->name[$lang['id_lang']] = 'Example Module Email Theme';
         }
-        $tab->id_parent = (int) Tab::getIdFromClassName('AdminMailThemeParent');
+        $tab->id_parent = (int) Tab::getIdFromClassName('AdminParentMailTheme');
         $tab->module = $this->name;
 
         return $tab->save();
