@@ -24,11 +24,13 @@ namespace PrestaShop\Module\DemoProductForm\CQRS\CommandHandler;
 
 use PrestaShop\Module\DemoProductForm\CQRS\Command\UpdateCustomProductCommand;
 use PrestaShop\Module\DemoProductForm\Entity\CustomProduct;
+use PrestaShop\PrestaShop\Core\CommandBus\Attributes\AsCommandHandler;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataHandler\ProductFormDataHandler;
 
 /**
  * Handles @see UpdateCustomProductCommand
  */
+#[AsCommandHandler]
 final class UpdateCustomProductCommandHandler
 {
     /**

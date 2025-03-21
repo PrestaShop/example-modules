@@ -34,36 +34,16 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\Combinatio
 use PrestaShopBundle\Form\FormBuilderModifier;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CombinationFormModifier
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var FormBuilderModifier
-     */
-    private $formBuilderModifier;
-
-    /**
-     * @param TranslatorInterface $translator
-     * @param FormBuilderModifier $formBuilderModifier
-     */
     public function __construct(
-        TranslatorInterface $translator,
-        FormBuilderModifier $formBuilderModifier
+        private readonly TranslatorInterface $translator,
+        private readonly FormBuilderModifier $formBuilderModifier
     ) {
-        $this->translator = $translator;
-        $this->formBuilderModifier = $formBuilderModifier;
     }
 
-    /**
-     * @param CombinationId|null $combinationId
-     * @param FormBuilderInterface $combinationFormBuilder
-     */
     public function modify(
         ?CombinationId $combinationId,
         FormBuilderInterface $combinationFormBuilder
@@ -75,9 +55,6 @@ class CombinationFormModifier
     }
 
     /**
-     * @param CustomCombination $customCombination
-     * @param FormBuilderInterface $combinationFormBuilder
-     *
      * @see demoproductform::hook
      */
     private function addCustomField(CustomCombination $customCombination, FormBuilderInterface $combinationFormBuilder): void
@@ -106,10 +83,6 @@ class CombinationFormModifier
         );
     }
 
-    /**
-     * @param CustomCombination $customCombination
-     * @param FormBuilderInterface $combinationFormBuilder
-     */
     private function addCustomTab(CustomCombination $customCombination, FormBuilderInterface $combinationFormBuilder): void
     {
         $this->formBuilderModifier->addAfter(

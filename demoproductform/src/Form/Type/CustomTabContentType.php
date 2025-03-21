@@ -46,7 +46,7 @@ class CustomTabContentType extends TranslatorAwareType
         $resolver
             ->setDefaults([
                 'label' => $this->trans('Customization content', 'Modules.Demoproductform.Admin'),
-                'form_theme' => '@Modules/demoproductform2/views/templates/admin/FormTheme/product_tab_content_form_theme.html.twig',
+                'form_theme' => '@Modules/demoproductform/views/templates/admin/FormTheme/product_tab_content_form_theme.html.twig',
             ]);
     }
 }

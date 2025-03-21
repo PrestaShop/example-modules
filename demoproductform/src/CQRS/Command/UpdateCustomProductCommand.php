@@ -40,48 +40,27 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
  */
 final class UpdateCustomProductCommand
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private ProductId $productId;
 
-    /**
-     * @var string
-     */
-    private $customerField = '';
+    private string $customerField = '';
 
-    /**
-     * @var DecimalNumber|null
-     */
-    private $customPrice;
+    private ?DecimalNumber $customPrice = null;
 
-    /**
-     * @param int $productId
-     */
     public function __construct(int $productId)
     {
         $this->productId = new ProductId($productId);
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
     }
 
-    /**
-     * @return string
-     */
     public function getCustomerField(): string
     {
         return $this->customerField;
     }
 
-    /**
-     * @param string $customerField
-     */
     public function setCustomerField(string $customerField): self
     {
         $this->customerField = $customerField;
@@ -89,19 +68,11 @@ final class UpdateCustomProductCommand
         return $this;
     }
 
-    /**
-     * @return DecimalNumber|null
-     */
     public function getCustomPrice(): ?DecimalNumber
     {
         return $this->customPrice;
     }
 
-    /**
-     * @param string $customPrice
-     *
-     * @return static
-     */
     public function setCustomPrice(string $customPrice): self
     {
         $this->customPrice = new DecimalNumber($customPrice);

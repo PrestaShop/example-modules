@@ -22,9 +22,9 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder;
 
+use PrestaShop\Module\DemoProductForm\CQRS\Command\UpdateCustomProductCommand;
 use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
-use PrestaShop\Module\DemoProductForm\CQRS\Command\UpdateCustomProductCommand;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\Product\ProductCommandsBuilderInterface;
 
 /**
