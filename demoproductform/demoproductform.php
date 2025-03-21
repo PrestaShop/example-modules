@@ -35,11 +35,11 @@ if (!defined('_PS_VERSION_')) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-class DemoProductForm2 extends Module
+class DemoProductForm extends Module
 {
     public function __construct()
     {
-        $this->name = 'demoproductform2';
+        $this->name = 'demoproductform';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
         $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => _PS_VERSION_];
@@ -110,7 +110,7 @@ class DemoProductForm2 extends Module
         /** @var EngineInterface $twig */
         $twig = $this->get('twig');
 
-        return $twig->render('@Modules/demoproductform2/views/templates/admin/extra_module.html.twig', [
+        return $twig->render('@Modules/demoproductform/views/templates/admin/extra_module.html.twig', [
             'customProduct' => $customProduct,
         ]);
     }
