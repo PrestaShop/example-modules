@@ -10,7 +10,7 @@ It provides a simple configuration page for a module with a Text Field. This tex
 
 ## Supported PrestaShop versions
 
-This module has been tested with PrestaShop 8.
+This module has been tested with PrestaShop 9.
 
 ## Requirements
 
@@ -19,7 +19,6 @@ Composer
 ## How to install
 
 Download or clone the module into the modules directory of your PrestaShop installation.
-Rename the directory to make sure that the module directory is named `demosymfonyformsimple`.
 
 `cd` into module's directory and run following commands:
 
