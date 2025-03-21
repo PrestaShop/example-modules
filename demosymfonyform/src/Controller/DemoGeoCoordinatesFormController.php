@@ -23,11 +23,10 @@ declare(strict_types=1);
 namespace PrestaShop\Module\DemoSymfonyForm\Controller;
 
 use PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationGeoCoordinatesType;
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
-use Symfony\Component\HttpFoundation\Request;
+use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
 use Symfony\Component\HttpFoundation\Response;
 
-class DemoGeoCoordinatesFormController extends FrameworkBundleAdminController
+class DemoGeoCoordinatesFormController extends PrestaShopAdminController
 {
     public function index(): Response
     {

@@ -2,6 +2,18 @@ services:
   _defaults:
     public: true
 
+  PrestaShop\Module\DemoSymfonyForm\Controller\DemoConfigurationController:
+    autoconfigure: true
+    autowire: true
+
+  PrestaShop\Module\DemoSymfonyForm\Controller\DemoConfigurationMultipleFormsController:
+    autoconfigure: true
+    autowire: true
+
+  PrestaShop\Module\DemoSymfonyForm\Controller\DemoGeoCoordinatesFormController:
+    autoconfigure: true
+    autowire: true
+
   # Demo configuration text form
   prestashop.module.demosymfonyform.form.type.demo_configuration_text:
     class: 'PrestaShop\Module\DemoSymfonyForm\Form\DemoConfigurationTextType'

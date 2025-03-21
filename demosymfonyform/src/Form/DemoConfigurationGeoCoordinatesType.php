@@ -47,7 +47,7 @@ class DemoConfigurationGeoCoordinatesType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn-sm btn-primary float-right',
-                ]
+                ],
             ])
         ;
     }

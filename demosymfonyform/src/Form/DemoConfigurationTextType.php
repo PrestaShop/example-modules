@@ -32,6 +32,7 @@ use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 
 class DemoConfigurationTextType extends TranslatorAwareType
@@ -101,8 +102,16 @@ class DemoConfigurationTextType extends TranslatorAwareType
                     ],
                 ],
             ])
-            ->add('coordinates', GeoCoordinatesType::class,[
+            ->add('coordinates', GeoCoordinatesType::class, [
                 'label' => $this->trans('Geocoordinates type', 'Modules.DemoSymfonyForm.Admin'),
             ]);
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        parent::configureOptions($resolver);
+        $resolver->setDefaults([
+            'form_theme' => '@PrestaShop/Admin/TwigTemplateForm/prestashop_ui_kit.html.twig',
+        ]);
     }
 }

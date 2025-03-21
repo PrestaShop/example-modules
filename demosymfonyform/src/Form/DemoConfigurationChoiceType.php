@@ -31,6 +31,7 @@ use PrestaShopBundle\Form\Admin\Type\ShopChoiceTreeType;
 use PrestaShopBundle\Form\Admin\Type\SwitchType;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DemoConfigurationChoiceType extends TranslatorAwareType
 {
@@ -146,5 +147,13 @@ class DemoConfigurationChoiceType extends TranslatorAwareType
                     'label' => $this->trans('Switch type', 'Modules.DemoSymfonyForm.Admin'),
                 ]
             );
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        parent::configureOptions($resolver);
+        $resolver->setDefaults([
+            'form_theme' => '@PrestaShop/Admin/TwigTemplateForm/prestashop_ui_kit.html.twig',
+        ]);
     }
 }

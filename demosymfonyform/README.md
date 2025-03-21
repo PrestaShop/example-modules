@@ -11,7 +11,7 @@ are being used. You can use these pages as examples of how to integrate these in
 
 ### Supported PrestaShop versions
 
-This module is compatible with PS 8.0.x versions only.
+This module is compatible with PS >= 9.0 versions only.
  
 ### Requirements
  
@@ -26,5 +26,3 @@ This module is compatible with PS 8.0.x versions only.
 4. Install module from Back Office
  
 _* Because the name of the directory and the name of the main module file must match._
- 
-
