@@ -23,14 +23,11 @@
  * International Registered Trademark & Property of PrestaShop SA
  */
 
-const $ = require('jquery');
-const colorpicker = require('bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min');
-
-//This component comes from PrestaShop core, this path is relative so you need to build assets with your modules
-//installed in a PrestaShop project
-import TranslatableInput from '../../../../admin-dev/themes/new-theme/js/components/translatable-input';
-
 $(document).ready(function() {
-  $('.color-picker').colorpicker();
-  new TranslatableInput();
+  window.prestashop.component.initComponents(
+      [
+        'TranslatableInput',
+        'ColorPicker',
+      ],
+  );
 });

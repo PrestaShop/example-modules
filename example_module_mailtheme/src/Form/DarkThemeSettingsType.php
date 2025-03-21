@@ -28,10 +28,11 @@ namespace PrestaShop\Module\ExampleModuleMailtheme\Form;
 
 use PrestaShop\Module\ExampleModuleMailtheme\DarkThemeSettings;
 use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\DefaultLanguage;
+use PrestaShopBundle\Form\Admin\Type\ColorPickerType;
 use PrestaShopBundle\Form\Admin\Type\TranslatableType;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -44,6 +45,7 @@ class DarkThemeSettingsType extends TranslatorAwareType
     {
         $builder
             ->add('custom_message', TranslatableType::class, [
+                'label' => $this->trans('Custom message', 'Modules.ExampleModuleMailtheme'),
                 'constraints' => [
                     new DefaultLanguage([
                         'message' => $this->trans(
@@ -74,10 +76,8 @@ class DarkThemeSettingsType extends TranslatorAwareType
                     ],
                 ],
             ])
-            ->add('primary_background_color', TextType::class, [
-                'attr' => [
-                    'class' => 'color-picker',
-                ],
+            ->add('primary_background_color', ColorPickerType::class, [
+                'label' => $this->trans('Primary background color', 'Modules.ExampleModuleMailtheme'),
                 'constraints' => [
                     new Regex([
                         'pattern' => '/#[0-9A-F]{6}/',
@@ -88,10 +88,8 @@ class DarkThemeSettingsType extends TranslatorAwareType
                     ]),
                 ],
             ])
-            ->add('secondary_background_color', TextType::class, [
-                'attr' => [
-                    'class' => 'color-picker',
-                ],
+            ->add('secondary_background_color', ColorPickerType::class, [
+                'label' => $this->trans('Secondary background color', 'Modules.ExampleModuleMailtheme'),
                 'constraints' => [
                     new Regex([
                         'pattern' => '/#[0-9A-F]{6}/',
@@ -102,10 +100,8 @@ class DarkThemeSettingsType extends TranslatorAwareType
                     ]),
                 ],
             ])
-            ->add('primary_text_color', TextType::class, [
-                'attr' => [
-                    'class' => 'color-picker',
-                ],
+            ->add('primary_text_color', ColorPickerType::class, [
+                'label' => $this->trans('Primary text color', 'Modules.ExampleModuleMailtheme'),
                 'constraints' => [
                     new Regex([
                         'pattern' => '/#[0-9A-F]{6}/',
@@ -116,10 +112,8 @@ class DarkThemeSettingsType extends TranslatorAwareType
                     ]),
                 ],
             ])
-            ->add('secondary_text_color', TextType::class, [
-                'attr' => [
-                    'class' => 'color-picker',
-                ],
+            ->add('secondary_text_color', ColorPickerType::class, [
+                'label' => $this->trans('Secondary text color', 'Modules.ExampleModuleMailtheme'),
                 'constraints' => [
                     new Regex([
                         'pattern' => '/#[0-9A-F]{6}/',
@@ -131,5 +125,13 @@ class DarkThemeSettingsType extends TranslatorAwareType
                 ],
             ])
         ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        parent::configureOptions($resolver);
+        $resolver->setDefaults([
+            'form_theme' => '@PrestaShop/Admin/TwigTemplateForm/prestashop_ui_kit.html.twig',
+        ]);
     }
 }

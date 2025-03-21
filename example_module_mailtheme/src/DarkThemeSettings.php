@@ -29,13 +29,13 @@ namespace PrestaShop\Module\ExampleModuleMailtheme;
 use PrestaShop\PrestaShop\Core\ConfigurationInterface;
 
 /**
- * Class DarkThemeSettings is responsible of accessing/saving the theme settings in PrestaShop configuration
+ * Class DarkThemeSettings is responsible for accessing/saving the theme settings in PrestaShop configuration
  */
 class DarkThemeSettings
 {
-    const SETTINGS_KEY = 'EXAMPLE_MODULE_MAILTHEME_DARK_THEME_SETTINGS';
-    const DEFAULT_CUSTOM_MESSAGE = 'My custom message';
-    const CUSTOM_MESSAGE_MAX_SIZE = 512;
+    public const SETTINGS_KEY = 'EXAMPLE_MODULE_MAILTHEME_DARK_THEME_SETTINGS';
+    public const DEFAULT_CUSTOM_MESSAGE = 'My custom message';
+    public const CUSTOM_MESSAGE_MAX_SIZE = 512;
 
     /** @var ConfigurationInterface */
     private $configuration;
