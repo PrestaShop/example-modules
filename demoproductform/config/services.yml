@@ -14,9 +14,7 @@ services:
 
     PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\UpdateCustomProductCommandHandler:
         class: PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\UpdateCustomProductCommandHandler
-        tags:
-            - name: tactician.handler
-              command: PrestaShop\Module\DemoProductForm\CQRS\Command\UpdateCustomProductCommand
+        autoconfigure: true
 
     PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\CustomProductCommandsBuilder:
         class: PrestaShop\Module\DemoProductForm\CQRS\CommandBuilder\CustomProductCommandsBuilder
@@ -29,5 +27,12 @@ services:
         public: true
         arguments:
             - '@=service("prestashop.adapter.data_provider.currency").getDefaultCurrency()'
+        tags:
+            - { name: form.type }
+
+    PrestaShop\Module\DemoProductForm\Form\Type\CustomTabContentType:
+        class: PrestaShop\Module\DemoProductForm\Form\Type\CustomTabContentType
+        parent: 'form.type.translatable.aware'
+        public: true
         tags:
             - { name: form.type }

@@ -24,42 +24,23 @@ namespace PrestaShop\Module\DemoProductForm\Form\Modifier;
 
 use PrestaShop\Module\DemoProductForm\CQRS\CommandHandler\UpdateCustomProductCommandHandler;
 use PrestaShop\Module\DemoProductForm\Entity\CustomProduct;
+use PrestaShop\Module\DemoProductForm\Form\Type\CustomTabContentType;
 use PrestaShop\Module\DemoProductForm\Form\Type\CustomTabType;
 use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 use PrestaShopBundle\Form\Admin\Type\IconButtonType;
 use PrestaShopBundle\Form\FormBuilderModifier;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ProductFormModifier
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var FormBuilderModifier
-     */
-    private $formBuilderModifier;
-
-    /**
-     * @param TranslatorInterface $translator
-     * @param FormBuilderModifier $formBuilderModifier
-     */
     public function __construct(
-        TranslatorInterface $translator,
-        FormBuilderModifier $formBuilderModifier
+        private readonly TranslatorInterface $translator,
+        private readonly FormBuilderModifier $formBuilderModifier
     ) {
-        $this->translator = $translator;
-        $this->formBuilderModifier = $formBuilderModifier;
     }
 
-    /**
-     * @param ProductId|null $productId
-     * @param FormBuilderInterface $productFormBuilder
-     */
     public function modify(
         ?ProductId $productId,
         FormBuilderInterface $productFormBuilder
@@ -72,9 +53,6 @@ final class ProductFormModifier
     }
 
     /**
-     * @param CustomProduct $customProduct
-     * @param FormBuilderInterface $productFormBuilder
-     *
      * @see UpdateCustomProductCommandHandler to check how the field is handled on form POST
      */
     private function modifyDescriptionTab(CustomProduct $customProduct, FormBuilderInterface $productFormBuilder): void
@@ -104,10 +82,6 @@ final class ProductFormModifier
         );
     }
 
-    /**
-     * @param CustomProduct $customProduct
-     * @param FormBuilderInterface $productFormBuilder
-     */
     private function addCustomTab(CustomProduct $customProduct, FormBuilderInterface $productFormBuilder): void
     {
         $this->formBuilderModifier->addAfter(
@@ -121,11 +95,19 @@ final class ProductFormModifier
                 ],
             ]
         );
+        $this->formBuilderModifier->addAfter(
+            $productFormBuilder,
+            'custom_tab',
+            'custom_tab_content',
+            CustomTabContentType::class,
+            [
+                'data' => [
+                    'custom_price' => $customProduct->custom_price,
+                ],
+            ],
+        );
     }
 
-    /**
-     * @param FormBuilderInterface $productFormBuilder
-     */
     private function modifyFooter(FormBuilderInterface $productFormBuilder): void
     {
         $headerFormBuilder = $productFormBuilder->get('footer');

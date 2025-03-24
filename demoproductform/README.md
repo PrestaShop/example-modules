@@ -2,7 +2,7 @@
 
 ## About
 
-This is example module explaining various extendability options in product page form (from v8.1.0):
+This is example module explaining various extendability options in product page form (from v9.0.0):
 1. Add custom text field in product form basic tab
 2. Save custom text field into database using dedicated object model
 3. Show how to use ProductCommandsBuilder (specific to new Product page)
@@ -10,12 +10,11 @@ This is example module explaining various extendability options in product page 
 
 ### Supported PrestaShop versions
 
-Compatible with 8.1.0 and above versions.
+Compatible with 9.0.0 and above versions.
 
 ### Requirements
 
 1. Composer, see [Composer](https://getcomposer.org/) to learn more
-2. Switch on the new product page feature flag in the backoffice configuration UI
 
 #### How to install:
 1. Copy the module into `modules` directory of your PrestaShop installation
