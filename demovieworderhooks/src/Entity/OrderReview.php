@@ -21,48 +21,32 @@ use Doctrine\ORM\Mapping as ORM;
 class OrderReview
 {
     /**
-     * @var int|null
-     *
      * @ORM\Id
      * @ORM\Column(name="id_order_review", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private ?int $id;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="id_order", type="integer")
      */
-    private $orderId;
+    private int $orderId;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="score", type="integer")
      */
-    private $score;
+    private int $score;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="comment", type="string")
      */
-    private $comment;
+    private string $comment;
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int|null $id
-     *
-     * @return OrderReview
-     */
     public function setId(?int $id): OrderReview
     {
         $this->id = $id;
@@ -70,19 +54,11 @@ class OrderReview
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getOrderId(): int
     {
         return $this->orderId;
     }
 
-    /**
-     * @param int $orderId
-     *
-     * @return OrderReview
-     */
     public function setOrderId(int $orderId): OrderReview
     {
         $this->orderId = $orderId;
@@ -90,19 +66,11 @@ class OrderReview
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getScore(): int
     {
         return $this->score;
     }
 
-    /**
-     * @param int $score
-     *
-     * @return OrderReview
-     */
     public function setScore(int $score): OrderReview
     {
         $this->score = $score;
@@ -110,19 +78,11 @@ class OrderReview
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getComment(): string
     {
         return $this->comment;
     }
 
-    /**
-     * @param string $comment
-     *
-     * @return OrderReview
-     */
     public function setComment(string $comment): OrderReview
     {
         $this->comment = $comment;

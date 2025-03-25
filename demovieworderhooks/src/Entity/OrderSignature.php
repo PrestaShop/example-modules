@@ -20,41 +20,27 @@ use Doctrine\ORM\Mapping as ORM;
 class OrderSignature
 {
     /**
-     * @var int|null
-     *
      * @ORM\Id
      * @ORM\Column(name="id_signature", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private ?int $id;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="id_order", type="integer")
      */
-    private $orderId;
+    private int $orderId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="filename", type="string")
      */
-    private $filename;
+    private string $filename;
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return self
-     */
     public function setId(int $id): self
     {
         $this->id = $id;
@@ -62,19 +48,11 @@ class OrderSignature
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getFilename(): string
     {
         return $this->filename;
     }
 
-    /**
-     * @param string $filename
-     *
-     * @return self
-     */
     public function setFilename(string $filename): self
     {
         $this->filename = $filename;
@@ -82,19 +60,11 @@ class OrderSignature
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getOrderId(): int
     {
         return $this->orderId;
     }
 
-    /**
-     * @param int $orderId
-     *
-     * @return self
-     */
     public function setOrderId(int $orderId): self
     {
         $this->orderId = $orderId;

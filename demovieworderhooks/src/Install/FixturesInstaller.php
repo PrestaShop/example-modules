@@ -27,17 +27,12 @@ class FixturesInstaller
     /**
      * @var LoremIpsum
      */
-    private $loremIpsum;
+    private LoremIpsum $loremIpsum;
 
-    /**
-     * @var Db
-     */
-    private $db;
-
-    public function __construct(Db $db)
-    {
+    public function __construct(
+        private readonly Db $db
+    ) {
         $this->loremIpsum = new LoremIpsum();
-        $this->db = $db;
     }
 
     public function install(): void

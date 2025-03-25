@@ -20,22 +20,13 @@ use Module;
  */
 class Installer
 {
-    /**
-     * @var FixturesInstaller
-     */
-    private $fixturesInstaller;
-
-    public function __construct(FixturesInstaller $fixturesInstaller)
-    {
-        $this->fixturesInstaller = $fixturesInstaller;
+    public function __construct(
+        private readonly FixturesInstaller $fixturesInstaller
+    ) {
     }
 
     /**
      * Module's installation entry point.
-     *
-     * @param Module $module
-     *
-     * @return bool
      */
     public function install(Module $module): bool
     {
@@ -54,8 +45,6 @@ class Installer
 
     /**
      * Module's uninstallation entry point.
-     *
-     * @return bool
      */
     public function uninstall(): bool
     {
@@ -64,8 +53,6 @@ class Installer
 
     /**
      * Install the database modifications required for this module.
-     *
-     * @return bool
      */
     private function installDatabase(): bool
     {
@@ -102,8 +89,6 @@ class Installer
 
     /**
      * Uninstall database modifications.
-     *
-     * @return bool
      */
     private function uninstallDatabase(): bool
     {
@@ -118,10 +103,6 @@ class Installer
 
     /**
      * Register hooks for the module.
-     *
-     * @param Module $module
-     *
-     * @return bool
      */
     private function registerHooks(Module $module): bool
     {
@@ -143,10 +124,6 @@ class Installer
 
     /**
      * A helper that executes multiple database queries.
-     *
-     * @param array $queries
-     *
-     * @return bool
      */
     private function executeQueries(array $queries): bool
     {
