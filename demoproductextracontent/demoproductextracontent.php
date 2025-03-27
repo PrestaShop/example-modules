@@ -44,15 +44,12 @@ class DemoProductExtraContent extends Module
      */
     public function install()
     {
-        if (!parent::install()) {
-            return false;
-        }
-
-        return $this->registerHook('displayProductExtraContent');
+        return parent::install() &&
+            $this->registerHook('displayProductExtraContent');
     }
 
     /**
-     * Add extra content to the product page, by default, it renders as tabs on the product page.
+     * Add extra content to the product FO page, by default, it renders as tabs on the product FO page.
      */
     public function hookDisplayProductExtraContent($params) {
         return [
