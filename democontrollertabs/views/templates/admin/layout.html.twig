@@ -26,9 +26,9 @@
                                     <div class="alert alert-info" role="alert">
                                         {% set controllerList = {
                                             'Configure Controller': 'ps_controller_tabs_configure',
-                                            'Secured Controller': 'ps_controller_tabs_secured',
                                             'Manual Tab Controller': 'ps_controller_tabs_manual_tab',
                                             'Minimalist Controller': 'ps_controller_tabs_minimalist',
+                                            'Secured Controller': 'ps_controller_tabs_secured',
                                         } %}
                                         <div class="alert-text">
                                             <p>{{ 'This module displays a few examples of Symfony controllers:'|trans({}, 'Modules.Democontrollertab.Admin') }}</p>
@@ -43,9 +43,9 @@
                                         <div class="alert-text">
                                             <p>{{ 'For detailed documentation of Controllers, Tabs and Permissions you can visit these links'|trans({}, 'Modules.Democontrollertab.Admin') }}</p>
                                             {% set documentationLinks = [
-                                                'https://devdocs.prestashop-project.org/1.7/modules/concepts/controllers/admin-controllers',
-                                                'https://devdocs.prestashop-project.org/1.7/modules/concepts/controllers/admin-controllers/tabs/',
-                                                'https://devdocs.prestashop-project.org/1.7/development/architecture/migration-guide/controller-routing',
+                                                'https://devdocs.prestashop-project.org/9/modules/concepts/controllers/admin-controllers',
+                                                'https://devdocs.prestashop-project.org/9/modules/concepts/controllers/admin-controllers/tabs/',
+                                                'https://devdocs.prestashop-project.org/9/development/architecture/migration-guide/controller-routing',
                                             ] %}
                                             <ul>
                                                 {% for documentationLink in documentationLinks %}

@@ -39,17 +39,27 @@ ps_controller_tabs_minimalist:
             <h3>Minimalist Controller</h3>
             <pre>
                 <code class="php">
-class MinimalistController extends FrameworkBundleAdminController
+class MinimalistController extends PrestaShopAdminController
 {
-    /**
-     * @return Response
-     */
-    public function indexAction()
+    public function indexAction(): Response
     {
         return $this->render('@Modules/democontrollertabs/views/templates/admin/minimalist.html.twig');
     }
 }
                 </code>
+            </pre>
+
+          <h3>Controller service definition</h3>
+          <p>
+            The controllers, starting from PrestaShop V9, should extend the <code>PrestaShopBundle\Controller\Admin\PrestaShopAdminController</code> class, when they do they must be defined as services. It is recommended to use the <code>autowire</code> and <code>autoconfigure</code> parameters to ease the configuration.
+          </p>
+          <pre>
+              <code class="yaml">
+services:
+  PrestaShop\Module\DemoControllerTabs\Controller\Admin\MinimalistController:
+    autowire: true
+    autoconfigure: true
+              </code>
             </pre>
         </div>
     </div>

@@ -1,4 +1,4 @@
-# @see https://devdocs.prestashop-project.org/1.7/modules/concepts/controllers/admin-controllers/#how-to-map-an-action-of-your-controller-to-a-uri
+# @see https://devdocs.prestashop-project.org/9/modules/concepts/controllers/admin-controllers/#how-to-map-an-action-of-your-controller-to-a-uri
 ps_controller_tabs_configure:
     path: /configure-tabs
     methods: [GET]

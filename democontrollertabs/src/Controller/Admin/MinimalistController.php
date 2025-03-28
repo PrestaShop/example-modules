@@ -27,15 +27,12 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoControllerTabs\Controller\Admin;
 
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
+use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
 use Symfony\Component\HttpFoundation\Response;
 
-class MinimalistController extends FrameworkBundleAdminController
+class MinimalistController extends PrestaShopAdminController
 {
-    /**
-     * @return Response
-     */
-    public function indexAction()
+    public function indexAction(): Response
     {
         return $this->render('@Modules/democontrollertabs/views/templates/admin/minimalist.html.twig');
     }

@@ -1,0 +1,16 @@
+services:
+  PrestaShop\Module\DemoControllerTabs\Controller\Admin\ConfigureController:
+    autowire: true
+    autoconfigure: true
+
+  PrestaShop\Module\DemoControllerTabs\Controller\Admin\ManualTabController:
+    autowire: true
+    autoconfigure: true
+
+  PrestaShop\Module\DemoControllerTabs\Controller\Admin\MinimalistController:
+    autowire: true
+    autoconfigure: true
+
+  PrestaShop\Module\DemoControllerTabs\Controller\Admin\SecuredController:
+    autowire: true
+    autoconfigure: true

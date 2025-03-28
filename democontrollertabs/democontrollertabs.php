@@ -36,14 +36,14 @@ class democontrollertabs extends Module
         $this->name = 'democontrollertabs';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '1.7.7', 'max' => '8.99.99'];
+        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => _PS_VERSION_];
 
         parent::__construct();
 
-        $this->displayName = $this->l('Demo Controller Tabs');
-        $this->description = $this->l('Demonstration of Symfony Controllers, Tabs and Permissions');
+        $this->displayName = $this->trans('Demo Controller Tabs', [], 'Modules.Democontrollertabs.Admin');
+        $this->description = $this->trans('Demonstration of Symfony Controllers, Tabs and Permissions', [], 'Modules.Democontrollertabs.Admin');
 
-        // See https://devdocs.prestashop.com/1.7/modules/concepts/controllers/admin-controllers/tabs/
+        // See https://devdocs.prestashop.com/9/modules/concepts/controllers/admin-controllers/tabs/
         $tabNames = [];
         foreach (Language::getLanguages(true) as $lang) {
             $tabNames[$lang['locale']] = $this->trans('Demo Controller Tabs', [], 'Modules.Democontrollertabs.Admin', $lang['locale']);
@@ -63,7 +63,7 @@ class democontrollertabs extends Module
     public function getContent()
     {
         // This uses the matching with the route ps_controller_tabs_configure via the _legacy_link property
-        // See https://devdocs.prestashop.com/1.7/development/architecture/migration-guide/controller-routing
+        // See https://devdocs.prestashop.com/9/development/architecture/migration-guide/controller-routing
         Tools::redirectAdmin(
             $this->context->link->getAdminLink(ConfigureController::TAB_CLASS_NAME)
         );
