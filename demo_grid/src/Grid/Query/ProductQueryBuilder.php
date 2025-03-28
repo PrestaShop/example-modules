@@ -25,6 +25,9 @@ namespace Module\DemoGrid\Grid\Query;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use PrestaShop\PrestaShop\Adapter\Configuration;
+use PrestaShop\PrestaShop\Core\ConfigurationInterface;
+use PrestaShop\PrestaShop\Core\Context\LanguageContext;
+use PrestaShop\PrestaShop\Core\Context\ShopContext;
 use PrestaShop\PrestaShop\Core\Grid\Query\AbstractDoctrineQueryBuilder;
 use PrestaShop\PrestaShop\Core\Grid\Query\DoctrineSearchCriteriaApplicatorInterface;
 use PrestaShop\PrestaShop\Core\Grid\Query\Filter\DoctrineFilterApplicatorInterface;
@@ -36,60 +39,16 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
 {
-    /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var int
-     */
-    private $contextLanguageId;
-
-    /**
-     * @var int
-     */
-    private $contextShopId;
-
-    /**
-     * @var bool
-     */
-    private $isStockSharingBetweenShopGroupEnabled;
-
-    /**
-     * @var int
-     */
-    private $contextShopGroupId;
-
-    /**
-     * @var DoctrineFilterApplicatorInterface
-     */
-    private $filterApplicator;
-
-    /**
-     * @var Configuration
-     */
-    private $configuration;
-
     public function __construct(
         Connection $connection,
         string $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        int $contextLanguageId,
-        int $contextShopId,
-        int $contextShopGroupId,
-        bool $isStockSharingBetweenShopGroupEnabled,
-        DoctrineFilterApplicatorInterface $filterApplicator,
-        Configuration $configuration
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private readonly LanguageContext $languageContext,
+        private readonly ShopContext $shopContext,
+        private readonly DoctrineFilterApplicatorInterface $filterApplicator,
+        private readonly ConfigurationInterface $configuration
     ) {
         parent::__construct($connection, $dbPrefix);
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->contextLanguageId = $contextLanguageId;
-        $this->contextShopId = $contextShopId;
-        $this->isStockSharingBetweenShopGroupEnabled = $isStockSharingBetweenShopGroupEnabled;
-        $this->contextShopGroupId = $contextShopGroupId;
-        $this->filterApplicator = $filterApplicator;
-        $this->configuration = $configuration;
     }
 
     /**
@@ -169,18 +128,18 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
             ->andWhere('p.`state`=1')
         ;
 
-        $isStockManagementEnabled = $this->configuration->getBoolean('PS_STOCK_MANAGEMENT');
-
+        $isStockManagementEnabled = (bool) $this->configuration->get('PS_STOCK_MANAGEMENT');
         if ($isStockManagementEnabled) {
             $stockOnCondition =
                 'sa.`id_product` = p.`id_product`
                     AND sa.`id_product_attribute` = 0
                 ';
 
-            if ($this->isStockSharingBetweenShopGroupEnabled) {
+            if ($this->shopContext->hasGroupSharingStocks()) {
                 $stockOnCondition .= '
                      AND sa.`id_shop` = 0 AND sa.`id_shop_group` = :id_shop_group
                 ';
+                $qb->setParameter('id_shop_group', $this->shopContext->getShopGroupId());
             } else {
                 $stockOnCondition .= '
                      AND sa.`id_shop` = :id_shop AND sa.`id_shop_group` = 0
@@ -193,8 +152,6 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
                 'sa',
                 $stockOnCondition
             );
-
-            $qb->setParameter('id_shop_group', $this->contextShopGroupId);
         }
 
         $sqlFilters = new SqlFilters();
@@ -214,8 +171,8 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
         }
         $this->filterApplicator->apply($qb, $sqlFilters, $filterValues);
 
-        $qb->setParameter('id_shop', $this->contextShopId);
-        $qb->setParameter('id_lang', $this->contextLanguageId);
+        $qb->setParameter('id_shop', $this->shopContext->getId());
+        $qb->setParameter('id_lang', $this->languageContext->getId());
 
         foreach ($filterValues as $filterName => $filter) {
             if ('active' === $filterName) {

@@ -24,10 +24,6 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-if (file_exists(__DIR__ . '/vendor/autoload.php')) {
-    require_once __DIR__ . '/vendor/autoload.php';
-}
-
 class Demo_Grid extends Module
 {
     public function __construct()
@@ -35,12 +31,12 @@ class Demo_Grid extends Module
         $this->name = 'demo_grid';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '1.7.7', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => '9.99.99'];
 
         parent::__construct();
 
-        $this->displayName = $this->l('Demo grid');
-        $this->description = $this->l('Demonstration of Grid in PrestaShop');
+        $this->displayName = $this->trans('Demo grid', [], 'Modules.Demogrid.Admin');
+        $this->description = $this->trans('Demonstration of Grid in PrestaShop', [], 'Modules.Demogrid.Admin');
     }
 
     public function getContent()
