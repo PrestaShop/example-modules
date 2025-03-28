@@ -1,4 +1,3 @@
 services:
     PrestaShop\Module\DemoConsoleCommand\Command\ListManufacturersCommand:
-        class: PrestaShop\Module\DemoConsoleCommand\Command\ListManufacturersCommand
         tags: [ console.command ]
