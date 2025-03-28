@@ -42,23 +42,32 @@ ps_controller_tabs_secured:
 
             <h3>Secured Controller</h3>
             <p>
-                We use the <code>PrestaShopBundle\Security\Annotation\AdminSecurity</code> annotation to secure the controller, it will use the permissions associated to the configured <code>_legacy_controller</code> (which is defined as <code>AdminDemoControllerTabsSecured</code> in the routing file).
+                We use the <code>PrestaShopBundle\Security\Attribute\AdminSecurity</code> attribute to secure the controller, it will use the permissions associated to the configured <code>_legacy_controller</code> (which is defined as <code>AdminDemoControllerTabsSecured</code> in the routing file).
             </p>
             <pre>
                 <code class="php">
-class SecuredController extends FrameworkBundleAdminController
+class SecuredController extends PrestaShopAdminController
 {
-    /**
-     * @AdminSecurity("is_granted('read', request.get('_legacy_controller'))")
-     *
-     * @return Response
-     */
-    public function indexAction()
+    #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
+    public function indexAction(): Response
     {
         return $this->render('@Modules/democontrollertabs/views/templates/admin/secured.html.twig');
     }
 }
                 </code>
+            </pre>
+
+          <h3>Controller service definition</h3>
+          <p>
+            The controllers, starting from PrestaShop V9, should extend the <code>PrestaShopBundle\Controller\Admin\PrestaShopAdminController</code> class, when they do they must be defined as services. It is recommended to use the <code>autowire</code> and <code>autoconfigure</code> parameters to ease the configuration.
+          </p>
+          <pre>
+              <code class="yaml">
+services:
+  PrestaShop\Module\DemoControllerTabs\Controller\Admin\SecuredController:
+    autowire: true
+    autoconfigure: true
+              </code>
             </pre>
         </div>
     </div>

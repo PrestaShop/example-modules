@@ -27,20 +27,16 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoControllerTabs\Controller\Admin;
 
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
-use PrestaShopBundle\Security\Annotation\AdminSecurity;
+use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
+use PrestaShopBundle\Security\Attribute\AdminSecurity;
 use Symfony\Component\HttpFoundation\Response;
 
-class ManualTabController extends FrameworkBundleAdminController
+class ManualTabController extends PrestaShopAdminController
 {
-    const TAB_CLASS_NAME = 'AdminDemoControllerTabsManualTab';
+    public const TAB_CLASS_NAME = 'AdminDemoControllerTabsManualTab';
 
-    /**
-     * @AdminSecurity("is_granted('read', 'AdminDemoControllerTabsManualTab')")
-     *
-     * @return Response
-     */
-    public function indexAction()
+    #[AdminSecurity("is_granted('read', 'AdminDemoControllerTabsManualTab')")]
+    public function indexAction(): Response
     {
         return $this->render('@Modules/democontrollertabs/views/templates/admin/manual_tab.html.twig');
     }
