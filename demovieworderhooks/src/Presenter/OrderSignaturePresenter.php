@@ -18,14 +18,9 @@ use PrestaShop\Module\DemoViewOrderHooks\Entity\OrderSignature;
 
 class OrderSignaturePresenter
 {
-    /**
-     * @var string
-     */
-    private $signatureImgDir;
-
-    public function __construct(string $signatureImgDir)
-    {
-        $this->signatureImgDir = $signatureImgDir;
+    public function __construct(
+        private readonly string $signatureImgDir
+    ) {
     }
 
     public function present(OrderSignature $orderSignature, int $languageId): array

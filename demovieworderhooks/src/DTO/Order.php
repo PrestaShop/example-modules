@@ -16,32 +16,12 @@ use DateTimeImmutable;
 
 final class Order
 {
-    /**
-     * @var int
-     */
-    private $orderId;
-
-    /**
-     * @var string
-     */
-    private $reference;
-
-    /**
-     * @var int
-     */
-    private $orderStateId;
-
-    /**
-     * @var DateTimeImmutable
-     */
-    private $orderDate;
-
-    public function __construct(int $orderId, string $reference, int $orderStateId, DateTimeImmutable $orderDate)
+    public function __construct(
+        private readonly int $orderId, 
+        private readonly string $reference, 
+        private readonly int $orderStateId, 
+        private readonly DateTimeImmutable $orderDate)
     {
-        $this->orderId = $orderId;
-        $this->reference = $reference;
-        $this->orderStateId = $orderStateId;
-        $this->orderDate = $orderDate;
     }
 
     public function getOrderId(): int

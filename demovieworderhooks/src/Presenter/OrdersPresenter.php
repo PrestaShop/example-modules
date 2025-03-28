@@ -22,26 +22,14 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class OrdersPresenter
 {
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-
-    /**
-     * @var Locale
-     */
-    private $locale;
-
-    public function __construct(UrlGeneratorInterface $urlGenerator, Locale $locale)
-    {
-        $this->urlGenerator = $urlGenerator;
-        $this->locale = $locale;
+    public function __construct(
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly Locale $locale
+    ) {
     }
 
     /**
      * Present a collection of orders for usage in rendering.
-     *
-     * @return array presented array of orders
      */
     public function present(OrderCollection $orders, int $languageId): array
     {

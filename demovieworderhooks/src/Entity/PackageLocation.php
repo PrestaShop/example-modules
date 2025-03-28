@@ -22,55 +22,37 @@ use Doctrine\ORM\Mapping as ORM;
 class PackageLocation
 {
     /**
-     * @var int|null
-     *
      * @ORM\Id
      * @ORM\Column(name="id_package_location", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private ?int $id;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="id_order", type="integer")
      */
-    private $orderId;
+    private int $orderId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="location", type="string")
      */
-    private $location;
+    private string $location;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="position", type="integer")
      */
-    private $position;
+    private int $position;
 
     /**
-     * @var DateTime|null
-     *
      * @ORM\Column(name="date", type="datetime", nullable=true)
      */
-    private $date;
+    private ?DateTime $date;
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int|null $id
-     *
-     * @return PackageLocation
-     */
     public function setId(?int $id): PackageLocation
     {
         $this->id = $id;
@@ -78,19 +60,11 @@ class PackageLocation
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getOrderId(): int
     {
         return $this->orderId;
     }
 
-    /**
-     * @param int $orderId
-     *
-     * @return PackageLocation
-     */
     public function setOrderId(int $orderId): PackageLocation
     {
         $this->orderId = $orderId;
@@ -98,19 +72,11 @@ class PackageLocation
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getLocation(): string
     {
         return $this->location;
     }
 
-    /**
-     * @param string $location
-     *
-     * @return PackageLocation
-     */
     public function setLocation(string $location): PackageLocation
     {
         $this->location = $location;
@@ -118,19 +84,11 @@ class PackageLocation
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getPosition(): int
     {
         return $this->position;
     }
 
-    /**
-     * @param int $position
-     *
-     * @return PackageLocation
-     */
     public function setPosition(int $position): PackageLocation
     {
         $this->position = $position;
@@ -138,19 +96,11 @@ class PackageLocation
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getDate(): ?DateTime
     {
         return $this->date;
     }
 
-    /**
-     * @param DateTime|null $date
-     *
-     * @return PackageLocation
-     */
     public function setDate(?DateTime $date): PackageLocation
     {
         $this->date = $date;
