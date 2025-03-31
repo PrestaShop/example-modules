@@ -25,12 +25,12 @@ class DemoOverrideObjectModel extends Module
         $this->name = 'demooverrideobjectmodel';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '1.7.7.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => '9.99.99'];
 
         parent::__construct();
 
-        $this->displayName = $this->l('Demo override object model');
-        $this->description = $this->l('Shows example how to override object model and add custom field to database table');
+        $this->displayName = $this->trans('Demo override object model', [], 'Modules.DemmoOverrideObjectModel.Admin');
+        $this->description = $this->trans('Shows example how to override object model and add custom field to database table', [], 'Modules.DemmoOverrideObjectModel.Admin');
     }
 
     /**

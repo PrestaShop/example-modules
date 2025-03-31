@@ -21,10 +21,6 @@ class Installer
 {
     /**
      * Module's installation entry point.
-     *
-     * @param Module $module
-     *
-     * @return bool
      */
     public function install(Module $module): bool
     {
@@ -48,10 +44,6 @@ class Installer
      * Register hooks for the module.
      *
      * @see https://devdocs.prestashop.com/1.7/modules/concepts/hooks/
-     *
-     * @param Module $module
-     *
-     * @return bool
      */
     private function registerHooks(Module $module): bool
     {
@@ -60,9 +52,6 @@ class Installer
         return (bool) $module->registerHook($hooks);
     }
 
-    /**
-     * @param Module $module
-     */
     private function installDb(Module $module): void
     {
         $this->executeSqlFromFile($module->getLocalPath() . 'src/Install/install.sql');
@@ -74,9 +63,6 @@ class Installer
 
     }
 
-    /**
-     * @param string $path
-     */
     private function executeSqlFromFile(string $path): void
     {
         $database = Db::getInstance();

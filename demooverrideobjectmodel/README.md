@@ -6,7 +6,7 @@ Example module showing how to override an ObjectModel (in this case the manufact
 
 ### Supported PrestaShop versions
 
-Tested on 1.7.7, but same principle applies to all versions.
+Tested on 9.0.0, but same principle applies to all versions.
 
 ### Requirements
 
