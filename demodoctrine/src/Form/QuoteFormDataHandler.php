@@ -20,34 +20,11 @@ use PrestaShopBundle\Entity\Repository\LangRepository;
 
 class QuoteFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var QuoteRepository
-     */
-    private $quoteRepository;
-
-    /**
-     * @var LangRepository
-     */
-    private $langRepository;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    /**
-     * @param QuoteRepository $quoteRepository
-     * @param LangRepository $langRepository
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(
-        QuoteRepository $quoteRepository,
-        LangRepository $langRepository,
-        EntityManagerInterface $entityManager
+        private readonly QuoteRepository $quoteRepository,
+        private readonly LangRepository $langRepository,
+        private readonly EntityManagerInterface $entityManager
     ) {
-        $this->quoteRepository = $quoteRepository;
-        $this->langRepository = $langRepository;
-        $this->entityManager = $entityManager;
     }
 
     /**

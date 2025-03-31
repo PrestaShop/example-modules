@@ -10,6 +10,7 @@
 declare(strict_types=1);
 
 use Module\DemoDoctrine\Database\QuoteInstaller;
+use Module\DemoDoctrine\Repository\QuoteRepository;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -53,7 +54,7 @@ class DemoDoctrine extends Module
 
     public function hookDisplayHome()
     {
-        $repository = $this->get('prestashop.module.demodoctrine.repository.quote_repository');
+        $repository = $this->get(QuoteRepository::class);
         $langId = $this->context->language->id;
         $quotes = $repository->getRandom($langId, 3);
 
@@ -62,10 +63,7 @@ class DemoDoctrine extends Module
         return $this->fetch('module:demodoctrine/views/templates/front/home.tpl');
     }
 
-    /**
-     * @return bool
-     */
-    private function installTables()
+    private function installTables(): bool
     {
         /** @var QuoteInstaller $installer */
         $installer = $this->getInstaller();
@@ -74,10 +72,7 @@ class DemoDoctrine extends Module
         return empty($errors);
     }
 
-    /**
-     * @return bool
-     */
-    private function removeTables()
+    private function removeTables(): bool
     {
         /** @var QuoteInstaller $installer */
         $installer = $this->getInstaller();
@@ -86,19 +81,16 @@ class DemoDoctrine extends Module
         return empty($errors);
     }
 
-    /**
-     * @return QuoteInstaller
-     */
-    private function getInstaller()
+    private function getInstaller(): QuoteInstaller
     {
         try {
-            $installer = $this->get('prestashop.module.demodoctrine.quotes.install');
-        } catch (Exception $e) {
+            $installer = $this->get(QuoteInstaller::class);
+        } catch (Exception) {
             // Catch exception in case container is not available, or service is not available
             $installer = null;
         }
 
-        // During install process the modules's service is not available yet so we build it manually
+        // During install process the modules's service is not available yet, so we build it manually
         if (!$installer) {
             $installer = new QuoteInstaller(
                 $this->get('doctrine.dbal.default_connection'),

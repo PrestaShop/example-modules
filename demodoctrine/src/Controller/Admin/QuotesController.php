@@ -11,82 +11,60 @@ declare(strict_types=1);
 
 namespace Module\DemoDoctrine\Controller\Admin;
 
-use Doctrine\DBAL\Driver\Connection;
-use Doctrine\DBAL\Exception\TableExistsException;
-use Doctrine\DBAL\Exception\TableNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
-use Module\DemoDoctrine\Entity\Quote;
-use Module\DemoDoctrine\Entity\QuoteLang;
+use Module\DemoDoctrine\Database\QuoteGenerator;
 use Module\DemoDoctrine\Grid\Definition\Factory\QuoteGridDefinitionFactory;
 use Module\DemoDoctrine\Grid\Filters\QuoteFilters;
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
-use PrestaShopBundle\Entity\Lang;
-use PrestaShopBundle\Entity\Repository\LangRepository;
-use PrestaShopBundle\Service\Grid\ResponseBuilder;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Module\DemoDoctrine\Repository\QuoteRepository;
+use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Builder\FormBuilderInterface;
+use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Handler\FormHandlerInterface;
+use PrestaShop\PrestaShop\Core\Grid\Definition\Factory\GridDefinitionFactoryInterface;
+use PrestaShop\PrestaShop\Core\Grid\GridFactoryInterface;
+use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class QuotesController extends FrameworkBundleAdminController
+class QuotesController extends PrestaShopAdminController
 {
-    /**
-     * List quotes
-     *
-     * @param QuoteFilters $filters
-     *
-     * @return Response
-     */
-    public function indexAction(QuoteFilters $filters)
-    {
-        $quoteGridFactory = $this->get('prestashop.module.demodoctrine.grid.factory.quotes');
-        $quoteGrid = $quoteGridFactory->getGrid($filters);
-
+    public function indexAction(
+        QuoteFilters $filters,
+        #[Autowire(service: 'prestashop.module.demodoctrine.grid.factory.quotes')]
+        GridFactoryInterface $quoteGridFactory,
+    ): Response {
         return $this->render(
             '@Modules/demodoctrine/views/templates/admin/index.html.twig',
             [
                 'enableSidebar' => true,
-                'layoutTitle' => $this->trans('Quotes', 'Modules.Demodoctrine.Admin'),
+                'layoutTitle' => $this->trans('Quotes', [], 'Modules.Demodoctrine.Admin'),
                 'layoutHeaderToolbarBtn' => $this->getToolbarButtons(),
-                'quoteGrid' => $this->presentGrid($quoteGrid),
+                'quoteGrid' => $this->presentGrid($quoteGridFactory->getGrid($filters)),
             ]
         );
     }
 
-    /**
-     * Provides filters functionality.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
-    public function searchAction(Request $request)
-    {
-        /** @var ResponseBuilder $responseBuilder */
-        $responseBuilder = $this->get('prestashop.bundle.grid.response_builder');
-
-        return $responseBuilder->buildSearchResponse(
-            $this->get('prestashop.module.demodoctrine.grid.definition.factory.quotes'),
+    public function searchAction(
+        Request $request,
+        #[Autowire(service: 'prestashop.module.demodoctrine.grid.definition.factory.quotes')]
+        GridDefinitionFactoryInterface $quoteGridDefinitionFactory,
+    ): RedirectResponse {
+        return $this->buildSearchResponse(
+            $quoteGridDefinitionFactory,
             $request,
             QuoteGridDefinitionFactory::GRID_ID,
             'ps_demodoctrine_quote_index'
         );
     }
 
-    /**
-     * List quotes
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function generateAction(Request $request)
-    {
-        if ($request->isMethod('POST')) {
-            $generator = $this->get('prestashop.module.demodoctrine.quotes.generator');
+    public function generateAction(
+        Request $request,
+        QuoteGenerator $generator,
+    ): Response {
+        if ($request->isMethod(Request::METHOD_POST)) {
             $generator->generateQuotes();
-            $this->addFlash('success', $this->trans('Quotes were successfully generated.', 'Modules.Demodoctrine.Admin'));
+            $this->addFlash('success', $this->trans('Quotes were successfully generated.', [], 'Modules.Demodoctrine.Admin'));
 
             return $this->redirectToRoute('ps_demodoctrine_quote_index');
         }
@@ -95,32 +73,27 @@ class QuotesController extends FrameworkBundleAdminController
             '@Modules/demodoctrine/views/templates/admin/generate.html.twig',
             [
                 'enableSidebar' => true,
-                'layoutTitle' => $this->trans('Quotes', 'Modules.Demodoctrine.Admin'),
+                'layoutTitle' => $this->trans('Quotes', [], 'Modules.Demodoctrine.Admin'),
                 'layoutHeaderToolbarBtn' => $this->getToolbarButtons(),
             ]
         );
     }
 
-    /**
-     * Create quote
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function createAction(Request $request)
-    {
-        $quoteFormBuilder = $this->get('prestashop.module.demodoctrine.form.identifiable_object.builder.quote_form_builder');
+    public function createAction(
+        Request $request,
+        #[Autowire(service: 'prestashop.module.demodoctrine.form.identifiable_object.builder.quote_form_builder')]
+        FormBuilderInterface $quoteFormBuilder,
+        #[Autowire(service: 'prestashop.module.demodoctrine.form.identifiable_object.handler.quote_form_handler')]
+        FormHandlerInterface $quoteFormHandler,
+    ): Response {
         $quoteForm = $quoteFormBuilder->getForm();
         $quoteForm->handleRequest($request);
-
-        $quoteFormHandler = $this->get('prestashop.module.demodoctrine.form.identifiable_object.handler.quote_form_handler');
         $result = $quoteFormHandler->handle($quoteForm);
 
         if (null !== $result->getIdentifiableObjectId()) {
             $this->addFlash(
                 'success',
-                $this->trans('Successful creation.', 'Admin.Notifications.Success')
+                $this->trans('Successful creation.', [], 'Admin.Notifications.Success')
             );
 
             return $this->redirectToRoute('ps_demodoctrine_quote_index');
@@ -131,25 +104,20 @@ class QuotesController extends FrameworkBundleAdminController
         ]);
     }
 
-    /**
-     * Edit quote
-     *
-     * @param Request $request
-     * @param int $quoteId
-     *
-     * @return Response
-     */
-    public function editAction(Request $request, $quoteId)
-    {
-        $quoteFormBuilder = $this->get('prestashop.module.demodoctrine.form.identifiable_object.builder.quote_form_builder');
+    public function editAction(
+        Request $request,
+        int $quoteId,
+        #[Autowire(service: 'prestashop.module.demodoctrine.form.identifiable_object.builder.quote_form_builder')]
+        FormBuilderInterface $quoteFormBuilder,
+        #[Autowire(service: 'prestashop.module.demodoctrine.form.identifiable_object.handler.quote_form_handler')]
+        FormHandlerInterface $quoteFormHandler,
+    ): Response {
         $quoteForm = $quoteFormBuilder->getFormFor((int) $quoteId);
         $quoteForm->handleRequest($request);
-
-        $quoteFormHandler = $this->get('prestashop.module.demodoctrine.form.identifiable_object.handler.quote_form_handler');
         $result = $quoteFormHandler->handleFor((int) $quoteId, $quoteForm);
 
         if ($result->isSubmitted() && $result->isValid()) {
-            $this->addFlash('success', $this->trans('Successful update.', 'Admin.Notifications.Success'));
+            $this->addFlash('success', $this->trans('Successful update.', [], 'Admin.Notifications.Success'));
 
             return $this->redirectToRoute('ps_demodoctrine_quote_index');
         }
@@ -159,92 +127,76 @@ class QuotesController extends FrameworkBundleAdminController
         ]);
     }
 
-    /**
-     * Delete quote
-     *
-     * @param int $quoteId
-     *
-     * @return Response
-     */
-    public function deleteAction($quoteId)
-    {
-        $repository = $this->get('prestashop.module.demodoctrine.repository.quote_repository');
+    public function deleteAction(
+        int $quoteId,
+        EntityManagerInterface $entityManager,
+        QuoteRepository $quoteRepository,
+    ): RedirectResponse {
         try {
-            $quote = $repository->findOneById($quoteId);
+            $quote = $quoteRepository->findOneById($quoteId);
         } catch (EntityNotFoundException $e) {
             $quote = null;
         }
 
         if (null !== $quote) {
-            /** @var EntityManagerInterface $em */
-            $em = $this->get('doctrine.orm.entity_manager');
-            $em->remove($quote);
-            $em->flush();
+            $entityManager->remove($quote);
+            $entityManager->flush();
 
             $this->addFlash(
                 'success',
-                $this->trans('Successful deletion.', 'Admin.Notifications.Success')
+                $this->trans('Successful deletion.', [], 'Admin.Notifications.Success'),
             );
         } else {
             $this->addFlash(
                 'error',
                 $this->trans(
                     'Cannot find quote %quote%',
+                    ['%quote%' => $quoteId],
                     'Modules.Demodoctrine.Admin',
-                    ['%quote%' => $quoteId]
-                )
+                ),
             );
         }
 
         return $this->redirectToRoute('ps_demodoctrine_quote_index');
     }
 
-    /**
-     * Delete bulk quotes
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function deleteBulkAction(Request $request)
-    {
-        $quoteIds = $request->request->get('quote_bulk');
-        $repository = $this->get('prestashop.module.demodoctrine.repository.quote_repository');
+    public function deleteBulkAction(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        QuoteRepository $quoteRepository,
+    ): RedirectResponse {
+        $quoteIds = $request->request->all('quote_bulk');
         try {
-            $quotes = $repository->findById($quoteIds);
+            $quotes = $quoteRepository->findById($quoteIds);
         } catch (EntityNotFoundException $e) {
             $quotes = null;
         }
+
         if (!empty($quotes)) {
-            /** @var EntityManagerInterface $em */
-            $em = $this->get('doctrine.orm.entity_manager');
             foreach ($quotes as $quote) {
-                $em->remove($quote);
+                $entityManager->remove($quote);
             }
-            $em->flush();
+            $entityManager->flush();
 
             $this->addFlash(
                 'success',
-                $this->trans('The selection has been successfully deleted.', 'Admin.Notifications.Success')
+                $this->trans('The selection has been successfully deleted.', [], 'Admin.Notifications.Success')
             );
         }
 
         return $this->redirectToRoute('ps_demodoctrine_quote_index');
     }
 
-    /**
-     * @return array[]
-     */
-    private function getToolbarButtons()
+    private function getToolbarButtons(): array
     {
         return [
             'add' => [
-                'desc' => $this->trans('Add new quote', 'Modules.Demodoctrine.Admin'),
+                'desc' => $this->trans('Add new quote', [], 'Modules.Demodoctrine.Admin'),
                 'icon' => 'add_circle_outline',
                 'href' => $this->generateUrl('ps_demodoctrine_quote_create'),
             ],
             'generate' => [
-                'desc' => $this->trans('Generate quotes', 'Modules.Demodoctrine.Admin'),
+                'desc' => $this->trans('Generate quotes', [], 'Modules.Demodoctrine.Admin'),
                 'icon' => 'add_circle_outline',
                 'href' => $this->generateUrl('ps_demodoctrine_quote_generate'),
             ],
