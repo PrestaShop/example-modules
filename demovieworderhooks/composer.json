@@ -1,4 +1,4 @@
-{  
+{
     "name": "prestashop/demovieworderhooks",
     "description": "Demonstration of new hooks in PrestaShop 1.7.7 order view page.",
     "license": "AFL-3.0",
@@ -16,6 +16,7 @@
         }
     ],
     "require": {
+        "php": ">=8.1",
         "joshtronic/php-loremipsum": "^1.0"
     },
     "autoload": {

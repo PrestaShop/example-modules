@@ -25,10 +25,7 @@ use PrestaShop\Module\DemoViewOrderHooks\DTO\Order;
  */
 class OrderRepository
 {
-    /**
-     * @var Db
-     */
-    private $db;
+    private Db $db;
 
     public function __construct()
     {

@@ -40,12 +40,12 @@ class DemoViewOrderHooks extends Module
         $this->name = 'demovieworderhooks';
         $this->author = 'PrestaShop';
         $this->version = '2.0.0';
-        $this->ps_versions_compliancy = ['min' => '8.0.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => '9.99.99'];
 
         parent::__construct();
 
         $this->displayName = $this->l('Demo view order hooks');
-        $this->description = $this->l('Demonstration of new hooks in PrestaShop 1.7.7 order view page');
+        $this->description = $this->l('Demonstration of hooks in PrestaShop order view page');
     }
 
     public function install()

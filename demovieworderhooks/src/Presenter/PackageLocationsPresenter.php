@@ -21,8 +21,6 @@ class PackageLocationsPresenter
 
     /**
      * @param PackageLocation[] $packageLocations
-     *
-     * @return array
      */
     public function present(array $packageLocations): array
     {
