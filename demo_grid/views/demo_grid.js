@@ -17,14 +17,8 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
-/**
- * Three mode available:
- *  build = production mode
- *  build:analyze = production mode with bundler analyzer
- *  dev = development mode
- */
-module.exports = () => (
-  process.env.NODE_ENV === 'production' ?
-    require('./.webpack/prod.js')() :
-    require('./.webpack/dev.js')()
-);
+$(() => {
+    const grid = new window.prestashop.component.Grid('product');
+    grid.addExtension(new window.prestashop.component.GridExtensions.SortingExtension());
+    grid.addExtension(new window.prestashop.component.GridExtensions.FiltersResetExtension());
+});
