@@ -2,14 +2,14 @@
 
 ## About
 
-This module demonstrates how to use Grid in PrestaShop 1.7.7+
+This module demonstrates how to use Grid in PrestaShop 9.0.0 and later.
 Please note this module is an example only, not a mandatory structure.
 
 ![Demo Grid screenshot](demo_grid_screenshot.png)
 
 ### Supported PrestaShop versions
 
-PrestaShop 1.7.7 to PrestaShop 8.1.0
+PrestaShop 9.0.0 and later
 
 ### Requirements
 

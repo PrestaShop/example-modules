@@ -24,50 +24,38 @@ namespace Module\DemoGrid\Controller\Admin;
 
 use Module\DemoGrid\Grid\Definition\Factory\ProductGridDefinitionFactory;
 use Module\DemoGrid\Grid\Filters\ProductFilters;
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
-use PrestaShopBundle\Service\Grid\ResponseBuilder;
+use PrestaShop\PrestaShop\Core\Grid\GridFactoryInterface;
+use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class IndexController extends FrameworkBundleAdminController
+class IndexController extends PrestaShopAdminController
 {
-    /**
-     * List quotes
-     *
-     * @param ProductFilters $filters
-     *
-     * @return Response
-     */
-    public function indexAction(ProductFilters $filters)
-    {
-        $quoteGridFactory = $this->get('demo_grid.grid.factory.products');
-        $quoteGrid = $quoteGridFactory->getGrid($filters);
+    public function indexAction(
+        ProductFilters $filters,
+        #[Autowire(service: 'demo_grid.grid.factory.products')]
+        GridFactoryInterface $productGridFactory,
+    ): Response {
+        $quoteGrid = $productGridFactory->getGrid($filters);
 
         return $this->render(
             '@Modules/demo_grid/views/templates/admin/index.html.twig',
             [
                 'enableSidebar' => true,
-                'layoutTitle' => $this->trans('Product listing', 'Modules.Demogrid.Admin'),
+                'layoutTitle' => $this->trans('Product listing', [], 'Modules.Demogrid.Admin'),
                 'quoteGrid' => $this->presentGrid($quoteGrid),
             ]
         );
     }
 
-    /**
-     * Provides filters functionality.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
-    public function searchAction(Request $request)
-    {
-        /** @var ResponseBuilder $responseBuilder */
-        $responseBuilder = $this->get('prestashop.bundle.grid.response_builder');
-
-        return $responseBuilder->buildSearchResponse(
-            $this->get('demo_grid.grid.definition.factory.products'),
+    public function searchAction(
+        Request $request,
+        ProductGridDefinitionFactory $productGridDefinitionFactory,
+    ): RedirectResponse {
+        return $this->buildSearchResponse(
+            $productGridDefinitionFactory,
             $request,
             ProductGridDefinitionFactory::GRID_ID,
             'demo_grid_index'
