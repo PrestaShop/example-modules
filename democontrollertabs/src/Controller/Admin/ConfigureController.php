@@ -27,20 +27,16 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoControllerTabs\Controller\Admin;
 
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
-use PrestaShopBundle\Security\Annotation\AdminSecurity;
+use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
+use PrestaShopBundle\Security\Attribute\AdminSecurity;
 use Symfony\Component\HttpFoundation\Response;
 
-class ConfigureController extends FrameworkBundleAdminController
+class ConfigureController extends PrestaShopAdminController
 {
-    const TAB_CLASS_NAME = 'AdminDemoControllerTabsConfigure';
+    public const TAB_CLASS_NAME = 'AdminDemoControllerTabsConfigure';
 
-    /**
-     * @AdminSecurity("is_granted('read', request.get('_legacy_controller'))")
-     *
-     * @return Response
-     */
-    public function indexAction()
+    #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
+    public function indexAction(): Response
     {
         return $this->render('@Modules/democontrollertabs/views/templates/admin/configure.html.twig');
     }
