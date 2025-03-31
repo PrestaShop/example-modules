@@ -15,8 +15,8 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-if (file_exists(__DIR__.'/vendor/autoload.php')) {
-    require_once __DIR__.'/vendor/autoload.php';
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
 }
 
 class DemoDoctrine extends Module
@@ -25,8 +25,8 @@ class DemoDoctrine extends Module
     {
         $this->name = 'demodoctrine';
         $this->author = 'PrestaShop';
-        $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '1.7.7', 'max' => '8.99.99'];
+        $this->version = '2.0.0';
+        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => '9.99.99'];
 
         parent::__construct();
 

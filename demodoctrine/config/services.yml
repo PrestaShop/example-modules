@@ -3,8 +3,7 @@ imports:
 
 services:
     # Form services
-    prestashop.module.demodoctrine.type.quote:
-        class: 'Module\DemoDoctrine\Form\QuoteType'
+    Module\DemoDoctrine\Form\QuoteType:
         parent: 'form.type.translatable.aware'
         public: true
         arguments:
@@ -20,7 +19,7 @@ services:
     prestashop.module.demodoctrine.form.identifiable_object.builder.quote_form_builder:
         class: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Builder\FormBuilder'
         public: true
-        factory: 'prestashop.core.form.builder.form_builder_factory:create'
+        factory: [ '@prestashop.core.form.builder.form_builder_factory', 'create' ]
         arguments:
             - 'Module\DemoDoctrine\Form\QuoteType'
             - '@prestashop.module.demodoctrine.form.identifiable_object.data_provider.quote_form_data_provider'
@@ -35,7 +34,7 @@ services:
     prestashop.module.demodoctrine.form.identifiable_object.handler.quote_form_handler:
         class: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Handler\FormHandler'
         public: true
-        factory: 'prestashop.core.form.identifiable_object.handler.form_handler_factory:create'
+        factory: [ '@prestashop.core.form.identifiable_object.handler.form_handler_factory', 'create' ]
         arguments:
             - '@prestashop.module.demodoctrine.form.identifiable_object.data_handler.quote_form_data_handler'
 

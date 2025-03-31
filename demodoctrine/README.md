@@ -10,7 +10,7 @@ Please note this module is an example only, not a mandatory structure.
 
 ### Supported PrestaShop versions
 
-PrestaShop 1.7.7 to PrestaShop 8.1.
+PrestaShop 9.0.0 and above.
 
 ## Requirements
 
@@ -30,7 +30,7 @@ PrestaShop 1.7.7 to PrestaShop 8.1.
 
 ## Other examples
 
-In this module, we also demonstrated other usecases that you might find useful for building a module. However they are not mandatory to use in your module.
+In this module, we also demonstrated other usecases that you might find useful for building a module. However, they are not mandatory to use in your module.
 
 ### Using Doctrine ORM to handle persisted models
 
