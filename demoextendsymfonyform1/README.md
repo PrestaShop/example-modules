@@ -25,7 +25,7 @@ how to use DoctrineORM.
 
 ### Supported PrestaShop versions
 
-PrestaShop 1.7.6 to PrestaShop 8.1.
+PrestaShop 9.0.0 and later.
  
 ### Requirements
  

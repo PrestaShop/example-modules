@@ -15,34 +15,16 @@ use PDO;
 
 class ReviewerRepository
 {
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     */
-    public function __construct(Connection $connection, $dbPrefix)
-    {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix
+    ) {
     }
 
     /**
      * Finds customer id if such exists.
-     *
-     * @param int $customerId
-     *
-     * @return int
      */
-    public function findIdByCustomer($customerId)
+    public function findIdByCustomer(int $customerId): int
     {
         $queryBuilder = $this->connection->createQueryBuilder();
 
@@ -59,12 +41,8 @@ class ReviewerRepository
 
     /**
      * Gets allowed to review status by customer.
-     *
-     * @param int $customerId
-     *
-     * @return bool
      */
-    public function getIsAllowedToReviewStatus($customerId)
+    public function getIsAllowedToReviewStatus(int $customerId): bool
     {
         $queryBuilder = $this->connection->createQueryBuilder();
 

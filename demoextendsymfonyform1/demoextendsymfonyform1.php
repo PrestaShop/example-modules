@@ -21,6 +21,7 @@ use PrestaShop\PrestaShop\Core\Search\Filters\CustomerFilters;
 use PrestaShopBundle\Form\Admin\Type\SwitchType;
 use PrestaShopBundle\Form\Admin\Type\YesAndNoChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use PrestaShop\Module\DemoHowToExtendSymfonyForm\Repository\ReviewerRepository;
 
 /**
  * Class DemoExtendSymfonyForm1 demonstrates the usage of Symfony hooks.
@@ -36,22 +37,22 @@ class DemoExtendSymfonyForm1 extends Module
 
         parent::__construct();
 
-        $this->displayName = $this->getTranslator()->trans(
-            'Demo Symfony Forms #1',
+        $this->displayName = $this->trans(
+            'Demo Symfony Forms #1', 
             [],
             'Modules.DemoHowToExtendSymfonyForm.Admin'
         );
 
         $this->description =
-            $this->getTranslator()->trans(
+            $this->trans(
                 'Help developers to understand how to create module using few Symfony hooks available in PrestaShop',
                 [],
                 'Modules.DemoHowToExtendSymfonyForm.Admin'
             );
 
         $this->ps_versions_compliancy = [
-            'min' => '1.7.6.0',
-            'max' => '8.99.99',
+            'min' => '9.0.0',
+            'max' => '9.99.99',
         ];
     }
 
@@ -110,14 +111,12 @@ class DemoExtendSymfonyForm1 extends Module
         /** @var GridDefinitionInterface $definition */
         $definition = $params['definition'];
 
-        $translator = $this->getTranslator();
-
         $definition
             ->getColumns()
             ->addAfter(
                 'optin',
                 (new ToggleColumn('is_allowed_for_review'))
-                    ->setName($translator->trans('Allowed for review', [], 'Modules.DemoHowToExtendSymfonyForm.Admin'))
+                    ->setName($this->trans('Allowed for review', [], 'Modules.DemoHowToExtendSymfonyForm.Admin'))
                     ->setOptions([
                         'field' => 'is_allowed_for_review',
                         'primary_field' => 'id_customer',
@@ -182,13 +181,13 @@ class DemoExtendSymfonyForm1 extends Module
         /** @var FormBuilderInterface $formBuilder */
         $formBuilder = $params['form_builder'];
         $formBuilder->add('is_allowed_for_review', SwitchType::class, [
-            'label' => $this->getTranslator()->trans('Allow reviews', [], 'Modules.DemoHowToExtendSymfonyForm.Admin'),
+            'label' => $this->trans('Allow reviews', [], 'Modules.DemoHowToExtendSymfonyForm.Admin'),
             'required' => false,
         ]);
 
         $result = false;
         if (null !== $params['id']) {
-            $result = $this->get('ps_demoextendsymfonyform.repository.reviewer')->getIsAllowedToReviewStatus((int) $params['id']);
+            $result = $this->get(ReviewerRepository::class)->getIsAllowedToReviewStatus((int) $params['id']);
         }
 
         $params['data']['is_allowed_for_review'] = $result;
@@ -232,7 +231,7 @@ class DemoExtendSymfonyForm1 extends Module
         $customerFormData = $params['form_data'];
         $isAllowedForReview = (bool) $customerFormData['is_allowed_for_review'];
 
-        $reviewerId = $this->get('ps_demoextendsymfonyform.repository.reviewer')->findIdByCustomer($customerId);
+        $reviewerId = $this->get(ReviewerRepository::class)->findIdByCustomer($customerId);
 
         $reviewer = new Reviewer($reviewerId);
         if (0 >= $reviewer->id) {

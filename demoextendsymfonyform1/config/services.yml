@@ -1,8 +1,10 @@
 services:
   _defaults:
     public: true
-  ps_demoextendsymfonyform.repository.reviewer:
-    class: 'PrestaShop\Module\DemoHowToExtendSymfonyForm\Repository\ReviewerRepository'
+  PrestaShop\Module\DemoHowToExtendSymfonyForm\Repository\ReviewerRepository:
     arguments:
       - '@doctrine.dbal.default_connection'
       - '%database_prefix%'
+  PrestaShop\Module\DemoHowToExtendSymfonyForm\Controller\Admin\CustomerReviewController:
+    autoconfigure: true
+    autowire: true

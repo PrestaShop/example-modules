@@ -15,27 +15,25 @@ use PrestaShop\Module\DemoHowToExtendSymfonyForm\Exception\CannotToggleAllowedTo
 use PrestaShop\Module\DemoHowToExtendSymfonyForm\Exception\ReviewerException;
 use PrestaShop\Module\DemoHowToExtendSymfonyForm\Entity\Reviewer;
 use PrestaShop\PrestaShop\Core\Domain\Customer\Exception\CustomerException;
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use PrestaShop\Module\DemoHowToExtendSymfonyForm\Repository\ReviewerRepository;
 
 /**
  * This controller holds all custom actions which are added by extending "Sell > Customers" page.
- *
- * @see https://devdocs.prestashop.com/1.7/modules/concepts/controllers/admin-controllers/ for more details.
  */
-class CustomerReviewController extends FrameworkBundleAdminController
+class CustomerReviewController extends PrestashopAdminController
 {
     /**
      * Catches the toggle action of customer review.
-     *
-     * @param int $customerId
-     *
-     * @return RedirectResponse
      */
-    public function toggleIsAllowedForReviewAction(int $customerId)
+    public function toggleIsAllowedForReviewAction(
+        int $customerId,
+        ReviewerRepository $reviewerRepository
+    ): JsonResponse
     {
         try {
-            $reviewerId = $this->get('ps_demoextendsymfonyform.repository.reviewer')->findIdByCustomer($customerId);
+            $reviewerId = $reviewerRepository->findIdByCustomer($customerId);
 
             $reviewer = new Reviewer((int) $reviewerId);
             if (0 >= $reviewer->id) {
@@ -58,7 +56,7 @@ class CustomerReviewController extends FrameworkBundleAdminController
             return $this->json(
                 [
                     'status' => true,
-                    'message' => $this->trans('Successful update.', 'Admin.Notifications.Success')
+                    'message' => $this->trans('Successful update.', [], 'Admin.Notifications.Success')
                 ]
             );
         } catch (ReviewerException $e) {
@@ -84,14 +82,17 @@ class CustomerReviewController extends FrameworkBundleAdminController
         return [
             CustomerException::class => $this->trans(
                 'Something bad happened when trying to get customer id',
+                [],
                 'Modules.DemoHowToExtendSymfonyForm.Customerreviewcontroller'
             ),
             CannotCreateReviewerException::class => $this->trans(
                 'Failed to create reviewer',
+                [],
                 'Modules.DemoHowToExtendSymfonyForm.Customerreviewcontroller'
             ),
             CannotToggleAllowedToReviewStatusException::class => $this->trans(
                 'An error occurred while updating the status.',
+                [],
                 'Modules.DemoHowToExtendSymfonyForm.Customerreviewcontroller'
             ),
         ];
@@ -100,13 +101,9 @@ class CustomerReviewController extends FrameworkBundleAdminController
     /**
      * Creates a reviewer. Used when toggle action is used on customer whose data is empty.
      *
-     * @param int $customerId
-     *
-     * @return Reviewer
-     *
      * @throws CannotCreateReviewerException
      */
-    protected function createReviewerIfNeeded(int $customerId)
+    protected function createReviewerIfNeeded(int $customerId): Reviewer
     {
         try {
             $reviewer = new Reviewer();
