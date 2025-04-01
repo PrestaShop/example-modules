@@ -21,15 +21,14 @@ class UpdateIsAllowedToReviewCommand
 {
     private CustomerId $customerId;
 
-    private bool $isAllowedToReview;
-
     /**
      * @throws CustomerException
      */
-    public function __construct(int $customerId, bool $isAllowedToReview)
-    {
+    public function __construct(
+        int $customerId,
+        private bool $isAllowedToReview
+    ) {
         $this->customerId = new CustomerId($customerId);
-        $this->isAllowedToReview = $isAllowedToReview;
     }
 
     public function getCustomerId(): CustomerId

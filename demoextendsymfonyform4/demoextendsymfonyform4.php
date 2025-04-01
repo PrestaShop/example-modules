@@ -24,7 +24,6 @@ use PrestaShop\PrestaShop\Core\Search\Filters\CustomerFilters;
 use PrestaShopBundle\Form\Admin\Type\SwitchType;
 use PrestaShopBundle\Form\Admin\Type\YesAndNoChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class DemoExtendSymfonyForm1 demonstrates the usage of CQRS pattern and hooks.
@@ -72,7 +71,7 @@ class DemoExtendSymfonyForm4 extends Module
     /**
      * Install module and register hooks to allow grid modification.
      *
-     * @see https://devdocs.prestashop.com/1.7/modules/concepts/hooks/use-hooks-on-modern-pages/
+     * @see https://devdocs.prestashop-project.org/9/modules/concepts/hooks/use-hooks-on-modern-pages/
      *
      * @return bool
      */
@@ -198,7 +197,7 @@ class DemoExtendSymfonyForm4 extends Module
         /**
          * This part demonstrates the usage of CQRS pattern query to perform read operation from Reviewer entity.
          *
-         * @see https://devdocs.prestashop.com/1.7/development/architecture/cqrs/ for more detailed information.
+         * @see https://devdocs.prestashop-project.org/9/development/architecture/domain/cqrs/ for more detailed information.
          *
          * As this is our recommended approach of reading the data but we not force to use this pattern in modules -
          * you can use directly an entity here or wrap it in custom service class.
@@ -254,7 +253,7 @@ class DemoExtendSymfonyForm4 extends Module
         try {
             /*
              * This part demonstrates the usage of CQRS pattern command to perform write operation for Reviewer entity.
-             * @see https://devdocs.prestashop.com/1.7/development/architecture/domain/cqrs/ for more detailed information.
+             * @see https://devdocs.prestashop-project.org/9/development/architecture/domain/cqrs/ for more detailed information.
              *
              * As this is our recommended approach of writing the data but we not force to use this pattern in modules -
              * you can use directly an entity here or wrap it in custom service class.

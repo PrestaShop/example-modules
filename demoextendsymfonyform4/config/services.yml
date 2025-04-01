@@ -1,7 +1,7 @@
 services:
   _defaults:
     public: true
-#  @see  https://devdocs.prestashop.com/1.7/development/architecture/migration-guide/forms/cqrs-usage-in-forms/ for CQRS pattern usage examples.
+#  @see  https://devdocs.prestashop-project.org/9/development/architecture/migration-guide/forms/cqrs-usage-in-forms/ for CQRS pattern usage examples.
   democqrshooksusage.domain.reviewer.command_handler.toggle_is_allowed_to_review_handler:
     class: 'DemoCQRSHooksUsage\Domain\Reviewer\CommandHandler\ToggleIsAllowedToReviewHandler'
     autoconfigure: true
@@ -25,3 +25,7 @@ services:
     arguments:
       - '@doctrine.dbal.default_connection'
       - '%database_prefix%'
+
+  DemoCQRSHooksUsage\Controller\Admin\CustomerReviewController:
+    autowire: true
+    autoconfigure: true

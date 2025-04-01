@@ -7,5 +7,8 @@
       "DemoCQRSHooksUsage\\": "src/"
     }
   },
+  "require": {
+      "php": ">=8.1"
+  },
   "type": "prestashop-module"
 }

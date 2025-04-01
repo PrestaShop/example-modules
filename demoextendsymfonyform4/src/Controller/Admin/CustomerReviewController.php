@@ -15,39 +15,35 @@ use DemoCQRSHooksUsage\Domain\Reviewer\Exception\CannotCreateReviewerException;
 use DemoCQRSHooksUsage\Domain\Reviewer\Exception\CannotToggleAllowedToReviewStatusException;
 use DemoCQRSHooksUsage\Domain\Reviewer\Exception\ReviewerException;
 use PrestaShop\PrestaShop\Core\Domain\Customer\Exception\CustomerException;
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
 
 /**
  * This controller holds all custom actions which are added by extending "Sell > Customers" page.
  *
- * @see https://devdocs.prestashop.com/1.7/modules/concepts/controllers/admin-controllers/ for more details.
+ * @see https://devdocs.prestashop-project.org/9/modules/concepts/controllers/admin-controllers/ for more details.
  */
-class CustomerReviewController extends FrameworkBundleAdminController
+class CustomerReviewController extends PrestaShopAdminController
 {
     /**
      * Catches the toggle action of customer review.
-     *
-     * @param int $customerId
-     *
-     * @return RedirectResponse
      */
-    public function toggleIsAllowedForReviewAction($customerId)
+    public function toggleIsAllowedForReviewAction(int $customerId): JsonResponse
     {
         try {
             /*
              * This part demonstrates the usage of CQRS pattern command to perform write operation for Reviewer entity.
-             * @see https://devdocs.prestashop.com/1.7/development/architecture/cqrs/ for more detailed information.
+             * @see https://devdocs.prestashop-project.org/9/development/architecture/domain/cqrs/ for more detailed information.
              *
              * As this is our recommended approach of writing the data but we not force to use this pattern in modules -
              * you can use directly an entity here or wrap it in custom service class.
              */
-            $this->getCommandBus()->handle(new ToggleIsAllowedToReviewCommand((int) $customerId));
+            $this->dispatchCommand(new ToggleIsAllowedToReviewCommand((int) $customerId));
 
             return $this->json(
                 [
                     'status' => true,
-                    'message' => $this->trans('Successful update.', 'Admin.Notifications.Success')
+                    'message' => $this->trans('Successful update.', [], 'Admin.Notifications.Success')
                 ]
             );
         } catch (ReviewerException $e) {
@@ -66,23 +62,24 @@ class CustomerReviewController extends FrameworkBundleAdminController
      * Gets error message mappings which are later used to display friendly user error message instead of the
      * exception message.
      *
-     * @see https://devdocs.prestashop.com/1.7/development/architecture/domain-exceptions/ for more detailed explanation
-     *
-     * @return array
+     * @see https://devdocs.prestashop-project.org/9/development/architecture/domain/domain-exceptions/ for more detailed explanation
      */
     private function getErrorMessageMapping()
     {
         return [
             CustomerException::class => $this->trans(
                 'Something bad happened when trying to get customer id',
+                [],
                 'Modules.Democqrshooksusage.Customerreviewcontroller'
             ),
             CannotCreateReviewerException::class => $this->trans(
                 'Failed to create reviewer',
+                [],
                 'Modules.Democqrshooksusage.Customerreviewcontroller'
             ),
             CannotToggleAllowedToReviewStatusException::class => $this->trans(
                 'An error occurred while updating the status.',
+                [],
                 'Modules.Democqrshooksusage.Customerreviewcontroller'
             ),
         ];
