@@ -21,70 +21,48 @@ use Doctrine\ORM\Mapping as ORM;
 class SupplierExtraImage
 {
     /**
-     * @var int
-     *
      * @ORM\Id
      * @ORM\Column(name="id_extra_image", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
 
     /**
      * @ORM\Column(name="id_supplier", type="integer")
      */
-    private $supplierId;
+    private int $supplierId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-    private $imageName;
+    private string $imageName;
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
     public function setId(int $id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSupplierId()
+    public function getSupplierId(): int
     {
         return $this->supplierId;
     }
 
-    /**
-     * @param mixed $supplierId
-     */
-    public function setSupplierId($supplierId): void
+    public function setSupplierId(int $supplierId): void
     {
         $this->supplierId = $supplierId;
     }
 
-    /**
-     * @return string
-     */
     public function getImageName(): string
     {
         return $this->imageName;
     }
 
-    /**
-     * @param string $imageName
-     */
     public function setImageName(string $imageName): void
     {
         $this->imageName = $imageName;

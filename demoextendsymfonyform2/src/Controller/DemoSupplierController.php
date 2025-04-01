@@ -16,31 +16,30 @@ use PrestaShop\Module\DemoExtendSymfonyForm\Entity\SupplierExtraImage;
 use PrestaShop\Module\DemoExtendSymfonyForm\Repository\SupplierExtraImageRepository;
 use PrestaShop\PrestaShop\Core\Domain\Category\Exception\CannotDeleteImageException;
 use PrestaShop\PrestaShop\Core\Domain\Supplier\Exception\SupplierException;
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
 
 /**
  * Class DemoSupplierController
  * @package PrestaShop\Module\DemoExtendSymfonyForm\Controller
  */
-class DemoSupplierController extends FrameworkBundleAdminController
+class DemoSupplierController extends PrestaShopAdminController
 {
 
     /**
      * Deletes image.
-     *
-     * @param int $supplierId
-     *
-     * @return RedirectResponse
      */
-    public function deleteExtraImageAction(int $supplierId)
+    public function deleteExtraImageAction(
+        int $supplierId,
+        SupplierExtraImageRepository $supplierExtraImageRepository
+    ): RedirectResponse
     {
         try {
-            $this->deleteExtraUploadedImage($supplierId);
+            $this->deleteExtraUploadedImage($supplierId, $supplierExtraImageRepository);
 
             $this->addFlash(
                 'success',
-                $this->trans('The image was successfully deleted.', 'Admin.Notifications.Success')
+                $this->trans('The image was successfully deleted.', [], 'Admin.Notifications.Success')
             );
         } catch (SupplierException $e) {
             $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
@@ -53,30 +52,26 @@ class DemoSupplierController extends FrameworkBundleAdminController
 
     /**
      * Provides error messages for exceptions
-     * @return array
      */
-    private function getErrorMessages()
+    private function getErrorMessages(): array
     {
         return [
             CannotDeleteImageException::class => $this->trans(
                 'Second supplier image could not be deleted!',
+                [],
                 'Admin.Notifications.Error'
             ),
         ];
     }
 
     /**
-     * @param int $supplierId
-     *
-     * @return bool
      * @throws CannotDeleteImageException
      */
-    private function deleteExtraUploadedImage(int $supplierId)
+    private function deleteExtraUploadedImage(
+        int $supplierId,
+        SupplierExtraImageRepository $supplierExtraImageRepository
+    ): bool
     {
-        /** @var SupplierExtraImageRepository $supplierExtraImageRepository */
-        $supplierExtraImageRepository = $this->get(
-            'prestashop.module.demoextendsymfonyform.repository.supplier_extra_image_repository'
-        );
         /** @var SupplierExtraImage $supplierExtraImage */
         $supplierExtraImage = $supplierExtraImageRepository->findOneBy(['supplierId' => $supplierId]);
         if ($supplierExtraImage) {

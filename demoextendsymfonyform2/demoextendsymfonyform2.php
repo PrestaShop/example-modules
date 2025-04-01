@@ -18,12 +18,13 @@ use PrestaShopBundle\Form\Admin\Type\CustomContentType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use PrestaShop\Module\DemoExtendSymfonyForm\Uploader\SupplierExtraImageUploader;
 
 if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 /**
  * Class demoextendsymfonyform
@@ -37,12 +38,12 @@ class DemoExtendSymfonyForm2 extends Module
         $this->name = 'demoextendsymfonyform2';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '1.7.7.0', 'max' => '8.99.99'];
+        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => '9.99.99'];
 
         parent::__construct();
 
-        $this->displayName = $this->l('Demo Symfony Forms #2');
-        $this->description = $this->l('Demonstration of how to add an image upload field inside the Symfony form');
+        $this->displayName = $this->trans('Demo Symfony Forms #2', [], 'Modules.DemoExtendSymfonyForm2.Admin');
+        $this->description = $this->trans('Demonstration of how to add an image upload field inside the Symfony form', [], 'Modules.DemoExtendSymfonyForm2.Admin');
     }
 
     /**
@@ -75,16 +76,13 @@ class DemoExtendSymfonyForm2 extends Module
     public function hookActionSupplierFormBuilderModifier(array $params)
     {
         /** @var SupplierExtraImageRepository $supplierExtraImageRepository */
-        $supplierExtraImageRepository = $this->get(
-            'prestashop.module.demoextendsymfonyform.repository.supplier_extra_image_repository'
-        );
+        $supplierExtraImageRepository = $this->get(SupplierExtraImageRepository::class);
 
-        $translator = $this->getTranslator();
         /** @var FormBuilderInterface $formBuilder */
         $formBuilder = $params['form_builder'];
         $formBuilder
             ->add('upload_image_file', FileType::class, [
-                'label' => $translator->trans('Upload image file', [], 'Modules.DemoExtendSymfonyForm'),
+                'label' => $this->trans('Upload image file', [], 'Modules.DemoExtendSymfonyForm'),
                 'required' => false,
             ]);
 
@@ -125,9 +123,7 @@ class DemoExtendSymfonyForm2 extends Module
     private function uploadImage(array $params): void
     {
         /** @var ImageUploaderInterface $supplierExtraImageUploader */
-        $supplierExtraImageUploader = $this->get(
-            'prestashop.module.demoextendsymfonyform.uploader.supplier_extra_image_uploader'
-        );
+        $supplierExtraImageUploader = $this->get(SupplierExtraImageUploader::class);
 
         /** @var UploadedFile $uploadedFile */
         $uploadedFile = $params['form_data']['upload_image_file'];

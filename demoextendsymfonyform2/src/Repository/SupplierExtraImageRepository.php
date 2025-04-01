@@ -21,11 +21,7 @@ use PrestaShop\Module\DemoExtendSymfonyForm\Entity\SupplierExtraImage;
  */
 class SupplierExtraImageRepository extends EntityRepository
 {
-    /**
-     * @param $supplierId
-     * @param $imageName
-     */
-    public function upsertSupplierImageName($supplierId, $imageName)
+    public function upsertSupplierImageName(int $supplierId, string $imageName)
     {
         /** @var SupplierExtraImage $supplierExtraImage */
         $supplierExtraImage = $this->findOneBy(['supplierId' => $supplierId]);
@@ -40,9 +36,6 @@ class SupplierExtraImageRepository extends EntityRepository
         $em->flush();
     }
 
-    /**
-     * @param SupplierExtraImage $supplierExtraImage
-     */
     public function deleteExtraImage(SupplierExtraImage $supplierExtraImage)
     {
         $em = $this->getEntityManager();
