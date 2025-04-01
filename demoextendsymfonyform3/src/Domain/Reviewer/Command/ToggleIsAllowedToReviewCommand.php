@@ -19,25 +19,17 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerId;
  */
 class ToggleIsAllowedToReviewCommand
 {
-    /**
-     * @var CustomerId
-     */
-    private $customerId;
+    private CustomerId $customerId;
 
     /**
-     * @param int $customerId
-     *
      * @throws CustomerException
      */
-    public function __construct($customerId)
+    public function __construct(int $customerId)
     {
         $this->customerId = new CustomerId($customerId);
     }
 
-    /**
-     * @return CustomerId
-     */
-    public function getCustomerId()
+    public function getCustomerId(): CustomerId
     {
         return $this->customerId;
     }

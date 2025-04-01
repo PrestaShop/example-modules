@@ -19,23 +19,14 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerId;
  */
 class GetReviewerSettingsForForm
 {
-    /**
-     * @var CustomerId|null
-     */
-    private $customerId;
+    private ?CustomerId $customerId;
 
-    /**
-     * @param int|null $customerId
-     */
-    public function __construct($customerId)
+    public function __construct(?int $customerId)
     {
         $this->customerId = null !== $customerId ? new CustomerId((int) $customerId) : null;
     }
 
-    /**
-     * @return CustomerId|null
-     */
-    public function getCustomerId()
+    public function getCustomerId(): ?CustomerId
     {
         return $this->customerId;
     }

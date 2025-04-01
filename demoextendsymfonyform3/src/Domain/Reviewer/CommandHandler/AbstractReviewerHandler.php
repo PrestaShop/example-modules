@@ -21,13 +21,9 @@ class AbstractReviewerHandler
     /**
      * Creates a reviewer.
      *
-     * @param $customerId
-     *
-     * @return Reviewer
-     *
      * @throws CannotCreateReviewerException
      */
-    protected function createReviewer($customerId)
+    protected function createReviewer(int $customerId): Reviewer
     {
         try {
             $reviewer = new Reviewer();
@@ -44,7 +40,7 @@ class AbstractReviewerHandler
             }
         } catch (PrestaShopException $exception) {
             /*
-             * @see https://devdocs.prestashop.com/1.7/development/architecture/domain-exceptions/
+             * @see https://devdocs.prestashop-project.org/9/development/architecture/domain/domain-exceptions/
              */
             throw new CannotCreateReviewerException(
                 sprintf(

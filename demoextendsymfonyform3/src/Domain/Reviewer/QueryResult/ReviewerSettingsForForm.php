@@ -15,23 +15,12 @@ namespace DemoCQRSHooksUsage\Domain\Reviewer\QueryResult;
  */
 class ReviewerSettingsForForm
 {
-    /**
-     * @var bool
-     */
-    private $isAllowedForReview;
-
-    /**
-     * @param bool $isAllowedForReview
-     */
-    public function __construct($isAllowedForReview)
-    {
-        $this->isAllowedForReview = $isAllowedForReview;
+    public function __construct(
+        private bool $isAllowedForReview
+    ) {
     }
 
-    /**
-     * @return bool
-     */
-    public function isAllowedForReview()
+    public function isAllowedForReview(): bool
     {
         return $this->isAllowedForReview;
     }

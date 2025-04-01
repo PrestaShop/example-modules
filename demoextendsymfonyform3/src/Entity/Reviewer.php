@@ -17,15 +17,9 @@ use PrestaShop\PrestaShop\Adapter\Entity\ObjectModel;
  */
 class Reviewer extends ObjectModel
 {
-    /**
-     * @var int
-     */
-    public $id_customer;
+    public int $id_customer;
 
-    /**
-     * @var int
-     */
-    public $is_allowed_for_review;
+    public int $is_allowed_for_review;
 
     public static $definition = [
         'table' => 'democqrshooksusage_reviewer',
