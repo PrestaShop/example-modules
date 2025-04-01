@@ -24,8 +24,6 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-require_once __DIR__ . '/vendor/autoload.php';
-
 class DemoExtendTemplates extends Module
 {
     public function __construct()
@@ -33,7 +31,7 @@ class DemoExtendTemplates extends Module
         $this->name = 'demoextendtemplates';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '8.0.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => '9.99.99'];
 
         parent::__construct();
 
