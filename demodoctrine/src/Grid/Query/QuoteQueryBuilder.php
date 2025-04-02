@@ -13,38 +13,20 @@ namespace Module\DemoDoctrine\Grid\Query;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
+use PrestaShop\PrestaShop\Core\Context\LanguageContext;
 use PrestaShop\PrestaShop\Core\Grid\Query\AbstractDoctrineQueryBuilder;
 use PrestaShop\PrestaShop\Core\Grid\Query\DoctrineSearchCriteriaApplicatorInterface;
 use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 
 class QuoteQueryBuilder extends AbstractDoctrineQueryBuilder
 {
-    /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var int
-     */
-    private $languageId;
-
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param int $languageId
-     */
     public function __construct(
         Connection $connection,
-        $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        $languageId
+        string $dbPrefix,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private readonly LanguageContext $languageContext,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->languageId = $languageId;
     }
 
     /**
@@ -96,7 +78,7 @@ class QuoteQueryBuilder extends AbstractDoctrineQueryBuilder
             ->from($this->dbPrefix . 'quote', 'q')
             ->innerJoin('q', $this->dbPrefix . 'quote_lang', 'ql', 'q.id_quote = ql.id_quote')
             ->andWhere('ql.`id_lang`= :language')
-            ->setParameter('language', $this->languageId)
+            ->setParameter('language', $this->languageContext->getId())
         ;
 
         foreach ($filters as $name => $value) {

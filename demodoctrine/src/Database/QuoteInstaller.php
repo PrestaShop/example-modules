@@ -12,8 +12,7 @@ declare(strict_types=1);
 namespace Module\DemoDoctrine\Database;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
-use Doctrine\DBAL\Driver\Statement;
+use Doctrine\DBAL\Exception as DBALException;
 
 /**
  * We cannot use Doctrine entities on install because the mapping is not available yet
@@ -21,34 +20,13 @@ use Doctrine\DBAL\Driver\Statement;
  */
 class QuoteInstaller
 {
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     */
     public function __construct(
-        Connection $connection,
-        $dbPrefix
+        private readonly Connection $connection,
+        private readonly string $dbPrefix
     ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
     }
 
-    /**
-     * @return array
-     *
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    public function createTables()
+    public function createTables(): array
     {
         $errors = [];
         $this->dropTables();
@@ -60,10 +38,12 @@ class QuoteInstaller
             if (empty($query)) {
                 continue;
             }
-            $statement = $this->connection->executeQuery($query);
-            if (0 != (int) $statement->errorCode()) {
+
+            try {
+                $this->connection->executeQuery($query);
+            } catch (DBALException $e) {
                 $errors[] = [
-                    'key' => json_encode($statement->errorInfo()),
+                    'key' => $e->getMessage(),
                     'parameters' => [],
                     'domain' => 'Admin.Modules.Notification',
                 ];
@@ -73,12 +53,7 @@ class QuoteInstaller
         return $errors;
     }
 
-    /**
-     * @return array
-     *
-     * @throws DBALException
-     */
-    public function dropTables()
+    public function dropTables(): array
     {
         $errors = [];
         $tableNames = [
@@ -87,10 +62,11 @@ class QuoteInstaller
         ];
         foreach ($tableNames as $tableName) {
             $sql = 'DROP TABLE IF EXISTS ' . $this->dbPrefix . $tableName;
-            $statement = $this->connection->executeQuery($sql);
-            if ($statement instanceof Statement && 0 != (int) $statement->errorCode()) {
+            try {
+                $this->connection->executeQuery($sql);
+            } catch (DBALException $e) {
                 $errors[] = [
-                    'key' => json_encode($statement->errorInfo()),
+                    'key' => $e->getMessage(),
                     'parameters' => [],
                     'domain' => 'Admin.Modules.Notification',
                 ];

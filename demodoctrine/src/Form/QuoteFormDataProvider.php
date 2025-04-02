@@ -18,17 +18,9 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataProvider\FormDataProv
 
 class QuoteFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var QuoteRepository
-     */
-    private $repository;
-
-    /**
-     * @param QuoteRepository $repository
-     */
-    public function __construct(QuoteRepository $repository)
-    {
-        $this->repository = $repository;
+    public function __construct(
+        private readonly QuoteRepository $repository
+    ) {
     }
 
     /**

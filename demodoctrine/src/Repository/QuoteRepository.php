@@ -52,7 +52,7 @@ class QuoteRepository extends EntityRepository
         ;
 
         $quotes = $qb->getQuery()->getResult();
-        uasort($quotes, function($a, $b) use ($ids) {
+        uasort($quotes, function ($a, $b) use ($ids) {
             return array_search($a->getId(), $ids) - array_search($b->getId(), $ids);
         });
 
@@ -69,7 +69,7 @@ class QuoteRepository extends EntityRepository
 
         $quotes = $qb->getQuery()->getScalarResult();
 
-        return array_map(function($quote) {
+        return array_map(function ($quote) {
             return $quote['id'];
         }, $quotes);
     }

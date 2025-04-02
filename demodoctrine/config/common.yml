@@ -1,13 +1,12 @@
 services:
-    prestashop.module.demodoctrine.repository.quote_repository:
-        class: Module\DemoDoctrine\Repository\QuoteRepository
+    Module\DemoDoctrine\Repository\QuoteRepository:
         public: true
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - Module\DemoDoctrine\Entity\Quote
 
-    prestashop.module.demodoctrine.quotes.install:
-        class: Module\DemoDoctrine\Database\QuoteInstaller
+    Module\DemoDoctrine\Database\QuoteInstaller:
+        public: true
         arguments:
             - '@doctrine.dbal.default_connection'
             - '%database_prefix%'
