@@ -11,14 +11,11 @@ declare(strict_types=1);
 
 class Manufacturer extends ManufacturerCore
 {
-    /**
-     * @var string
-     */
-    public $code;
+    public string $code;
 
     public function __construct(
-        $id = null,
-        $idLang = null
+        ?int $id = null,
+        ?int $idLang = null
     ) {
         self::$definition['fields']['code'] = ['type' => self::TYPE_STRING, 'size' => 64];
         parent::__construct($id, $idLang);
