@@ -31,7 +31,7 @@ class DemoFormDataProviders extends Module
         $this->name = 'demoformdataproviders';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '8.0.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '8.0.0', 'max' => '9.99.99'];
 
         parent::__construct();
 
@@ -48,7 +48,7 @@ class DemoFormDataProviders extends Module
             return false;
         }
 
-        $this->registerHook('actionProductFormDataProviderData') 
+        return $this->registerHook('actionProductFormDataProviderData')
             && $this->registerHook('actionProductFormDataProviderDefaultData');
     }
 
@@ -60,6 +60,7 @@ class DemoFormDataProviders extends Module
         if (!parent::uninstall()) {
             return false;
         }
+        return true;
     }
 
     public function hookActionProductFormDataProviderDefaultData(array $params): void
