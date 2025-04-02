@@ -27,43 +27,29 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class SupplierExtraImageUploader implements ImageUploaderInterface
 {
-    /** @var SupplierExtraImageRepository */
-    private $supplierExtraImageRepository;
-
-    /**
-     * @param SupplierExtraImageRepository $supplierExtraImageRepository
-     */
-    public function __construct(SupplierExtraImageRepository $supplierExtraImageRepository)
-    {
-        $this->supplierExtraImageRepository = $supplierExtraImageRepository;
+    public function __construct(
+        private readonly SupplierExtraImageRepository $supplierExtraImageRepository
+    ) {
     }
 
-    /**
-     * @param int $supplierId
-     * @param UploadedFile $image
-     */
-    public function upload($supplierId, UploadedFile $image)
+    public function upload($supplierId, UploadedFile $image): void
     {
         $this->checkImageIsAllowedForUpload($image);
         $tempImageName = $this->createTemporaryImage($image);
-        $this->deleteOldImage($supplierId);
+        $this->deleteOldImage((int) $supplierId);
 
         $originalImageName = $image->getClientOriginalName();
         $destination = _PS_SUPP_IMG_DIR_ . $originalImageName;
         $this->uploadFromTemp($tempImageName, $destination);
-        $this->supplierExtraImageRepository->upsertSupplierImageName($supplierId, $originalImageName);
+        $this->supplierExtraImageRepository->upsertSupplierImageName((int) $supplierId, $originalImageName);
     }
 
     /**
      * Creates temporary image from uploaded file
      *
-     * @param UploadedFile $image
-     *
      * @throws ImageUploadException
-     *
-     * @return string
      */
-    protected function createTemporaryImage(UploadedFile $image)
+    protected function createTemporaryImage(UploadedFile $image): string
     {
         $temporaryImageName = tempnam(_PS_TMP_IMG_DIR_, 'PS');
 
@@ -77,13 +63,10 @@ class SupplierExtraImageUploader implements ImageUploaderInterface
     /**
      * Uploads resized image from temporary folder to image destination
      *
-     * @param $temporaryImageName
-     * @param $destination
-     *
      * @throws ImageOptimizationException
      * @throws MemoryLimitException
      */
-    protected function uploadFromTemp($temporaryImageName, $destination)
+    protected function uploadFromTemp(string $temporaryImageName, string $destination): void
     {
         if (!\ImageManager::checkImageMemoryLimit($temporaryImageName)) {
             throw new MemoryLimitException('Cannot upload image due to memory restrictions');
@@ -98,10 +81,8 @@ class SupplierExtraImageUploader implements ImageUploaderInterface
 
     /**
      * Deletes old image
-     *
-     * @param $supplierId
      */
-    private function deleteOldImage($supplierId)
+    private function deleteOldImage(int $supplierId): void
     {
         /** @var SupplierExtraImage $supplierExtraImage */
         $supplierExtraImage = $this->supplierExtraImageRepository->findOneBy(['supplierId' => $supplierId]);
@@ -113,11 +94,9 @@ class SupplierExtraImageUploader implements ImageUploaderInterface
     /**
      * Check if image is allowed to be uploaded.
      *
-     * @param UploadedFile $image
-     *
      * @throws UploadedImageConstraintException
      */
-    protected function checkImageIsAllowedForUpload(UploadedFile $image)
+    protected function checkImageIsAllowedForUpload(UploadedFile $image): void
     {
         $maxFileSize = \Tools::getMaxUploadSize();
 

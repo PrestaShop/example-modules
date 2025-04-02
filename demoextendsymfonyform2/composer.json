@@ -10,6 +10,9 @@
         "name": "PrestaShop Core Team"
     }
   ],
+  "require": {
+      "php": ">=8.1"
+  },
   "autoload": {
     "psr-4": {
       "PrestaShop\\Module\\DemoExtendSymfonyForm\\": "src/"

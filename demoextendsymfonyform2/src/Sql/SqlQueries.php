@@ -20,8 +20,6 @@ class SqlQueries
 {
     /**
      * Install database queries.
-     *
-     * @return array
      */
     public static function installQueries(): array
     {
@@ -37,8 +35,6 @@ class SqlQueries
 
     /**
      * Uninstall database queries.
-     *
-     * @return bool
      */
     public static function uninstallQueries(): array
     {
