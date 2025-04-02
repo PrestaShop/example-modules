@@ -15,33 +15,25 @@ use DemoCQRSHooksUsage\Domain\Reviewer\Exception\CannotCreateReviewerException;
 use DemoCQRSHooksUsage\Domain\Reviewer\Exception\CannotToggleAllowedToReviewStatusException;
 use DemoCQRSHooksUsage\Entity\Reviewer;
 use DemoCQRSHooksUsage\Repository\ReviewerRepository;
+use PrestaShop\PrestaShop\Core\CommandBus\Attributes\AsCommandHandler;
 use PrestaShopException;
 
 /**
  * Used for toggling the customer if is allowed to make a review.
  */
+#[AsCommandHandler]
 class ToggleIsAllowedToReviewHandler extends AbstractReviewerHandler
 {
-    /**
-     * @var ReviewerRepository
-     */
-    private $reviewerRepository;
-
-    /**
-     * @param ReviewerRepository $reviewerRepository
-     */
-    public function __construct(ReviewerRepository $reviewerRepository)
-    {
-        $this->reviewerRepository = $reviewerRepository;
+    public function __construct(
+        private readonly ReviewerRepository $reviewerRepository
+    ) {
     }
 
     /**
-     * @param ToggleIsAllowedToReviewCommand $command
-     *
      * @throws CannotCreateReviewerException
      * @throws CannotToggleAllowedToReviewStatusException
      */
-    public function handle(ToggleIsAllowedToReviewCommand $command)
+    public function handle(ToggleIsAllowedToReviewCommand $command): void
     {
         $reviewerId = $this->reviewerRepository->findIdByCustomer($command->getCustomerId()->getValue());
 
@@ -61,7 +53,7 @@ class ToggleIsAllowedToReviewHandler extends AbstractReviewerHandler
             }
         } catch (PrestaShopException $exception) {
             /*
-             * @see https://devdocs.prestashop.com/1.7/development/architecture/domain-exceptions/
+             * @see https://devdocs.prestashop-project.org/9/development/architecture/domain/domain-exceptions/
              */
             throw new CannotToggleAllowedToReviewStatusException(
                 'An unexpected error occurred when updating reviewer status'

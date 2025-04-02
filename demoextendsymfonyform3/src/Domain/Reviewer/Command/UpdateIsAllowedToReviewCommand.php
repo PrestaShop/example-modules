@@ -19,40 +19,24 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerId;
  */
 class UpdateIsAllowedToReviewCommand
 {
-    /**
-     * @var CustomerId
-     */
-    private $customerId;
+    private CustomerId $customerId;
 
     /**
-     * @var bool
-     */
-    private $isAllowedToReview;
-
-    /**
-     * @param int $customerId
-     * @param bool $isAllowedToReview
-     *
      * @throws CustomerException
      */
-    public function __construct($customerId, $isAllowedToReview)
-    {
+    public function __construct(
+        int $customerId,
+        private readonly bool $isAllowedToReview
+    ) {
         $this->customerId = new CustomerId($customerId);
-        $this->isAllowedToReview = $isAllowedToReview;
     }
 
-    /**
-     * @return CustomerId
-     */
-    public function getCustomerId()
+    public function getCustomerId(): CustomerId
     {
         return $this->customerId;
     }
 
-    /**
-     * @return bool
-     */
-    public function isAllowedToReview()
+    public function isAllowedToReview(): bool
     {
         return $this->isAllowedToReview;
     }

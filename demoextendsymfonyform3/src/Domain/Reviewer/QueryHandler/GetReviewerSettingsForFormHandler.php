@@ -13,23 +13,17 @@ namespace DemoCQRSHooksUsage\Domain\Reviewer\QueryHandler;
 use DemoCQRSHooksUsage\Domain\Reviewer\Query\GetReviewerSettingsForForm;
 use DemoCQRSHooksUsage\Domain\Reviewer\QueryResult\ReviewerSettingsForForm;
 use DemoCQRSHooksUsage\Repository\ReviewerRepository;
+use PrestaShop\PrestaShop\Core\CommandBus\Attributes\AsQueryHandler;
 
 /**
  * Gets reviewer settings data ready for form display.
  */
+#[AsQueryHandler]
 class GetReviewerSettingsForFormHandler
 {
-    /**
-     * @var ReviewerRepository
-     */
-    private $reviewerRepository;
-
-    /**
-     * @param ReviewerRepository $reviewerRepository
-     */
-    public function __construct(ReviewerRepository $reviewerRepository)
-    {
-        $this->reviewerRepository = $reviewerRepository;
+    public function __construct(
+        private readonly ReviewerRepository $reviewerRepository
+    ) {
     }
 
     public function handle(GetReviewerSettingsForForm $query)

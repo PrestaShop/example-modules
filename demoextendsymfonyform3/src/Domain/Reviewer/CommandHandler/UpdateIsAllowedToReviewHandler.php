@@ -14,27 +14,21 @@ use DemoCQRSHooksUsage\Domain\Reviewer\Command\UpdateIsAllowedToReviewCommand;
 use DemoCQRSHooksUsage\Domain\Reviewer\Exception\CannotToggleAllowedToReviewStatusException;
 use DemoCQRSHooksUsage\Entity\Reviewer;
 use DemoCQRSHooksUsage\Repository\ReviewerRepository;
+use PrestaShop\PrestaShop\Core\CommandBus\Attributes\AsCommandHandler;
 use PrestaShopException;
 
 /**
  * used to update customers review status.
  */
+#[AsCommandHandler]
 class UpdateIsAllowedToReviewHandler extends AbstractReviewerHandler
 {
-    /**
-     * @var ReviewerRepository
-     */
-    private $reviewerRepository;
-
-    /**
-     * @param ReviewerRepository $reviewerRepository
-     */
-    public function __construct(ReviewerRepository $reviewerRepository)
-    {
-        $this->reviewerRepository = $reviewerRepository;
+    public function __construct(
+        private readonly ReviewerRepository $reviewerRepository
+    ) {
     }
 
-    public function handle(UpdateIsAllowedToReviewCommand $command)
+    public function handle(UpdateIsAllowedToReviewCommand $command): void
     {
         $reviewerId = $this->reviewerRepository->findIdByCustomer($command->getCustomerId()->getValue());
 
@@ -54,7 +48,7 @@ class UpdateIsAllowedToReviewHandler extends AbstractReviewerHandler
             }
         } catch (PrestaShopException $exception) {
             /*
-             * @see https://devdocs.prestashop.com/1.7/development/architecture/domain-exceptions/
+             * @see https://devdocs.prestashop-project.org/9/development/architecture/domain/domain-exceptions/
              */
             throw new CannotToggleAllowedToReviewStatusException(
                 'An unexpected error occurred when updating reviewer status'
