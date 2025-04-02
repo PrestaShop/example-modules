@@ -31,7 +31,7 @@ class DemoProductExtraContent extends Module
         $this->name = 'demoproductextracontent';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '1.7.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '1.7.0', 'max' => '9.99.99'];
 
         parent::__construct();
 
@@ -61,5 +61,5 @@ class DemoProductExtraContent extends Module
                 ->setContent('Content of the second custom tab')
         ];
     }
-        
+
 }

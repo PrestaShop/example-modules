@@ -36,7 +36,7 @@ class democontrollertabs extends Module
         $this->name = 'democontrollertabs';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => '9.99.99'];
 
         parent::__construct();
 

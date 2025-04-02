@@ -161,14 +161,12 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
                 'p.`id_product`',
                 SqlFilters::WHERE_STRICT
             );
-        if (version_compare(_PS_VERSION_, '8.0', '>=')) {
-            $sqlFilters
-                ->addFilter(
-                    'price_tax_excluded',
-                    'ps.`price`',
-                    SqlFilters::MIN_MAX
-                );
-        }
+        $sqlFilters
+            ->addFilter(
+                'price_tax_excluded',
+                'ps.`price`',
+                SqlFilters::MIN_MAX
+            );
         $this->filterApplicator->apply($qb, $sqlFilters, $filterValues);
 
         $qb->setParameter('id_shop', $this->shopContext->getId());
@@ -194,19 +192,6 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
                 $qb->setParameter('reference', '%' . $filter . '%');
 
                 continue;
-            }
-
-            if (version_compare(_PS_VERSION_, '8.0', '<')) {
-                if ('price_tax_excluded' === $filterName) {
-                    if (isset($filter['min_field'])) {
-                        $qb->andWhere('ps.`price` >= :price_min');
-                        $qb->setParameter('price_min', $filter['min_field']);
-                    }
-                    if (isset($filter['max_field'])) {
-                        $qb->andWhere('ps.`price` <= :price_max');
-                        $qb->setParameter('price_max', $filter['max_field']);
-                    }
-                }
             }
         }
 

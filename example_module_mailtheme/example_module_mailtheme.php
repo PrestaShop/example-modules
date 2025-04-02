@@ -63,7 +63,7 @@ class example_module_mailtheme extends Module
         $this->description = $this->trans('Example module to deal with an Email theme in PrestaShop.', [], 'Modules.ExampleModuleMailtheme.Admin');
         $this->secure_key = Tools::hash($this->name);
 
-        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => '9.99.99'];
         $this->templateFile = 'module:example_module_mailtheme/views/templates/index.tpl';
         $this->hookList = [
             ThemeCatalogInterface::LIST_MAIL_THEMES_HOOK,
