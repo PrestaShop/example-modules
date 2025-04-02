@@ -37,7 +37,7 @@ class Api_Module extends \Module
         $this->description = 'Demo module of how to modify the new API';
         $this->need_instance = 0;
         $this->bootstrap = false;
-        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => '9.99.99'];
         parent::__construct();
     }
 }
