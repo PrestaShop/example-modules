@@ -9,6 +9,9 @@
       "name": "PrestaShop Core Team"
     }
   ],
+  "require": {
+      "php": ">=8.1"
+  },
   "description": "Help developers to understand how to create module using Symfony hooks",
   "autoload": {
     "psr-4": {
