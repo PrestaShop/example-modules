@@ -22,10 +22,10 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoJsRouting\Controller;
 
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
+use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
 use Symfony\Component\HttpFoundation\Response;
 
-class DemoPageController extends FrameworkBundleAdminController
+class DemoPageController extends PrestaShopAdminController
 {
     public function indexAction(): Response
     {

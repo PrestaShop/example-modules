@@ -27,10 +27,6 @@ class Installer
 {
     /**
      * Module's installation entry point.
-     *
-     * @param Module $module
-     *
-     * @return bool
      */
     public function install(Module $module): bool
     {
@@ -44,11 +40,7 @@ class Installer
     /**
      * Register hooks for the module.
      *
-     * @see https://devdocs.prestashop.com/1.7/modules/concepts/hooks/
-     *
-     * @param Module $module
-     *
-     * @return bool
+     * @see https://devdocs.prestashop-project.org/9/modules/concepts/hooks/
      */
     private function registerHooks(Module $module): bool
     {

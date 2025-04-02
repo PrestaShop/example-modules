@@ -44,12 +44,12 @@ class DemoJsRouting extends Module
         $this->name = 'demojsrouting';
         $this->author = 'PrestaShop';
         $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '1.7.7.0', 'max' => '8.99.99'];
+        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => '9.99.99'];
 
         parent::__construct();
 
-        $this->displayName = $this->l('Demo Javascript routing');
-        $this->description = $this->l('Example module of Javascript component Router usage in BO');
+        $this->displayName = $this->trans('Demo Javascript routing', [], 'Modules.Demojsrouting.Admin');
+        $this->description = $this->trans('Example module of Javascript component Router usage in BO', [], 'Modules.Demojsrouting.Admin');
     }
 
     /**

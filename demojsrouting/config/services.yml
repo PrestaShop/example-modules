@@ -1,0 +1,7 @@
+services:
+  _defaults:
+    public: true
+
+  PrestaShop\Module\DemoJsRouting\Controller\DemoPageController:
+    autowire: true
+    autoconfigure: true
