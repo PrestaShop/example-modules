@@ -18,6 +18,8 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
+use PrestaShop\Module\ApiExample\Database\DBInstaller;
+
 if (!defined('_PS_VERSION_')) {
     exit;
 }
@@ -39,5 +41,53 @@ class Api_Module extends \Module
         $this->bootstrap = false;
         $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => '9.99.99'];
         parent::__construct();
+    }
+
+    public function install()
+    {
+        return $this->installTables() && parent::install();
+    }
+
+    public function uninstall()
+    {
+        return $this->removeTables() && parent::uninstall();
+    }
+
+    private function installTables(): bool
+    {
+        /** @var DBInstaller $installer */
+        $installer = $this->getInstaller();
+        $errors = $installer->createTables();
+
+        return empty($errors);
+    }
+
+    private function removeTables(): bool
+    {
+        /** @var DBInstaller $installer */
+        $installer = $this->getInstaller();
+        $errors = $installer->dropTables();
+
+        return empty($errors);
+    }
+
+    private function getInstaller(): DBInstaller
+    {
+        try {
+            $installer = $this->get(DBInstaller::class);
+        } catch (Exception) {
+            // Catch exception in case container is not available, or service is not available
+            $installer = null;
+        }
+
+        // During install process the modules's service is not available yet, so we build it manually
+        if (!$installer) {
+            $installer = new DBInstaller(
+                $this->get('doctrine.dbal.default_connection'),
+                $this->getContainer()->getParameter('database_prefix')
+            );
+        }
+
+        return $installer;
     }
 }
