@@ -26,34 +26,28 @@
 
 declare(strict_types=1);
 
-namespace PrestaShop\Module\ApiExample\ApiPlatform\Resource;
+namespace PrestaShop\Module\ApiExample\ApiPlatform\State;
 
-use ApiPlatform\Metadata\ApiProperty;
-use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
-use PrestaShop\Module\ApiExample\ApiPlatform\State\CatProcessor;
-use PrestaShop\Module\ApiExample\ApiPlatform\State\CatProvider;
+use ApiPlatform\Metadata\Operation;
+use ApiPlatform\State\ProviderInterface;
+use PrestaShop\Module\ApiExample\ApiPlatform\Resource\Cat;
 
-#[ApiResource(
-    operations: [
-        new Get(
-            uriTemplate: '/cat/{id}',
-            requirements: ['id' => '\d+'],
-        ),
-    ]
-)]
-#[Get(provider: CatProvider::class)]
-#[Post(processor: CatProcessor::class)]
-class Cat
+/**
+ * @implements ProviderInterface<Cat|null>
+ */
+final class CatProvider implements ProviderInterface
 {
-    /**
-     * @var int
-     */
-    #[ApiProperty(identifier: true)]
-    private int $id;
+    private array $data;
 
-    /**
-     * @var string
-     */
-    private string $name;
+    public function __construct() {
+        $this->data = [
+            'meow' => new Cat('Meow'),
+            'kitty' => new Cat('Kitty'),
+        ];
+    }
+
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): Cat|null
+    {
+        return $this->data[$uriVariables['id']] ?? null;
+    }
 }

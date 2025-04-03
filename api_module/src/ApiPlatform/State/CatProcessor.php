@@ -26,34 +26,21 @@
 
 declare(strict_types=1);
 
-namespace PrestaShop\Module\ApiExample\ApiPlatform\Resource;
+namespace PrestaShop\Module\ApiExample\ApiPlatform\State;
 
-use ApiPlatform\Metadata\ApiProperty;
-use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
-use PrestaShop\Module\ApiExample\ApiPlatform\State\CatProcessor;
-use PrestaShop\Module\ApiExample\ApiPlatform\State\CatProvider;
+use ApiPlatform\Metadata\Operation;
+use ApiPlatform\State\ProcessorInterface;
+use PrestaShop\Module\ApiExample\ApiPlatform\Resource\Cat;
 
-#[ApiResource(
-    operations: [
-        new Get(
-            uriTemplate: '/cat/{id}',
-            requirements: ['id' => '\d+'],
-        ),
-    ]
-)]
-#[Get(provider: CatProvider::class)]
-#[Post(processor: CatProcessor::class)]
-class Cat
-{
+/**
+ * @implements ProcessorInterface<Cat, Cat|void>
+ */
+final class CatProcessor implements ProcessorInterface{
     /**
-     * @var int
+     * @return Cat|void
      */
-    #[ApiProperty(identifier: true)]
-    private int $id;
-
-    /**
-     * @var string
-     */
-    private string $name;
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
+    {
+        return $data;
+    }
 }
