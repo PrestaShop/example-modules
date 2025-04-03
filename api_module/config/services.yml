@@ -1,5 +1,4 @@
 services:
-
   PrestaShop\Module\ApiModule\Repository\HorseRepository:
     arguments:
       - '@doctrine.dbal.default_connection'
@@ -11,4 +10,9 @@ services:
 
   PrestaShop\Module\ApiModule\ApiPlatform\State\HorseProcessor:
     autowire: true
+
+  PrestaShop\Module\ApiModule\ApiPlatform\State\CatProvider:
+    tags: [ 'api_platform.state_provider' ]
+
+  PrestaShop\Module\ApiModule\ApiPlatform\State\CatProcessor:
     tags: [ 'api_platform.state_processor' ]

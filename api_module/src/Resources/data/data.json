@@ -1,0 +1,26 @@
+[
+    {
+        "uuid": "9284ca1e-9403-42c1-9a3f-81e5384a6925",
+        "name": "Grumpy Cat"
+    },
+    {
+        "uuid": "7f0be8a6-8d7c-4404-9733-8e81106d2874",
+        "name": "Garfield"
+    },
+    {
+        "uuid": "9232bd16-ce13-4dcc-afa3-aa4190f861e6",
+        "name": "Hello Kitty"
+    },
+    {
+        "uuid": "02bc0196-5e15-4dd1-94a1-6f6f7f12d25c",
+        "name": "Grominet"
+    },
+    {
+        "uuid": "a1399187-668a-45ef-9262-b5e1dc7b927f",
+        "name": "Tom"
+    },
+    {
+        "uuid": "8ad8dbb2-5c2c-46bd-b490-3a6d294c91bd",
+        "name": "Lucifer"
+    }
+]
