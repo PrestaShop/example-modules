@@ -29,28 +29,16 @@ use PrestaShop\PrestaShop\Adapter\Shop\Context;
 final class ContentBlockQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var Context
-     */
-    private $shopContext;
-
-    /**
      * ContentBlockQueryBuilder constructor.
-     *
-     * @param Connection $connection
-     * @param $dbPrefix
-     * @param Context $shopContext
      */
-    public function __construct(Connection $connection, $dbPrefix, Context $shopContext)
-    {
+    public function __construct(
+        Connection $connection,
+        string $dbPrefix,
+        private Context $shopContext
+    ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->shopContext = $shopContext;
     }
 
-    /**
-     * @param SearchCriteriaInterface $searchCriteria
-     * @return QueryBuilder
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getBaseQuery();
@@ -66,7 +54,7 @@ final class ContentBlockQueryBuilder extends AbstractDoctrineQueryBuilder
             $searchCriteria->getOrderBy(),
             $searchCriteria->getOrderWay()
         )
-            ->setFirstResult($searchCriteria->getOffset())
+            ->setFirstResult($searchCriteria->getOffset() ?? 0)
             ->setMaxResults($searchCriteria->getLimit());
 
         $qb->orderBy('id_content_block');
@@ -74,10 +62,6 @@ final class ContentBlockQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * @param SearchCriteriaInterface $searchCriteria
-     * @return QueryBuilder
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getBaseQuery();
@@ -90,9 +74,6 @@ final class ContentBlockQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * @return QueryBuilder
-     */
     private function getBaseQuery(): QueryBuilder
     {
         return $this->connection

@@ -1,5 +1,11 @@
 services:
-  _defaults: { public: true }
+  _defaults:
+    public: true
+
+  # controller
+  PrestaShop\Module\DemoMultistoreForm\Controller\DemoMultistoreController:
+    autowire: true
+    autoconfigure: true
 
   # installer
   prestashop.module.demo_multistore.content_block_installer:
@@ -24,7 +30,7 @@ services:
 
   prestashop.module.demo_multistore.form.identifiable_object.builder.content_block_form_builder:
     class: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Builder\FormBuilder'
-    factory: 'prestashop.core.form.builder.form_builder_factory:create'
+    factory: [ '@prestashop.core.form.builder.form_builder_factory', 'create' ]
     arguments:
       - 'PrestaShop\Module\DemoMultistoreForm\Form\ContentBlockType'
       - '@prestashop.module.demo_multistore.form.identifiable_object.data_provider.content_block_form_data_provider'
@@ -36,7 +42,7 @@ services:
 
   prestashop.module.demo_multistore.form.identifiable_object.handler.content_block_form_handler:
     class: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Handler\FormHandler'
-    factory: 'prestashop.core.form.identifiable_object.handler.form_handler_factory:create'
+    factory: [ '@prestashop.core.form.identifiable_object.handler.form_handler_factory', 'create' ]
     arguments:
       - '@prestashop.module.demo_multistore.form.identifiable_object.data_handler.content_block_form_data_handler'
 
@@ -94,9 +100,10 @@ services:
   # content block form
   prestashop.module.demo_multistore.form.content_block_type:
     class: 'PrestaShop\Module\DemoMultistoreForm\Form\ContentBlockType'
-    parent: 'form.type.translatable.aware'
-    arguments:
-      - '@=service("prestashop.adapter.multistore_feature").isUsed()'
     public: true
-    tags:
-      - { name: form.type }
+    autowire: true
+    autoconfigure: true
+    calls:
+      - { method: setTranslator, arguments: [ '@translator' ] }
+    arguments:
+      $isMultistoreUsed: '@=service("prestashop.adapter.multistore_feature").isUsed()'

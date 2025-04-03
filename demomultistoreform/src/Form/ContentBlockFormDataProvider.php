@@ -28,30 +28,12 @@ use PrestaShop\PrestaShop\Adapter\Shop\Context;
 
 class ContentBlockFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    /**
-     * @var Context
-     */
-    private $shopContext;
-
-    /**
-     * ContentBlockFormDataProvider constructor.
-     * @param EntityManagerInterface $entityManager
-     */
-    public function __construct(EntityManagerInterface $entityManager, Context $shopContext)
-    {
-        $this->entityManager = $entityManager;
-        $this->shopContext = $shopContext;
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private Context $shopContext
+    ) {
     }
 
-    /**
-     * @param mixed $id
-     * @return array
-     */
     public function getData($id): array
     {
         $contentBlock = $this->entityManager->getRepository(ContentBlock::class)->find((int) $id);
@@ -68,9 +50,6 @@ class ContentBlockFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * @return array
-     */
     public function getDefaultData(): array
     {
         return [
