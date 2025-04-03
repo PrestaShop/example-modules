@@ -63,9 +63,7 @@ final class ContentBlockDataConfiguration extends AbstractMultistoreConfiguratio
     }
 
     /**
-     * @param array $configuration
-     *
-     * @return bool Returns true if no exception are thrown
+     * Returns true if no exception are thrown
      */
     public function validateConfiguration(array $configuration): bool
     {

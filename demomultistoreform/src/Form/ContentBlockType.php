@@ -23,34 +23,21 @@ namespace PrestaShop\Module\DemoMultistoreForm\Form;
 
 use PrestaShopBundle\Form\Admin\Type\ShopChoiceTreeType;
 use PrestaShopBundle\Form\Admin\Type\SwitchType;
-use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\TypedRegex;
-use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use PrestaShopBundle\Translation\TranslatorAwareTrait;
+use Symfony\Component\Form\AbstractType;
 
-class ContentBlockType extends TranslatorAwareType
+class ContentBlockType extends AbstractType
 {
-    /**
-     * @var bool
-     */
-    private $isMultistoreUsed;
-
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param bool $isMultistoreUsed
-     */
+    use TranslatorAwareTrait;
+    
     public function __construct(
-        TranslatorInterface $translator,
-        array $locales,
-        bool $isMultistoreUsed
+        private readonly bool $isMultistoreUsed
     ) {
-        parent::__construct($translator, $locales);
-
-        $this->isMultistoreUsed = $isMultistoreUsed;
     }
 
     /**
@@ -108,6 +95,7 @@ class ContentBlockType extends TranslatorAwareType
                         new NotBlank([
                             'message' => $this->trans(
                                 'You have to select at least one shop to associate this item with',
+                                [],
                                 'Admin.Notifications.Error'
                             ),
                         ])

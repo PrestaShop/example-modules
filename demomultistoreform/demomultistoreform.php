@@ -44,9 +44,9 @@ class DemoMultistoreForm extends Module
         $this->bootstrap = true;
         parent::__construct();
 
-        $this->displayName = 'Demo multistore configuration form';
-        $this->description = 'Module created for the purpose of showing an example of multistore configuration form';
-        $this->ps_versions_compliancy = array('min' => '1.7.8.0', 'max' => '8.99.99');
+        $this->displayName = $this->trans('Demo multistore configuration form', [], 'Modules.Demomultistoreform.Admin');
+        $this->description = $this->trans('Module created for the purpose of showing an example of multistore configuration form', [], 'Modules.Demomultistoreform.Admin');
+        $this->ps_versions_compliancy = array('min' => '9.0.0', 'max' => '9.99.99');
     }
 
     /**

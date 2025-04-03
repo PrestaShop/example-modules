@@ -27,15 +27,11 @@ use PrestaShopBundle\Entity\Shop;
 
 class ContentBlockFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
+    public function __construct(
+        private EntityManagerInterface $entityManager
+    ) {
     }
+
     /**
      * {@inheritdoc}
      */
@@ -74,10 +70,6 @@ class ContentBlockFormDataHandler implements FormDataHandlerInterface
         return $contentBlock->getId();
     }
 
-    /**
-     * @param ContentBlock $contentBlock
-     * @param array|null $shopIdList
-     */
     private function addAssociatedShops(ContentBlock &$contentBlock, array $shopIdList = null): void
     {
         $contentBlock->clearShops();
