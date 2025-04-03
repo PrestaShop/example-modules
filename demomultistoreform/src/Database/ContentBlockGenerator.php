@@ -28,29 +28,12 @@ use PrestaShopBundle\Entity\Shop;
 
 class ContentBlockGenerator
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    /**
-     * @var string
-     */
-    private $jsonFilePath;
-
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param string $jsonFilePath
-     */
-    public function __construct(EntityManagerInterface $entityManager, string $jsonFilePath)
-    {
-        $this->entityManager = $entityManager;
-        $this->jsonFilePath = $jsonFilePath;
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private string $jsonFilePath
+    ) {
     }
 
-    /**
-     * @return array
-     */
     public function generateContentBlockFixtures(): array
     {
         $errors = [];
@@ -99,8 +82,6 @@ class ContentBlockGenerator
 
     /**
      * Returns first shop in the list, it could be any shop, doesn't matter, it's for fixtures
-     *
-     * @return Shop|null
      */
     private function getFirstShop(): ?Shop
     {

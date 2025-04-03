@@ -24,33 +24,21 @@ use Doctrine\DBAL\Connection;
 use PrestaShop\PrestaShop\Core\Grid\Query\AbstractDoctrineQueryBuilder;
 use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 use Doctrine\DBAL\Query\QueryBuilder;
-use PrestaShop\PrestaShop\Adapter\Shop\Context;
+use PrestaShop\PrestaShop\Core\Context\ShopContext;
 
 final class ContentBlockQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var Context
-     */
-    private $shopContext;
-
-    /**
      * ContentBlockQueryBuilder constructor.
-     *
-     * @param Connection $connection
-     * @param $dbPrefix
-     * @param Context $shopContext
      */
-    public function __construct(Connection $connection, $dbPrefix, Context $shopContext)
-    {
+    public function __construct(
+        Connection $connection,
+        string $dbPrefix,
+        private ShopContext $shopContext
+    ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->shopContext = $shopContext;
     }
 
-    /**
-     * @param SearchCriteriaInterface $searchCriteria
-     * @return QueryBuilder
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getBaseQuery();
@@ -58,7 +46,7 @@ final class ContentBlockQueryBuilder extends AbstractDoctrineQueryBuilder
 
         if (!$this->shopContext->isAllShopContext()) {
             $qb->join('cb', $this->dbPrefix . 'content_block_shop', 'cbs', 'cbs.id_content_block = cb.id_content_block')
-                ->where('cbs.id_shop in (' . implode(', ', $this->shopContext->getContextListShopID()) . ')')
+                ->where('cbs.id_shop in (' . implode(', ', $this->shopContext->getAssociatedShopIds()) . ')')
                 ->groupBy('cb.id_content_block');
         }
 
@@ -66,7 +54,7 @@ final class ContentBlockQueryBuilder extends AbstractDoctrineQueryBuilder
             $searchCriteria->getOrderBy(),
             $searchCriteria->getOrderWay()
         )
-            ->setFirstResult($searchCriteria->getOffset())
+            ->setFirstResult($searchCriteria->getOffset() ?? 0)
             ->setMaxResults($searchCriteria->getLimit());
 
         $qb->orderBy('id_content_block');
@@ -74,25 +62,18 @@ final class ContentBlockQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * @param SearchCriteriaInterface $searchCriteria
-     * @return QueryBuilder
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getBaseQuery();
         $qb->select('COUNT(DISTINCT cb.id_content_block)');
         if (!$this->shopContext->isAllShopContext()) {
             $qb->join('cb', $this->dbPrefix . 'content_block_shop', 'cbs', 'cbs.id_content_block = cb.id_content_block')
-                ->where('cbs.id_shop in (' . implode(', ', $this->shopContext->getContextListShopID()) . ')');
+                ->where('cbs.id_shop in (' . implode(', ', $this->shopContext->getAssociatedShopIds()) . ')');
         }
 
         return $qb;
     }
 
-    /**
-     * @return QueryBuilder
-     */
     private function getBaseQuery(): QueryBuilder
     {
         return $this->connection

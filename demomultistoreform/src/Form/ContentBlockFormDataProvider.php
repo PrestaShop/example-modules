@@ -23,35 +23,17 @@ namespace PrestaShop\Module\DemoMultistoreForm\Form;
 
 use Doctrine\ORM\EntityManagerInterface;
 use PrestaShop\Module\DemoMultistoreForm\Entity\ContentBlock;
+use PrestaShop\PrestaShop\Core\Context\ShopContext;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataProvider\FormDataProviderInterface;
-use PrestaShop\PrestaShop\Adapter\Shop\Context;
 
 class ContentBlockFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    /**
-     * @var Context
-     */
-    private $shopContext;
-
-    /**
-     * ContentBlockFormDataProvider constructor.
-     * @param EntityManagerInterface $entityManager
-     */
-    public function __construct(EntityManagerInterface $entityManager, Context $shopContext)
-    {
-        $this->entityManager = $entityManager;
-        $this->shopContext = $shopContext;
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private ShopContext $shopContext
+    ) {
     }
 
-    /**
-     * @param mixed $id
-     * @return array
-     */
     public function getData($id): array
     {
         $contentBlock = $this->entityManager->getRepository(ContentBlock::class)->find((int) $id);
@@ -68,16 +50,13 @@ class ContentBlockFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * @return array
-     */
     public function getDefaultData(): array
     {
         return [
             'title' => '',
             'description' => '',
             'enable' => false,
-            'shop_association' => $this->shopContext->getContextListShopID(),
+            'shop_association' => $this->shopContext->getAssociatedShopIds(),
         ];
     }
 }
