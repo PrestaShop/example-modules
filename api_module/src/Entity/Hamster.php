@@ -24,7 +24,7 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  */
 
-namespace PrestaShop\Module\APIResources\Entity;
+namespace PrestaShop\Module\ApiModule\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
@@ -107,4 +107,3 @@ class Hamster
         return $this;
     }
 }
-

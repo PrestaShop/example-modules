@@ -18,7 +18,7 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
-use PrestaShop\Module\ApiExample\Database\DBInstaller;
+use PrestaShop\Module\ApiModule\Database\DBInstaller;
 
 if (!defined('_PS_VERSION_')) {
     exit;
