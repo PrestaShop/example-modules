@@ -26,7 +26,7 @@
 
 declare(strict_types=1);
 
-namespace PrestaShop\Module\ApiExample\ApiPlatform\Resource;
+namespace PrestaShop\Module\ApiModule\ApiPlatform\Resources;
 
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
