@@ -23,25 +23,35 @@ namespace PrestaShop\Module\DemoMultistoreForm\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteria;
 use PrestaShop\Module\DemoMultistoreForm\Entity\ContentBlock;
 use PrestaShopBundle\Entity\Shop;
+use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
+use PrestaShop\PrestaShop\Core\Grid\GridFactory;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use PrestaShop\PrestaShop\Core\Form\Handler;
+use Doctrine\ORM\EntityManagerInterface;
+use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Builder\FormBuilder;
+use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Handler\FormHandler;
+use PrestaShop\Module\DemoMultistoreForm\Database\ContentBlockGenerator;
 
-class DemoMultistoreController extends FrameworkBundleAdminController
+class DemoMultistoreController extends PrestaShopAdminController
 {
-    public function index(Request $request): Response
+    public function index(
+        #[Autowire(service: 'prestashop.module.demo_multistore.grid.content_block_grid_factory')]
+        GridFactory $contentBlockGridFactory,
+        #[Autowire(service: 'prestashop.module.demo_multistore.content_block_configuration.form_handler')]
+        Handler $configurationFormHandler,
+        EntityManagerInterface $entityManager,
+    ): Response
     {
         // content block list in a grid
-        $contentBlockGridFactory = $this->get('prestashop.module.demo_multistore.grid.content_block_grid_factory');
         $contentBlockGrid = $contentBlockGridFactory->getGrid(new SearchCriteria());
 
         // configuration form
-        $configurationForm = $this->get('prestashop.module.demo_multistore.content_block_configuration.form_handler')->getForm();
+        $configurationForm = $configurationFormHandler->getForm();
 
-        $contentBlocCount = $this->getDoctrine()
-            ->getRepository(ContentBlock::class)
-            ->count([]);
+        $contentBlocCount = $entityManager->getRepository(ContentBlock::class)->count([]);
 
         return $this->render('@Modules/demomultistoreform/views/templates/admin/index.html.twig', [
             'title' => 'Content block list',
@@ -52,19 +62,24 @@ class DemoMultistoreController extends FrameworkBundleAdminController
         ]);
     }
 
-    public function create(Request $request): Response
+    public function create(
+        Request $request,
+        #[Autowire(service: 'prestashop.module.demo_multistore.form.identifiable_object.builder.content_block_form_builder')]
+        FormBuilder $formBuilder,
+        #[Autowire(service: 'prestashop.module.demo_multistore.form.identifiable_object.handler.content_block_form_handler')]
+        FormHandler $formHandler
+
+    ): Response
     {
-        $formDataHandler = $this->get('prestashop.module.demo_multistore.form.identifiable_object.builder.content_block_form_builder');
-        $form = $formDataHandler->getForm();
+        $form = $formBuilder->getForm();
         $form->handleRequest($request);
 
-        $formHandler = $this->get('prestashop.module.demo_multistore.form.identifiable_object.handler.content_block_form_handler');
         $result = $formHandler->handle($form);
 
         if (null !== $result->getIdentifiableObjectId()) {
             $this->addFlash(
                 'success',
-                $this->trans('Successful creation.', 'Admin.Notifications.Success')
+                $this->trans('Successful creation.', [], 'Admin.Notifications.Success')
             );
 
             return $this->redirectToRoute('demo_multistore');
@@ -77,19 +92,24 @@ class DemoMultistoreController extends FrameworkBundleAdminController
         ]);
     }
 
-    public function edit(Request $request, int $contentBlockId): Response
+    public function edit(
+        Request $request,
+        int $contentBlockId,
+        #[Autowire(service: 'prestashop.module.demo_multistore.form.identifiable_object.builder.content_block_form_builder')]
+        FormBuilder $formBuilder,
+        #[Autowire(service: 'prestashop.module.demo_multistore.form.identifiable_object.handler.content_block_form_handler')]
+        FormHandler $formHandler
+    ): Response
     {
-        $formBuilder = $this->get('prestashop.module.demo_multistore.form.identifiable_object.builder.content_block_form_builder');
         $form = $formBuilder->getFormFor((int) $contentBlockId);
         $form->handleRequest($request);
 
-        $formHandler = $this->get('prestashop.module.demo_multistore.form.identifiable_object.handler.content_block_form_handler');
         $result = $formHandler->handleFor($contentBlockId, $form);
 
         if (null !== $result->getIdentifiableObjectId()) {
             $this->addFlash(
                 'success',
-                $this->trans('Successful edition.', 'Admin.Notifications.Success')
+                $this->trans('Successful edition.', [], 'Admin.Notifications.Success')
             );
 
             return $this->redirectToRoute('demo_multistore');
@@ -102,22 +122,21 @@ class DemoMultistoreController extends FrameworkBundleAdminController
         ]);
     }
 
-    public function delete(Request $request, int $contentBlockId): Response
+    public function delete(
+        int $contentBlockId,
+        EntityManagerInterface $entityManager,
+    ): Response
     {
-        $contentBlock = $this->getDoctrine()
-            ->getRepository(ContentBlock::class)
-            ->find($contentBlockId);
+        $shopContext = $this->getShopContext();
+        $contentBlock = $entityManager->getRepository(ContentBlock::class)->find($contentBlockId);
 
         if (!empty($contentBlock)) {
-            $multistoreContext = $this->get('prestashop.adapter.shop.context');
-            $entityManager = $this->get('doctrine.orm.entity_manager');
-            if ($multistoreContext->isAllShopContext()) {
+            if ($shopContext->isAllShopContext()) {
                 $contentBlock->clearShops();
                 $entityManager->remove($contentBlock);
             } else {
-                $shopList = $this->getDoctrine()
-                    ->getRepository(Shop::class)
-                    ->findBy(['id' => $multistoreContext->getContextListShopID()]);
+                $shopList = $entityManager->getRepository(Shop::class)
+                    ->findBy(['id' => $shopContext->getAssociatedShopIds()]);
                 foreach ($shopList as $shop) {
                     $contentBlock->removeShop($shop);
                     $entityManager->flush();
@@ -129,7 +148,7 @@ class DemoMultistoreController extends FrameworkBundleAdminController
             $entityManager->flush();
             $this->addFlash(
                 'success',
-                $this->trans('Successful deletion.', 'Admin.Notifications.Success')
+                $this->trans('Successful deletion.', [], 'Admin.Notifications.Success')
             );
 
             return $this->redirectToRoute('demo_multistore');
@@ -146,15 +165,15 @@ class DemoMultistoreController extends FrameworkBundleAdminController
         return $this->redirectToRoute('demo_multistore');
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
-    public function saveConfiguration(Request $request): Response
+    public function saveConfiguration(
+        Request $request,
+        #[Autowire(service: 'prestashop.module.demo_multistore.content_block_configuration.form_handler')]
+        Handler $configurationFormHandler,
+    ): Response
     {
         $redirectResponse = $this->redirectToRoute('demo_multistore');
 
-        $form = $this->get('prestashop.module.demo_multistore.content_block_configuration.form_handler')->getForm();
+        $form = $configurationFormHandler->getForm();
         $form->handleRequest($request);
 
         if (!$form->isSubmitted()) {
@@ -162,29 +181,27 @@ class DemoMultistoreController extends FrameworkBundleAdminController
         }
 
         $data = $form->getData();
-        $saveErrors = $this->get('prestashop.module.demo_multistore.content_block_configuration.form_handler')->save($data);
+        $saveErrors = $configurationFormHandler->save($data);
 
         if (0 === count($saveErrors)) {
-            $this->addFlash('success', $this->trans('Successful update.', 'Admin.Notifications.Success'));
+            $this->addFlash('success', $this->trans('Successful update.', [], 'Admin.Notifications.Success'));
 
             return $redirectResponse;
         }
 
-        $this->flashErrors($saveErrors);
+        $this->addFlashErrors($saveErrors);
 
         return $redirectResponse;
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
-    public function generateFixtures(Request $request): Response
+    public function generateFixtures(
+        #[Autowire(service: 'prestashop.module.demo_multistore.content_block_generator')]
+        ContentBlockGenerator $generator
+    ): Response
     {
         $redirectResponse = $this->redirectToRoute('demo_multistore');
 
         try {
-            $generator = $this->get('prestashop.module.demo_multistore.content_block_generator');
             $generator->generateContentBlockFixtures();
         } catch (\Exception $e) {
             $this->addFlash('error', 'There was a problem while generating context block fixtures');
@@ -198,15 +215,11 @@ class DemoMultistoreController extends FrameworkBundleAdminController
         return $redirectResponse;
     }
 
-    /**
-     * @param Request $request
-     * @param int $contentBlockId
-     *
-     * @return Response
-     */
-    public function toggleStatus(Request $request, int $contentBlockId): Response
+    public function toggleStatus(
+        int $contentBlockId,
+        EntityManagerInterface $entityManager
+    ): Response
     {
-        $entityManager = $this->get('doctrine.orm.entity_manager');
         $contentBlock = $entityManager
             ->getRepository(ContentBlock::class)
             ->findOneBy(['id' => $contentBlockId]);
@@ -223,7 +236,7 @@ class DemoMultistoreController extends FrameworkBundleAdminController
             $entityManager->flush();
             $response = [
                 'status' => true,
-                'message' => $this->trans('The status has been successfully updated.', 'Admin.Notifications.Success'),
+                'message' => $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success'),
             ];
         } catch (\Exception $e) {
             $response = [

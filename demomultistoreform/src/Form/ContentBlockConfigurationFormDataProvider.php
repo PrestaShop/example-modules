@@ -26,17 +26,9 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 
 class ContentBlockConfigurationFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var DataConfigurationInterface
-     */
-    private $contentBlockConfigurationDataConfiguration;
-
-    /**
-     * @param DataConfigurationInterface $contentBlockConfigurationDataConfiguration
-     */
-    public function __construct(DataConfigurationInterface $contentBlockConfigurationDataConfiguration)
-    {
-        $this->contentBlockConfigurationDataConfiguration = $contentBlockConfigurationDataConfiguration;
+    public function __construct(
+        private DataConfigurationInterface $contentBlockConfigurationDataConfiguration
+    ) {
     }
 
     /**
