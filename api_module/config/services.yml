@@ -1,0 +1,6 @@
+services:
+  PrestaShop\Module\ApiModule\ApiPlatform\State\CatProvider:
+    tags: [ 'api_platform.state_provider' ]
+
+  PrestaShop\Module\ApiModule\ApiPlatform\State\CatProcessor:
+    tags: [ 'api_platform.state_processor' ]

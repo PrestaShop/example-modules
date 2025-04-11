@@ -30,26 +30,46 @@ namespace PrestaShop\Module\ApiModule\ApiPlatform\Resources;
 
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
+use PrestaShop\Module\ApiModule\ApiPlatform\State\CatProcessor;
+use PrestaShop\Module\ApiModule\ApiPlatform\State\CatProvider;
 
 #[ApiResource(
-    operations: [
-        new Get(
-            uriTemplate: '/cat/{id}',
-            requirements: ['id' => '\d+'],
-        ),
-    ]
+    provider: CatProvider::class,
+    processor: CatProcessor::class
 )]
 class Cat
 {
-    /**
-     * @var int
-     */
     #[ApiProperty(identifier: true)]
-    private int $id;
+    private string $uuid;
 
-    /**
-     * @var string
-     */
-    private string $name;
+    public function __construct(
+        private string $name,
+    )
+    {
+
+    }
+
+    public function getUuid(): string {
+        if (!isset($this->uuid)) {
+            $this->uuid = uniqid();
+        }
+
+        return $this->uuid;
+    }
+
+    public function setUuid(string $uuid): self {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    public function getName(): string {
+        return $this->name;
+    }
+
+    public function setName(string $name): self {
+        $this->name = $name;
+
+        return $this;
+    }
 }
