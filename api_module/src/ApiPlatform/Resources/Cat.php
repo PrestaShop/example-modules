@@ -40,18 +40,20 @@ use PrestaShop\Module\ApiModule\ApiPlatform\State\CatProvider;
 class Cat
 {
     #[ApiProperty(identifier: true)]
-    private string $uuid = '';
+    private string $uuid;
 
     public function __construct(
         private string $name,
     )
     {
-        if ($this->uuid === '') {
-            $this->uuid = uniqid();
-        }
+
     }
 
     public function getUuid(): string {
+        if (!isset($this->uuid)) {
+            $this->uuid = uniqid();
+        }
+
         return $this->uuid;
     }
 
