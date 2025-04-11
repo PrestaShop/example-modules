@@ -39,13 +39,16 @@ use PrestaShop\Module\ApiModule\ApiPlatform\State\CatProvider;
 )]
 class Cat
 {
+    #[ApiProperty(identifier: true)]
+    private string $uuid = '';
+
     public function __construct(
-        #[ApiProperty(identifier: true)]
-        private string $uuid,
         private string $name,
     )
     {
-
+        if ($this->uuid === '') {
+            $this->uuid = uniqid();
+        }
     }
 
     public function getUuid(): string {
