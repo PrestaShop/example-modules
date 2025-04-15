@@ -26,12 +26,3 @@ demo_configuration_other_form_save:
   methods: [ POST ]
   defaults:
     _controller: 'PrestaShop\Module\DemoSymfonyForm\Controller\DemoConfigurationMultipleFormsController::saveOtherForm'
-
-demo_geocoordinates_form:
-  path: /demosymfonyform/geoCoordinatesForm
-  methods: [GET, POST]
-  defaults:
-    _controller: 'PrestaShop\Module\DemoSymfonyForm\Controller\DemoGeoCoordinatesFormController::index'
-    # Needed to work with tab system
-    _legacy_controller: AdminDemoSymfonyForm
-    _legacy_link: AdminDemoSymfonyForm
