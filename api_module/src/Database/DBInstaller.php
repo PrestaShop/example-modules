@@ -69,6 +69,7 @@ class DBInstaller
         $errors = [];
         $tableNames = [
             'hamster',
+            'horse',
         ];
         foreach ($tableNames as $tableName) {
             $sql = 'DROP TABLE IF EXISTS ' . $this->dbPrefix . $tableName;

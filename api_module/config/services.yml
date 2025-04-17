@@ -1,0 +1,14 @@
+services:
+
+  PrestaShop\Module\ApiModule\Repository\HorseRepository:
+    arguments:
+      - '@doctrine.dbal.default_connection'
+      - '%database_prefix%'
+
+  PrestaShop\Module\ApiModule\ApiPlatform\State\HorseProvider:
+    autowire: true
+    tags: [ 'api_platform.state_provider' ]
+
+  PrestaShop\Module\ApiModule\ApiPlatform\State\HorseProcessor:
+    autowire: true
+    tags: [ 'api_platform.state_processor' ]
