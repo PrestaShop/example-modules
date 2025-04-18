@@ -48,7 +48,7 @@ class Horse
 
     #[Assert\NotBlank]
     #[Assert\Type('string')]
-    public ?string $color = null;
+    public ?string $coatColor = null;
 
     #[Assert\NotBlank]
     #[Assert\Type('float')]
@@ -60,7 +60,7 @@ class Horse
         $horse = new self();
         $horse->id = (int) $omHorse->id;
         $horse->name = $omHorse->name;
-        $horse->color = $omHorse->color;
+        $horse->coatColor = $omHorse->coat_color;
         $horse->weight = $omHorse->weight;
 
         return $horse;

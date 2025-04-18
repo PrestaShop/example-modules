@@ -51,7 +51,7 @@ class HorseRepository
     public function findAllHorses(): array
     {
         return $this->connection->createQueryBuilder()
-            ->select('h.id_horse, h.name, h.color, h.weight')
+            ->select('h.id_horse, h.name, h.coat_color, h.weight')
             ->from($this->dbPrefix . 'horse', 'h')
             ->executeQuery()
             ->fetchAllAssociative()
@@ -62,7 +62,7 @@ class HorseRepository
     {
         $horse = new Horse();
         $horse->name = $name;
-        $horse->color = $color;
+        $horse->coat_color = $color;
         $horse->weight = $weight;
         $horse->save();
 
@@ -79,7 +79,7 @@ class HorseRepository
     {
         $horse = new Horse($id);
         $horse->name = $name;
-        $horse->color = $color;
+        $horse->coat_color = $color;
         $horse->weight = $weight;
         $horse->save();
 
