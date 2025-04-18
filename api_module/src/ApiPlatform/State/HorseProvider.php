@@ -61,8 +61,8 @@ final class HorseProvider implements ProviderInterface
                 $horse->name = $newData->name;
             }
 
-            if (null !== $newData->color) {
-                $horse->color = $newData->color;
+            if (null !== $newData->coatColor) {
+                $horse->coatColor = $newData->coatColor;
             }
 
             if (null !== $newData->weight) {
@@ -94,7 +94,7 @@ final class HorseProvider implements ProviderInterface
             $h = new Horse();
             $h->id = (int) $horse['id_horse'];
             $h->name = $horse['name'];
-            $h->color = $horse['color'];
+            $h->coatColor = $horse['coat_color'];
             $h->weight = $horse['weight'];
 
             $horsesArray[] = $h;

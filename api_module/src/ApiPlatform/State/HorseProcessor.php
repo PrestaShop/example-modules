@@ -52,7 +52,7 @@ final class HorseProcessor implements ProcessorInterface
         if ($operation instanceof Post && $data instanceof Horse) {
             $horse = $this->horseRepository->create(
                 $data->name,
-                $data->color,
+                $data->coatColor,
                 $data->weight,
             );
 
@@ -69,7 +69,7 @@ final class HorseProcessor implements ProcessorInterface
             $horse = $this->horseRepository->update(
                 $data->id,
                 $data->name,
-                $data->color,
+                $data->coatColor,
                 $data->weight,
             );
 
