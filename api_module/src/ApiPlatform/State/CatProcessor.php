@@ -30,9 +30,6 @@ namespace PrestaShop\Module\ApiModule\ApiPlatform\State;
 
 use ApiPlatform\Metadata\DeleteOperationInterface;
 use ApiPlatform\Metadata\Operation;
-use ApiPlatform\Metadata\Patch;
-use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
 use ApiPlatform\State\ProcessorInterface;
 use PrestaShop\Module\ApiModule\ApiPlatform\Resources\Cat;
 
@@ -55,6 +52,10 @@ final class CatProcessor implements ProcessorInterface
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
+        if (!$data instanceof Cat) {
+            return null;
+        }
+
         if ($operation instanceof DeleteOperationInterface) {
             return $this->remove($data, $operation, $uriVariables, $context);
         }
@@ -65,7 +66,7 @@ final class CatProcessor implements ProcessorInterface
     private function remove(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
         foreach ($this->data as $key => $cat) {
-            if ($cat['uuid'] === $data->getUuid()) {
+            if ($cat['uuid'] === $data->uuid) {
                 unset($this->data[$key]);
             }
         }
@@ -82,16 +83,20 @@ final class CatProcessor implements ProcessorInterface
         $foundKey = null;
         // check if the cat is not already in the file
         foreach ($this->data as $key => $cat) {
-            if ($cat['uuid'] === $data->getUuid()) {
+            if ($cat['uuid'] === $data->uuid) {
                 $foundKey = $key;
             }
         }
 
         // if $foundKey is null, then we add a new cat
         // is not, we update the existing cat
+        if ($foundKey === null) {
+            $data->uuid = uniqid();
+        }
+
         $this->data[$foundKey] = [
-            'uuid' => $data->getUuid(),
-            'name' => $data->getName(),
+            'uuid' => $data->uuid,
+            'name' => $data->name,
         ];
 
         // reindex array

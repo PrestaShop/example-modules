@@ -32,6 +32,7 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use PrestaShop\Module\ApiModule\ApiPlatform\State\CatProcessor;
 use PrestaShop\Module\ApiModule\ApiPlatform\State\CatProvider;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
     provider: CatProvider::class,
@@ -40,36 +41,14 @@ use PrestaShop\Module\ApiModule\ApiPlatform\State\CatProvider;
 class Cat
 {
     #[ApiProperty(identifier: true)]
-    private string $uuid;
+    public ?string $uuid = null;
 
     public function __construct(
-        private string $name,
+        #[Assert\NotBlank]
+        #[Assert\Type('string')]
+        public string $name,
     )
     {
 
-    }
-
-    public function getUuid(): string {
-        if (!isset($this->uuid)) {
-            $this->uuid = uniqid();
-        }
-
-        return $this->uuid;
-    }
-
-    public function setUuid(string $uuid): self {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
-
-    public function getName(): string {
-        return $this->name;
-    }
-
-    public function setName(string $name): self {
-        $this->name = $name;
-
-        return $this;
     }
 }

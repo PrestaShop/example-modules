@@ -61,7 +61,7 @@ final class CatProvider implements ProviderInterface
         foreach ($this->data as $cat) {
             if ($cat['uuid'] === $uuid) {
                 $newCat = new Cat($cat['name']);
-                $newCat->setUuid($uuid);
+                $newCat->uuid = $uuid;
 
                 return $newCat;
             }
