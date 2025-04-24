@@ -31,7 +31,7 @@ use ObjectModel;
 class Horse extends ObjectModel
 {
     public $name;
-    public $color;
+    public $coat_color;
     public $weight;
 
     public static $definition = [
@@ -39,7 +39,7 @@ class Horse extends ObjectModel
         'primary' => 'id_horse',
         'fields' => [
             'name' => ['type' => self::TYPE_STRING, 'validate' => 'isCleanHtml', 'required' => true, 'size' => 64],
-            'color' => ['type' => self::TYPE_STRING, 'validate' => 'isCleanHtml', 'required' => true, 'size' => 64],
+            'coat_color' => ['type' => self::TYPE_STRING, 'validate' => 'isCleanHtml', 'required' => true, 'size' => 64],
             'weight' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat', 'required' => true],
         ],
     ];
