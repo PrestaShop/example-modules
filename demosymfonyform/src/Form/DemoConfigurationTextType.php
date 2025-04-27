@@ -69,8 +69,7 @@ class DemoConfigurationTextType extends TranslatorAwareType
                         ]),
                     ],
                 ],
-            ]
-            )
+            ])
             ->add('translatable_text_area_type', TranslatableType::class, [
                 'label' => $this->trans('Translatable text area type', 'Modules.DemoSymfonyForm.Admin'),
                 'help' => $this->trans('Throws error if length is > 10 or text contains <>={}', 'Modules.DemoSymfonyForm.Admin'),
@@ -85,8 +84,7 @@ class DemoConfigurationTextType extends TranslatorAwareType
                         ]),
                     ],
                 ],
-            ]
-            )
+            ])
             ->add('translatable_formatted_text_area_type', TranslatableType::class, [
                 'label' => $this->trans('Translatable formatted text area type', 'Modules.DemoSymfonyForm.Admin'),
                 'help' => $this->trans('Throws error if length is > 30', 'Modules.DemoSymfonyForm.Admin'),
@@ -99,6 +97,6 @@ class DemoConfigurationTextType extends TranslatorAwareType
                         ]),
                     ],
                 ],
-            ])
+            ]);
     }
 }
