@@ -50,7 +50,15 @@ final class CatProvider implements ProviderInterface
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): array|Cat|null
     {
         if ($operation instanceof CollectionOperationInterface) {
-            return $this->data;
+            $results = [];
+
+            foreach ($this->data as $cat) {
+                $newCat = new Cat($cat['name']);
+                $newCat->uuid = $cat['uuid'];
+                $results[] = $newCat;
+            }
+
+            return $results;
         }
 
         return $this->findCatByUuid($uriVariables['uuid']);
