@@ -30,26 +30,25 @@ namespace PrestaShop\Module\ApiModule\ApiPlatform\Resources;
 
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
+use PrestaShop\Module\ApiModule\ApiPlatform\State\CatProcessor;
+use PrestaShop\Module\ApiModule\ApiPlatform\State\CatProvider;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
-    operations: [
-        new Get(
-            uriTemplate: '/cat/{id}',
-            requirements: ['id' => '\d+'],
-        ),
-    ]
+    provider: CatProvider::class,
+    processor: CatProcessor::class
 )]
 class Cat
 {
-    /**
-     * @var int
-     */
     #[ApiProperty(identifier: true)]
-    private int $id;
+    public ?string $uuid = null;
 
-    /**
-     * @var string
-     */
-    private string $name;
+    public function __construct(
+        #[Assert\NotBlank]
+        #[Assert\Type('string')]
+        public string $name,
+    )
+    {
+
+    }
 }
