@@ -14,7 +14,7 @@ namespace PrestaShop\Module\DemoExtendSymfonyForm\Uploader;
 
 use PrestaShop\Module\DemoExtendSymfonyForm\Entity\SupplierExtraImage;
 use PrestaShop\Module\DemoExtendSymfonyForm\Repository\SupplierExtraImageRepository;
-use Prestashop\Prestashop\Core\Image\Exception\ImageOptimizationException;
+use PrestaShop\PrestaShop\Core\Image\Exception\ImageOptimizationException;
 use PrestaShop\PrestaShop\Core\Image\Uploader\Exception\ImageUploadException;
 use PrestaShop\PrestaShop\Core\Image\Uploader\Exception\MemoryLimitException;
 use PrestaShop\PrestaShop\Core\Image\Uploader\Exception\UploadedImageConstraintException;
