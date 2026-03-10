@@ -12,13 +12,13 @@
   "autoload": {
     "psr-4": {
       "PrestaShop\\Module\\DemoProductForm\\": "src/"
-    },
-    "config": {
-      "prepend-autoloader": false
-    },
-    "type": "prestashop-module"
+    }
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.14"
-  }
+  },
+  "config": {
+    "prepend-autoloader": false
+  },
+  "type": "prestashop-module"
 }
