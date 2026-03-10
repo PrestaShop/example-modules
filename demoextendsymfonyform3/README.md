@@ -33,8 +33,10 @@ PrestaShop 9.0.0 and later.
   2. Rename the directory to make sure that module directory is named `demoextendsymfonyform3`*
   3. `cd` into module's directory and run following commands:
       - `composer install` - to download dependencies into vendor folder
-  4. Install module from Back Office
- 
- _*Because the name of the directory and the name of the main module file must match._
+  4. Install module:
+     - from Back Office in Module Manager
+     - using the command `php ./bin/console prestashop:module install demoextendsymfonyform3`
+
+_* Because the name of the directory and the name of the main module file must match._
  
 

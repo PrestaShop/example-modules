@@ -7,11 +7,17 @@ This example module demonstrates how to modify PrestaShop's new API.
 
 ![](example.png)
 
-## Install
+## How to install
 
-1. Copy the `api_modules` directory into PrestaShop's `modules` directory.
-2. `composer install --node -o` in the module's directory. (`[...]/modules/api_module`)
-3. `bin/console prestashop:module install api_module` in PrestaShop's directory.
+1. Download or clone module into `modules` directory of your PrestaShop installation
+2. Rename the directory to make sure that module directory is named `api_module`*
+3. `cd` into module's directory and run following commands:
+   - `composer install` - to download dependencies into vendor folder
+4. Install module:
+   - from Back Office in Module Manager
+   - using the command `php ./bin/console prestashop:module install api_module`
+
+_* Because the name of the directory and the name of the main module file must match._
 
 ## License
 

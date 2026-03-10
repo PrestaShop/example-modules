@@ -21,5 +21,5 @@ PrestaShop 8.2.1+
  3. `cd` into module's directory and run following commands:
      - `composer install` - to download dependencies into vendor folder
  4. Install module:
-  - from Back Office in Module Catalog
+  - from Back Office in Module Manager
   - using the command `php ./bin/console prestashop:module install demofiltermodules`

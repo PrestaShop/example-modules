@@ -56,7 +56,9 @@ If an element is associated with several shops, then a user deletes it from the 
   2. Rename the directory to make sure that the module directory is named `demomultistoreform`*
   3. `cd` into module's directory and run following commands:
       - `composer install` - to download dependencies into the vendor folder
-  4. Install module from Back Office
+  4. Install module:
+     - from Back Office in Module Manager
+     - using the command `php ./bin/console prestashop:module install demomultistoreform`
   5. In the BO, activate multistore in Shop parameters > Preferences
   6. Create and configure at least one second shop
 
