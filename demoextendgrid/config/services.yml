@@ -1,0 +1,4 @@
+services:
+  PrestaShop\Module\DemoExtendGrid\Controller\DemoOrderController:
+    autowire: true
+    autoconfigure: true
