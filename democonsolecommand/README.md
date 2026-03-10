@@ -8,7 +8,7 @@ Example module showing how to implement Symfony console command. For more info c
 
 ### Supported PrestaShop versions
 
-PrestaShop 1.7.7 to PrestaShop 8.1.0
+PrestaShop 9.0.0 and later
 
 ### Requirements
 
