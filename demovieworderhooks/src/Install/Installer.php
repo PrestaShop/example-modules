@@ -121,11 +121,13 @@ class Installer
             'displayAdminOrderTabContent',
             'displayAdminOrderTabLink',
             'displayAdminOrderMain',
+            'displayAdminOrderMainBottom',
             'displayAdminOrderSide',
             'displayAdminOrderSideBottom',
             'displayAdminOrder',
             'displayOrderPreview',
             'displayAdminOrderTop',
+            'displayAdminOrderCreateExtraButtons',
             'actionGetAdminOrderButtons',
         ];
 

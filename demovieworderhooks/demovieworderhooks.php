@@ -214,6 +214,22 @@ class DemoViewOrderHooks extends Module
     }
 
     /**
+     * Displays a block at the bottom of the main column, after the payments section.
+     */
+    public function hookDisplayAdminOrderMainBottom(array $params): string
+    {
+        return $this->render($this->getModuleTemplatePath() . 'order_main_bottom.html.twig');
+    }
+
+    /**
+     * Displays extra items in the "More actions" dropdown on the order creation page.
+     */
+    public function hookDisplayAdminOrderCreateExtraButtons(array $params): string
+    {
+        return $this->render($this->getModuleTemplatePath() . 'order_create_extra_buttons.html.twig');
+    }
+
+    /**
      * Displays other orders from the same customer in a block.
      */
     public function hookDisplayAdminOrder(array $params)
