@@ -4,9 +4,11 @@
 
 In this module, you will learn how to utilize Symfony form types to create configuration pages for your module.
 
-[This module has been created by following a guide from the developer documentation](https://devdocs.prestashop-project.org/8/modules/creation/adding-configuration-page-modern/).
+[This module has been created by following a guide from the developer documentation](https://devdocs.prestashop-project.org/9/modules/creation/adding-configuration-page-modern/).
 
-It provides a simple configuration page for a module with a Text Field. This text field value is stored [using the Configuration component](https://devdocs.prestashop-project.org/8/development/components/configuration/). 
+It provides a simple configuration page for a module with a Text Field. This text field value is stored [using the Configuration component](https://devdocs.prestashop-project.org/9/development/components/configuration/).
+
+![Demo Symfony Form Simple Screenshot](demosymfonyformsimple.png)
 
 ## Supported PrestaShop versions
 
