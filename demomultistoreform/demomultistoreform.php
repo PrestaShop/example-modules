@@ -27,7 +27,6 @@ if (file_exists(__DIR__.'/vendor/autoload.php')) {
     require_once __DIR__.'/vendor/autoload.php';
 }
 
-use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 use PrestaShop\Module\DemoMultistoreForm\Database\ContentBlockInstaller;
 
 class DemoMultistoreForm extends Module
@@ -69,7 +68,7 @@ class DemoMultistoreForm extends Module
 
     public function getContent(): void
     {
-        $route = SymfonyContainer::getInstance()->get('router')->generate('demo_multistore');
+        $route = $this->get('router')->generate('demo_multistore');
         Tools::redirectAdmin($route);
     }
 

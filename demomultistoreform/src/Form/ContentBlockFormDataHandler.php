@@ -70,7 +70,7 @@ class ContentBlockFormDataHandler implements FormDataHandlerInterface
         return $contentBlock->getId();
     }
 
-    private function addAssociatedShops(ContentBlock &$contentBlock, array $shopIdList = null): void
+    private function addAssociatedShops(ContentBlock &$contentBlock, ?array $shopIdList = null): void
     {
         $contentBlock->clearShops();
 
