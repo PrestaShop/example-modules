@@ -1,11 +1,21 @@
 <?php
 /**
- * 2007-2020 PrestaShop
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the Academic Free License 3.0 (AFL-3.0).
- * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
+ * This source file is subject to the Academic Free License version 3.0
+ * that is bundled with this package in the file LICENSE.md.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
 declare(strict_types=1);
@@ -14,15 +24,16 @@ use PrestaShop\Module\DemoViewOrderHooks\Collection\OrderCollection;
 use PrestaShop\Module\DemoViewOrderHooks\Install\InstallerFactory;
 use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderLinkPresenter;
 use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderReviewPresenter;
+use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderSignaturePresenter;
 use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrdersPresenter;
 use PrestaShop\Module\DemoViewOrderHooks\Presenter\PackageLocationsPresenter;
-use PrestaShop\Module\DemoViewOrderHooks\Presenter\OrderSignaturePresenter;
 use PrestaShop\Module\DemoViewOrderHooks\Repository\OrderRepository;
 use PrestaShop\Module\DemoViewOrderHooks\Repository\OrderReviewRepository;
-use PrestaShop\Module\DemoViewOrderHooks\Repository\PackageLocationRepository;
 use PrestaShop\Module\DemoViewOrderHooks\Repository\OrderSignatureRepository;
+use PrestaShop\Module\DemoViewOrderHooks\Repository\PackageLocationRepository;
 use PrestaShop\PrestaShop\Core\Action\ActionsBarButton;
 use PrestaShop\PrestaShop\Core\Action\ActionsBarButtonsCollection;
+use Twig\Environment;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -87,12 +98,12 @@ class DemoViewOrderHooks extends Module
         );
         $bar->add(
             new ActionsBarButton(
-                'btn-info', ['href' => 'https://www.prestashop.com/'], 'Go to prestashop'
+                'btn-info', ['href' => 'https://www.prestashop.com/'], 'Go to PrestsaShop'
             )
         );
         $bar->add(
             new ActionsBarButton(
-                'btn-dark', ['href' => 'https://github.com/PrestaShop/example-modules/tree/master/demovieworderhooks'], 'Go to GitHub'
+                'btn-dark', ['href' => 'https://github.com/PrestaShop/example-modules/tree/master/demovieworderhooks'], 'Go to module\'s GitHub'
             )
         );
         $createAnOrderUrl = $router->generate('admin_orders_create');
@@ -260,7 +271,7 @@ class DemoViewOrderHooks extends Module
      */
     private function render(string $template, array $params = []): string
     {
-        /** @var Twig_Environment $twig */
+        /** @var Environment $twig */
         $twig = $this->get('twig');
 
         return $twig->render($template, $params);
