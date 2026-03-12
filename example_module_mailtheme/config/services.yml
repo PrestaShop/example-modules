@@ -12,6 +12,7 @@ services:
       - "@=service('prestashop.adapter.legacy.context').getLanguages()"
 
   PrestaShop\Module\ExampleModuleMailtheme\Form\DarkThemeSettingsType:
+    class: PrestaShop\Module\ExampleModuleMailtheme\Form\DarkThemeSettingsType
     public: true
     parent: 'form.type.translatable.aware'
     tags:
