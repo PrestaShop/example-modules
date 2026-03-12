@@ -1,4 +1,4 @@
-# https://devdocs.prestashop.com/9/modules/concepts/services/
+# https://devdocs.prestashop-project.org/9/modules/concepts/services/
 services:
     PrestaShop\Module\DemoProductForm\Form\Modifier\ProductFormModifier:
         autowire: true

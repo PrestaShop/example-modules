@@ -79,7 +79,7 @@ class DemoExtendSymfonyForm1 extends Module
     /**
      * Install module and register hooks to allow grid modification.
      *
-     * @see https://devdocs.prestashop.com/9/modules/concepts/hooks/use-hooks-on-modern-pages/
+     * @see https://devdocs.prestashop-project.org/9/modules/concepts/hooks/use-hooks-on-modern-pages/
      *
      * @return bool
      */

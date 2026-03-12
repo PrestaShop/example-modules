@@ -59,7 +59,7 @@ class Installer
     /**
      * Register hooks for the module.
      *
-     * @see https://devdocs.prestashop.com/9/modules/concepts/hooks/
+     * @see https://devdocs.prestashop-project.org/9/modules/concepts/hooks/
      *
      * @param \Module $module
      *

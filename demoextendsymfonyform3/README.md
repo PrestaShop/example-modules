@@ -14,7 +14,7 @@ Allowed to review in List  | Allowed to review in Form
 This modules demonstrates
  - how to add this field, manage its content and its
 properties using modern hooks in Symfony pages
- - how to use custom [CQRS](https://devdocs.prestashop.com/1.7/development/architecture/domain/cqrs/) Commands and Queries to separate your domain from your application
+ - how to use custom [CQRS](https://devdocs.prestashop-project.org/1.7/development/architecture/domain/cqrs/) Commands and Queries to separate your domain from your application
  - how to use Translator inside modern Symfony module
 
 *This part is demonstrated as a possibility for your module, this is not mandatory to be done this way.

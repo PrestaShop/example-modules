@@ -2,7 +2,7 @@
 
 ## About
 
-This module illustrates how to use Javascript Router [component](https://devdocs.prestashop.com/1.7/development/components/global-components/) in a module
+This module illustrates how to use Javascript Router [component](https://devdocs.prestashop-project.org/1.7/development/components/global-components/) in a module
 
 It provides a demo page which relies on the Router to allow customers search.
 
