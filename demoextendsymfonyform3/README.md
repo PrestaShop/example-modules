@@ -9,7 +9,7 @@ This new field appears:
 
 Allowed to review in List  | Allowed to review in Form
 ------------- | -------------
-![Allowed to review in List](democqrshooksusage_list.png)  | ![Allowed to review in Form](democqrshooksusage_form.png)
+![Allowed to review in List](demo_list.png)  | ![Allowed to review in Form](demo_form.png)
 
 This modules demonstrates
  - how to add this field, manage its content and its
