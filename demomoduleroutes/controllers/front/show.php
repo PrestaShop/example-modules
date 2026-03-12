@@ -8,6 +8,8 @@ class DemoModuleRoutesShowModuleFrontController extends ModuleFrontController
 {
     public function initContent()
     {
+        parent::initContent();
+
         $this->context->smarty->assign(
             // remember that it's just a demo module, always sanitize the input data!
             [

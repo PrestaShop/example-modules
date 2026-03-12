@@ -25,6 +25,7 @@ _* Because the name of the directory and the name of the main module file must m
 ### How to test
 
 - Enable `Friendly URL` in Back Office > Shop Parameters > Traffic & Seo
-- Access: 
+- Click **Configure** on the module in Module Manager — the configuration page displays ready-to-click links to both demo URLs for your installation.
+- Or access them manually:
     - _yourdomain_/_installdir_/demomoduleroutes/list
     - _yourdomain_/_installdir_/demomoduleroutes/show/1/abc
