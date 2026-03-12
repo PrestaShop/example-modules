@@ -27,7 +27,7 @@ use PrestaShop\Module\DemoProductForm\Form\Modifier\ProductFormModifier;
 use PrestaShop\Module\DemoProductForm\Install\Installer;
 use PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId;
 use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -73,7 +73,7 @@ class DemoProductForm extends Module
     }
 
     /**
-     * @see https://devdocs.prestashop.com/8/modules/creation/module-translation/new-system/#translating-your-module
+     * @see https://devdocs.prestashop-project.org/9/modules/creation/module-translation/new-system/#translating-your-module
      */
     public function isUsingNewTranslationSystem(): bool
     {
@@ -107,7 +107,7 @@ class DemoProductForm extends Module
         $productId = $params['id_product'];
         $customProduct = new CustomProduct($productId);
 
-        /** @var EngineInterface $twig */
+        /** @var Environment $twig */
         $twig = $this->get('twig');
 
         return $twig->render('@Modules/demoproductform/views/templates/admin/extra_module.html.twig', [
