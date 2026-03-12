@@ -16,10 +16,10 @@
   "autoload": {
     "psr-4": {
       "PrestaShop\\Module\\DemoControllerTabs\\": "src/"
-    },
-    "config": {
-      "prepend-autoloader": false
-    },
-    "type": "prestashop-module"
-  }
+    }
+  },
+  "config": {
+    "prepend-autoloader": false
+  },
+  "type": "prestashop-module"
 }

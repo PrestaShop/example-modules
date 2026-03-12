@@ -27,27 +27,34 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoExtendTemplates\Controller;
 
-use PrestaShop\PrestaShop\Core\Search\Filters\OrderFilters;
-use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
-use PrestaShopBundle\Controller\Admin\Sell\Order\OrderController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use PrestaShop\PrestaShop\Core\Grid\GridFactory;
-use PrestaShop\PrestaShop\Core\Kpi\Row\KpiRowFactoryInterface;
-use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
-use Symfony\Component\DependencyInjection\Attribute\MapDecorated;
+use PrestaShop\PrestaShop\Adapter\Currency\CurrencyDataProvider;
 use PrestaShop\PrestaShop\Adapter\LegacyContext;
+use PrestaShop\PrestaShop\Adapter\Order\Repository\OrderDetailRepository;
+use PrestaShop\PrestaShop\Adapter\PDF\OrderInvoicePdfGenerator;
+use PrestaShop\PrestaShop\Adapter\Tools;
+use PrestaShop\PrestaShop\Core\FeatureFlag\FeatureFlagStateCheckerInterface;
+use PrestaShop\PrestaShop\Core\Form\ChoiceProvider\LanguageByIdChoiceProvider;
+use PrestaShop\PrestaShop\Core\Form\ConfigurableFormChoiceProviderInterface;
+use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Builder\FormBuilderInterface;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Handler\FormHandlerInterface;
-use PrestaShop\PrestaShop\Adapter\Currency\CurrencyDataProvider;
-use Symfony\Component\Routing\RouterInterface;
-use PrestaShop\PrestaShop\Core\Form\ConfigurableFormChoiceProviderInterface;
-use PrestaShop\PrestaShop\Core\Order\OrderSiblingProviderInterface;
 use PrestaShop\PrestaShop\Core\Grid\Definition\Factory\OrderGridDefinitionFactory;
-use PrestaShop\PrestaShop\Adapter\PDF\OrderInvoicePdfGenerator;
+use PrestaShop\PrestaShop\Core\Grid\GridFactory;
+use PrestaShop\PrestaShop\Core\Grid\GridFactoryInterface;
+use PrestaShop\PrestaShop\Core\Kpi\Row\KpiRowFactoryInterface;
+use PrestaShop\PrestaShop\Core\Order\OrderSiblingProviderInterface;
 use PrestaShop\PrestaShop\Core\PDF\PDFGeneratorInterface;
-use PrestaShop\PrestaShop\Core\Form\ChoiceProvider\LanguageByIdChoiceProvider;
-use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
+use PrestaShop\PrestaShop\Core\Search\Filters\OrderFilters;
+use PrestaShop\PrestaShop\Core\Search\Filters\ShipmentFilters;
+use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
+use PrestaShopBundle\Controller\Admin\Sell\Order\OrderController;
+use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\DependencyInjection\Attribute\MapDecorated;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouterInterface;
 
 #[AsDecorator(OrderController::class)]
 class DecoratedOrderController extends PrestaShopAdminController
@@ -123,8 +130,55 @@ class DecoratedOrderController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.cancel_product_form_builder')] FormBuilderInterface $formBuilder,
         #[Autowire(service: 'prestashop.adapter.order.order_sibling_provider')] OrderSiblingProviderInterface $orderSiblingProvider,
         CurrencyDataProvider $currencyDataProvider,
+        FeatureFlagStateCheckerInterface $featureFlagStateChecker,
+        #[Autowire(service: 'PrestaShop\PrestaShop\Core\Grid\Factory\ShipmentFactory')] GridFactoryInterface $shipmentGridFactory,
+        ShipmentFilters $filters,
+        Tools $tools,
     ) {
-        return $this->orderController->viewAction($orderId, $request, $formBuilder, $orderSiblingProvider, $currencyDataProvider);
+        return $this->orderController->viewAction(
+            $orderId,
+            $request,
+            $formBuilder,
+            $orderSiblingProvider,
+            $currencyDataProvider,
+            $featureFlagStateChecker,
+            $shipmentGridFactory,
+            $filters,
+            $tools
+        );
+    }
+
+    public function getMergeShipmentForm(int $orderId, Request $request): Response
+    {
+        return $this->orderController->getMergeShipmentForm($orderId, $request);
+    }
+
+    public function getEditShipmentForm(int $orderId, Request $request): Response
+    {
+        return $this->orderController->getEditShipmentForm($orderId, $request);
+    }
+
+    public function mergeShipmentAction(int $orderId, Request $request): RedirectResponse
+    {
+        return $this->orderController->mergeShipmentAction($orderId, $request);
+    }
+
+    public function editShipmentAction(int $orderId, Request $request): RedirectResponse
+    {
+        return $this->orderController->editShipmentAction($orderId, $request);
+    }
+
+    public function splitShipmentAction(int $orderId, int $shipmentId, Request $request): RedirectResponse
+    {
+        return $this->orderController->splitShipmentAction($orderId, $shipmentId, $request);
+    }
+
+    public function getSplitShipmentForm(
+        int $orderId,
+        Request $request,
+        #[Autowire(service: 'PrestaShop\PrestaShop\Adapter\Order\Repository\OrderDetailRepository')] OrderDetailRepository $orderDetailRepository,
+    ): Response {
+        return $this->orderController->getSplitShipmentForm($orderId, $request, $orderDetailRepository);
     }
 
     public function partialRefundAction(

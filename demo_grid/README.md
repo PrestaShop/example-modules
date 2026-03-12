@@ -25,4 +25,5 @@ PrestaShop 9.0.0 and later
   - from Back Office in Module Manager
   - using the command `php ./bin/console prestashop:module install demo_grid`
  5. Now you can see an example grid in the Back Office after opening module's configuration page
+ 
 _* Because the name of the directory and the name of the main module file must match._

@@ -38,8 +38,8 @@ class DemoExtendGrid extends Module
     {
         $this->name = 'demoextendgrid';
         $this->author = 'PrestaShop';
-        $this->version = '1.1.0';
-        $this->ps_versions_compliancy = ['min' => '1.7.7', 'max' => '8.99.99'];
+        $this->version = '1.2.0';
+        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => '9.99.99'];
 
         parent::__construct();
 
@@ -101,9 +101,6 @@ class DemoExtendGrid extends Module
                     'use_inline_display' => true,
                 ])
         );
-        // Button is not working by default, because SubmitRowActionExtension component is not loaded in Orders grid javascript part.
-        // To replace that behavior there is an example of custom javascript in views/orders-listing.js
-        // Adding grid extension in non-compiled javascript is not supported yet, we hope to fix it in future.
     }
 
     private function getActionsColumn(GridDefinitionInterface $gridDefinition): ColumnInterface
@@ -120,5 +117,7 @@ class DemoExtendGrid extends Module
             // In this case you can create a new column or throw exception depending on your needs
             throw $e;
         }
+
+        throw new ColumnNotFoundException('actions column not found in grid definition');
     }
 }

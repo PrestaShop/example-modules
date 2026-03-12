@@ -12,10 +12,10 @@
     "autoload": {
       "psr-4": {
         "Module\\DemoGrid\\": "src/"
-      },
-      "config": {
-        "prepend-autoloader": false
-      },
-      "type": "prestashop-module"
-    }
+      }
+    },
+    "config": {
+      "prepend-autoloader": false
+    },
+    "type": "prestashop-module"
 }

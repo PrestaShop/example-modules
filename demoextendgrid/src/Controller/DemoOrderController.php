@@ -21,10 +21,10 @@ declare(strict_types=1);
 
 namespace PrestaShop\Module\DemoExtendGrid\Controller;
 
-use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
+use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
 use Symfony\Component\HttpFoundation\Response;
 
-class DemoOrderController extends FrameworkBundleAdminController
+class DemoOrderController extends PrestaShopAdminController
 {
     /**
      * @param int $orderId

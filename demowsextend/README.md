@@ -8,7 +8,12 @@ This module adds a resource managed by ObjectModel to the WebService.
 
 Compatible with 1.7.8 and above versions.
 
-### How to install
+## How to install
 
-- Copy the module into `modules` directory of your PrestaShop installation
-- Install the module from Back Office or from CLI
+1. Download or clone module into `modules` directory of your PrestaShop installation
+2. Rename the directory to make sure that module directory is named `demowsextend`*
+3. Install module:
+   - from Back Office in Module Manager
+   - using the command `php ./bin/console prestashop:module install demowsextend`
+
+_* Because the name of the directory and the name of the main module file must match._

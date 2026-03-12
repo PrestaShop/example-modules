@@ -18,10 +18,12 @@ Composer
 
 ## How to install
 
-Download or clone the module into the modules directory of your PrestaShop installation.
+1. Download or clone module into `modules` directory of your PrestaShop installation
+2. Rename the directory to make sure that module directory is named `demosymfonyformsimple`*
+3. `cd` into module's directory and run following commands:
+   - `composer install` - to download dependencies into vendor folder
+4. Install module:
+   - from Back Office in Module Manager
+   - using the command `php ./bin/console prestashop:module install demosymfonyformsimple`
 
-`cd` into module's directory and run following commands:
-
-`composer install` - to download dependencies into vendor folder
-
-Install the module from Back Office or via CLI.
+_* Because the name of the directory and the name of the main module file must match._

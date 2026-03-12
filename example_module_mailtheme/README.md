@@ -5,15 +5,17 @@ Example module to add a Mail theme to PrestaShop.
 
 This module requires PrestaShop 9.0.0 to work correctly.
 
-1. Copy the `example_module_mailtheme` directory into PrestaShop's `modules` directory.
-2. `composer install` in the module's directory. (`[...]/modules/example_module_mailtheme`)
-3. `bin/console prestashop:module install example_module_mailtheme` in PrestaShop's directory.
+# How to install
 
-# Install
+1. Download or clone module into `modules` directory of your PrestaShop installation
+2. Rename the directory to make sure that module directory is named `example_module_mailtheme`*
+3. `cd` into module's directory and run following commands:
+   - `composer install` - to download dependencies into vendor folder
+4. Install module:
+   - from Back Office in Module Manager
+   - using the command `php ./bin/console prestashop:module install example_module_mailtheme`
 
-1. Copy the `example_module_mailtheme` directory into PrestaShop's `modules` directory.
-2. `composer install` in the module's directory. (`[...]/modules/example_module_mailtheme`)
-3. `bin/console prestashop:module install example_module_mailtheme` in PrestaShop's directory.
+_* Because the name of the directory and the name of the main module file must match._
 
 # Usage
 

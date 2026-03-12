@@ -1,4 +1,3 @@
-<?php
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -18,29 +17,6 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
-declare(strict_types=1);
-
-if (!defined('_PS_VERSION_')) {
-    exit;
-}
-
-class DemoExtendTemplates extends Module
-{
-    public function __construct()
-    {
-        $this->name = 'demoextendtemplates';
-        $this->author = 'PrestaShop';
-        $this->version = '1.0.0';
-        $this->ps_versions_compliancy = ['min' => '9.1.0', 'max' => '9.99.99'];
-
-        parent::__construct();
-
-        $this->displayName = $this->trans('DemoExtendTemplates', [], 'Modules.DemoExtendTemplates.Config');
-        $this->description = $this->trans('Demonstrates various templating extension examples', [], 'Modules.DemoExtendTemplates.Config');
-    }
-
-    public function isUsingNewTranslationSystem()
-    {
-        return true;
-    }
-}
+document.addEventListener('DOMContentLoaded', () => {
+  window.prestashop.component.initComponents(['Grid']);
+});
