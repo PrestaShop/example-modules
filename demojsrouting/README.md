@@ -6,7 +6,7 @@ This module illustrates how to use Javascript Router [component](https://devdocs
 
 It provides a demo page which relies on the Router to allow customers search.
 
-![DemoJSrouting screenshot](demojsrouting_screenshot.jpeg)
+![DemoJSrouting screenshot](demojsrouting_screenshot.png)
 
 ### Requirements
 
