@@ -43,7 +43,7 @@ class democontrollertabs extends Module
         $this->displayName = $this->trans('Demo Controller Tabs', [], 'Modules.Democontrollertabs.Admin');
         $this->description = $this->trans('Demonstration of Symfony Controllers, Tabs and Permissions', [], 'Modules.Democontrollertabs.Admin');
 
-        // See https://devdocs.prestashop.com/9/modules/concepts/controllers/admin-controllers/tabs/
+        // See https://devdocs.prestashop-project.org/9/modules/concepts/controllers/admin-controllers/tabs/
         $tabNames = [];
         foreach (Language::getLanguages(true) as $lang) {
             $tabNames[$lang['locale']] = $this->trans('Demo Controller Tabs', [], 'Modules.Democontrollertabs.Admin', $lang['locale']);
@@ -63,7 +63,7 @@ class democontrollertabs extends Module
     public function getContent()
     {
         // This uses the matching with the route ps_controller_tabs_configure via the _legacy_link property
-        // See https://devdocs.prestashop.com/9/development/architecture/migration-guide/controller-routing
+        // See https://devdocs.prestashop-project.org/9/development/architecture/migration-guide/controller-routing
         Tools::redirectAdmin(
             $this->context->link->getAdminLink(ConfigureController::TAB_CLASS_NAME)
         );

@@ -44,6 +44,16 @@ class DemoModuleRoutes extends Module
     }
 
 
+    public function getContent(): string
+    {
+        $this->context->smarty->assign([
+            'urlList' => $this->context->link->getModuleLink('demomoduleroutes', 'list'),
+            'urlShow' => $this->context->link->getModuleLink('demomoduleroutes', 'show', ['id' => 1, 'slug' => 'abc']),
+        ]);
+
+        return $this->fetch('module:demomoduleroutes/views/templates/admin/configure.tpl');
+    }
+
     public function hookModuleRoutes()
     {
         return [

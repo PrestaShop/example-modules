@@ -37,7 +37,7 @@ Decorating controllers is a powerful way to extend or modify the behavior of exi
 
 Of course, there are some downsides to this approach, such as potential conflicts with other modules that also decorate the same controller, and the need to ensure that your decorations are compatible with future updates of the original controller. However, when used judiciously, decorating controllers can be an effective way to extend functionality while keeping your code organized and maintainable.
 
-**Alternatives*?
+**Alternatives**?
 
 You can base on EventSubscriber and listen to KernelEvents::CONTROLLER event, check if the controller and action match the one you want to extend, and execute your code before or after the controller's action is executed. This approach is more decoupled and can be easier to maintain, but it has some limitations compared to decorating the controller directly. Here are a few real ones worth knowing:                                                                     
                                          

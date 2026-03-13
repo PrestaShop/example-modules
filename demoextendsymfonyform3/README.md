@@ -9,12 +9,12 @@ This new field appears:
 
 Allowed to review in List  | Allowed to review in Form
 ------------- | -------------
-![Allowed to review in List](democqrshooksusage_list.png)  | ![Allowed to review in Form](democqrshooksusage_form.png)
+![Allowed to review in List](demo_list.png)  | ![Allowed to review in Form](demo_form.png)
 
 This modules demonstrates
  - how to add this field, manage its content and its
 properties using modern hooks in Symfony pages
- - how to use custom [CQRS](https://devdocs.prestashop.com/1.7/development/architecture/domain/cqrs/) Commands and Queries to separate your domain from your application
+ - how to use custom [CQRS](https://devdocs.prestashop-project.org/9/development/architecture/domain/cqrs/) Commands and Queries to separate your domain from your application
  - how to use Translator inside modern Symfony module
 
 *This part is demonstrated as a possibility for your module, this is not mandatory to be done this way.

@@ -8,6 +8,8 @@ class DemoModuleRoutesListModuleFrontController extends ModuleFrontController
 {
     public function initContent()
     {
+        parent::initContent();
+
         $this->setTemplate('module:demomoduleroutes/views/templates/front/list.tpl');
     }
 }

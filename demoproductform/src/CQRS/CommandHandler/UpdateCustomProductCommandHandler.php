@@ -35,7 +35,7 @@ final class UpdateCustomProductCommandHandler
 {
     /**
      * This method will be triggered when related command is dispatched
-     * (more about cqrs https://devdocs.prestashop.com/8/development/architecture/domain/cqrs/)
+     * (more about cqrs https://devdocs.prestashop-project.org/9/development/architecture/domain/cqrs/)
      *
      * Note - product form data handler create() method is a little unique
      *

@@ -2,11 +2,11 @@
 
 ## About
 
-This module illustrates using the [moduleRoutes hook](https://devdocs.prestashop-project.org/8/modules/concepts/hooks/list-of-hooks/moduleroutes/) in a module.
+This module illustrates using the [moduleRoutes hook](https://devdocs.prestashop-project.org/9/modules/concepts/hooks/list-of-hooks/moduleroutes/) in a module.
 
 It creates two `ModuleFrontController` controllers, extends default PrestaShop routes with two custom ones, and maps them to those controllers.
 
-You can find more information in [moduleRoutes hook on the devdocs](https://devdocs.prestashop-project.org/8/modules/concepts/hooks/list-of-hooks/moduleroutes/).
+You can find more information in [moduleRoutes hook on the devdocs](https://devdocs.prestashop-project.org/9/modules/concepts/hooks/list-of-hooks/moduleroutes/).
 
 ## Supported PrestaShop versions
 
@@ -25,6 +25,7 @@ _* Because the name of the directory and the name of the main module file must m
 ### How to test
 
 - Enable `Friendly URL` in Back Office > Shop Parameters > Traffic & Seo
-- Access: 
+- Click **Configure** on the module in Module Manager — the configuration page displays ready-to-click links to both demo URLs for your installation.
+- Or access them manually:
     - _yourdomain_/_installdir_/demomoduleroutes/list
     - _yourdomain_/_installdir_/demomoduleroutes/show/1/abc
