@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="Modules.Demoextrafield.Admin.xlf" source-language="en-US" target-language="fr-FR" datatype="plaintext">
+    <body>
+      <trans-unit id="dangerous_product_title">
+        <source>Dangerous product</source>
+        <target>Produit dangereux</target>
+      </trans-unit>
+      <trans-unit id="dangerous_product_desc">
+        <source>Indicates whether the product is dangerous</source>
+        <target>Indique si le produit est dangereux</target>
+      </trans-unit>
+      <trans-unit id="video_link_title">
+        <source>Video link</source>
+        <target>Lien vidéo</target>
+      </trans-unit>
+      <trans-unit id="video_link_desc">
+        <source>Video URL per language</source>
+        <target>URL de vidéo par langue</target>
+      </trans-unit>
+      <trans-unit id="custom_date_title">
+        <source>Custom date</source>
+        <target>Date personnalisée</target>
+      </trans-unit>
+      <trans-unit id="custom_date_desc">
+        <source>Custom date per shop</source>
+        <target>Date personnalisée par boutique</target>
+      </trans-unit>
+
+      <trans-unit id="theme_color_title">
+        <source>Theme color</source>
+        <target>Couleur de thème</target>
+      </trans-unit>
+      <trans-unit id="theme_color_desc">
+        <source>Color associated with the category</source>
+        <target>Couleur associée à la catégorie</target>
+      </trans-unit>
+      <trans-unit id="marketing_note_title">
+        <source>Marketing note</source>
+        <target>Note marketing</target>
+      </trans-unit>
+      <trans-unit id="marketing_note_desc">
+        <source>Free note displayed in BO, API and FO</source>
+        <target>Note libre affichée dans le BO, l’API et le FO</target>
+      </trans-unit>
+      <trans-unit id="default_supplier_title">
+        <source>Default supplier</source>
+        <target>Fournisseur par défaut</target>
+      </trans-unit>
+      <trans-unit id="default_supplier_desc">
+        <source>Select a PrestaShop supplier</source>
+        <target>Sélectionnez un fournisseur PrestaShop</target>
+      </trans-unit>
+
+      <trans-unit id="credit_limit_title">
+        <source>Credit limit</source>
+        <target>Limite de crédit</target>
+      </trans-unit>
+      <trans-unit id="credit_limit_desc">
+        <source>Maximum customer credit amount</source>
+        <target>Montant maximum de crédit client</target>
+      </trans-unit>
+      <trans-unit id="metadata_json_title">
+        <source>Metadata JSON</source>
+        <target>JSON de métadonnées</target>
+      </trans-unit>
+      <trans-unit id="metadata_json_desc_customer">
+        <source>Free JSON for customer metadata</source>
+        <target>JSON libre pour les métadonnées client</target>
+      </trans-unit>
+
+      <trans-unit id="fo_title">
+        <source>Extra fields (demoextrafield)</source>
+        <target>Champs extra (demoextrafield)</target>
+      </trans-unit>
+      <trans-unit id="fo_entity">
+        <source>Entity</source>
+        <target>Entité</target>
+      </trans-unit>
+      <trans-unit id="fo_none">
+        <source>No extra fields found for this module.</source>
+        <target>Aucun champ extra trouvé pour ce module.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
+
