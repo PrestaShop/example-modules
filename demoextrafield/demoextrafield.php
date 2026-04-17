@@ -9,6 +9,7 @@ declare(strict_types=1);
 use PrestaShop\PrestaShop\Adapter\ContainerFinder;
 use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertyOptions;
 use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertyScope;
+use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertySqlIndex;
 use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertyType;
 use PrestaShop\PrestaShop\Core\ExtraProperty\Storage\ExtraPropertyValueProviderInterface;
 use PrestaShopBundle\Form\Admin\Sell\Discount\DiscountSupplierType;
@@ -92,12 +93,11 @@ class demoextrafield extends Module
                 titleDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Indicates whether the product is dangerous',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
-                symfonyFieldType: CheckboxType::class,
+                formFieldType: CheckboxType::class,
                 validator: 'isBool',
-                displayFront: false,
                 displayApi: true,
-                displayBo: true,
-                propertyPath: 'options.extra_properties',
+                displayForm: true,
+                formPosition: 'options.extra_properties',
                 displayGrid: true,
                 gridPosition: 'quantity'
             )
@@ -120,12 +120,11 @@ class demoextrafield extends Module
                 titleDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Video URL per language',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
-                sqlIndex: 'unique',
-                symfonyFieldType: UrlType::class,
+                sqlIndex: ExtraPropertySqlIndex::Unique,
+                formFieldType: UrlType::class,
                 validator: 'isUrl',
-                displayFront: true,
                 displayApi: true,
-                displayBo: true,
+                displayForm: true,
                 displayGrid: false
             )
         );
@@ -147,12 +146,11 @@ class demoextrafield extends Module
                 titleDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Custom date per shop',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
-                sqlIndex: 'key',
-                symfonyFieldType: DatePickerType::class,
+                sqlIndex: ExtraPropertySqlIndex::Key,
+                formFieldType: DatePickerType::class,
                 validator: 'isDate',
-                displayFront: false,
                 displayApi: true,
-                displayBo: true,
+                displayForm: true,
                 displayGrid: true,
                 gridPosition: 3
             )
@@ -179,11 +177,10 @@ class demoextrafield extends Module
                 titleDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Color associated with the category',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
-                symfonyFieldType: ColorType::class,
+                formFieldType: ColorType::class,
                 validator: 'isColor',
-                displayFront: true,
                 displayApi: true,
-                displayBo: true,
+                displayForm: true,
                 displayGrid: true
             )
         );
@@ -205,11 +202,10 @@ class demoextrafield extends Module
                 titleDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Free note displayed in BO, API and FO',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
-                symfonyFieldType: FormattedTextareaType::class,
+                formFieldType: FormattedTextareaType::class,
                 validator: 'isCleanHtml',
-                displayFront: true,
                 displayApi: true,
-                displayBo: true,
+                displayForm: true,
                 displayGrid: false
             )
         );
@@ -231,11 +227,10 @@ class demoextrafield extends Module
                 titleDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Select a PrestaShop supplier',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
-                symfonyFieldType: DiscountSupplierType::class,
+                formFieldType: DiscountSupplierType::class,
                 validator: 'isUnsignedId',
-                displayFront: true,
                 displayApi: true,
-                displayBo: true,
+                displayForm: true,
                 displayGrid: true
             )
         );
@@ -261,11 +256,10 @@ class demoextrafield extends Module
                 titleDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Maximum customer credit amount',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
-                symfonyFieldType: MoneyType::class,
+                formFieldType: MoneyType::class,
                 validator: 'isPrice',
-                displayFront: false,
                 displayApi: true,
-                displayBo: true,
+                displayForm: true,
                 displayGrid: true
             )
         );
@@ -287,11 +281,10 @@ class demoextrafield extends Module
                 titleDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Free JSON for customer metadata',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
-                symfonyFieldType: TextareaType::class,
+                formFieldType: TextareaType::class,
                 validator: 'isJson',
-                displayFront: true,
                 displayApi: true,
-                displayBo: true,
+                displayForm: true,
                 displayGrid: false
             )
         );
@@ -324,16 +317,16 @@ class demoextrafield extends Module
         // false = keep columns in DB after uninstall
         $dropColumn = true;
 
-        $this->unregisterExtraProperty('product', 'video_link', 'lang', $dropColumn);
-        $this->unregisterExtraProperty('product', 'is_dangerous', 'common', $dropColumn);
-        $this->unregisterExtraProperty('product', 'custom_date', 'shop', $dropColumn);
+        $this->unregisterExtraProperty('product', 'video_link', ExtraPropertyScope::Lang, $dropColumn);
+        $this->unregisterExtraProperty('product', 'is_dangerous', ExtraPropertyScope::Common, $dropColumn);
+        $this->unregisterExtraProperty('product', 'custom_date', ExtraPropertyScope::Shop, $dropColumn);
 
-        $this->unregisterExtraProperty('category', 'theme_color', 'common', $dropColumn);
-        $this->unregisterExtraProperty('category', 'marketing_note', 'common', $dropColumn);
-        $this->unregisterExtraProperty('category', 'id_supplier', 'common', $dropColumn);
+        $this->unregisterExtraProperty('category', 'theme_color', ExtraPropertyScope::Common, $dropColumn);
+        $this->unregisterExtraProperty('category', 'marketing_note', ExtraPropertyScope::Common, $dropColumn);
+        $this->unregisterExtraProperty('category', 'id_supplier', ExtraPropertyScope::Common, $dropColumn);
 
-        $this->unregisterExtraProperty('customer', 'credit_limit', 'common', $dropColumn);
-        $this->unregisterExtraProperty('customer', 'extra_json', 'common', $dropColumn);
+        $this->unregisterExtraProperty('customer', 'credit_limit', ExtraPropertyScope::Common, $dropColumn);
+        $this->unregisterExtraProperty('customer', 'extra_json', ExtraPropertyScope::Common, $dropColumn);
 
         return parent::uninstall();
     }
