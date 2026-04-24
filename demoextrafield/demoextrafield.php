@@ -11,7 +11,7 @@ use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertyOptions;
 use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertyScope;
 use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertySqlIndex;
 use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertyType;
-use PrestaShop\PrestaShop\Core\ExtraProperty\Storage\ExtraPropertyValueProviderInterface;
+use PrestaShop\PrestaShop\Core\ExtraProperty\Storage\ExtraPropertyReaderInterface;
 use PrestaShopBundle\Form\Admin\Sell\Discount\DiscountSupplierType;
 use PrestaShopBundle\Form\Admin\Type\DatePickerType;
 use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
@@ -161,6 +161,30 @@ class demoextrafield extends Module
             return false;
         }
 
+        // Product (common) : date_last_seen
+        // Demo field: updated on every FO product page view via hookDisplayFooterProduct.
+        $productDateLastSeenRegistered = $this->registerExtraProperty(
+            'product',
+            'date_last_seen',
+            new ExtraPropertyOptions(
+                type: ExtraPropertyType::Date,
+                scope: ExtraPropertyScope::Common,
+                nullable: true,
+                titleWording: 'Date last seen',
+                titleDomain: self::TRANSLATION_DOMAIN,
+                descriptionWording: 'Last time this product page was viewed',
+                descriptionDomain: self::TRANSLATION_DOMAIN,
+                displayApi: true,
+                displayForm: true,
+                displayGrid: false
+            )
+        );
+        if (!$productDateLastSeenRegistered) {
+            $this->_errors[] = 'Failed to register Product extra field "date_last_seen" (scope: common).';
+
+            return false;
+        }
+
         /**
          * CATEGORY extra fields
          */
@@ -297,9 +321,10 @@ class demoextrafield extends Module
         $hooksRegistered = $this->registerHook('displayProductAdditionalInfo')
             && $this->registerHook('displayCartExtraProductInfo')
             && $this->registerHook('displayHeaderCategory')
-            && $this->registerHook('displayCustomerAccountTop');
+            && $this->registerHook('displayCustomerAccountTop')
+            && $this->registerHook('displayFooterProduct');
         if (!$hooksRegistered) {
-            $this->_errors[] = 'Failed to register one or more hooks (displayProductAdditionalInfo, displayCartExtraProductInfo, displayHeaderCategory, displayCustomerAccountTop).';
+            $this->_errors[] = 'Failed to register one or more hooks.';
 
             return false;
         }
@@ -320,6 +345,7 @@ class demoextrafield extends Module
         $this->unregisterExtraProperty('product', 'video_link', ExtraPropertyScope::Lang, $dropColumn);
         $this->unregisterExtraProperty('product', 'is_dangerous', ExtraPropertyScope::Common, $dropColumn);
         $this->unregisterExtraProperty('product', 'custom_date', ExtraPropertyScope::Shop, $dropColumn);
+        $this->unregisterExtraProperty('product', 'date_last_seen', ExtraPropertyScope::Common, $dropColumn);
 
         $this->unregisterExtraProperty('category', 'theme_color', ExtraPropertyScope::Common, $dropColumn);
         $this->unregisterExtraProperty('category', 'marketing_note', ExtraPropertyScope::Common, $dropColumn);
@@ -355,6 +381,42 @@ class demoextrafield extends Module
         ]);
 
         return $this->display(__FILE__, 'views/templates/hook/product_additional_info.tpl');
+    }
+
+    /**
+     * Front Office hook (product page footer).
+     *
+     * Demo: reads date_last_seen from the Product ObjectModel, displays it, then updates it.
+     *
+     * Two equivalent syntaxes are shown; both use the ExtraPropertiesBag via __get:
+     *   $product->extra_properties['demoextrafield_date_last_seen']      // ArrayAccess (preferred)
+     *   $product->getExtraProperty('demoextrafield', 'date_last_seen')   // convenience method
+     */
+    public function hookDisplayFooterProduct(array $params): string
+    {
+        $productId = (int) ($params['product']['id_product'] ?? 0);
+        if ($productId <= 0) {
+            return '';
+        }
+
+        $product = new Product($productId);
+        if (!Validate::isLoadedObject($product)) {
+            return '';
+        }
+
+        $now = date('Y-m-d H:i:s');
+
+        // ArrayAccess on the ExtraPropertiesBag (flat column name = module_name . '_' . field_name)
+        $dateLastSeen = $product->extra_properties['demoextrafield_date_last_seen'];
+        $product->extra_properties['demoextrafield_date_last_seen'] = $now;
+        $product->update();
+
+        $this->context->smarty->assign([
+            'dateLastSeen' => $dateLastSeen,
+            'dateLastSeenUpdated' => $now,
+        ]);
+
+        return $this->display(__FILE__, 'views/templates/hook/product_footer.tpl');
     }
 
     /**
@@ -422,20 +484,18 @@ class demoextrafield extends Module
 
         try {
             $containerFinder = new ContainerFinder($this->context);
-            /** @var ExtraPropertyValueProviderInterface $extraPropertyValueProvider */
-            $extraPropertyValueProvider = $containerFinder->getContainer()->get(ExtraPropertyValueProviderInterface::class);
-        } catch (Throwable $e) {
+            /** @var ExtraPropertyReaderInterface $extraPropertyReader */
+            $extraPropertyReader = $containerFinder->getContainer()->get(ExtraPropertyReaderInterface::class);
+        } catch (Throwable) {
             return '';
         }
 
-        $extraProperties = $extraPropertyValueProvider->getExtraProperties(
+        $extraProperties = $extraPropertyReader->getExtraProperties(
             'customer',
             'id_customer',
             (int) $customer->id,
             (int) $this->context->language->id,
-            (int) $this->context->shop->id,
-            true,
-            true
+            (int) $this->context->shop->id
         );
 
         $moduleExtras = $extraProperties[$this->name] ?? [];
@@ -467,6 +527,8 @@ class demoextrafield extends Module
         $this->trans('Video URL per language', [], $domain);
         $this->trans('Custom date', [], $domain);
         $this->trans('Custom date per shop', [], $domain);
+        $this->trans('Date last seen', [], $domain);
+        $this->trans('Last time this product page was viewed', [], $domain);
 
         // Category
         $this->trans('Theme color', [], $domain);
@@ -486,6 +548,9 @@ class demoextrafield extends Module
         $this->trans('Extra fields (demoextrafield)', [], $domain);
         $this->trans('Entity', [], $domain);
         $this->trans('No extra fields found for this module.', [], $domain);
+        $this->trans('Date last seen (extra field demo)', [], $domain);
+        $this->trans('Previous value', [], $domain);
+        $this->trans('Updated to', [], $domain);
+        $this->trans('Never seen before', [], $domain);
     }
 }
-
