@@ -1,87 +1,175 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file original="Modules.Demoextrafield.Admin.xlf" source-language="en-US" target-language="fr-FR" datatype="plaintext">
+  <file original="ModulesDemoextrafieldAdmin.xlf" source-language="fr-FR" target-language="fr-FR" datatype="plaintext">
     <body>
-      <trans-unit id="dangerous_product_title">
-        <source>Dangerous product</source>
-        <target>Produit dangereux</target>
+      <trans-unit id="f36fc796d8570796b960030bb80addea">
+        <source>Color associated with the category (required)</source>
+        <target>Couleur associée à la catégorie (obligatoire)</target>
       </trans-unit>
-      <trans-unit id="dangerous_product_desc">
-        <source>Indicates whether the product is dangerous</source>
-        <target>Indique si le produit est dangereux</target>
-      </trans-unit>
-      <trans-unit id="video_link_title">
-        <source>Video link</source>
-        <target>Lien vidéo</target>
-      </trans-unit>
-      <trans-unit id="video_link_desc">
-        <source>Video URL per language</source>
-        <target>URL de vidéo par langue</target>
-      </trans-unit>
-      <trans-unit id="custom_date_title">
-        <source>Custom date</source>
-        <target>Date personnalisée</target>
-      </trans-unit>
-      <trans-unit id="custom_date_desc">
-        <source>Custom date per shop</source>
-        <target>Date personnalisée par boutique</target>
-      </trans-unit>
-
-      <trans-unit id="theme_color_title">
-        <source>Theme color</source>
-        <target>Couleur de thème</target>
-      </trans-unit>
-      <trans-unit id="theme_color_desc">
-        <source>Color associated with the category</source>
-        <target>Couleur associée à la catégorie</target>
-      </trans-unit>
-      <trans-unit id="marketing_note_title">
-        <source>Marketing note</source>
-        <target>Note marketing</target>
-      </trans-unit>
-      <trans-unit id="marketing_note_desc">
-        <source>Free note displayed in BO, API and FO</source>
-        <target>Note libre affichée dans le BO, l’API et le FO</target>
-      </trans-unit>
-      <trans-unit id="default_supplier_title">
-        <source>Default supplier</source>
-        <target>Fournisseur par défaut</target>
-      </trans-unit>
-      <trans-unit id="default_supplier_desc">
-        <source>Select a PrestaShop supplier</source>
-        <target>Sélectionnez un fournisseur PrestaShop</target>
-      </trans-unit>
-
-      <trans-unit id="credit_limit_title">
+      <trans-unit id="5b08387b4633322186db360d7369e48e">
         <source>Credit limit</source>
         <target>Limite de crédit</target>
       </trans-unit>
-      <trans-unit id="credit_limit_desc">
-        <source>Maximum customer credit amount</source>
-        <target>Montant maximum de crédit client</target>
+      <trans-unit id="1f0bb3c2857d8c36ade4a62db274a37b">
+        <source>Custom date</source>
+        <target>Date personnalisée</target>
       </trans-unit>
-      <trans-unit id="metadata_json_title">
-        <source>Metadata JSON</source>
-        <target>JSON de métadonnées</target>
+      <trans-unit id="0c4a9b3087c0829a91b13b7baaa94024">
+        <source>Custom date per shop</source>
+        <target>Date personnalisée par boutique</target>
       </trans-unit>
-      <trans-unit id="metadata_json_desc_customer">
+      <trans-unit id="5468970782261225b646d31041a7a801">
+        <source>Dangerous product</source>
+        <target>Produit dangereux</target>
+      </trans-unit>
+      <trans-unit id="2181df973f37a2153b69714a1ba0be53">
+        <source>Date last seen</source>
+        <target>Date de dernière consultation</target>
+      </trans-unit>
+      <trans-unit id="57fb305c9ed4bed0845fa34bb63699eb">
+        <source>Date last seen (extra field demo)</source>
+        <target>Date de dernière consultation (démo champ supplémentaire)</target>
+      </trans-unit>
+      <trans-unit id="0b5c5a9176b94b7577e998f7440228a7">
+        <source>Default supplier</source>
+        <target>Fournisseur par défaut</target>
+      </trans-unit>
+      <trans-unit id="c2fd3b24e63ad1fb7e054a60c5220044">
+        <source>Delivery note</source>
+        <target>Note de livraison</target>
+      </trans-unit>
+      <trans-unit id="d1dc7ec8f692947daaba98abda6a04c4">
+        <source>Failed to register Address extra field "delivery_note" (scope: common).</source>
+        <target>Échec de l’enregistrement du champ supplémentaire Adresse "delivery_note" (portée : common).</target>
+      </trans-unit>
+      <trans-unit id="8fdf2794a133cb2c3b26ed84b30287a9">
+        <source>Failed to register Category extra field "id_supplier" (scope: common).</source>
+        <target>Échec de l’enregistrement du champ supplémentaire Catégorie "id_supplier" (portée : common).</target>
+      </trans-unit>
+      <trans-unit id="1dab92a82d758be050f1a66d06af18f5">
+        <source>Failed to register Category extra field "marketing_note" (scope: common).</source>
+        <target>Échec de l’enregistrement du champ supplémentaire Catégorie "marketing_note" (portée : common).</target>
+      </trans-unit>
+      <trans-unit id="ae791f086aa1701cdb352fb279db4090">
+        <source>Failed to register Category extra field "theme_color" (scope: common).</source>
+        <target>Échec de l’enregistrement du champ supplémentaire Catégorie "theme_color" (portée : common).</target>
+      </trans-unit>
+      <trans-unit id="747e6181f397afc583ff2608a688e66d">
+        <source>Failed to register Customer extra field "credit_limit" (scope: common).</source>
+        <target>Échec de l’enregistrement du champ supplémentaire Client "credit_limit" (portée : common).</target>
+      </trans-unit>
+      <trans-unit id="6d4ae3e9f8bdeb310f04a151470f408a">
+        <source>Failed to register Customer extra field "extra_json" (scope: common).</source>
+        <target>Échec de l’enregistrement du champ supplémentaire Client "extra_json" (portée : common).</target>
+      </trans-unit>
+      <trans-unit id="a9e0080f580907c2ab36758aeff7de66">
+        <source>Failed to register Customer extra field "internal_note" (scope: common).</source>
+        <target>Échec de l’enregistrement du champ supplémentaire Client "internal_note" (portée : common).</target>
+      </trans-unit>
+      <trans-unit id="9a937301db66ddf710501ae2a6c464eb">
+        <source>Failed to register Product extra field "custom_date" (scope: shop).</source>
+        <target>Échec de l’enregistrement du champ supplémentaire Produit "custom_date" (portée : shop).</target>
+      </trans-unit>
+      <trans-unit id="946f3493f1d4fbbaaa435df3172be3c5">
+        <source>Failed to register Product extra field "date_last_seen" (scope: common).</source>
+        <target>Échec de l’enregistrement du champ supplémentaire Produit "date_last_seen" (portée : shop).</target>
+      </trans-unit>
+      <trans-unit id="33c1b565706cecf8eef383ca223fb5ae">
+        <source>Failed to register Product extra field "is_dangerous" (scope: common).</source>
+        <target>Échec de l’enregistrement du champ supplémentaire Produit "is_dangerous" (portée : shop).</target>
+      </trans-unit>
+      <trans-unit id="39333c5fecd5ae1cd163d55b53f89936">
+        <source>Failed to register Product extra field "packaging_type" (scope: common).</source>
+        <target>Échec de l’enregistrement du champ supplémentaire Produit "packaging_type" (portée : shop).</target>
+      </trans-unit>
+      <trans-unit id="9a566dc8c34252df0532121b7e898b69">
+        <source>Failed to register Product extra field "video_link" (scope: lang).</source>
+        <target>Échec de l’enregistrement du champ supplémentaire Produit "video_link" (portée : lang).</target>
+      </trans-unit>
+      <trans-unit id="914148f4423e573bb61044ff8301538c">
+        <source>Failed to register one or more hooks.</source>
+        <target>Échec de l’enregistrement d’un ou plusieurs hooks.</target>
+      </trans-unit>
+      <trans-unit id="6a346e6fe5ce13a66e9bd6e24b909585">
         <source>Free JSON for customer metadata</source>
         <target>JSON libre pour les métadonnées client</target>
       </trans-unit>
-
-      <trans-unit id="fo_title">
-        <source>Extra fields (demoextrafield)</source>
-        <target>Champs extra (demoextrafield)</target>
+      <trans-unit id="fbea0598d968e94cde0dc59e692b4c6a">
+        <source>Free delivery note attached to this address</source>
+        <target>Note de livraison libre associée à cette adresse</target>
       </trans-unit>
-      <trans-unit id="fo_entity">
-        <source>Entity</source>
-        <target>Entité</target>
+      <trans-unit id="52125e42ad52bc5cbc0722dd7e33db42">
+        <source>Free note displayed in BO, API and FO</source>
+        <target>Note libre affichée dans le BO, l’API et le FO</target>
       </trans-unit>
-      <trans-unit id="fo_none">
-        <source>No extra fields found for this module.</source>
-        <target>Aucun champ extra trouvé pour ce module.</target>
+      <trans-unit id="653faa53ca1073ace738fcf1bec18d45">
+        <source>Indicates whether the product is dangerous</source>
+        <target>Indique si le produit est dangereux</target>
+      </trans-unit>
+      <trans-unit id="08643daceac5930a01274e8e41de11b3">
+        <source>Internal note</source>
+        <target>Note interne</target>
+      </trans-unit>
+      <trans-unit id="14b276be520b8d0de9a4a3f4f3488ed1">
+        <source>Last time this product page was viewed</source>
+        <target>Dernière consultation de cette fiche produit</target>
+      </trans-unit>
+      <trans-unit id="2c218b9db32a066ba90e3a891a440572">
+        <source>Marketing note</source>
+        <target>Note marketing</target>
+      </trans-unit>
+      <trans-unit id="94de7176090f37bf870659aa2c825473">
+        <source>Maximum customer credit amount</source>
+        <target>Montant maximal de crédit client</target>
+      </trans-unit>
+      <trans-unit id="6d96f20cb5f263bb33e725d31434a947">
+        <source>Merchant-only note — never exposed on the front office</source>
+        <target>Note réservée au marchand — jamais affichée sur le front-office</target>
+      </trans-unit>
+      <trans-unit id="5fbd29631689cf27a331d9a7fd63ea69">
+        <source>Metadata JSON</source>
+        <target>JSON des métadonnées</target>
+      </trans-unit>
+      <trans-unit id="4ac57a25f26f2d05725b7f72fcea270d">
+        <source>Never seen before</source>
+        <target>Jamais consulté auparavant</target>
+      </trans-unit>
+      <trans-unit id="d9bc28a26253438f5b16cea5eb35681a">
+        <source>Packaging type</source>
+        <target>Type d’emballage</target>
+      </trans-unit>
+      <trans-unit id="10fdc6b062175ca45045682ac3d2cd8c">
+        <source>Previous value</source>
+        <target>Valeur précédente</target>
+      </trans-unit>
+      <trans-unit id="17e07a445a42d7402a880cdf05d4e122">
+        <source>Select a PrestaShop supplier</source>
+        <target>Sélectionnez un fournisseur PrestaShop</target>
+      </trans-unit>
+      <trans-unit id="9a8f8d824ff6e002818e7cbd0a12a1f8">
+        <source>Selectable packaging type for this product</source>
+        <target>Type d’emballage sélectionnable pour ce produit</target>
+      </trans-unit>
+      <trans-unit id="45e035baf33a8e403766a606457f8b10">
+        <source>Theme color</source>
+        <target>Couleur du thème</target>
+      </trans-unit>
+      <trans-unit id="d46c3ba52e8d60d04b830df27017234b">
+        <source>Updated to</source>
+        <target>Mis à jour vers</target>
+      </trans-unit>
+      <trans-unit id="a5fb0b07e15758b66374d401aae3068a">
+        <source>Video URL per language</source>
+        <target>URL de la vidéo par langue</target>
+      </trans-unit>
+      <trans-unit id="3bd174f230facd43f09cb53749723e4f">
+        <source>Video link</source>
+        <target>Lien vidéo</target>
+      </trans-unit>
+      <trans-unit id="11e9876e2d4bbb17999b1c0d1eb80869">
+        <source>⚠ This product is marked as dangerous.</source>
+        <target>⚠ Ce produit est marqué comme dangereux.</target>
       </trans-unit>
     </body>
   </file>
 </xliff>
-

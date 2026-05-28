@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="ModulesDemoextrafieldMain.xlf" source-language="fr-FR" target-language="fr-FR" datatype="plaintext">
+    <body>
+      <trans-unit id="43bb0f5a8ed2f29fb2f6a7008f89c978">
+        <source>Extra fields (demoextrafield)</source>
+        <target>Champs extra (demoextrafield)</target>
+      </trans-unit>
+      <trans-unit id="70c6f114ad138abf7d5e55b66cf7e266">
+        <source>No extra fields found for this module.</source>
+        <target>Aucun champ extra pour ce module.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

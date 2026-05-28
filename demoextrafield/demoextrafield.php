@@ -1,4 +1,5 @@
 <?php
+
 /**
  * For the full copyright and license information, please view the
  * docs/licenses/LICENSE.txt file that was distributed with this source code.
@@ -6,16 +7,16 @@
 
 declare(strict_types=1);
 
-use PrestaShop\PrestaShop\Adapter\ContainerFinder;
 use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertyOptions;
 use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertyScope;
 use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertySqlIndex;
 use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertyType;
-use PrestaShop\PrestaShop\Core\ExtraProperty\Storage\ExtraPropertyReaderInterface;
+use PrestaShop\PrestaShop\Core\ExtraProperty\Value\ExtraPropertiesLazyArray;
 use PrestaShopBundle\Form\Admin\Sell\Discount\DiscountSupplierType;
 use PrestaShopBundle\Form\Admin\Type\DatePickerType;
 use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -30,8 +31,7 @@ if (!defined('_PS_VERSION_')) {
  *
  * This module is intentionally simple and verbose:
  * - fields are registered one by one (no loops, no config arrays),
- * - a few hooks are used to render the values on the Front Office,
- * - translation strings are declared in PHP + provided in an XLF file.
+ * - a few hooks are used to render the values on the Front Office.
  */
 class demoextrafield extends Module
 {
@@ -44,7 +44,7 @@ class demoextrafield extends Module
         $this->version = '1.0.0';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
-        $this->ps_versions_compliancy = ['min' => '9.1.0', 'max' => '9.9.99'];
+        $this->ps_versions_compliancy = ['min' => '9.2.0', 'max' => '9.9.99'];
 
         parent::__construct();
 
@@ -60,21 +60,8 @@ class demoextrafield extends Module
     public function install(): bool
     {
         if (!parent::install()) {
-            $errors = array_filter($this->getErrors());
-            $details = empty($errors) ? 'no legacy errors were provided' : implode(' | ', $errors);
-
-            throw new Exception(sprintf('demoextrafield: parent::install() failed (%s).', $details));
+            return false;
         }
-
-        // IMPORTANT NOTE ON TRANSLATION:
-        // Each extra field has a title + description meant to be displayed in Back Office.
-        // We store the source wording + its translation domain (for the default language), then
-        // PrestaShop handles translations for active languages via the BO translation system.
-        //
-        // For those strings to show up in the BO translation interface, two conditions must be met:
-        // - the strings must be declared in PHP via $this->trans(...),
-        // - the same source strings must exist at least once in an XLF file shipped by the module.
-        $this->registerTranslationWordings();
 
         /**
          * PRODUCT extra fields
@@ -85,25 +72,24 @@ class demoextrafield extends Module
             'product',
             'is_dangerous',
             new ExtraPropertyOptions(
-                type: ExtraPropertyType::Bool,
+                type: ExtraPropertyType::BOOL,
                 scope: ExtraPropertyScope::Common,
                 nullable: false,
                 defaultValue: 0,
-                titleWording: 'Dangerous product',
-                titleDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: 'Indicates whether the product is dangerous',
+                labelWording: $this->trans('Dangerous product', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelDomain: self::TRANSLATION_DOMAIN,
+                descriptionWording: $this->trans('Indicates whether the product is dangerous', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
                 formFieldType: CheckboxType::class,
                 validator: 'isBool',
                 displayApi: true,
                 displayForm: true,
                 formPosition: 'options.extra_properties',
-                displayGrid: true,
-                gridPosition: 'quantity'
+                associatedGrids: ['product.reference'],
             )
         );
         if (!$productDangerousRegistered) {
-            $this->_errors[] = 'Failed to register Product extra field "is_dangerous" (scope: common).';
+            $this->_errors[] = $this->trans('Failed to register Product extra field "is_dangerous" (scope: common).', [], 'Modules.Demoextrafield.Admin');
 
             return false;
         }
@@ -113,23 +99,22 @@ class demoextrafield extends Module
             'product',
             'video_link',
             new ExtraPropertyOptions(
-                type: ExtraPropertyType::String,
+                type: ExtraPropertyType::STRING,
                 scope: ExtraPropertyScope::Lang,
                 nullable: true,
-                titleWording: 'Video link',
-                titleDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: 'Video URL per language',
+                labelWording: $this->trans('Video link', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelDomain: self::TRANSLATION_DOMAIN,
+                descriptionWording: $this->trans('Video URL per language', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
                 sqlIndex: ExtraPropertySqlIndex::Unique,
                 formFieldType: UrlType::class,
                 validator: 'isUrl',
                 displayApi: true,
                 displayForm: true,
-                displayGrid: false
             )
         );
         if (!$productVideoLinkRegistered) {
-            $this->_errors[] = 'Failed to register Product extra field "video_link" (scope: lang).';
+            $this->_errors[] = $this->trans('Failed to register Product extra field "video_link" (scope: lang).', [], 'Modules.Demoextrafield.Admin');
 
             return false;
         }
@@ -139,48 +124,89 @@ class demoextrafield extends Module
             'product',
             'custom_date',
             new ExtraPropertyOptions(
-                type: ExtraPropertyType::Date,
+                type: ExtraPropertyType::DATE,
                 scope: ExtraPropertyScope::Shop,
                 nullable: true,
-                titleWording: 'Custom date',
-                titleDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: 'Custom date per shop',
+                labelWording: $this->trans('Custom date', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelDomain: self::TRANSLATION_DOMAIN,
+                descriptionWording: $this->trans('Custom date per shop', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
                 sqlIndex: ExtraPropertySqlIndex::Key,
                 formFieldType: DatePickerType::class,
                 validator: 'isDate',
                 displayApi: true,
                 displayForm: true,
-                displayGrid: true,
-                gridPosition: 3
+                associatedGrids: ['product.final_price_tax_excluded:before'],
             )
         );
         if (!$productCustomDateRegistered) {
-            $this->_errors[] = 'Failed to register Product extra field "custom_date" (scope: shop).';
+            $this->_errors[] = $this->trans('Failed to register Product extra field "custom_date" (scope: shop).', [], 'Modules.Demoextrafield.Admin');
 
             return false;
         }
 
         // Product (common) : date_last_seen
-        // Demo field: updated on every FO product page view via hookDisplayFooterProduct.
+        // Auto-updated on each FO product page view (hookDisplayFooterProduct).
+        // displayForm: false → read-only for merchants; visible in the product grid and via API.
         $productDateLastSeenRegistered = $this->registerExtraProperty(
             'product',
             'date_last_seen',
             new ExtraPropertyOptions(
-                type: ExtraPropertyType::Date,
+                type: ExtraPropertyType::DATE,
                 scope: ExtraPropertyScope::Common,
                 nullable: true,
-                titleWording: 'Date last seen',
-                titleDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: 'Last time this product page was viewed',
+                labelWording: $this->trans('Date last seen', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelDomain: self::TRANSLATION_DOMAIN,
+                descriptionWording: $this->trans('Last time this product page was viewed', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
                 displayApi: true,
-                displayForm: true,
-                displayGrid: false
+                displayForm: false,
+                associatedGrids: ['product'],
             )
         );
         if (!$productDateLastSeenRegistered) {
-            $this->_errors[] = 'Failed to register Product extra field "date_last_seen" (scope: common).';
+            $this->_errors[] = $this->trans('Failed to register Product extra field "date_last_seen" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+
+            return false;
+        }
+
+        // Product (common) : packaging_type
+        // Demonstrates: CHOICE type, enumValues, formOptions (dropdown choices).
+        // enumValues constrains the allowed DB values; formOptions drives the Symfony ChoiceType widget.
+        // formRequired: false + nullable: true + placeholder → the "—" option represents "no selection";
+        // the field can be left empty and the empty value passes server-side validation.
+        // (For a truly required field, omit the placeholder and set formRequired: true — NotBlank is added automatically.)
+        $productPackagingTypeRegistered = $this->registerExtraProperty(
+            'product',
+            'packaging_type',
+            new ExtraPropertyOptions(
+                type: ExtraPropertyType::CHOICE,
+                scope: ExtraPropertyScope::Common,
+                enumValues: ['standard', 'gift', 'bulk'],
+                nullable: true,
+                defaultValue: null,
+                labelWording: $this->trans('Packaging type', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelDomain: self::TRANSLATION_DOMAIN,
+                descriptionWording: $this->trans('Selectable packaging type for this product', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionDomain: self::TRANSLATION_DOMAIN,
+                formFieldType: ChoiceType::class,
+                formOptions: [
+                    'choices' => [
+                        'Standard' => 'standard',
+                        'Gift box' => 'gift',
+                        'Bulk' => 'bulk',
+                    ],
+                    'placeholder' => '—',
+                ],
+                formRequired: false,
+                displayApi: true,
+                displayForm: true,
+                displayFront: true,
+                associatedGrids: ['product'],
+            )
+        );
+        if (!$productPackagingTypeRegistered) {
+            $this->_errors[] = $this->trans('Failed to register Product extra field "packaging_type" (scope: common).', [], 'Modules.Demoextrafield.Admin');
 
             return false;
         }
@@ -190,26 +216,31 @@ class demoextrafield extends Module
          */
 
         // Category (common) : theme_color
+        // Demonstrates: formRequired: true → the form modifier automatically adds a NotBlank
+        // constraint at build time (server-side enforcement, not just the HTML required attribute).
+        // No need to put constraints in formOptions — formOptions is persisted as JSON and cannot
+        // hold Constraint objects.
         $categoryThemeColorRegistered = $this->registerExtraProperty(
             'category',
             'theme_color',
             new ExtraPropertyOptions(
-                type: ExtraPropertyType::String,
+                type: ExtraPropertyType::STRING,
                 scope: ExtraPropertyScope::Common,
                 nullable: true,
-                titleWording: 'Theme color',
-                titleDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: 'Color associated with the category',
+                labelWording: $this->trans('Theme color', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelDomain: self::TRANSLATION_DOMAIN,
+                descriptionWording: $this->trans('Color associated with the category (required)', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
                 formFieldType: ColorType::class,
+                formRequired: true,
                 validator: 'isColor',
                 displayApi: true,
                 displayForm: true,
-                displayGrid: true
+                associatedGrids: ['category']
             )
         );
         if (!$categoryThemeColorRegistered) {
-            $this->_errors[] = 'Failed to register Category extra field "theme_color" (scope: common).';
+            $this->_errors[] = $this->trans('Failed to register Category extra field "theme_color" (scope: common).', [], 'Modules.Demoextrafield.Admin');
 
             return false;
         }
@@ -219,22 +250,21 @@ class demoextrafield extends Module
             'category',
             'marketing_note',
             new ExtraPropertyOptions(
-                type: ExtraPropertyType::Html,
+                type: ExtraPropertyType::HTML,
                 scope: ExtraPropertyScope::Common,
                 nullable: true,
-                titleWording: 'Marketing note',
-                titleDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: 'Free note displayed in BO, API and FO',
+                labelWording: $this->trans('Marketing note', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelDomain: self::TRANSLATION_DOMAIN,
+                descriptionWording: $this->trans('Free note displayed in BO, API and FO', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
                 formFieldType: FormattedTextareaType::class,
                 validator: 'isCleanHtml',
                 displayApi: true,
                 displayForm: true,
-                displayGrid: false
             )
         );
         if (!$categoryMarketingNoteRegistered) {
-            $this->_errors[] = 'Failed to register Category extra field "marketing_note" (scope: common).';
+            $this->_errors[] = $this->trans('Failed to register Category extra field "marketing_note" (scope: common).', [], 'Modules.Demoextrafield.Admin');
 
             return false;
         }
@@ -244,22 +274,22 @@ class demoextrafield extends Module
             'category',
             'id_supplier',
             new ExtraPropertyOptions(
-                type: ExtraPropertyType::Int,
+                type: ExtraPropertyType::INT,
                 scope: ExtraPropertyScope::Common,
                 nullable: true,
-                titleWording: 'Default supplier',
-                titleDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: 'Select a PrestaShop supplier',
+                labelWording: $this->trans('Default supplier', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelDomain: self::TRANSLATION_DOMAIN,
+                descriptionWording: $this->trans('Select a PrestaShop supplier', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
                 formFieldType: DiscountSupplierType::class,
                 validator: 'isUnsignedId',
                 displayApi: true,
                 displayForm: true,
-                displayGrid: true
+                associatedGrids: ['category']
             )
         );
         if (!$categorySupplierRegistered) {
-            $this->_errors[] = 'Failed to register Category extra field "id_supplier" (scope: common).';
+            $this->_errors[] = $this->trans('Failed to register Category extra field "id_supplier" (scope: common).', [], 'Modules.Demoextrafield.Admin');
 
             return false;
         }
@@ -273,22 +303,22 @@ class demoextrafield extends Module
             'customer',
             'credit_limit',
             new ExtraPropertyOptions(
-                type: ExtraPropertyType::Float,
+                type: ExtraPropertyType::FLOAT,
                 scope: ExtraPropertyScope::Common,
                 nullable: true,
-                titleWording: 'Credit limit',
-                titleDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: 'Maximum customer credit amount',
+                labelWording: $this->trans('Credit limit', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelDomain: self::TRANSLATION_DOMAIN,
+                descriptionWording: $this->trans('Maximum customer credit amount', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
                 formFieldType: MoneyType::class,
                 validator: 'isPrice',
                 displayApi: true,
                 displayForm: true,
-                displayGrid: true
+                associatedGrids: ['customer']
             )
         );
         if (!$customerCreditLimitRegistered) {
-            $this->_errors[] = 'Failed to register Customer extra field "credit_limit" (scope: common).';
+            $this->_errors[] = $this->trans('Failed to register Customer extra field "credit_limit" (scope: common).', [], 'Modules.Demoextrafield.Admin');
 
             return false;
         }
@@ -298,22 +328,92 @@ class demoextrafield extends Module
             'customer',
             'extra_json',
             new ExtraPropertyOptions(
-                type: ExtraPropertyType::Json,
+                type: ExtraPropertyType::JSON,
                 scope: ExtraPropertyScope::Common,
                 nullable: true,
-                titleWording: 'Metadata JSON',
-                titleDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: 'Free JSON for customer metadata',
+                labelWording: $this->trans('Metadata JSON', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelDomain: self::TRANSLATION_DOMAIN,
+                descriptionWording: $this->trans('Free JSON for customer metadata', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
                 formFieldType: TextareaType::class,
                 validator: 'isJson',
                 displayApi: true,
                 displayForm: true,
-                displayGrid: false
             )
         );
         if (!$customerExtraJsonRegistered) {
-            $this->_errors[] = 'Failed to register Customer extra field "extra_json" (scope: common).';
+            $this->_errors[] = $this->trans('Failed to register Customer extra field "extra_json" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+
+            return false;
+        }
+
+        // Customer (common) : internal_note
+        // Demonstrates: displayFront: false — the field appears in BO form and API but is
+        // never returned by ExtraPropertiesLazyArray::getValues() on the front office.
+        $customerInternalNoteRegistered = $this->registerExtraProperty(
+            'customer',
+            'internal_note',
+            new ExtraPropertyOptions(
+                type: ExtraPropertyType::STRING,
+                scope: ExtraPropertyScope::Common,
+                nullable: true,
+                labelWording: $this->trans('Internal note', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelDomain: self::TRANSLATION_DOMAIN,
+                descriptionWording: $this->trans('Merchant-only note — never exposed on the front office', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionDomain: self::TRANSLATION_DOMAIN,
+                formFieldType: TextareaType::class,
+                displayApi: true,
+                displayForm: true,
+                displayFront: false,
+            )
+        );
+        if (!$customerInternalNoteRegistered) {
+            $this->_errors[] = $this->trans('Failed to register Customer extra field "internal_note" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+
+            return false;
+        }
+
+        /**
+         * ADDRESS extra fields
+         *
+         * Demo case: gridId ('manufacturer_address') differs from entity name ('address').
+         * This validates that getDefinitionCollectionByGridId() correctly decouples
+         * the grid identifier from the entity table name.
+         *
+         * Note on displayForm:
+         * The form modifier resolves extra fields using the form type's block prefix as the entity
+         * name. ManufacturerAddressType has block_prefix='manufacturer_address', but the entity
+         * table is 'address'. Because block_prefix ≠ entity_name, the form modifier cannot find
+         * definitions registered for 'address' when building the 'manufacturer_address' form.
+         * displayForm is therefore set to false: the field is intentionally grid-only here.
+         * (Forms where block_prefix == entity_name — e.g. product, customer, category — work
+         * correctly without this constraint.)
+         */
+
+        // Address (common) : delivery_note
+        // Shows in the manufacturer address grid (Catalog > Brands > Addresses) after 'city'.
+        $addressDeliveryNoteRegistered = $this->registerExtraProperty(
+            'address',
+            'delivery_note',
+            new ExtraPropertyOptions(
+                type: ExtraPropertyType::STRING,
+                scope: ExtraPropertyScope::Common,
+                nullable: true,
+                size: 255,
+                labelWording: $this->trans('Delivery note', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelDomain: self::TRANSLATION_DOMAIN,
+                descriptionWording: $this->trans('Free delivery note attached to this address', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionDomain: self::TRANSLATION_DOMAIN,
+                formFieldType: TextareaType::class,
+                validator: 'isGenericName',
+                displayApi: true,
+                displayForm: false,
+                // gridId 'manufacturer_address' ≠ entity 'address' — decoupling test.
+                associatedGrids: ['manufacturer_address.city'],
+            )
+        );
+        if (!$addressDeliveryNoteRegistered) {
+            $this->_errors[] = $this->trans('Failed to register Address extra field "delivery_note" (scope: common).', [], 'Modules.Demoextrafield.Admin');
 
             return false;
         }
@@ -324,7 +424,7 @@ class demoextrafield extends Module
             && $this->registerHook('displayCustomerAccountTop')
             && $this->registerHook('displayFooterProduct');
         if (!$hooksRegistered) {
-            $this->_errors[] = 'Failed to register one or more hooks.';
+            $this->_errors[] = $this->trans('Failed to register one or more hooks.', [], 'Modules.Demoextrafield.Admin');
 
             return false;
         }
@@ -342,19 +442,24 @@ class demoextrafield extends Module
         // false = keep columns in DB after uninstall
         $dropColumn = true;
 
-        $this->unregisterExtraProperty('product', 'video_link', ExtraPropertyScope::Lang, $dropColumn);
-        $this->unregisterExtraProperty('product', 'is_dangerous', ExtraPropertyScope::Common, $dropColumn);
-        $this->unregisterExtraProperty('product', 'custom_date', ExtraPropertyScope::Shop, $dropColumn);
-        $this->unregisterExtraProperty('product', 'date_last_seen', ExtraPropertyScope::Common, $dropColumn);
+        return
+            $this->unregisterExtraProperty('product', 'video_link', ExtraPropertyScope::Lang, $dropColumn)
+            && $this->unregisterExtraProperty('product', 'is_dangerous', ExtraPropertyScope::Common, $dropColumn)
+            && $this->unregisterExtraProperty('product', 'custom_date', ExtraPropertyScope::Shop, $dropColumn)
+            && $this->unregisterExtraProperty('product', 'date_last_seen', ExtraPropertyScope::Common, $dropColumn)
+            && $this->unregisterExtraProperty('product', 'packaging_type', ExtraPropertyScope::Common, $dropColumn)
 
-        $this->unregisterExtraProperty('category', 'theme_color', ExtraPropertyScope::Common, $dropColumn);
-        $this->unregisterExtraProperty('category', 'marketing_note', ExtraPropertyScope::Common, $dropColumn);
-        $this->unregisterExtraProperty('category', 'id_supplier', ExtraPropertyScope::Common, $dropColumn);
+            && $this->unregisterExtraProperty('category', 'theme_color', ExtraPropertyScope::Common, $dropColumn)
+            && $this->unregisterExtraProperty('category', 'marketing_note', ExtraPropertyScope::Common, $dropColumn)
+            && $this->unregisterExtraProperty('category', 'id_supplier', ExtraPropertyScope::Common, $dropColumn)
 
-        $this->unregisterExtraProperty('customer', 'credit_limit', ExtraPropertyScope::Common, $dropColumn);
-        $this->unregisterExtraProperty('customer', 'extra_json', ExtraPropertyScope::Common, $dropColumn);
+            && $this->unregisterExtraProperty('customer', 'credit_limit', ExtraPropertyScope::Common, $dropColumn)
+            && $this->unregisterExtraProperty('customer', 'extra_json', ExtraPropertyScope::Common, $dropColumn)
+            && $this->unregisterExtraProperty('customer', 'internal_note', ExtraPropertyScope::Common, $dropColumn)
 
-        return parent::uninstall();
+            && $this->unregisterExtraProperty('address', 'delivery_note', ExtraPropertyScope::Common, $dropColumn)
+
+            && parent::uninstall();
     }
 
     /**
@@ -363,23 +468,6 @@ class demoextrafield extends Module
      */
     public function hookDisplayProductAdditionalInfo(array $params): string
     {
-        $product = $params['product'] ?? null;
-        if (!$product instanceof ArrayAccess || (int) ($product['id_product'] ?? 0) <= 0) {
-            return '';
-        }
-
-        $moduleExtras = $product['extraProperties'][$this->name] ?? [];
-        if (!is_array($moduleExtras) && !$moduleExtras instanceof ArrayAccess) {
-            $moduleExtras = [];
-        }
-
-        $this->context->smarty->assign([
-            'demoExtraFieldTitle' => $this->trans('Extra fields (demoextrafield)', [], self::TRANSLATION_DOMAIN),
-            'entityLabel' => $this->trans('Entity', [], self::TRANSLATION_DOMAIN),
-            'entityName' => 'product',
-            'moduleExtras' => $moduleExtras,
-        ]);
-
         return $this->display(__FILE__, 'views/templates/hook/product_additional_info.tpl');
     }
 
@@ -388,9 +476,7 @@ class demoextrafield extends Module
      *
      * Demo: reads date_last_seen from the Product ObjectModel, displays it, then updates it.
      *
-     * Two equivalent syntaxes are shown; both use the ExtraPropertiesBag via __get:
-     *   $product->extra_properties['demoextrafield_date_last_seen']      // ArrayAccess (preferred)
-     *   $product->getExtraProperty('demoextrafield', 'date_last_seen')   // convenience method
+     * Access is grouped by module: $product->extra_properties['module']['field']
      */
     public function hookDisplayFooterProduct(array $params): string
     {
@@ -406,9 +492,8 @@ class demoextrafield extends Module
 
         $now = date('Y-m-d H:i:s');
 
-        // ArrayAccess on the ExtraPropertiesBag (flat column name = module_name . '_' . field_name)
-        $dateLastSeen = $product->extra_properties['demoextrafield_date_last_seen'];
-        $product->extra_properties['demoextrafield_date_last_seen'] = $now;
+        $dateLastSeen = $product->extra_properties['demoextrafield']['date_last_seen'];
+        $product->extra_properties['demoextrafield']['date_last_seen'] = $now;
         $product->update();
 
         $this->context->smarty->assign([
@@ -422,25 +507,12 @@ class demoextrafield extends Module
     /**
      * Front Office hook (cart).
      * Displays this module extra fields for products in cart.
+     *
+     * $params['product'] is the product LazyArray passed by the cart template.
      */
     public function hookDisplayCartExtraProductInfo(array $params): string
     {
-        $product = $params['product'] ?? null;
-        if (!$product instanceof ArrayAccess || (int) ($product['id_product'] ?? 0) <= 0) {
-            return '';
-        }
-
-        $moduleExtras = $product['extraProperties'][$this->name] ?? [];
-        if (!is_array($moduleExtras) && !$moduleExtras instanceof ArrayAccess) {
-            $moduleExtras = [];
-        }
-
-        $this->context->smarty->assign([
-            'demoExtraFieldTitle' => $this->trans('Extra fields (demoextrafield)', [], self::TRANSLATION_DOMAIN),
-            'entityLabel' => $this->trans('Entity', [], self::TRANSLATION_DOMAIN),
-            'entityName' => 'product',
-            'moduleExtras' => $moduleExtras,
-        ]);
+        $this->context->smarty->assign('product', $params['product'] ?? []);
 
         return $this->display(__FILE__, 'views/templates/hook/cart_extra_product_info.tpl');
     }
@@ -451,106 +523,47 @@ class demoextrafield extends Module
      */
     public function hookDisplayHeaderCategory(): string
     {
-        $category = $this->context->smarty->getTemplateVars('category');
-        if (!$category instanceof ArrayAccess || (int) ($category['id_category'] ?? 0) <= 0) {
-            return '';
-        }
-
-        $moduleExtras = $category['extraProperties'][$this->name] ?? [];
-        if (!is_array($moduleExtras) && !$moduleExtras instanceof ArrayAccess) {
-            $moduleExtras = [];
-        }
-
-        $this->context->smarty->assign([
-            'demoExtraFieldTitle' => $this->trans('Extra fields (demoextrafield)', [], self::TRANSLATION_DOMAIN),
-            'entityLabel' => $this->trans('Entity', [], self::TRANSLATION_DOMAIN),
-            'entityName' => 'category',
-            'moduleExtras' => $moduleExtras,
-        ]);
-
         return $this->display(__FILE__, 'views/templates/hook/category_header.tpl');
     }
 
     /**
      * Front Office hook (customer my-account page).
-     * Displays this module extra fields for current customer.
+     *
+     * --- Why we load extra properties manually here ---
+     *
+     * Extra properties are natively carried by every ObjectModel subclass (Customer, Product,
+     * Category…). In PHP, $customer->extra_properties['module']['field'] works on any instance.
+     *
+     * In FO Smarty templates however, entities are presented through LazyArrays
+     * (ProductLazyArray, CategoryLazyArray, OrderLazyArray…). AbstractLazyArray exposes the
+     * `extraProperties` key, so `$product.extraProperties.mymodule.myfield` works in templates.
+     *
+     * Customer is the exception: the Smarty `$customer` variable is a plain PHP array built
+     * by FrontController::getTemplateVarCustomer() via objectPresenter->present(). It is not
+     * a LazyArray, so `$customer.extraProperties` does not exist.
+     *
+     * Solution for entities without a native LazyArray: fetch the values explicitly in the
+     * hook handler using ExtraPropertiesLazyArray::fromObjectModelClass(), then assign them
+     * to Smarty under a dedicated variable.
+     *
+     * Note: getValues() already filters out fields with displayFront=false
+     * (here, 'internal_note' field is therefore intentionally absent from the output).
      */
     public function hookDisplayCustomerAccountTop(): string
     {
-        $customer = $this->context->customer;
-        if (!$customer instanceof Customer || (int) $customer->id <= 0) {
+        $customerId = (int) $this->context->customer->id;
+        if ($customerId <= 0) {
             return '';
         }
 
-        try {
-            $containerFinder = new ContainerFinder($this->context);
-            /** @var ExtraPropertyReaderInterface $extraPropertyReader */
-            $extraPropertyReader = $containerFinder->getContainer()->get(ExtraPropertyReaderInterface::class);
-        } catch (Throwable) {
-            return '';
-        }
+        $extraPropertiesByModule = ExtraPropertiesLazyArray::fromObjectModelClass(
+            Customer::class,
+            $customerId
+        )->getValues();
 
-        $extraProperties = $extraPropertyReader->getExtraProperties(
-            'customer',
-            'id_customer',
-            (int) $customer->id,
-            (int) $this->context->language->id,
-            (int) $this->context->shop->id
-        );
-
-        $moduleExtras = $extraProperties[$this->name] ?? [];
-        if (!is_array($moduleExtras) && !$moduleExtras instanceof ArrayAccess) {
-            $moduleExtras = [];
-        }
-
-        $this->context->smarty->assign([
-            'demoExtraFieldTitle' => $this->trans('Extra fields (demoextrafield)', [], self::TRANSLATION_DOMAIN),
-            'entityLabel' => $this->trans('Entity', [], self::TRANSLATION_DOMAIN),
-            'entityName' => 'customer',
-            'moduleExtras' => $moduleExtras,
-        ]);
+        // Wrap as ['extraProperties' => ...] so _extra_properties.tpl can be reused as-is.
+        $this->context->smarty->assign('customerExtraData', ['extraProperties' => $extraPropertiesByModule]);
 
         return $this->display(__FILE__, 'views/templates/hook/customer_account_top.tpl');
-    }
-
-    /**
-     * Declares translation wordings so BO extraction can index them.
-     */
-    protected function registerTranslationWordings(): void
-    {
-        $domain = self::TRANSLATION_DOMAIN;
-
-        // Product
-        $this->trans('Dangerous product', [], $domain);
-        $this->trans('Indicates whether the product is dangerous', [], $domain);
-        $this->trans('Video link', [], $domain);
-        $this->trans('Video URL per language', [], $domain);
-        $this->trans('Custom date', [], $domain);
-        $this->trans('Custom date per shop', [], $domain);
-        $this->trans('Date last seen', [], $domain);
-        $this->trans('Last time this product page was viewed', [], $domain);
-
-        // Category
-        $this->trans('Theme color', [], $domain);
-        $this->trans('Color associated with the category', [], $domain);
-        $this->trans('Marketing note', [], $domain);
-        $this->trans('Free note displayed in BO, API and FO', [], $domain);
-        $this->trans('Default supplier', [], $domain);
-        $this->trans('Select a PrestaShop supplier', [], $domain);
-
-        // Customer
-        $this->trans('Credit limit', [], $domain);
-        $this->trans('Maximum customer credit amount', [], $domain);
-        $this->trans('Metadata JSON', [], $domain);
-        $this->trans('Free JSON for customer metadata', [], $domain);
-
-        // Front templates
-        $this->trans('Extra fields (demoextrafield)', [], $domain);
-        $this->trans('Entity', [], $domain);
-        $this->trans('No extra fields found for this module.', [], $domain);
-        $this->trans('Date last seen (extra field demo)', [], $domain);
-        $this->trans('Previous value', [], $domain);
-        $this->trans('Updated to', [], $domain);
-        $this->trans('Never seen before', [], $domain);
     }
 }

@@ -1,18 +1,14 @@
 <section class="demoextrafield demoextrafield--product">
-  <h4>{$demoExtraFieldTitle|escape:'htmlall':'UTF-8'}</h4>
-  <p><strong>{$entityLabel|escape:'htmlall':'UTF-8'}:</strong> {$entityName|escape:'htmlall':'UTF-8'}</p>
+  <h4>{l s='Extra fields (demoextrafield)' d='Modules.Demoextrafield.Main'}</h4>
 
-  {if empty($moduleExtras)}
-    <p><em>{l s='No extra fields found for this module.' d='Modules.Demoextrafield.Admin'}</em></p>
-  {else}
-    <ul>
-      {foreach from=$moduleExtras key=fieldName item=fieldValue}
-        <li>
-          <strong>{$fieldName|escape:'htmlall':'UTF-8'}:</strong>
-          <span>{$fieldValue|escape:'htmlall':'UTF-8'}</span>
-        </li>
-      {/foreach}
-    </ul>
+  {* 1. Generic loop — iterates over all fields registered by this module. *}
+  {include file='./_extra_properties.tpl' objectModel=$product}
+
+  {* 2. Named access — read a specific field directly without looping.
+        Useful when you need to act on a known field (conditional display, formatting, etc.). *}
+  {if $product.extraProperties.demoextrafield.is_dangerous|intval}
+    <p class="demoextrafield__warning" style="color: #c0392b; font-weight: bold; margin-top: 0.5rem;">
+      {l s='⚠ This product is marked as dangerous.' d='Modules.Demoextrafield.Admin'}
+    </p>
   {/if}
 </section>
-
