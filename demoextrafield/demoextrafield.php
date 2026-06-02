@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertyOptions;
+use PrestaShop\PrestaShop\Core\ExtraProperty\Definition\ExtraPropertyDefinition;
 use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertyScope;
 use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertySqlIndex;
 use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertyType;
@@ -71,9 +71,9 @@ class demoextrafield extends Module
         $productDangerousRegistered = $this->registerExtraProperty(
             'product',
             'is_dangerous',
-            new ExtraPropertyOptions(
+            new ExtraPropertyDefinition(
                 type: ExtraPropertyType::BOOL,
-                scope: ExtraPropertyScope::Common,
+                scope: ExtraPropertyScope::COMMON,
                 nullable: false,
                 defaultValue: 0,
                 labelWording: $this->trans('Dangerous product', [], 'Modules.Demoextrafield.Admin', 'en'),
@@ -83,8 +83,7 @@ class demoextrafield extends Module
                 formFieldType: CheckboxType::class,
                 validator: 'isBool',
                 displayApi: true,
-                displayForm: true,
-                formPosition: 'options.extra_properties',
+                associatedForms: ['product.options.extra_properties'],
                 associatedGrids: ['product.reference'],
             )
         );
@@ -98,19 +97,19 @@ class demoextrafield extends Module
         $productVideoLinkRegistered = $this->registerExtraProperty(
             'product',
             'video_link',
-            new ExtraPropertyOptions(
+            new ExtraPropertyDefinition(
                 type: ExtraPropertyType::STRING,
-                scope: ExtraPropertyScope::Lang,
+                scope: ExtraPropertyScope::LANG,
                 nullable: true,
                 labelWording: $this->trans('Video link', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: $this->trans('Video URL per language', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
-                sqlIndex: ExtraPropertySqlIndex::Unique,
+                sqlIndex: ExtraPropertySqlIndex::UNIQUE,
                 formFieldType: UrlType::class,
                 validator: 'isUrl',
                 displayApi: true,
-                displayForm: true,
+                associatedForms: ['product'],
             )
         );
         if (!$productVideoLinkRegistered) {
@@ -123,19 +122,19 @@ class demoextrafield extends Module
         $productCustomDateRegistered = $this->registerExtraProperty(
             'product',
             'custom_date',
-            new ExtraPropertyOptions(
+            new ExtraPropertyDefinition(
                 type: ExtraPropertyType::DATE,
-                scope: ExtraPropertyScope::Shop,
+                scope: ExtraPropertyScope::SHOP,
                 nullable: true,
                 labelWording: $this->trans('Custom date', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: $this->trans('Custom date per shop', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
-                sqlIndex: ExtraPropertySqlIndex::Key,
+                sqlIndex: ExtraPropertySqlIndex::KEY,
                 formFieldType: DatePickerType::class,
                 validator: 'isDate',
                 displayApi: true,
-                displayForm: true,
+                associatedForms: ['product'],
                 associatedGrids: ['product.final_price_tax_excluded:before'],
             )
         );
@@ -151,16 +150,15 @@ class demoextrafield extends Module
         $productDateLastSeenRegistered = $this->registerExtraProperty(
             'product',
             'date_last_seen',
-            new ExtraPropertyOptions(
+            new ExtraPropertyDefinition(
                 type: ExtraPropertyType::DATE,
-                scope: ExtraPropertyScope::Common,
+                scope: ExtraPropertyScope::COMMON,
                 nullable: true,
                 labelWording: $this->trans('Date last seen', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: $this->trans('Last time this product page was viewed', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
                 displayApi: true,
-                displayForm: false,
                 associatedGrids: ['product'],
             )
         );
@@ -179,9 +177,9 @@ class demoextrafield extends Module
         $productPackagingTypeRegistered = $this->registerExtraProperty(
             'product',
             'packaging_type',
-            new ExtraPropertyOptions(
+            new ExtraPropertyDefinition(
                 type: ExtraPropertyType::CHOICE,
-                scope: ExtraPropertyScope::Common,
+                scope: ExtraPropertyScope::COMMON,
                 enumValues: ['standard', 'gift', 'bulk'],
                 nullable: true,
                 defaultValue: null,
@@ -200,8 +198,8 @@ class demoextrafield extends Module
                 ],
                 formRequired: false,
                 displayApi: true,
-                displayForm: true,
                 displayFront: true,
+                associatedForms: ['product'],
                 associatedGrids: ['product'],
             )
         );
@@ -223,9 +221,9 @@ class demoextrafield extends Module
         $categoryThemeColorRegistered = $this->registerExtraProperty(
             'category',
             'theme_color',
-            new ExtraPropertyOptions(
+            new ExtraPropertyDefinition(
                 type: ExtraPropertyType::STRING,
-                scope: ExtraPropertyScope::Common,
+                scope: ExtraPropertyScope::COMMON,
                 nullable: true,
                 labelWording: $this->trans('Theme color', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
@@ -235,7 +233,7 @@ class demoextrafield extends Module
                 formRequired: true,
                 validator: 'isColor',
                 displayApi: true,
-                displayForm: true,
+                associatedForms: ['category', 'root_category'],
                 associatedGrids: ['category']
             )
         );
@@ -249,9 +247,9 @@ class demoextrafield extends Module
         $categoryMarketingNoteRegistered = $this->registerExtraProperty(
             'category',
             'marketing_note',
-            new ExtraPropertyOptions(
+            new ExtraPropertyDefinition(
                 type: ExtraPropertyType::HTML,
-                scope: ExtraPropertyScope::Common,
+                scope: ExtraPropertyScope::COMMON,
                 nullable: true,
                 labelWording: $this->trans('Marketing note', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
@@ -260,7 +258,7 @@ class demoextrafield extends Module
                 formFieldType: FormattedTextareaType::class,
                 validator: 'isCleanHtml',
                 displayApi: true,
-                displayForm: true,
+                associatedForms: ['category'],
             )
         );
         if (!$categoryMarketingNoteRegistered) {
@@ -273,9 +271,9 @@ class demoextrafield extends Module
         $categorySupplierRegistered = $this->registerExtraProperty(
             'category',
             'id_supplier',
-            new ExtraPropertyOptions(
+            new ExtraPropertyDefinition(
                 type: ExtraPropertyType::INT,
-                scope: ExtraPropertyScope::Common,
+                scope: ExtraPropertyScope::COMMON,
                 nullable: true,
                 labelWording: $this->trans('Default supplier', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
@@ -284,7 +282,7 @@ class demoextrafield extends Module
                 formFieldType: DiscountSupplierType::class,
                 validator: 'isUnsignedId',
                 displayApi: true,
-                displayForm: true,
+                associatedForms: ['category'],
                 associatedGrids: ['category']
             )
         );
@@ -302,9 +300,9 @@ class demoextrafield extends Module
         $customerCreditLimitRegistered = $this->registerExtraProperty(
             'customer',
             'credit_limit',
-            new ExtraPropertyOptions(
+            new ExtraPropertyDefinition(
                 type: ExtraPropertyType::FLOAT,
-                scope: ExtraPropertyScope::Common,
+                scope: ExtraPropertyScope::COMMON,
                 nullable: true,
                 labelWording: $this->trans('Credit limit', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
@@ -313,7 +311,7 @@ class demoextrafield extends Module
                 formFieldType: MoneyType::class,
                 validator: 'isPrice',
                 displayApi: true,
-                displayForm: true,
+                associatedForms: ['customer'],
                 associatedGrids: ['customer']
             )
         );
@@ -327,9 +325,9 @@ class demoextrafield extends Module
         $customerExtraJsonRegistered = $this->registerExtraProperty(
             'customer',
             'extra_json',
-            new ExtraPropertyOptions(
+            new ExtraPropertyDefinition(
                 type: ExtraPropertyType::JSON,
-                scope: ExtraPropertyScope::Common,
+                scope: ExtraPropertyScope::COMMON,
                 nullable: true,
                 labelWording: $this->trans('Metadata JSON', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
@@ -338,7 +336,7 @@ class demoextrafield extends Module
                 formFieldType: TextareaType::class,
                 validator: 'isJson',
                 displayApi: true,
-                displayForm: true,
+                associatedForms: ['customer'],
             )
         );
         if (!$customerExtraJsonRegistered) {
@@ -353,9 +351,9 @@ class demoextrafield extends Module
         $customerInternalNoteRegistered = $this->registerExtraProperty(
             'customer',
             'internal_note',
-            new ExtraPropertyOptions(
+            new ExtraPropertyDefinition(
                 type: ExtraPropertyType::STRING,
-                scope: ExtraPropertyScope::Common,
+                scope: ExtraPropertyScope::COMMON,
                 nullable: true,
                 labelWording: $this->trans('Internal note', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
@@ -363,8 +361,8 @@ class demoextrafield extends Module
                 descriptionDomain: self::TRANSLATION_DOMAIN,
                 formFieldType: TextareaType::class,
                 displayApi: true,
-                displayForm: true,
                 displayFront: false,
+                associatedForms: ['customer'],
             )
         );
         if (!$customerInternalNoteRegistered) {
@@ -395,9 +393,9 @@ class demoextrafield extends Module
         $addressDeliveryNoteRegistered = $this->registerExtraProperty(
             'address',
             'delivery_note',
-            new ExtraPropertyOptions(
+            new ExtraPropertyDefinition(
                 type: ExtraPropertyType::STRING,
-                scope: ExtraPropertyScope::Common,
+                scope: ExtraPropertyScope::COMMON,
                 nullable: true,
                 size: 255,
                 labelWording: $this->trans('Delivery note', [], 'Modules.Demoextrafield.Admin', 'en'),
@@ -407,7 +405,6 @@ class demoextrafield extends Module
                 formFieldType: TextareaType::class,
                 validator: 'isGenericName',
                 displayApi: true,
-                displayForm: false,
                 // gridId 'manufacturer_address' ≠ entity 'address' — decoupling test.
                 associatedGrids: ['manufacturer_address.city'],
             )
@@ -443,21 +440,21 @@ class demoextrafield extends Module
         $dropColumn = true;
 
         return
-            $this->unregisterExtraProperty('product', 'video_link', ExtraPropertyScope::Lang, $dropColumn)
-            && $this->unregisterExtraProperty('product', 'is_dangerous', ExtraPropertyScope::Common, $dropColumn)
-            && $this->unregisterExtraProperty('product', 'custom_date', ExtraPropertyScope::Shop, $dropColumn)
-            && $this->unregisterExtraProperty('product', 'date_last_seen', ExtraPropertyScope::Common, $dropColumn)
-            && $this->unregisterExtraProperty('product', 'packaging_type', ExtraPropertyScope::Common, $dropColumn)
+            $this->unregisterExtraProperty('product', 'video_link', ExtraPropertyScope::LANG, $dropColumn)
+            && $this->unregisterExtraProperty('product', 'is_dangerous', ExtraPropertyScope::COMMON, $dropColumn)
+            && $this->unregisterExtraProperty('product', 'custom_date', ExtraPropertyScope::SHOP, $dropColumn)
+            && $this->unregisterExtraProperty('product', 'date_last_seen', ExtraPropertyScope::COMMON, $dropColumn)
+            && $this->unregisterExtraProperty('product', 'packaging_type', ExtraPropertyScope::COMMON, $dropColumn)
 
-            && $this->unregisterExtraProperty('category', 'theme_color', ExtraPropertyScope::Common, $dropColumn)
-            && $this->unregisterExtraProperty('category', 'marketing_note', ExtraPropertyScope::Common, $dropColumn)
-            && $this->unregisterExtraProperty('category', 'id_supplier', ExtraPropertyScope::Common, $dropColumn)
+            && $this->unregisterExtraProperty('category', 'theme_color', ExtraPropertyScope::COMMON, $dropColumn)
+            && $this->unregisterExtraProperty('category', 'marketing_note', ExtraPropertyScope::COMMON, $dropColumn)
+            && $this->unregisterExtraProperty('category', 'id_supplier', ExtraPropertyScope::COMMON, $dropColumn)
 
-            && $this->unregisterExtraProperty('customer', 'credit_limit', ExtraPropertyScope::Common, $dropColumn)
-            && $this->unregisterExtraProperty('customer', 'extra_json', ExtraPropertyScope::Common, $dropColumn)
-            && $this->unregisterExtraProperty('customer', 'internal_note', ExtraPropertyScope::Common, $dropColumn)
+            && $this->unregisterExtraProperty('customer', 'credit_limit', ExtraPropertyScope::COMMON, $dropColumn)
+            && $this->unregisterExtraProperty('customer', 'extra_json', ExtraPropertyScope::COMMON, $dropColumn)
+            && $this->unregisterExtraProperty('customer', 'internal_note', ExtraPropertyScope::COMMON, $dropColumn)
 
-            && $this->unregisterExtraProperty('address', 'delivery_note', ExtraPropertyScope::Common, $dropColumn)
+            && $this->unregisterExtraProperty('address', 'delivery_note', ExtraPropertyScope::COMMON, $dropColumn)
 
             && parent::uninstall();
     }
