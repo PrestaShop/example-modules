@@ -558,8 +558,8 @@ class demoextrafield extends Module
             $customerId
         )->getValues();
 
-        // Wrap as ['extraProperties' => ...] so _extra_properties.tpl can be reused as-is.
-        $this->context->smarty->assign('customerExtraData', ['extraProperties' => $extraPropertiesByModule]);
+        // Wrap as ['extra_properties' => ...] so _extra_properties.tpl can be reused as-is.
+        $this->context->smarty->assign('customerExtraData', ['extra_properties' => $extraPropertiesByModule]);
 
         return $this->display(__FILE__, 'views/templates/hook/customer_account_top.tpl');
     }
