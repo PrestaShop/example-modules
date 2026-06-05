@@ -8,9 +8,9 @@
 declare(strict_types=1);
 
 use PrestaShop\PrestaShop\Core\ExtraProperty\Definition\ExtraPropertyDefinition;
-use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertyScope;
-use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertySqlIndex;
-use PrestaShop\PrestaShop\Core\ExtraProperty\ExtraPropertyType;
+use PrestaShop\PrestaShop\Core\ExtraProperty\Definition\ExtraPropertyScope;
+use PrestaShop\PrestaShop\Core\ExtraProperty\Definition\ExtraPropertySqlIndex;
+use PrestaShop\PrestaShop\Core\ExtraProperty\Definition\ExtraPropertyType;
 use PrestaShop\PrestaShop\Core\ExtraProperty\Value\ExtraPropertiesLazyArray;
 use PrestaShopBundle\Form\Admin\Sell\Discount\DiscountSupplierType;
 use PrestaShopBundle\Form\Admin\Type\DatePickerType;
@@ -69,9 +69,9 @@ class demoextrafield extends Module
 
         // Product (common) : is_dangerous
         $productDangerousRegistered = $this->registerExtraProperty(
-            'product',
-            'is_dangerous',
             new ExtraPropertyDefinition(
+                entityName: 'product',
+                propertyName: 'is_dangerous',
                 type: ExtraPropertyType::BOOL,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: false,
@@ -95,9 +95,9 @@ class demoextrafield extends Module
 
         // Product (lang) : video_link
         $productVideoLinkRegistered = $this->registerExtraProperty(
-            'product',
-            'video_link',
             new ExtraPropertyDefinition(
+                entityName: 'product',
+                propertyName: 'video_link',
                 type: ExtraPropertyType::STRING,
                 scope: ExtraPropertyScope::LANG,
                 nullable: true,
@@ -120,9 +120,9 @@ class demoextrafield extends Module
 
         // Product (shop) : custom_date
         $productCustomDateRegistered = $this->registerExtraProperty(
-            'product',
-            'custom_date',
             new ExtraPropertyDefinition(
+                entityName: 'product',
+                propertyName: 'custom_date',
                 type: ExtraPropertyType::DATE,
                 scope: ExtraPropertyScope::SHOP,
                 nullable: true,
@@ -148,9 +148,9 @@ class demoextrafield extends Module
         // Auto-updated on each FO product page view (hookDisplayFooterProduct).
         // displayForm: false → read-only for merchants; visible in the product grid and via API.
         $productDateLastSeenRegistered = $this->registerExtraProperty(
-            'product',
-            'date_last_seen',
             new ExtraPropertyDefinition(
+                entityName: 'product',
+                propertyName: 'date_last_seen',
                 type: ExtraPropertyType::DATE,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
@@ -175,9 +175,9 @@ class demoextrafield extends Module
         // the field can be left empty and the empty value passes server-side validation.
         // (For a truly required field, omit the placeholder and set formRequired: true — NotBlank is added automatically.)
         $productPackagingTypeRegistered = $this->registerExtraProperty(
-            'product',
-            'packaging_type',
             new ExtraPropertyDefinition(
+                entityName: 'product',
+                propertyName: 'packaging_type',
                 type: ExtraPropertyType::CHOICE,
                 scope: ExtraPropertyScope::COMMON,
                 enumValues: ['standard', 'gift', 'bulk'],
@@ -219,9 +219,9 @@ class demoextrafield extends Module
         // No need to put constraints in formOptions — formOptions is persisted as JSON and cannot
         // hold Constraint objects.
         $categoryThemeColorRegistered = $this->registerExtraProperty(
-            'category',
-            'theme_color',
             new ExtraPropertyDefinition(
+                entityName: 'category',
+                propertyName: 'theme_color',
                 type: ExtraPropertyType::STRING,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
@@ -245,9 +245,9 @@ class demoextrafield extends Module
 
         // Category (common) : marketing_note
         $categoryMarketingNoteRegistered = $this->registerExtraProperty(
-            'category',
-            'marketing_note',
             new ExtraPropertyDefinition(
+                entityName: 'category',
+                propertyName: 'marketing_note',
                 type: ExtraPropertyType::HTML,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
@@ -269,9 +269,9 @@ class demoextrafield extends Module
 
         // Category (common) : id_supplier
         $categorySupplierRegistered = $this->registerExtraProperty(
-            'category',
-            'id_supplier',
             new ExtraPropertyDefinition(
+                entityName: 'category',
+                propertyName: 'id_supplier',
                 type: ExtraPropertyType::INT,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
@@ -298,9 +298,9 @@ class demoextrafield extends Module
 
         // Customer (common) : credit_limit
         $customerCreditLimitRegistered = $this->registerExtraProperty(
-            'customer',
-            'credit_limit',
             new ExtraPropertyDefinition(
+                entityName: 'customer',
+                propertyName: 'credit_limit',
                 type: ExtraPropertyType::FLOAT,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
@@ -323,9 +323,9 @@ class demoextrafield extends Module
 
         // Customer (common) : extra_json
         $customerExtraJsonRegistered = $this->registerExtraProperty(
-            'customer',
-            'extra_json',
             new ExtraPropertyDefinition(
+                entityName: 'customer',
+                propertyName: 'extra_json',
                 type: ExtraPropertyType::JSON,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
@@ -349,9 +349,9 @@ class demoextrafield extends Module
         // Demonstrates: displayFront: false — the field appears in BO form and API but is
         // never returned by ExtraPropertiesLazyArray::getValues() on the front office.
         $customerInternalNoteRegistered = $this->registerExtraProperty(
-            'customer',
-            'internal_note',
             new ExtraPropertyDefinition(
+                entityName: 'customer',
+                propertyName: 'internal_note',
                 type: ExtraPropertyType::STRING,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
@@ -391,9 +391,9 @@ class demoextrafield extends Module
         // Address (common) : delivery_note
         // Shows in the manufacturer address grid (Catalog > Brands > Addresses) after 'city'.
         $addressDeliveryNoteRegistered = $this->registerExtraProperty(
-            'address',
-            'delivery_note',
             new ExtraPropertyDefinition(
+                entityName: 'address',
+                propertyName: 'delivery_note',
                 type: ExtraPropertyType::STRING,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
