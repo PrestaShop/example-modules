@@ -440,21 +440,21 @@ class demoextrafield extends Module
         $dropColumn = true;
 
         return
-            $this->unregisterExtraProperty('product', 'video_link', ExtraPropertyScope::LANG, $dropColumn)
-            && $this->unregisterExtraProperty('product', 'is_dangerous', ExtraPropertyScope::COMMON, $dropColumn)
-            && $this->unregisterExtraProperty('product', 'custom_date', ExtraPropertyScope::SHOP, $dropColumn)
-            && $this->unregisterExtraProperty('product', 'date_last_seen', ExtraPropertyScope::COMMON, $dropColumn)
-            && $this->unregisterExtraProperty('product', 'packaging_type', ExtraPropertyScope::COMMON, $dropColumn)
+            $this->unregisterExtraProperty(new ExtraPropertyDefinition('product', 'video_link', scope: ExtraPropertyScope::LANG), $dropColumn)
+            && $this->unregisterExtraProperty(new ExtraPropertyDefinition('product', 'is_dangerous'), $dropColumn)
+            && $this->unregisterExtraProperty(new ExtraPropertyDefinition('product', 'custom_date', scope: ExtraPropertyScope::SHOP), $dropColumn)
+            && $this->unregisterExtraProperty(new ExtraPropertyDefinition('product', 'date_last_seen'), $dropColumn)
+            && $this->unregisterExtraProperty(new ExtraPropertyDefinition('product', 'packaging_type'), $dropColumn)
 
-            && $this->unregisterExtraProperty('category', 'theme_color', ExtraPropertyScope::COMMON, $dropColumn)
-            && $this->unregisterExtraProperty('category', 'marketing_note', ExtraPropertyScope::COMMON, $dropColumn)
-            && $this->unregisterExtraProperty('category', 'id_supplier', ExtraPropertyScope::COMMON, $dropColumn)
+            && $this->unregisterExtraProperty(new ExtraPropertyDefinition('category', 'theme_color'), $dropColumn)
+            && $this->unregisterExtraProperty(new ExtraPropertyDefinition('category', 'marketing_note'), $dropColumn)
+            && $this->unregisterExtraProperty(new ExtraPropertyDefinition('category', 'id_supplier'), $dropColumn)
 
-            && $this->unregisterExtraProperty('customer', 'credit_limit', ExtraPropertyScope::COMMON, $dropColumn)
-            && $this->unregisterExtraProperty('customer', 'extra_json', ExtraPropertyScope::COMMON, $dropColumn)
-            && $this->unregisterExtraProperty('customer', 'internal_note', ExtraPropertyScope::COMMON, $dropColumn)
+            && $this->unregisterExtraProperty(new ExtraPropertyDefinition('customer', 'credit_limit'), $dropColumn)
+            && $this->unregisterExtraProperty(new ExtraPropertyDefinition('customer', 'extra_json'), $dropColumn)
+            && $this->unregisterExtraProperty(new ExtraPropertyDefinition('customer', 'internal_note'), $dropColumn)
 
-            && $this->unregisterExtraProperty('address', 'delivery_note', ExtraPropertyScope::COMMON, $dropColumn)
+            && $this->unregisterExtraProperty(new ExtraPropertyDefinition('address', 'delivery_note'), $dropColumn)
 
             && parent::uninstall();
     }
