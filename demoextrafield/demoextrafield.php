@@ -14,11 +14,13 @@ use PrestaShop\PrestaShop\Core\ExtraProperty\Definition\ExtraPropertyType;
 use PrestaShopBundle\Form\Admin\Sell\Discount\DiscountSupplierType;
 use PrestaShopBundle\Form\Admin\Type\DatePickerType;
 use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
+use PrestaShopBundle\Form\Admin\Type\TranslatableType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
 if (!defined('_PS_VERSION_')) {
@@ -424,11 +426,73 @@ class demoextrafield extends Module
             return false;
         }
 
+        /**
+         * CMS extra fields — MANUAL form integration (no associatedForms)
+         *
+         * Demo case: the module integrates its fields into the migrated CMS page form
+         * itself via the generic form hooks (actionCmsPageFormBuilderModifier,
+         * actionCmsPageFormDataProviderData, actionAfterCreate/UpdateCmsPageFormHandler)
+         * and persists them natively through the ObjectModel:
+         *     $cms->extra_properties['demoextrafield']['promo_banner'] = [id_lang => value];
+         *     $cms->update();
+         * promo_banner is LANG-scoped to validate the native multilang round-trip
+         * (no langId in the constructor → all languages read/modified/saved at once).
+         */
+
+        // CMS (lang) : promo_banner
+        $cmsPromoBannerRegistered = $this->registerExtraProperty(
+            new ExtraPropertyDefinition(
+                entityName: 'cms',
+                propertyName: 'promo_banner',
+                type: ExtraPropertyType::STRING,
+                scope: ExtraPropertyScope::LANG,
+                nullable: true,
+                displayApi: true,
+                validator: 'isGenericName',
+                labelWording: $this->trans('Promo banner', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelDomain: self::TRANSLATION_DOMAIN,
+                descriptionWording: $this->trans('Translated promotional text displayed on the CMS page', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionDomain: self::TRANSLATION_DOMAIN,
+            )
+        );
+        if (!$cmsPromoBannerRegistered) {
+            $this->_errors[] = $this->trans('Failed to register CMS extra field "promo_banner" (scope: lang).', [], 'Modules.Demoextrafield.Admin');
+
+            return false;
+        }
+
+        // CMS (common) : revision_code
+        $cmsRevisionCodeRegistered = $this->registerExtraProperty(
+            new ExtraPropertyDefinition(
+                entityName: 'cms',
+                propertyName: 'revision_code',
+                type: ExtraPropertyType::STRING,
+                scope: ExtraPropertyScope::COMMON,
+                nullable: true,
+                displayApi: true,
+                validator: 'isGenericName',
+                labelWording: $this->trans('Revision code', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelDomain: self::TRANSLATION_DOMAIN,
+                descriptionWording: $this->trans('Internal revision code displayed on the CMS page', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionDomain: self::TRANSLATION_DOMAIN,
+            )
+        );
+        if (!$cmsRevisionCodeRegistered) {
+            $this->_errors[] = $this->trans('Failed to register CMS extra field "revision_code" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+
+            return false;
+        }
+
         $hooksRegistered = $this->registerHook('displayProductAdditionalInfo')
             && $this->registerHook('displayCartExtraProductInfo')
             && $this->registerHook('displayHeaderCategory')
             && $this->registerHook('displayCustomerAccountTop')
-            && $this->registerHook('displayFooterProduct');
+            && $this->registerHook('displayFooterProduct')
+            && $this->registerHook('actionCmsPageFormBuilderModifier')
+            && $this->registerHook('actionCmsPageFormDataProviderData')
+            && $this->registerHook('actionAfterCreateCmsPageFormHandler')
+            && $this->registerHook('actionAfterUpdateCmsPageFormHandler')
+            && $this->registerHook('displayCMSDisputeInformation');
         if (!$hooksRegistered) {
             $this->_errors[] = $this->trans('Failed to register one or more hooks.', [], 'Modules.Demoextrafield.Admin');
 
@@ -441,7 +505,8 @@ class demoextrafield extends Module
     /**
      * Uninstall:
      * - unregisters all extra fields,
-     * - drops SQL storage columns.
+     * - drops SQL storage columns,
+     * - unregisters all hooks.
      */
     public function uninstall(): bool
     {
@@ -464,6 +529,20 @@ class demoextrafield extends Module
             && $this->unregisterExtraProperty(new ExtraPropertyDefinition('customer', 'internal_note'), $dropColumn)
 
             && $this->unregisterExtraProperty(new ExtraPropertyDefinition('address', 'delivery_note'), $dropColumn)
+
+            && $this->unregisterExtraProperty(new ExtraPropertyDefinition('cms', 'promo_banner', scope: ExtraPropertyScope::LANG), $dropColumn)
+            && $this->unregisterExtraProperty(new ExtraPropertyDefinition('cms', 'revision_code'), $dropColumn)
+
+            && $this->unregisterHook('displayProductAdditionalInfo')
+            && $this->unregisterHook('displayCartExtraProductInfo')
+            && $this->unregisterHook('displayHeaderCategory')
+            && $this->unregisterHook('displayCustomerAccountTop')
+            && $this->unregisterHook('displayFooterProduct')
+            && $this->unregisterHook('actionCmsPageFormBuilderModifier')
+            && $this->unregisterHook('actionCmsPageFormDataProviderData')
+            && $this->unregisterHook('actionAfterCreateCmsPageFormHandler')
+            && $this->unregisterHook('actionAfterUpdateCmsPageFormHandler')
+            && $this->unregisterHook('displayCMSDisputeInformation')
 
             && parent::uninstall();
     }
@@ -558,5 +637,113 @@ class demoextrafield extends Module
         $this->context->smarty->assign('customerObjectModel', $customer);
 
         return $this->display(__FILE__, 'views/templates/hook/customer_account_top.tpl');
+    }
+
+    /**
+     * Back Office hook (CMS page form, Design > Pages) — MANUAL form integration, step 1/3.
+     *
+     * Adds the two CMS extra fields to the migrated Symfony form. They are NOT registered
+     * with associatedForms, so the native ExtraPropertiesFormBuilderModifier ignores them;
+     * the module owns the whole integration (same pattern as the devdocs sample
+     * "extending a Symfony form", but persistence goes through the ObjectModel natively —
+     * no custom table, no Doctrine entity).
+     *
+     * TranslatableType submits [id_lang => value] — exactly the shape the ExtraPropertiesBag
+     * uses for lang-scoped fields.
+     */
+    public function hookActionCmsPageFormBuilderModifier(array $params): void
+    {
+        $params['form_builder']
+            ->add('demoextrafield_promo_banner', TranslatableType::class, [
+                'type' => TextType::class,
+                'label' => $this->trans('Promo banner (demoextrafield)', [], 'Modules.Demoextrafield.Admin'),
+                'required' => false,
+            ])
+            ->add('demoextrafield_revision_code', TextType::class, [
+                'label' => $this->trans('Revision code (demoextrafield)', [], 'Modules.Demoextrafield.Admin'),
+                'required' => false,
+            ]);
+    }
+
+    /**
+     * Back Office hook (CMS page edit form) — MANUAL form integration, step 2/3 (prefill).
+     *
+     * $params['data'] is passed by reference BEFORE the form is created, so values set here
+     * pre-populate the fields added in hookActionCmsPageFormBuilderModifier.
+     *
+     * The CMS ObjectModel is instantiated WITHOUT a langId: promo_banner comes back as a
+     * [id_lang => value] array — the exact data shape TranslatableType expects.
+     */
+    public function hookActionCmsPageFormDataProviderData(array $params): void
+    {
+        $cmsId = (int) ($params['id'] ?? 0);
+        if ($cmsId <= 0) {
+            return;
+        }
+
+        $cms = new CMS($cmsId);
+        $params['data']['demoextrafield_promo_banner'] = (array) ($cms->extra_properties['demoextrafield']['promo_banner'] ?? []);
+        $params['data']['demoextrafield_revision_code'] = (string) ($cms->extra_properties['demoextrafield']['revision_code'] ?? '');
+    }
+
+    /**
+     * Back Office hook (CMS page form submit, creation) — MANUAL form integration, step 3/3.
+     */
+    public function hookActionAfterCreateCmsPageFormHandler(array $params): void
+    {
+        $this->saveCmsExtraProperties($params);
+    }
+
+    /**
+     * Back Office hook (CMS page form submit, update) — MANUAL form integration, step 3/3.
+     */
+    public function hookActionAfterUpdateCmsPageFormHandler(array $params): void
+    {
+        $this->saveCmsExtraProperties($params);
+    }
+
+    /**
+     * Persists the two CMS extra fields natively through the ObjectModel.
+     *
+     * This is the native multilang round-trip: the CMS is instantiated WITHOUT a langId,
+     * so assigning the full [id_lang => value] array to the lang-scoped field updates ALL
+     * languages in one save — persistExtraProperties() validates each language and issues
+     * one UPSERT per language into cms_extra_lang (plus one into cms_extra for the common field).
+     */
+    private function saveCmsExtraProperties(array $params): void
+    {
+        $cmsId = (int) ($params['id'] ?? 0);
+        $formData = (array) ($params['form_data'] ?? []);
+        if ($cmsId <= 0 || [] === $formData) {
+            return;
+        }
+
+        $cms = new CMS($cmsId);
+        if (!Validate::isLoadedObject($cms)) {
+            return;
+        }
+
+        $cms->extra_properties['demoextrafield']['promo_banner'] = (array) ($formData['demoextrafield_promo_banner'] ?? []);
+        $cms->extra_properties['demoextrafield']['revision_code'] = (string) ($formData['demoextrafield_revision_code'] ?? '');
+        $cms->update();
+    }
+
+    /**
+     * Front Office hook (CMS page, e.g. /content/4-about-us).
+     *
+     * The CMS ObjectModel is instantiated WITH the context langId: lang-scoped fields come
+     * back as scalars for the current language, and the bag is FO-filtered automatically
+     * (front-office controller context).
+     */
+    public function hookDisplayCMSDisputeInformation(array $params): string
+    {
+        $cmsId = (int) Tools::getValue('id_cms');
+        if ($cmsId <= 0) {
+            return '';
+        }
+
+        $this->context->smarty->assign('cmsObjectModel', new CMS($cmsId, (int) $this->context->language->id));
+
+        return $this->display(__FILE__, 'views/templates/hook/cms_page_extra.tpl');
     }
 }
