@@ -11,7 +11,6 @@ use PrestaShop\PrestaShop\Core\ExtraProperty\Definition\ExtraPropertyDefinition;
 use PrestaShop\PrestaShop\Core\ExtraProperty\Definition\ExtraPropertyScope;
 use PrestaShop\PrestaShop\Core\ExtraProperty\Definition\ExtraPropertySqlIndex;
 use PrestaShop\PrestaShop\Core\ExtraProperty\Definition\ExtraPropertyType;
-use PrestaShop\PrestaShop\Core\ExtraProperty\Value\ExtraPropertiesLazyArray;
 use PrestaShopBundle\Form\Admin\Sell\Discount\DiscountSupplierType;
 use PrestaShopBundle\Form\Admin\Type\DatePickerType;
 use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
@@ -74,17 +73,17 @@ class demoextrafield extends Module
                 propertyName: 'is_dangerous',
                 type: ExtraPropertyType::BOOL,
                 scope: ExtraPropertyScope::COMMON,
-                nullable: false,
                 defaultValue: 0,
+                nullable: false,
+                displayApi: true,
+                associatedForms: ['product.options.extra_properties'],
+                associatedGrids: ['product.reference'],
+                formFieldType: CheckboxType::class,
+                validator: 'isBool',
                 labelWording: $this->trans('Dangerous product', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: $this->trans('Indicates whether the product is dangerous', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
-                formFieldType: CheckboxType::class,
-                validator: 'isBool',
-                displayApi: true,
-                associatedForms: ['product.options.extra_properties'],
-                associatedGrids: ['product.reference'],
             )
         );
         if (!$productDangerousRegistered) {
@@ -101,15 +100,15 @@ class demoextrafield extends Module
                 type: ExtraPropertyType::STRING,
                 scope: ExtraPropertyScope::LANG,
                 nullable: true,
+                sqlIndex: ExtraPropertySqlIndex::UNIQUE,
+                displayApi: true,
+                associatedForms: ['product'],
+                formFieldType: UrlType::class,
+                validator: 'isUrl',
                 labelWording: $this->trans('Video link', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: $this->trans('Video URL per language', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
-                sqlIndex: ExtraPropertySqlIndex::UNIQUE,
-                formFieldType: UrlType::class,
-                validator: 'isUrl',
-                displayApi: true,
-                associatedForms: ['product'],
             )
         );
         if (!$productVideoLinkRegistered) {
@@ -126,16 +125,16 @@ class demoextrafield extends Module
                 type: ExtraPropertyType::DATE,
                 scope: ExtraPropertyScope::SHOP,
                 nullable: true,
+                sqlIndex: ExtraPropertySqlIndex::KEY,
+                displayApi: true,
+                associatedForms: ['product'],
+                associatedGrids: ['product.final_price_tax_excluded:before'],
+                formFieldType: DatePickerType::class,
+                validator: 'isDate',
                 labelWording: $this->trans('Custom date', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: $this->trans('Custom date per shop', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
-                sqlIndex: ExtraPropertySqlIndex::KEY,
-                formFieldType: DatePickerType::class,
-                validator: 'isDate',
-                displayApi: true,
-                associatedForms: ['product'],
-                associatedGrids: ['product.final_price_tax_excluded:before'],
             )
         );
         if (!$productCustomDateRegistered) {
@@ -154,12 +153,12 @@ class demoextrafield extends Module
                 type: ExtraPropertyType::DATE,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
+                displayApi: true,
+                associatedGrids: ['product'],
                 labelWording: $this->trans('Date last seen', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: $this->trans('Last time this product page was viewed', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
-                displayApi: true,
-                associatedGrids: ['product'],
             )
         );
         if (!$productDateLastSeenRegistered) {
@@ -181,12 +180,13 @@ class demoextrafield extends Module
                 type: ExtraPropertyType::CHOICE,
                 scope: ExtraPropertyScope::COMMON,
                 enumValues: ['standard', 'gift', 'bulk'],
-                nullable: true,
                 defaultValue: null,
-                labelWording: $this->trans('Packaging type', [], 'Modules.Demoextrafield.Admin', 'en'),
-                labelDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: $this->trans('Selectable packaging type for this product', [], 'Modules.Demoextrafield.Admin', 'en'),
-                descriptionDomain: self::TRANSLATION_DOMAIN,
+                nullable: true,
+                formRequired: false,
+                displayApi: true,
+                displayFront: true,
+                associatedForms: ['product'],
+                associatedGrids: ['product'],
                 formFieldType: ChoiceType::class,
                 formOptions: [
                     'choices' => [
@@ -196,11 +196,10 @@ class demoextrafield extends Module
                     ],
                     'placeholder' => '—',
                 ],
-                formRequired: false,
-                displayApi: true,
-                displayFront: true,
-                associatedForms: ['product'],
-                associatedGrids: ['product'],
+                labelWording: $this->trans('Packaging type', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelDomain: self::TRANSLATION_DOMAIN,
+                descriptionWording: $this->trans('Selectable packaging type for this product', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionDomain: self::TRANSLATION_DOMAIN,
             )
         );
         if (!$productPackagingTypeRegistered) {
@@ -225,16 +224,16 @@ class demoextrafield extends Module
                 type: ExtraPropertyType::STRING,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
+                formRequired: true,
+                displayApi: true,
+                associatedForms: ['category', 'root_category'],
+                associatedGrids: ['category'],
+                formFieldType: ColorType::class,
+                validator: 'isColor',
                 labelWording: $this->trans('Theme color', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: $this->trans('Color associated with the category (required)', [], 'Modules.Demoextrafield.Admin', 'en'),
-                descriptionDomain: self::TRANSLATION_DOMAIN,
-                formFieldType: ColorType::class,
-                formRequired: true,
-                validator: 'isColor',
-                displayApi: true,
-                associatedForms: ['category', 'root_category'],
-                associatedGrids: ['category']
+                descriptionDomain: self::TRANSLATION_DOMAIN
             )
         );
         if (!$categoryThemeColorRegistered) {
@@ -244,6 +243,9 @@ class demoextrafield extends Module
         }
 
         // Category (common) : marketing_note
+        // Demonstrates: displayFront: false on an entity rendered through a presenter LazyArray
+        // (CategoryLazyArray) — validates that the forFrontOffice filtering works on that path
+        // too (the customer's internal_note covers the native ObjectModel path).
         $categoryMarketingNoteRegistered = $this->registerExtraProperty(
             new ExtraPropertyDefinition(
                 entityName: 'category',
@@ -251,14 +253,15 @@ class demoextrafield extends Module
                 type: ExtraPropertyType::HTML,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
-                labelWording: $this->trans('Marketing note', [], 'Modules.Demoextrafield.Admin', 'en'),
-                labelDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: $this->trans('Free note displayed in BO, API and FO', [], 'Modules.Demoextrafield.Admin', 'en'),
-                descriptionDomain: self::TRANSLATION_DOMAIN,
+                displayApi: true,
+                displayFront: false,
+                associatedForms: ['category'],
                 formFieldType: FormattedTextareaType::class,
                 validator: 'isCleanHtml',
-                displayApi: true,
-                associatedForms: ['category'],
+                labelWording: $this->trans('Marketing note', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelDomain: self::TRANSLATION_DOMAIN,
+                descriptionWording: $this->trans('Merchant-only note displayed in BO and API — never on the front office', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionDomain: self::TRANSLATION_DOMAIN,
             )
         );
         if (!$categoryMarketingNoteRegistered) {
@@ -275,15 +278,19 @@ class demoextrafield extends Module
                 type: ExtraPropertyType::INT,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
+                displayApi: true,
+                associatedForms: ['category'],
+                associatedGrids: ['category'],
+                formFieldType: DiscountSupplierType::class,
+                formOptions: [
+                    'label_tag_name' => null,
+                ],
+                // This prevents using a h3 tag for label
+                validator: 'isUnsignedId',
                 labelWording: $this->trans('Default supplier', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: $this->trans('Select a PrestaShop supplier', [], 'Modules.Demoextrafield.Admin', 'en'),
-                descriptionDomain: self::TRANSLATION_DOMAIN,
-                formFieldType: DiscountSupplierType::class,
-                validator: 'isUnsignedId',
-                displayApi: true,
-                associatedForms: ['category'],
-                associatedGrids: ['category']
+                descriptionDomain: self::TRANSLATION_DOMAIN
             )
         );
         if (!$categorySupplierRegistered) {
@@ -304,15 +311,15 @@ class demoextrafield extends Module
                 type: ExtraPropertyType::FLOAT,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
+                displayApi: true,
+                associatedForms: ['customer'],
+                associatedGrids: ['customer'],
+                formFieldType: MoneyType::class,
+                validator: 'isPrice',
                 labelWording: $this->trans('Credit limit', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: $this->trans('Maximum customer credit amount', [], 'Modules.Demoextrafield.Admin', 'en'),
-                descriptionDomain: self::TRANSLATION_DOMAIN,
-                formFieldType: MoneyType::class,
-                validator: 'isPrice',
-                displayApi: true,
-                associatedForms: ['customer'],
-                associatedGrids: ['customer']
+                descriptionDomain: self::TRANSLATION_DOMAIN
             )
         );
         if (!$customerCreditLimitRegistered) {
@@ -329,14 +336,14 @@ class demoextrafield extends Module
                 type: ExtraPropertyType::JSON,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
+                displayApi: true,
+                associatedForms: ['customer'],
+                formFieldType: TextareaType::class,
+                validator: 'isJson',
                 labelWording: $this->trans('Metadata JSON', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: $this->trans('Free JSON for customer metadata', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
-                formFieldType: TextareaType::class,
-                validator: 'isJson',
-                displayApi: true,
-                associatedForms: ['customer'],
             )
         );
         if (!$customerExtraJsonRegistered) {
@@ -347,7 +354,9 @@ class demoextrafield extends Module
 
         // Customer (common) : internal_note
         // Demonstrates: displayFront: false — the field appears in BO form and API but is
-        // never returned by ExtraPropertiesLazyArray::getValues() on the front office.
+        // never readable on the front office: presenter lazy arrays are built with
+        // forFrontOffice: true, and native ObjectModel bags detect the FO controller
+        // context automatically, so non-displayFront definitions are never even read.
         $customerInternalNoteRegistered = $this->registerExtraProperty(
             new ExtraPropertyDefinition(
                 entityName: 'customer',
@@ -355,14 +364,14 @@ class demoextrafield extends Module
                 type: ExtraPropertyType::STRING,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
+                displayApi: true,
+                displayFront: false,
+                associatedForms: ['customer'],
+                formFieldType: TextareaType::class,
                 labelWording: $this->trans('Internal note', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: $this->trans('Merchant-only note — never exposed on the front office', [], 'Modules.Demoextrafield.Admin', 'en'),
                 descriptionDomain: self::TRANSLATION_DOMAIN,
-                formFieldType: TextareaType::class,
-                displayApi: true,
-                displayFront: false,
-                associatedForms: ['customer'],
             )
         );
         if (!$customerInternalNoteRegistered) {
@@ -398,15 +407,15 @@ class demoextrafield extends Module
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
                 size: 255,
+                displayApi: true,
+                associatedGrids: ['manufacturer_address.city'],
+                formFieldType: TextareaType::class,
+                validator: 'isGenericName',
                 labelWording: $this->trans('Delivery note', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: $this->trans('Free delivery note attached to this address', [], 'Modules.Demoextrafield.Admin', 'en'),
-                descriptionDomain: self::TRANSLATION_DOMAIN,
-                formFieldType: TextareaType::class,
-                validator: 'isGenericName',
-                displayApi: true,
                 // gridId 'manufacturer_address' ≠ entity 'address' — decoupling test.
-                associatedGrids: ['manufacturer_address.city'],
+                descriptionDomain: self::TRANSLATION_DOMAIN,
             )
         );
         if (!$addressDeliveryNoteRegistered) {
@@ -437,7 +446,7 @@ class demoextrafield extends Module
     public function uninstall(): bool
     {
         // false = keep columns in DB after uninstall
-        $dropColumn = true;
+        $dropColumn = false;
 
         return
             $this->unregisterExtraProperty(new ExtraPropertyDefinition('product', 'video_link', scope: ExtraPropertyScope::LANG), $dropColumn)
@@ -526,40 +535,27 @@ class demoextrafield extends Module
     /**
      * Front Office hook (customer my-account page).
      *
-     * --- Why we load extra properties manually here ---
+     * Demonstrates that an ObjectModel instance can be handed to Smarty as-is: the template
+     * reads the lazy ExtraPropertiesBag through object syntax
+     * ({$customerObjectModel->extra_properties.demoextrafield.field_name}) — no presenter,
+     * no array conversion. The first hop uses `->` (ObjectModel is not ArrayAccess); the bag
+     * levels then support dot syntax and iteration.
      *
-     * Extra properties are natively carried by every ObjectModel subclass (Customer, Product,
-     * Category…). In PHP, $customer->extra_properties['module']['field'] works on any instance.
+     * (The presented `$customer` Smarty global would work too — ObjectPresenter populates its
+     * `extra_properties` key — but passing the ObjectModel directly is the point of this demo.)
      *
-     * In FO Smarty templates however, entities are presented through LazyArrays
-     * (ProductLazyArray, CategoryLazyArray, OrderLazyArray…). AbstractLazyArray exposes the
-     * `extraProperties` key, so `$product.extraProperties.mymodule.myfield` works in templates.
-     *
-     * Customer is the exception: the Smarty `$customer` variable is a plain PHP array built
-     * by FrontController::getTemplateVarCustomer() via objectPresenter->present(). It is not
-     * a LazyArray, so `$customer.extraProperties` does not exist.
-     *
-     * Solution for entities without a native LazyArray: fetch the values explicitly in the
-     * hook handler using ExtraPropertiesLazyArray::fromObjectModelClass(), then assign them
-     * to Smarty under a dedicated variable.
-     *
-     * Note: getValues() already filters out fields with displayFront=false
-     * (here, 'internal_note' field is therefore intentionally absent from the output).
+     * No manual filtering is needed: since this hook runs in a front-office controller, the
+     * native bag is built with forFrontOffice: true automatically, so fields like
+     * 'internal_note' (displayFront: false) are never read nor exposed.
      */
     public function hookDisplayCustomerAccountTop(): string
     {
-        $customerId = (int) $this->context->customer->id;
-        if ($customerId <= 0) {
+        $customer = $this->context->customer;
+        if (null === $customer || (int) $customer->id <= 0) {
             return '';
         }
 
-        $extraPropertiesByModule = ExtraPropertiesLazyArray::fromObjectModelClass(
-            Customer::class,
-            $customerId
-        )->getValues();
-
-        // Wrap as ['extra_properties' => ...] so _extra_properties.tpl can be reused as-is.
-        $this->context->smarty->assign('customerExtraData', ['extra_properties' => $extraPropertiesByModule]);
+        $this->context->smarty->assign('customerObjectModel', $customer);
 
         return $this->display(__FILE__, 'views/templates/hook/customer_account_top.tpl');
     }
