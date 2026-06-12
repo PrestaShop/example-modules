@@ -514,9 +514,10 @@ class demoextrafield extends Module
         $dropColumn = false;
 
         return
-            $this->unregisterExtraProperty(new ExtraPropertyDefinition('product', 'video_link', scope: ExtraPropertyScope::LANG), $dropColumn)
+            // Scope is not needed to identify a definition: (entity, module, property) is unique across scopes.
+            $this->unregisterExtraProperty(new ExtraPropertyDefinition('product', 'video_link'), $dropColumn)
             && $this->unregisterExtraProperty(new ExtraPropertyDefinition('product', 'is_dangerous'), $dropColumn)
-            && $this->unregisterExtraProperty(new ExtraPropertyDefinition('product', 'custom_date', scope: ExtraPropertyScope::SHOP), $dropColumn)
+            && $this->unregisterExtraProperty(new ExtraPropertyDefinition('product', 'custom_date'), $dropColumn)
             && $this->unregisterExtraProperty(new ExtraPropertyDefinition('product', 'date_last_seen'), $dropColumn)
             && $this->unregisterExtraProperty(new ExtraPropertyDefinition('product', 'packaging_type'), $dropColumn)
 
@@ -530,7 +531,7 @@ class demoextrafield extends Module
 
             && $this->unregisterExtraProperty(new ExtraPropertyDefinition('address', 'delivery_note'), $dropColumn)
 
-            && $this->unregisterExtraProperty(new ExtraPropertyDefinition('cms', 'promo_banner', scope: ExtraPropertyScope::LANG), $dropColumn)
+            && $this->unregisterExtraProperty(new ExtraPropertyDefinition('cms', 'promo_banner'), $dropColumn)
             && $this->unregisterExtraProperty(new ExtraPropertyDefinition('cms', 'revision_code'), $dropColumn)
 
             && $this->unregisterHook('displayProductAdditionalInfo')
