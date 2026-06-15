@@ -82,9 +82,9 @@ class demoextrafield extends Module
                 associatedGrids: ['product:reference'],
                 formFieldType: SwitchType::class,
                 validator: 'isBool',
-                labelWording: $this->trans('Dangerous product', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelWording: 'Dangerous product',
                 labelDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: $this->trans('Indicates whether the product is dangerous', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionWording: 'Indicates whether the product is dangerous',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
             )
         );
@@ -107,9 +107,9 @@ class demoextrafield extends Module
                 associatedForms: ['product'],
                 formFieldType: UrlType::class,
                 validator: 'isUrl',
-                labelWording: $this->trans('Video link', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelWording: 'Video link',
                 labelDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: $this->trans('Video URL per language', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionWording: 'Video URL per language',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
             )
         );
@@ -133,9 +133,9 @@ class demoextrafield extends Module
                 associatedGrids: ['product:final_price_tax_excluded:before'],
                 formFieldType: DatePickerType::class,
                 validator: 'isDate',
-                labelWording: $this->trans('Custom date', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelWording: 'Custom date',
                 labelDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: $this->trans('Custom date per shop', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionWording: 'Custom date per shop',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
             )
         );
@@ -157,9 +157,9 @@ class demoextrafield extends Module
                 nullable: true,
                 displayApi: true,
                 associatedGrids: ['product'],
-                labelWording: $this->trans('Date last seen', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelWording: 'Date last seen',
                 labelDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: $this->trans('Last time this product page was viewed', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionWording: 'Last time this product page was viewed',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
             )
         );
@@ -198,9 +198,9 @@ class demoextrafield extends Module
                     ],
                     'placeholder' => '—',
                 ],
-                labelWording: $this->trans('Packaging type', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelWording: 'Packaging type',
                 labelDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: $this->trans('Selectable packaging type for this product', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionWording: 'Selectable packaging type for this product',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
             )
         );
@@ -232,9 +232,9 @@ class demoextrafield extends Module
                 associatedGrids: ['category'],
                 formFieldType: ColorType::class,
                 validator: 'isColor',
-                labelWording: $this->trans('Theme color', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelWording: 'Theme color',
                 labelDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: $this->trans('Color associated with the category (required)', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionWording: 'Color associated with the category (required)',
                 descriptionDomain: self::TRANSLATION_DOMAIN
             )
         );
@@ -260,9 +260,9 @@ class demoextrafield extends Module
                 associatedForms: ['category'],
                 formFieldType: FormattedTextareaType::class,
                 validator: 'isCleanHtml',
-                labelWording: $this->trans('Marketing note', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelWording: 'Marketing note',
                 labelDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: $this->trans('Merchant-only note displayed in BO and API — never on the front office', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionWording: 'Merchant-only note displayed in BO and API — never on the front office',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
             )
         );
@@ -289,9 +289,9 @@ class demoextrafield extends Module
                 ],
                 // This prevents using a h3 tag for label
                 validator: 'isUnsignedId',
-                labelWording: $this->trans('Default supplier', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelWording: 'Default supplier',
                 labelDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: $this->trans('Select a PrestaShop supplier', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionWording: 'Select a PrestaShop supplier',
                 descriptionDomain: self::TRANSLATION_DOMAIN
             )
         );
@@ -318,9 +318,9 @@ class demoextrafield extends Module
                 associatedGrids: ['customer'],
                 formFieldType: MoneyType::class,
                 validator: 'isPrice',
-                labelWording: $this->trans('Credit limit', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelWording: 'Credit limit',
                 labelDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: $this->trans('Maximum customer credit amount', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionWording: 'Maximum customer credit amount',
                 descriptionDomain: self::TRANSLATION_DOMAIN
             )
         );
@@ -342,9 +342,9 @@ class demoextrafield extends Module
                 associatedForms: ['customer'],
                 formFieldType: TextareaType::class,
                 validator: 'isJson',
-                labelWording: $this->trans('Metadata JSON', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelWording: 'Metadata JSON',
                 labelDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: $this->trans('Free JSON for customer metadata', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionWording: 'Free JSON for customer metadata',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
             )
         );
@@ -370,9 +370,9 @@ class demoextrafield extends Module
                 displayFront: false,
                 associatedForms: ['customer'],
                 formFieldType: TextareaType::class,
-                labelWording: $this->trans('Internal note', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelWording: 'Internal note',
                 labelDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: $this->trans('Merchant-only note — never exposed on the front office', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionWording: 'Merchant-only note — never exposed on the front office',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
             )
         );
@@ -413,9 +413,9 @@ class demoextrafield extends Module
                 associatedGrids: ['manufacturer_address:city'],
                 formFieldType: TextareaType::class,
                 validator: 'isGenericName',
-                labelWording: $this->trans('Delivery note', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelWording: 'Delivery note',
                 labelDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: $this->trans('Free delivery note attached to this address', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionWording: 'Free delivery note attached to this address',
                 // gridId 'manufacturer_address' ≠ entity 'address' — decoupling test.
                 descriptionDomain: self::TRANSLATION_DOMAIN,
             )
@@ -449,9 +449,9 @@ class demoextrafield extends Module
                 nullable: true,
                 displayApi: true,
                 validator: 'isGenericName',
-                labelWording: $this->trans('Promo banner', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelWording: 'Promo banner',
                 labelDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: $this->trans('Translated promotional text displayed on the CMS page', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionWording: 'Translated promotional text displayed on the CMS page',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
             )
         );
@@ -471,9 +471,9 @@ class demoextrafield extends Module
                 nullable: true,
                 displayApi: true,
                 validator: 'isGenericName',
-                labelWording: $this->trans('Revision code', [], 'Modules.Demoextrafield.Admin', 'en'),
+                labelWording: 'Revision code',
                 labelDomain: self::TRANSLATION_DOMAIN,
-                descriptionWording: $this->trans('Internal revision code displayed on the CMS page', [], 'Modules.Demoextrafield.Admin', 'en'),
+                descriptionWording: 'Internal revision code displayed on the CMS page',
                 descriptionDomain: self::TRANSLATION_DOMAIN,
             )
         );
