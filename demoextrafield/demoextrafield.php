@@ -14,8 +14,8 @@ use PrestaShop\PrestaShop\Core\ExtraProperty\Definition\ExtraPropertyType;
 use PrestaShopBundle\Form\Admin\Sell\Discount\DiscountSupplierType;
 use PrestaShopBundle\Form\Admin\Type\DatePickerType;
 use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
+use PrestaShopBundle\Form\Admin\Type\SwitchType;
 use PrestaShopBundle\Form\Admin\Type\TranslatableType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -78,9 +78,9 @@ class demoextrafield extends Module
                 defaultValue: 0,
                 nullable: false,
                 displayApi: true,
-                associatedForms: ['product.options.extra_properties'],
-                associatedGrids: ['product.reference'],
-                formFieldType: CheckboxType::class,
+                associatedForms: ['product:options.suppliers:before'],
+                associatedGrids: ['product:reference'],
+                formFieldType: SwitchType::class,
                 validator: 'isBool',
                 labelWording: $this->trans('Dangerous product', [], 'Modules.Demoextrafield.Admin', 'en'),
                 labelDomain: self::TRANSLATION_DOMAIN,
@@ -130,7 +130,7 @@ class demoextrafield extends Module
                 sqlIndex: ExtraPropertySqlIndex::KEY,
                 displayApi: true,
                 associatedForms: ['product'],
-                associatedGrids: ['product.final_price_tax_excluded:before'],
+                associatedGrids: ['product:final_price_tax_excluded:before'],
                 formFieldType: DatePickerType::class,
                 validator: 'isDate',
                 labelWording: $this->trans('Custom date', [], 'Modules.Demoextrafield.Admin', 'en'),
@@ -410,7 +410,7 @@ class demoextrafield extends Module
                 nullable: true,
                 size: 255,
                 displayApi: true,
-                associatedGrids: ['manufacturer_address.city'],
+                associatedGrids: ['manufacturer_address:city'],
                 formFieldType: TextareaType::class,
                 validator: 'isGenericName',
                 labelWording: $this->trans('Delivery note', [], 'Modules.Demoextrafield.Admin', 'en'),
