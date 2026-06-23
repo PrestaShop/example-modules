@@ -113,7 +113,7 @@ class demoextrafield extends Module
                 // Showcases BOTH multilang validation styles on one field (Symfony-native):
                 constraints: [
                     // Whole array: if any language is filled, the default language must be too.
-                    new DefaultLanguage(allowNull: true, fieldName: 'Video link'),
+                    new DefaultLanguage(fieldName: 'Video link'),
                     // Each language value: must be a valid URL (Assert\All applies it per language).
                     new Assert\All([new Assert\Url()]),
                 ],
@@ -182,7 +182,7 @@ class demoextrafield extends Module
         // Product (common) : packaging_type
         // Demonstrates: CHOICE type, enumValues, formOptions (dropdown choices).
         // enumValues constrains the allowed DB values; formOptions drives the Symfony ChoiceType widget.
-        // formRequired: false + nullable: true + placeholder → the "—" option represents "no selection";
+        // required: false + nullable: true + placeholder → the "—" option represents "no selection";
         // the field can be left empty and the empty value passes server-side validation.
         // (For a truly required field, omit the placeholder and add new Assert\NotBlank() to constraints.)
         $productPackagingTypeRegistered = $this->registerExtraProperty(
@@ -194,7 +194,7 @@ class demoextrafield extends Module
                 enumValues: ['standard', 'gift', 'bulk'],
                 defaultValue: null,
                 nullable: true,
-                formRequired: false,
+                required: false,
                 associatedApis: ['/products', '/products/{productId}'],
                 displayFront: true,
                 associatedForms: ['product'],
@@ -225,7 +225,7 @@ class demoextrafield extends Module
          */
 
         // Category (common) : theme_color
-        // Demonstrates: a required, validated field. formRequired: true drives the HTML required
+        // Demonstrates: a required, validated field. required: true drives the HTML required
         // attribute and label asterisk; Assert\NotBlank in constraints enforces it server-side (the
         // form modifier no longer adds NotBlank automatically). Assert\CssColor replaces the legacy
         // isColor validator. Constraints are real Symfony Constraint objects passed directly here —
@@ -237,7 +237,7 @@ class demoextrafield extends Module
                 type: ExtraPropertyType::STRING,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
-                formRequired: true,
+                required: true,
                 associatedApis: ['/categories', '/categories/{categoryId}'],
                 associatedForms: ['category', 'root_category'],
                 associatedGrids: ['category'],
