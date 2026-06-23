@@ -7,6 +7,9 @@
 
 declare(strict_types=1);
 
+use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\CleanHtml;
+use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\DefaultLanguage;
+use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\TypedRegex;
 use PrestaShop\PrestaShop\Core\ExtraProperty\Definition\ExtraPropertyDefinition;
 use PrestaShop\PrestaShop\Core\ExtraProperty\Definition\ExtraPropertyScope;
 use PrestaShop\PrestaShop\Core\ExtraProperty\Definition\ExtraPropertySqlIndex;
@@ -22,6 +25,7 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -81,7 +85,7 @@ class demoextrafield extends Module
                 associatedForms: ['product:options.suppliers:before'],
                 associatedGrids: ['product:reference'],
                 formFieldType: SwitchType::class,
-                validator: 'isBool',
+                // No constraints: a SwitchType always yields a valid 0/1 — demonstrates that validation is opt-in.
                 labelWording: 'Dangerous product',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Indicates whether the product is dangerous',
@@ -106,7 +110,13 @@ class demoextrafield extends Module
                 associatedApis: ['/products', '/products/{productId}'],
                 associatedForms: ['product'],
                 formFieldType: UrlType::class,
-                validator: 'isUrl',
+                // Showcases BOTH multilang validation styles on one field (Symfony-native):
+                constraints: [
+                    // Whole array: if any language is filled, the default language must be too.
+                    new DefaultLanguage(allowNull: true, fieldName: 'Video link'),
+                    // Each language value: must be a valid URL (Assert\All applies it per language).
+                    new Assert\All([new Assert\Url()]),
+                ],
                 labelWording: 'Video link',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Video URL per language',
@@ -132,7 +142,7 @@ class demoextrafield extends Module
                 associatedForms: ['product'],
                 associatedGrids: ['product:final_price_tax_excluded:before'],
                 formFieldType: DatePickerType::class,
-                validator: 'isDate',
+                constraints: [new Assert\Date()],
                 labelWording: 'Custom date',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Custom date per shop',
@@ -174,7 +184,7 @@ class demoextrafield extends Module
         // enumValues constrains the allowed DB values; formOptions drives the Symfony ChoiceType widget.
         // formRequired: false + nullable: true + placeholder → the "—" option represents "no selection";
         // the field can be left empty and the empty value passes server-side validation.
-        // (For a truly required field, omit the placeholder and set formRequired: true — NotBlank is added automatically.)
+        // (For a truly required field, omit the placeholder and add new Assert\NotBlank() to constraints.)
         $productPackagingTypeRegistered = $this->registerExtraProperty(
             new ExtraPropertyDefinition(
                 entityName: 'product',
@@ -215,10 +225,11 @@ class demoextrafield extends Module
          */
 
         // Category (common) : theme_color
-        // Demonstrates: formRequired: true → the form modifier automatically adds a NotBlank
-        // constraint at build time (server-side enforcement, not just the HTML required attribute).
-        // No need to put constraints in formOptions — formOptions is persisted as JSON and cannot
-        // hold Constraint objects.
+        // Demonstrates: a required, validated field. formRequired: true drives the HTML required
+        // attribute and label asterisk; Assert\NotBlank in constraints enforces it server-side (the
+        // form modifier no longer adds NotBlank automatically). Assert\CssColor replaces the legacy
+        // isColor validator. Constraints are real Symfony Constraint objects passed directly here —
+        // not in formOptions (which is JSON-persisted and cannot hold Constraint objects).
         $categoryThemeColorRegistered = $this->registerExtraProperty(
             new ExtraPropertyDefinition(
                 entityName: 'category',
@@ -231,7 +242,7 @@ class demoextrafield extends Module
                 associatedForms: ['category', 'root_category'],
                 associatedGrids: ['category'],
                 formFieldType: ColorType::class,
-                validator: 'isColor',
+                constraints: [new Assert\NotBlank(), new Assert\CssColor()],
                 labelWording: 'Theme color',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Color associated with the category (required)',
@@ -259,7 +270,7 @@ class demoextrafield extends Module
                 displayFront: false,
                 associatedForms: ['category'],
                 formFieldType: FormattedTextareaType::class,
-                validator: 'isCleanHtml',
+                constraints: [new CleanHtml()],
                 labelWording: 'Marketing note',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Merchant-only note displayed in BO and API — never on the front office',
@@ -288,7 +299,7 @@ class demoextrafield extends Module
                     'label_tag_name' => null,
                 ],
                 // This prevents using a h3 tag for label
-                validator: 'isUnsignedId',
+                constraints: [new Assert\PositiveOrZero()],
                 labelWording: 'Default supplier',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Select a PrestaShop supplier',
@@ -317,7 +328,7 @@ class demoextrafield extends Module
                 associatedForms: ['customer'],
                 associatedGrids: ['customer'],
                 formFieldType: MoneyType::class,
-                validator: 'isPrice',
+                constraints: [new Assert\PositiveOrZero()],
                 labelWording: 'Credit limit',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Maximum customer credit amount',
@@ -341,7 +352,7 @@ class demoextrafield extends Module
                 associatedApis: ['/customers', '/customers/{customerId}'],
                 associatedForms: ['customer'],
                 formFieldType: TextareaType::class,
-                validator: 'isJson',
+                constraints: [new Assert\Json()],
                 labelWording: 'Metadata JSON',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Free JSON for customer metadata',
@@ -412,7 +423,7 @@ class demoextrafield extends Module
                 associatedApis: ['/addresses', '/addresses/{addressId}', '/addresses/manufacturers/{addressId}'],
                 associatedGrids: ['manufacturer_address:city'],
                 formFieldType: TextareaType::class,
-                validator: 'isGenericName',
+                constraints: [new TypedRegex(['type' => TypedRegex::TYPE_GENERIC_NAME])],
                 labelWording: 'Delivery note',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Free delivery note attached to this address',
@@ -447,7 +458,7 @@ class demoextrafield extends Module
                 type: ExtraPropertyType::STRING,
                 scope: ExtraPropertyScope::LANG,
                 nullable: true,
-                validator: 'isGenericName',
+                constraints: [new Assert\All([new TypedRegex(['type' => TypedRegex::TYPE_GENERIC_NAME])])],
                 labelWording: 'Promo banner',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Translated promotional text displayed on the CMS page',
@@ -468,7 +479,7 @@ class demoextrafield extends Module
                 type: ExtraPropertyType::STRING,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
-                validator: 'isGenericName',
+                constraints: [new TypedRegex(['type' => TypedRegex::TYPE_GENERIC_NAME])],
                 labelWording: 'Revision code',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Internal revision code displayed on the CMS page',
@@ -558,7 +569,15 @@ class demoextrafield extends Module
     /**
      * Front Office hook (product page footer).
      *
-     * Demo: reads date_last_seen from the Product ObjectModel, displays it, then updates it.
+     * Demo: on each FO product view, updates two extra properties to contrast the COMMON and LANG update paths.
+     *
+     * The Product is loaded WITH a langId, so its LANG extra properties are single scalars (the current language),
+     * NOT [id_lang => value] arrays:
+     * - date_last_seen (COMMON) — one value shared by all languages.
+     * - video_link (LANG) — only the CURRENT language's value is touched: a "lastSeen" query parameter is
+     *   set/replaced on it. This shows that a langId-scoped write updates a single language (the other languages'
+     *   video_link is untouched). Validation then applies the per-language rule (Url) and skips the whole-array
+     *   DefaultLanguage, since there is only one language value to check.
      *
      * Access is grouped by module: $product->extra_properties['module']['field']
      */
@@ -569,15 +588,27 @@ class demoextrafield extends Module
             return '';
         }
 
-        $product = new Product($productId);
+        // Provide the langId → single-language mode: LANG extra properties are read/written as scalars.
+        $languageId = (int) $this->context->language->id;
+        $product = new Product($productId, false, $languageId);
         if (!Validate::isLoadedObject($product)) {
             return '';
         }
 
         $now = date('Y-m-d H:i:s');
 
+        // COMMON: same value across languages.
         $dateLastSeen = $product->extra_properties['demoextrafield']['date_last_seen'];
         $product->extra_properties['demoextrafield']['date_last_seen'] = $now;
+
+        // LANG (single language because a langId was provided): the value is a scalar for the current language.
+        // Only touch it when the merchant has actually set a video link — set/replace a "lastSeen" query parameter so
+        // ONLY this language's value changes (the other languages' value is untouched). Empty values are left as-is.
+        $videoLink = $product->extra_properties['demoextrafield']['video_link'];
+        if (is_string($videoLink) && '' !== $videoLink) {
+            $product->extra_properties['demoextrafield']['video_link'] = $this->withQueryParameter($videoLink, 'lastSeen', $now);
+        }
+
         $product->update();
 
         $this->context->smarty->assign([
@@ -586,6 +617,28 @@ class demoextrafield extends Module
         ]);
 
         return $this->display(__FILE__, 'views/templates/hook/product_footer.tpl');
+    }
+
+    /**
+     * Returns $url with the given query parameter set: appended when absent, replaced when already present.
+     */
+    private function withQueryParameter(string $url, string $key, string $value): string
+    {
+        $parts = parse_url($url);
+        if (false === $parts) {
+            return $url;
+        }
+
+        parse_str($parts['query'] ?? '', $query);
+        $query[$key] = $value;
+        $queryString = http_build_query($query);
+
+        return (isset($parts['scheme']) ? $parts['scheme'] . '://' : '')
+            . ($parts['host'] ?? '')
+            . (isset($parts['port']) ? ':' . $parts['port'] : '')
+            . ($parts['path'] ?? '')
+            . ('' !== $queryString ? '?' . $queryString : '')
+            . (isset($parts['fragment']) ? '#' . $parts['fragment'] : '');
     }
 
     /**
