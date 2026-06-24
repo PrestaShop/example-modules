@@ -7,6 +7,8 @@
 
 declare(strict_types=1);
 
+use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\CleanHtml;
+use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\TypedRegex;
 use PrestaShop\PrestaShop\Core\ExtraProperty\Definition\ExtraPropertyDefinition;
 use PrestaShop\PrestaShop\Core\ExtraProperty\Definition\ExtraPropertyScope;
 use PrestaShop\PrestaShop\Core\ExtraProperty\Definition\ExtraPropertySqlIndex;
@@ -22,6 +24,12 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\Json;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\PositiveOrZero;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Url;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -81,7 +89,6 @@ class demoextrafield extends Module
                 associatedForms: ['product:options.suppliers:before'],
                 associatedGrids: ['product:reference'],
                 formFieldType: SwitchType::class,
-                validator: 'isBool',
                 labelWording: 'Dangerous product',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Indicates whether the product is dangerous',
@@ -106,7 +113,7 @@ class demoextrafield extends Module
                 associatedApis: ['/products', '/products/{productId}'],
                 associatedForms: ['product'],
                 formFieldType: UrlType::class,
-                validator: 'isUrl',
+                constraints: [new Url()],
                 labelWording: 'Video link',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Video URL per language',
@@ -132,7 +139,7 @@ class demoextrafield extends Module
                 associatedForms: ['product'],
                 associatedGrids: ['product:final_price_tax_excluded:before'],
                 formFieldType: DatePickerType::class,
-                validator: 'isDate',
+                constraints: [new Date()],
                 labelWording: 'Custom date',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Custom date per shop',
@@ -172,9 +179,10 @@ class demoextrafield extends Module
         // Product (common) : packaging_type
         // Demonstrates: CHOICE type, enumValues, formOptions (dropdown choices).
         // enumValues constrains the allowed DB values; formOptions drives the Symfony ChoiceType widget.
-        // formRequired: false + nullable: true + placeholder → the "—" option represents "no selection";
+        // required: false + nullable: true + placeholder → the "—" option represents "no selection";
         // the field can be left empty and the empty value passes server-side validation.
-        // (For a truly required field, omit the placeholder and set formRequired: true — NotBlank is added automatically.)
+        // (For a truly required field, omit the placeholder, set required: true, AND pass an explicit
+        // NotBlank constraint — "required" only drives the HTML/OpenAPI flag, it never validates by itself.)
         $productPackagingTypeRegistered = $this->registerExtraProperty(
             new ExtraPropertyDefinition(
                 entityName: 'product',
@@ -184,7 +192,7 @@ class demoextrafield extends Module
                 enumValues: ['standard', 'gift', 'bulk'],
                 defaultValue: null,
                 nullable: true,
-                formRequired: false,
+                required: false,
                 associatedApis: ['/products', '/products/{productId}'],
                 displayFront: true,
                 associatedForms: ['product'],
@@ -215,10 +223,10 @@ class demoextrafield extends Module
          */
 
         // Category (common) : theme_color
-        // Demonstrates: formRequired: true → the form modifier automatically adds a NotBlank
-        // constraint at build time (server-side enforcement, not just the HTML required attribute).
-        // No need to put constraints in formOptions — formOptions is persisted as JSON and cannot
-        // hold Constraint objects.
+        // Demonstrates: required: true only drives the HTML required attribute and the Admin API
+        // (OpenAPI) schema — it never adds server-side validation by itself. A real NotBlank
+        // constraint is passed explicitly below for actual enforcement, alongside a Regex
+        // reproducing the legacy hex-or-named-color format check.
         $categoryThemeColorRegistered = $this->registerExtraProperty(
             new ExtraPropertyDefinition(
                 entityName: 'category',
@@ -226,12 +234,12 @@ class demoextrafield extends Module
                 type: ExtraPropertyType::STRING,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
-                formRequired: true,
+                required: true,
                 associatedApis: ['/categories', '/categories/{categoryId}'],
                 associatedForms: ['category', 'root_category'],
                 associatedGrids: ['category'],
                 formFieldType: ColorType::class,
-                validator: 'isColor',
+                constraints: [new NotBlank(), new Regex(['pattern' => '/^(#[0-9a-fA-F]{6}|[a-zA-Z0-9-]*)$/'])],
                 labelWording: 'Theme color',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Color associated with the category (required)',
@@ -259,7 +267,7 @@ class demoextrafield extends Module
                 displayFront: false,
                 associatedForms: ['category'],
                 formFieldType: FormattedTextareaType::class,
-                validator: 'isCleanHtml',
+                constraints: [new CleanHtml()],
                 labelWording: 'Marketing note',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Merchant-only note displayed in BO and API — never on the front office',
@@ -288,7 +296,7 @@ class demoextrafield extends Module
                     'label_tag_name' => null,
                 ],
                 // This prevents using a h3 tag for label
-                validator: 'isUnsignedId',
+                constraints: [new PositiveOrZero()],
                 labelWording: 'Default supplier',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Select a PrestaShop supplier',
@@ -317,7 +325,7 @@ class demoextrafield extends Module
                 associatedForms: ['customer'],
                 associatedGrids: ['customer'],
                 formFieldType: MoneyType::class,
-                validator: 'isPrice',
+                constraints: [new PositiveOrZero()],
                 labelWording: 'Credit limit',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Maximum customer credit amount',
@@ -341,7 +349,7 @@ class demoextrafield extends Module
                 associatedApis: ['/customers', '/customers/{customerId}'],
                 associatedForms: ['customer'],
                 formFieldType: TextareaType::class,
-                validator: 'isJson',
+                constraints: [new Json()],
                 labelWording: 'Metadata JSON',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Free JSON for customer metadata',
@@ -412,7 +420,7 @@ class demoextrafield extends Module
                 associatedApis: ['/addresses', '/addresses/{addressId}', '/addresses/manufacturers/{addressId}'],
                 associatedGrids: ['manufacturer_address:city'],
                 formFieldType: TextareaType::class,
-                validator: 'isGenericName',
+                constraints: [new TypedRegex(['type' => TypedRegex::TYPE_GENERIC_NAME])],
                 labelWording: 'Delivery note',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Free delivery note attached to this address',
@@ -447,7 +455,7 @@ class demoextrafield extends Module
                 type: ExtraPropertyType::STRING,
                 scope: ExtraPropertyScope::LANG,
                 nullable: true,
-                validator: 'isGenericName',
+                constraints: [new TypedRegex(['type' => TypedRegex::TYPE_GENERIC_NAME])],
                 labelWording: 'Promo banner',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Translated promotional text displayed on the CMS page',
@@ -468,7 +476,7 @@ class demoextrafield extends Module
                 type: ExtraPropertyType::STRING,
                 scope: ExtraPropertyScope::COMMON,
                 nullable: true,
-                validator: 'isGenericName',
+                constraints: [new TypedRegex(['type' => TypedRegex::TYPE_GENERIC_NAME])],
                 labelWording: 'Revision code',
                 labelDomain: self::TRANSLATION_DOMAIN,
                 descriptionWording: 'Internal revision code displayed on the CMS page',
