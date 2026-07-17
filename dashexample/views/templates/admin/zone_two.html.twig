@@ -1,0 +1,24 @@
+{#**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0).
+ * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
+ *#}
+
+{% trans_default_domain 'Module.Dashexample.Admin' %}
+
+<div class="panel dashexample-card">
+  <h3 class="panel-heading">
+    <span class="material-icons">insights</span>
+    {{ 'Zone two'|trans }}
+  </h3>
+  <div class="panel-body">
+    <p>{{ 'This block is rendered by the dashexample module through the displayAdminDashboardZoneTwo hook.'|trans }}</p>
+    <ul class="mb-0">
+      <li>{{ 'Rendered with a module Twig template (no Smarty).'|trans }}</li>
+      <li>{{ 'No HelperForm, no Db::getInstance().'|trans }}</li>
+      <li>{{ 'Range received as hook parameters: %from% → %to%.'|trans({'%from%': dateFrom, '%to%': dateTo}) }}</li>
+    </ul>
+  </div>
+</div>
