@@ -1,0 +1,17 @@
+{
+    "name": "prestashop/dashexample",
+    "description": "Demonstration of the new dedicated hooks of the migrated Symfony dashboard page.",
+    "license": "AFL-3.0",
+    "authors": [
+        {
+            "name": "PrestaShop Core Team"
+        }
+    ],
+    "require": {
+        "php": ">=8.1"
+    },
+    "config": {
+        "prepend-autoloader": false
+    },
+    "type": "prestashop-module"
+}

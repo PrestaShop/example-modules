@@ -1,0 +1,15 @@
+{#**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0).
+ * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
+ *#}
+
+{% trans_default_domain 'Module.Dashexample.Admin' %}
+
+<div class="alert alert-info dashexample-top">
+  <span class="material-icons">campaign</span>
+  {{ 'This banner is rendered by the dashexample module through the displayAdminDashboardTop hook.'|trans }}
+  <span class="text-muted">{{ 'Selected range: %from% → %to%'|trans({'%from%': dateFrom, '%to%': dateTo}) }}</span>
+</div>
