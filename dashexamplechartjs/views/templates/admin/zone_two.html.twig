@@ -1,0 +1,59 @@
+{#**
+ # Copyright since 2007 PrestaShop SA and Contributors
+ # PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ #
+ # This source file is subject to the Academic Free License 3.0 (AFL-3.0).
+ # It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
+ #}
+
+{% trans_default_domain 'Module.Dashexamplechartjs.Admin' %}
+
+{#
+ # NOTE (spike #41970 finding): assets are loaded here, not from the toolbar hook as the
+ # `dashexample` reference module does, because index.html.twig (core PR #42077) applies
+ # `|raw` to zoneOneContent/zoneTwoContent/zoneThreeContent but NOT to toolbarContent/topContent
+ # — so HTML returned from those two hooks gets auto-escaped and never executes as markup.
+ # This breaks the toolbar-based asset-loading convention documented for every module, not just
+ # this one. Left as-is here to keep the PoC demonstrable; flagged to report upstream.
+ #}
+<link rel="stylesheet" href="{{ moduleUri }}views/css/dashexamplechartjs.css">
+<script src="{{ moduleUri }}views/js/lib/chart.umd.min.js" defer></script>
+<script src="{{ moduleUri }}views/js/dashexamplechartjs.js" defer></script>
+
+<div class="panel dashexamplechartjs-card">
+  <h3 class="panel-heading">
+    <span class="material-icons">show_chart</span>
+    {{ 'Sales trend'|trans }}
+  </h3>
+  <div class="panel-body">
+    <p class="text-muted">
+      {{ 'dashtrends equivalent — line/area chart with a previous-period overlay, rendered with Chart.js. Range: %from% → %to%'|trans({'%from%': dateFrom, '%to%': dateTo}) }}
+    </p>
+    <canvas id="dashexamplechartjs-line" height="140" role="img" aria-label="{{ 'Sales trend, current vs previous period'|trans }}"></canvas>
+    <script type="application/json" id="dashexamplechartjs-line-data">
+      {
+        "labels": ["D-13", "D-12", "D-11", "D-10", "D-9", "D-8", "D-7", "D-6", "D-5", "D-4", "D-3", "D-2", "D-1", "D-0"],
+        "current": [420, 460, 510, 495, 530, 610, 590, 640, 605, 655, 700, 690, 730, 760],
+        "previous": [380, 400, 430, 445, 460, 500, 505, 520, 540, 560, 580, 600, 610, 630]
+      }
+    </script>
+  </div>
+</div>
+
+<div class="panel dashexamplechartjs-card">
+  <h3 class="panel-heading">
+    <span class="material-icons">bar_chart</span>
+    {{ 'Monthly goals'|trans }}
+  </h3>
+  <div class="panel-body">
+    <p class="text-muted">{{ 'dashgoals equivalent — bar chart, rendered with Chart.js.'|trans }}</p>
+    <canvas id="dashexamplechartjs-bar" height="160" role="img" aria-label="{{ 'Monthly goals versus actual performance'|trans }}"></canvas>
+    <script type="application/json" id="dashexamplechartjs-bar-data">
+      {
+        "labels": ["Traffic", "Conversion rate", "Avg. cart value", "Sales"],
+        "goal": [100, 100, 100, 100],
+        "actual": [92, 108, 97, 115]
+      }
+    </script>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+/**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0).
+ * It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
+ */
+
+.dashexamplechartjs-toolbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  background-color: #e6f0ff;
+  color: #2b7dd8;
+  font-weight: 600;
+}
+
+.dashexamplechartjs-card .panel-heading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dashexamplechartjs-card canvas {
+  max-width: 100%;
+}
