@@ -1,0 +1,20 @@
+{#**
+ # Copyright since 2007 PrestaShop SA and Contributors
+ # PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ #
+ # This source file is subject to the Academic Free License 3.0 (AFL-3.0).
+ # It is also available through the world-wide-web at this URL: https://opensource.org/licenses/AFL-3.0
+ #}
+
+{% trans_default_domain 'Module.Dashexamplechartjs.Admin' %}
+
+{#
+ # NOTE (spike #41970 finding): this hook's output is NOT rendered with |raw in core's
+ # index.html.twig (PR #42077), unlike the zone hooks — so the HTML below is displayed
+ # escaped as text instead of executing. Assets are therefore loaded from zone_two.html.twig
+ # instead (see that file). Kept here, unfixed, to document the gap for the core PR.
+ #}
+<div class="dashexamplechartjs-toolbar">
+  <span class="material-icons">insert_chart</span>
+  <span>{{ 'Spike #41970 — Chart.js proof of concept active.'|trans }}</span>
+</div>

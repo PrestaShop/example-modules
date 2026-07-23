@@ -1,0 +1,17 @@
+{
+    "name": "prestashop/dashexamplechartjs",
+    "description": "Spike #41970 PoC: renders the migrated Symfony dashboard zones with Chart.js instead of D3 v3 / NVD3.",
+    "license": "AFL-3.0",
+    "authors": [
+        {
+            "name": "PrestaShop Core Team"
+        }
+    ],
+    "require": {
+        "php": ">=8.1"
+    },
+    "config": {
+        "prepend-autoloader": false
+    },
+    "type": "prestashop-module"
+}

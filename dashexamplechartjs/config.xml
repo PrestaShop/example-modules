@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>dashexamplechartjs</name>
+    <displayName><![CDATA[Dashboard example - Chart.js]]></displayName>
+    <version><![CDATA[1.0.0]]></version>
+    <description><![CDATA[Spike #41970 PoC: renders the migrated Symfony dashboard zones with Chart.js instead of D3 v3 / NVD3.]]></description>
+    <author><![CDATA[PrestaShop]]></author>
+    <tab><![CDATA[administration]]></tab>
+    <is_configurable>0</is_configurable>
+    <need_instance>0</need_instance>
+</module>
