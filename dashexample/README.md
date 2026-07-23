@@ -6,7 +6,7 @@ It is both living documentation of the integration contract and a validation veh
 
 ## What it demonstrates
 
-- Registering on the **new** dashboard hooks: `displayAdminDashboardZoneOne`, `displayAdminDashboardZoneTwo`, `displayAdminDashboardTop`, `displayAdminDashboardToolbar`.
+- Registering on the **new** dashboard hooks: `displayAdminDashboardZoneOne`, `displayAdminDashboardZoneTwo`, `displayAdminDashboardZoneThree`, `displayAdminDashboardTop`, `displayAdminDashboardToolbar`.
 - Rendering hook content through **module Twig templates** (`views/templates/admin/*.html.twig`) — no Smarty, no `HelperForm`, no `Db::getInstance()`.
 - Passing and using hook **parameters** (`date_from` / `date_to`, the employee stats date range).
 - Loading the module's **own CSS/JS assets from its hook output** (see `toolbar.html.twig`) — no `actionAdminControllerSetMedia`, no `get_class($this->context->controller)` detection.
@@ -84,6 +84,7 @@ This module registers **only the new hooks** on purpose, so it also serves as a 
 | `dashexample.php` | Module class: hook registration + hook callbacks rendering Twig |
 | `views/templates/admin/zone_one.html.twig` | Zone One block |
 | `views/templates/admin/zone_two.html.twig` | Zone Two block |
+| `views/templates/admin/zone_three.html.twig` | Zone Three block |
 | `views/templates/admin/top.html.twig` | Top area block |
 | `views/templates/admin/toolbar.html.twig` | Toolbar block + asset loading |
 | `views/css/dashexample.css`, `views/js/dashexample.js` | Module-owned assets |

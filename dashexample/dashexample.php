@@ -58,6 +58,7 @@ class DashExample extends Module
             && $this->registerHook([
                 'displayAdminDashboardZoneOne',
                 'displayAdminDashboardZoneTwo',
+                'displayAdminDashboardZoneThree',
                 'displayAdminDashboardTop',
                 'displayAdminDashboardToolbar',
             ]);
@@ -81,6 +82,18 @@ class DashExample extends Module
     public function hookDisplayAdminDashboardZoneTwo(array $params): string
     {
         return $this->render('zone_two.html.twig', [
+            'dateFrom' => $params['date_from'] ?? null,
+            'dateTo' => $params['date_to'] ?? null,
+        ]);
+    }
+
+    /**
+     * Renders a block in the third (right) column of the Symfony dashboard.
+     * Receives the employee date range selected on the page.
+     */
+    public function hookDisplayAdminDashboardZoneThree(array $params): string
+    {
+        return $this->render('zone_three.html.twig', [
             'dateFrom' => $params['date_from'] ?? null,
             'dateTo' => $params['date_to'] ?? null,
         ]);
