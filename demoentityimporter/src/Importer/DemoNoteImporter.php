@@ -26,9 +26,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use PrestaShop\Module\DemoEntityImporter\Entity\DemoNote;
 use PrestaShop\PrestaShop\Core\Import\Engine\EntityImporter\AbstractEntityImporter;
 use PrestaShop\PrestaShop\Core\Import\Engine\EntityImporter\RowMapper;
+use PrestaShop\PrestaShop\Core\Import\Engine\ImportJobContext;
 use PrestaShop\PrestaShop\Core\Import\Engine\ImportMessage;
 use PrestaShop\PrestaShop\Core\Import\Engine\ImportPhaseDefinition;
-use PrestaShop\PrestaShop\Core\Import\Engine\ImportRunContext;
 use PrestaShop\PrestaShop\Core\Import\Engine\PhaseBatchResult;
 use PrestaShop\PrestaShop\Core\Import\EntityField\EntityField;
 use PrestaShop\PrestaShop\Core\Import\EntityField\EntityFieldCollection;
@@ -108,7 +108,7 @@ class DemoNoteImporter extends AbstractEntityImporter
         ];
     }
 
-    public function processPhaseBatch(string $phaseId, ImportRunContext $context, int $limit): PhaseBatchResult
+    public function processPhaseBatch(string $phaseId, ImportJobContext $context, int $limit): PhaseBatchResult
     {
         $this->assertKnownPhase($phaseId);
 
@@ -117,9 +117,9 @@ class DemoNoteImporter extends AbstractEntityImporter
                 $messages = [];
                 $note = $row['note'] ?? '';
                 if ('' === $note) {
-                    $messages[] = $this->message(ImportMessage::SEVERITY_ERROR, ImportPhaseDefinition::PHASE_VALIDATION, 'The note text is required.', $rowIndex);
+                    $messages[] = $this->message(ImportMessage::SEVERITY_ERROR, ImportPhaseDefinition::PHASE_VALIDATION, 'The note text is required.', $rowIndex, 'note');
                 } elseif (mb_strlen($note) > self::NOTE_MAX_LENGTH) {
-                    $messages[] = $this->message(ImportMessage::SEVERITY_ERROR, ImportPhaseDefinition::PHASE_VALIDATION, sprintf('The note exceeds %d characters.', self::NOTE_MAX_LENGTH), $rowIndex);
+                    $messages[] = $this->message(ImportMessage::SEVERITY_ERROR, ImportPhaseDefinition::PHASE_VALIDATION, sprintf('The note exceeds %d characters.', self::NOTE_MAX_LENGTH), $rowIndex, 'note');
                 }
 
                 // an error marks the row as skipped for the later phases
@@ -167,9 +167,23 @@ class DemoNoteImporter extends AbstractEntityImporter
         $this->entityManager->flush();
     }
 
-    protected function message(string $severity, string $phase, string $text, int $rowIndex): ImportMessage
+    /**
+     * Two conventions are worth copying from here.
+     *
+     * ImportMessage carries a cumulative LIST of row indexes, not a single
+     * row: the engine coalesces messages that are equal on everything but
+     * their rows, so one report line can name every row it applies to. A
+     * per-row message therefore passes a one-element list, and a file-level
+     * message passes none at all.
+     *
+     * The field is what the back office highlights in the report, so it names
+     * the column the merchant has to go and fix. A failure that belongs to the
+     * row rather than to any one column — the catch-all below, where any
+     * command may have thrown — passes null instead of blaming a column that
+     * may be perfectly valid.
+     */
+    protected function message(string $severity, string $phase, string $text, int $rowIndex, ?string $field = null): ImportMessage
     {
-        return new ImportMessage($severity, $phase, $text, $rowIndex, 'note');
+        return new ImportMessage($severity, $phase, $text, [$rowIndex], $field);
     }
-
 }
