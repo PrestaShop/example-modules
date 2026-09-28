@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <module>
-    <name>demoextrafield</name>
-    <displayName><![CDATA[Demo native extra fields]]></displayName>
+    <name>demoextraproperty</name>
+    <displayName><![CDATA[Demo native extra properties]]></displayName>
     <version><![CDATA[1.0.0]]></version>
-    <description><![CDATA[Example module showing how to register and display native extra fields.]]></description>
+    <description><![CDATA[Example module showing how to register and display native extra properties.]]></description>
     <author><![CDATA[PrestaShop]]></author>
     <tab><![CDATA[administration]]></tab>
     <is_configurable>0</is_configurable>

@@ -1,5 +1,5 @@
-<div class="demoextrafield demoextrafield--cart">
-  <h4>{l s='Extra fields (demoextrafield)' d='Modules.Demoextrafield.Main'}</h4>
+<div class="demoextraproperty demoextraproperty--cart">
+  <h4>{l s='Extra properties (demoextraproperty)' d='Modules.Demoextraproperty.Main'}</h4>
 
   {include file='./_extra_properties.tpl' objectModel=$product}
 </div>

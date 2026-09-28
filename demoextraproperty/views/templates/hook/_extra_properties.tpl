@@ -1,5 +1,5 @@
 {*
-  Displays all extra fields registered by this module for a given entity.
+  Displays all extra properties registered by this module for a given entity.
 
   Usage: {include file='./_extra_properties.tpl' objectModel=$product}
   where $objectModel is a LazyArray or a raw ObjectModel exposing extra_properties.{moduleName}.{fieldName}.
@@ -21,7 +21,7 @@
   detect the front-office controller context automatically.
 *}
 <ul>
-  {foreach from=$objectModel->extra_properties.demoextrafield key=fieldName item=fieldValue}
+  {foreach from=$objectModel->extra_properties.demoextraproperty key=fieldName item=fieldValue}
     <li>
       <strong>{$fieldName|escape:'htmlall':'UTF-8'}:</strong>
       {if is_array($fieldValue)}
@@ -43,6 +43,6 @@
       {/if}
     </li>
   {foreachelse}
-    <li><em>{l s='No extra fields found for this module.' d='Modules.Demoextrafield.Main'}</em></li>
+    <li><em>{l s='No extra properties found for this module.' d='Modules.Demoextraproperty.Main'}</em></li>
   {/foreach}
 </ul>

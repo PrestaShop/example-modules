@@ -32,19 +32,19 @@ if (!defined('_PS_VERSION_')) {
 }
 
 /**
- * Demo module showcasing native extra fields (custom fields).
+ * Demo module showcasing native extra properties (custom fields).
  *
  * This module is intentionally simple and verbose:
  * - fields are registered one by one (no loops, no config arrays),
  * - a few hooks are used to render the values on the Front Office.
  */
-class demoextrafield extends Module
+class demoextraproperty extends Module
 {
-    protected const TRANSLATION_DOMAIN = 'Modules.Demoextrafield.Admin';
+    protected const TRANSLATION_DOMAIN = 'Modules.Demoextraproperty.Admin';
 
     public function __construct()
     {
-        $this->name = 'demoextrafield';
+        $this->name = 'demoextraproperty';
         $this->tab = 'administration';
         $this->version = '1.0.0';
         $this->author = 'PrestaShop';
@@ -53,13 +53,13 @@ class demoextrafield extends Module
 
         parent::__construct();
 
-        $this->displayName = 'Demo native extra fields';
-        $this->description = 'Example module showing how to register and display native extra fields.';
+        $this->displayName = 'Demo native extra properties';
+        $this->description = 'Example module showing how to register and display native extra properties.';
     }
 
     /**
      * Install:
-     * - registers extra fields for product/category/customer,
+     * - registers extra properties for product/category/customer,
      * - registers a few FO hooks to display values.
      */
     public function install(): bool
@@ -69,7 +69,7 @@ class demoextrafield extends Module
         }
 
         /**
-         * PRODUCT extra fields
+         * PRODUCT extra properties
          */
 
         // Product (common) : is_dangerous
@@ -94,7 +94,7 @@ class demoextrafield extends Module
             )
         );
         if (!$productDangerousRegistered) {
-            $this->_errors[] = $this->trans('Failed to register Product extra field "is_dangerous" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register Product extra property "is_dangerous" (scope: common).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
@@ -126,7 +126,7 @@ class demoextrafield extends Module
             )
         );
         if (!$productVideoLinkRegistered) {
-            $this->_errors[] = $this->trans('Failed to register Product extra field "video_link" (scope: lang).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register Product extra property "video_link" (scope: lang).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
@@ -153,7 +153,7 @@ class demoextrafield extends Module
             )
         );
         if (!$productCustomDateRegistered) {
-            $this->_errors[] = $this->trans('Failed to register Product extra field "custom_date" (scope: shop).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register Product extra property "custom_date" (scope: shop).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
@@ -178,7 +178,7 @@ class demoextrafield extends Module
             )
         );
         if (!$productDateLastSeenRegistered) {
-            $this->_errors[] = $this->trans('Failed to register Product extra field "date_last_seen" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register Product extra property "date_last_seen" (scope: common).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
@@ -219,13 +219,13 @@ class demoextrafield extends Module
             )
         );
         if (!$productPackagingTypeRegistered) {
-            $this->_errors[] = $this->trans('Failed to register Product extra field "packaging_type" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register Product extra property "packaging_type" (scope: common).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
 
         /**
-         * CATEGORY extra fields
+         * CATEGORY extra properties
          */
 
         // Category (common) : theme_color
@@ -255,7 +255,7 @@ class demoextrafield extends Module
             )
         );
         if (!$categoryThemeColorRegistered) {
-            $this->_errors[] = $this->trans('Failed to register Category extra field "theme_color" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register Category extra property "theme_color" (scope: common).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
@@ -283,7 +283,7 @@ class demoextrafield extends Module
             )
         );
         if (!$categoryMarketingNoteRegistered) {
-            $this->_errors[] = $this->trans('Failed to register Category extra field "marketing_note" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register Category extra property "marketing_note" (scope: common).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
@@ -313,13 +313,13 @@ class demoextrafield extends Module
             )
         );
         if (!$categorySupplierRegistered) {
-            $this->_errors[] = $this->trans('Failed to register Category extra field "id_supplier" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register Category extra property "id_supplier" (scope: common).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
 
         /**
-         * CUSTOMER extra fields
+         * CUSTOMER extra properties
          */
 
         // Customer (common) : credit_limit
@@ -343,7 +343,7 @@ class demoextrafield extends Module
             )
         );
         if (!$customerCreditLimitRegistered) {
-            $this->_errors[] = $this->trans('Failed to register Customer extra field "credit_limit" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register Customer extra property "credit_limit" (scope: common).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
@@ -368,7 +368,7 @@ class demoextrafield extends Module
             )
         );
         if (!$customerExtraJsonRegistered) {
-            $this->_errors[] = $this->trans('Failed to register Customer extra field "extra_json" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register Customer extra property "extra_json" (scope: common).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
@@ -396,20 +396,20 @@ class demoextrafield extends Module
             )
         );
         if (!$customerInternalNoteRegistered) {
-            $this->_errors[] = $this->trans('Failed to register Customer extra field "internal_note" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register Customer extra property "internal_note" (scope: common).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
 
         /**
-         * ADDRESS extra fields
+         * ADDRESS extra properties
          *
          * Demo case: gridId ('manufacturer_address') differs from entity name ('address').
          * This validates that getDefinitionCollectionByGridId() correctly decouples
          * the grid identifier from the entity table name.
          *
          * Note on displayForm:
-         * The form modifier resolves extra fields using the form type's block prefix as the entity
+         * The form modifier resolves extra properties using the form type's block prefix as the entity
          * name. ManufacturerAddressType has block_prefix='manufacturer_address', but the entity
          * table is 'address'. Because block_prefix ≠ entity_name, the form modifier cannot find
          * definitions registered for 'address' when building the 'manufacturer_address' form.
@@ -441,19 +441,19 @@ class demoextrafield extends Module
             )
         );
         if (!$addressDeliveryNoteRegistered) {
-            $this->_errors[] = $this->trans('Failed to register Address extra field "delivery_note" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register Address extra property "delivery_note" (scope: common).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
 
         /**
-         * CMS extra fields — MANUAL form integration (no associatedForms)
+         * CMS extra properties — MANUAL form integration (no associatedForms)
          *
          * Demo case: the module integrates its fields into the migrated CMS page form
          * itself via the generic form hooks (actionCmsPageFormBuilderModifier,
          * actionCmsPageFormDataProviderData, actionAfterCreate/UpdateCmsPageFormHandler)
          * and persists them natively through the ObjectModel:
-         *     $cms->extra_properties['demoextrafield']['promo_banner'] = [id_lang => value];
+         *     $cms->extra_properties['demoextraproperty']['promo_banner'] = [id_lang => value];
          *     $cms->update();
          * promo_banner is LANG-scoped to validate the native multilang round-trip
          * (no langId in the constructor → all languages read/modified/saved at once).
@@ -476,7 +476,7 @@ class demoextrafield extends Module
             )
         );
         if (!$cmsPromoBannerRegistered) {
-            $this->_errors[] = $this->trans('Failed to register CMS extra field "promo_banner" (scope: lang).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register CMS extra property "promo_banner" (scope: lang).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
@@ -498,13 +498,13 @@ class demoextrafield extends Module
             )
         );
         if (!$cmsRevisionCodeRegistered) {
-            $this->_errors[] = $this->trans('Failed to register CMS extra field "revision_code" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register CMS extra property "revision_code" (scope: common).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
 
         /**
-         * CART extra field — the cart is a COMMON-only entity: it has no cart_lang /
+         * CART extra property — the cart is a COMMON-only entity: it has no cart_lang /
          * cart_shop base table (its id_lang / id_shop are plain columns), so LANG and
          * SHOP scopes are rejected at registration. No form/grid/API placements exist
          * for the cart either; the value is written by a hook and displayed on checkout.
@@ -527,13 +527,13 @@ class demoextrafield extends Module
             )
         );
         if (!$cartDeliveryNoteRegistered) {
-            $this->_errors[] = $this->trans('Failed to register Cart extra field "delivery_note" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register Cart extra property "delivery_note" (scope: common).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
 
         /**
-         * ORDER extra field — registered with the natural entity name 'order': the core
+         * ORDER extra property — registered with the natural entity name 'order': the core
          * resolves the physical table ('orders') and the primary key ('id_order') from
          * the Order ObjectModel. COMMON is the only supported scope (no orders_lang /
          * orders_shop tables). Deliberately NO order-grid placement: the order grid uses
@@ -558,13 +558,13 @@ class demoextrafield extends Module
             )
         );
         if (!$orderDeliveryNoteRegistered) {
-            $this->_errors[] = $this->trans('Failed to register Order extra field "delivery_note" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register Order extra property "delivery_note" (scope: common).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
 
         /**
-         * COMBINATION extra fields — registered with the natural entity name
+         * COMBINATION extra properties — registered with the natural entity name
          * 'combination' (the 'Combination'/'product_attribute'/'ProductAttribute'
          * spellings work identically): the core resolves the physical table
          * ('product_attribute') and the primary key ('id_product_attribute'). All three
@@ -590,7 +590,7 @@ class demoextrafield extends Module
             )
         );
         if (!$combinationEanVerifiedRegistered) {
-            $this->_errors[] = $this->trans('Failed to register Combination extra field "ean_verified" (scope: common).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register Combination extra property "ean_verified" (scope: common).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
@@ -612,7 +612,7 @@ class demoextrafield extends Module
             )
         );
         if (!$combinationRestockNoteRegistered) {
-            $this->_errors[] = $this->trans('Failed to register Combination extra field "restock_note" (scope: shop).', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register Combination extra property "restock_note" (scope: shop).', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
@@ -632,7 +632,7 @@ class demoextrafield extends Module
             && $this->registerHook('actionValidateOrder')
             && $this->registerHook('displayOrderDetail');
         if (!$hooksRegistered) {
-            $this->_errors[] = $this->trans('Failed to register one or more hooks.', [], 'Modules.Demoextrafield.Admin');
+            $this->_errors[] = $this->trans('Failed to register one or more hooks.', [], 'Modules.Demoextraproperty.Admin');
 
             return false;
         }
@@ -642,7 +642,7 @@ class demoextrafield extends Module
 
     /**
      * Uninstall:
-     * - unregisters all extra fields,
+     * - unregisters all extra properties,
      * - drops SQL storage columns,
      * - unregisters all hooks.
      */
@@ -697,7 +697,7 @@ class demoextrafield extends Module
 
     /**
      * Front Office hook (product page).
-     * Displays this module extra fields from the product LazyArray.
+     * Displays this module extra properties from the product LazyArray.
      */
     public function hookDisplayProductAdditionalInfo(array $params): string
     {
@@ -736,15 +736,15 @@ class demoextrafield extends Module
         $now = date('Y-m-d H:i:s');
 
         // COMMON: same value across languages.
-        $dateLastSeen = $product->extra_properties['demoextrafield']['date_last_seen'];
-        $product->extra_properties['demoextrafield']['date_last_seen'] = $now;
+        $dateLastSeen = $product->extra_properties['demoextraproperty']['date_last_seen'];
+        $product->extra_properties['demoextraproperty']['date_last_seen'] = $now;
 
         // LANG (single language because a langId was provided): the value is a scalar for the current language.
         // Only touch it when the merchant has actually set a video link — set/replace a "lastSeen" query parameter so
         // ONLY this language's value changes (the other languages' value is untouched). Empty values are left as-is.
-        $videoLink = $product->extra_properties['demoextrafield']['video_link'];
+        $videoLink = $product->extra_properties['demoextraproperty']['video_link'];
         if (is_string($videoLink) && '' !== $videoLink) {
-            $product->extra_properties['demoextrafield']['video_link'] = $this->withQueryParameter($videoLink, 'lastSeen', $now);
+            $product->extra_properties['demoextraproperty']['video_link'] = $this->withQueryParameter($videoLink, 'lastSeen', $now);
         }
 
         $product->update();
@@ -781,7 +781,7 @@ class demoextrafield extends Module
 
     /**
      * Front Office hook (cart).
-     * Displays this module extra fields for products in cart.
+     * Displays this module extra properties for products in cart.
      *
      * $params['product'] is the product LazyArray passed by the cart template.
      */
@@ -794,7 +794,7 @@ class demoextrafield extends Module
 
     /**
      * Front Office hook (category listing page).
-     * Displays this module extra fields from the category LazyArray.
+     * Displays this module extra properties from the category LazyArray.
      */
     public function hookDisplayHeaderCategory(): string
     {
@@ -804,7 +804,7 @@ class demoextrafield extends Module
     /**
      * Action hook — fires on every cart save.
      *
-     * Demo of the CART extra field write path: seeds the delivery_note the first time the
+     * Demo of the CART extra property write path: seeds the delivery_note the first time the
      * cart is persisted (a real module would set it from a checkout form field). Writing
      * through $cart->update() re-triggers actionCartSave, hence the re-entrancy guard.
      */
@@ -820,14 +820,14 @@ class demoextrafield extends Module
             return;
         }
 
-        $existingNote = $cart->extra_properties['demoextrafield']['delivery_note'];
+        $existingNote = $cart->extra_properties['demoextraproperty']['delivery_note'];
         if (is_string($existingNote) && '' !== $existingNote) {
             return;
         }
 
         $seeding = true;
         try {
-            $cart->extra_properties['demoextrafield']['delivery_note'] = sprintf(
+            $cart->extra_properties['demoextraproperty']['delivery_note'] = sprintf(
                 'Leave the parcel at the pickup point (demo note seeded on %s).',
                 date('Y-m-d H:i')
             );
@@ -869,18 +869,18 @@ class demoextrafield extends Module
             return;
         }
 
-        $deliveryNote = $cart->extra_properties['demoextrafield']['delivery_note'];
+        $deliveryNote = $cart->extra_properties['demoextraproperty']['delivery_note'];
         if (!is_string($deliveryNote) || '' === $deliveryNote) {
             return;
         }
 
-        $order->extra_properties['demoextrafield']['delivery_note'] = $deliveryNote;
+        $order->extra_properties['demoextraproperty']['delivery_note'] = $deliveryNote;
         $order->update();
     }
 
     /**
      * Front Office hook (order detail page, customer account).
-     * Displays the order's extra fields (e.g. the delivery_note copied from the cart).
+     * Displays the order's extra properties (e.g. the delivery_note copied from the cart).
      */
     public function hookDisplayOrderDetail(array $params): string
     {
@@ -899,7 +899,7 @@ class demoextrafield extends Module
      *
      * Demonstrates that an ObjectModel instance can be handed to Smarty as-is: the template
      * reads the lazy ExtraPropertiesBag through object syntax
-     * ({$customerObjectModel->extra_properties.demoextrafield.field_name}) — no presenter,
+     * ({$customerObjectModel->extra_properties.demoextraproperty.field_name}) — no presenter,
      * no array conversion. The first hop uses `->` (ObjectModel is not ArrayAccess); the bag
      * levels then support dot syntax and iteration.
      *
@@ -920,9 +920,9 @@ class demoextrafield extends Module
         // JSON showcase: write a real PHP structure — the writer json_encodes it for
         // storage, the constraint (Assert\Json) validates the encoded string, and reads
         // give the decoded structure back (iterable in the template below).
-        $extraJson = $customer->extra_properties['demoextrafield']['extra_json'];
+        $extraJson = $customer->extra_properties['demoextraproperty']['extra_json'];
         if (empty($extraJson)) {
-            $customer->extra_properties['demoextrafield']['extra_json'] = [
+            $customer->extra_properties['demoextraproperty']['extra_json'] = [
                 'loyalty' => ['points' => 0, 'tier' => 'bronze'],
                 'preferences' => ['newsletter' => true],
             ];
@@ -937,7 +937,7 @@ class demoextrafield extends Module
     /**
      * Back Office hook (CMS page form, Design > Pages) — MANUAL form integration, step 1/3.
      *
-     * Adds the two CMS extra fields to the migrated Symfony form. They are NOT registered
+     * Adds the two CMS extra properties to the migrated Symfony form. They are NOT registered
      * with associatedForms, so the native ExtraPropertiesFormBuilderModifier ignores them;
      * the module owns the whole integration (same pattern as the devdocs sample
      * "extending a Symfony form", but persistence goes through the ObjectModel natively —
@@ -949,13 +949,13 @@ class demoextrafield extends Module
     public function hookActionCmsPageFormBuilderModifier(array $params): void
     {
         $params['form_builder']
-            ->add('demoextrafield_promo_banner', TranslatableType::class, [
+            ->add('demoextraproperty_promo_banner', TranslatableType::class, [
                 'type' => TextType::class,
-                'label' => $this->trans('Promo banner (demoextrafield)', [], 'Modules.Demoextrafield.Admin'),
+                'label' => $this->trans('Promo banner (demoextraproperty)', [], 'Modules.Demoextraproperty.Admin'),
                 'required' => false,
             ])
-            ->add('demoextrafield_revision_code', TextType::class, [
-                'label' => $this->trans('Revision code (demoextrafield)', [], 'Modules.Demoextrafield.Admin'),
+            ->add('demoextraproperty_revision_code', TextType::class, [
+                'label' => $this->trans('Revision code (demoextraproperty)', [], 'Modules.Demoextraproperty.Admin'),
                 'required' => false,
             ]);
     }
@@ -977,8 +977,8 @@ class demoextrafield extends Module
         }
 
         $cms = new CMS($cmsId);
-        $params['data']['demoextrafield_promo_banner'] = (array) ($cms->extra_properties['demoextrafield']['promo_banner'] ?? []);
-        $params['data']['demoextrafield_revision_code'] = (string) ($cms->extra_properties['demoextrafield']['revision_code'] ?? '');
+        $params['data']['demoextraproperty_promo_banner'] = (array) ($cms->extra_properties['demoextraproperty']['promo_banner'] ?? []);
+        $params['data']['demoextraproperty_revision_code'] = (string) ($cms->extra_properties['demoextraproperty']['revision_code'] ?? '');
     }
 
     /**
@@ -998,7 +998,7 @@ class demoextrafield extends Module
     }
 
     /**
-     * Persists the two CMS extra fields natively through the ObjectModel.
+     * Persists the two CMS extra properties natively through the ObjectModel.
      *
      * This is the native multilang round-trip: the CMS is instantiated WITHOUT a langId,
      * so assigning the full [id_lang => value] array to the lang-scoped field updates ALL
@@ -1018,8 +1018,8 @@ class demoextrafield extends Module
             return;
         }
 
-        $cms->extra_properties['demoextrafield']['promo_banner'] = (array) ($formData['demoextrafield_promo_banner'] ?? []);
-        $cms->extra_properties['demoextrafield']['revision_code'] = (string) ($formData['demoextrafield_revision_code'] ?? '');
+        $cms->extra_properties['demoextraproperty']['promo_banner'] = (array) ($formData['demoextraproperty_promo_banner'] ?? []);
+        $cms->extra_properties['demoextraproperty']['revision_code'] = (string) ($formData['demoextraproperty_revision_code'] ?? '');
         $cms->update();
     }
 
