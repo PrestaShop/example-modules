@@ -1,5 +1,5 @@
-<section class="demoextrafield demoextrafield--customer" style="margin-bottom: 1rem;">
-  <h4>{l s='Extra fields (demoextrafield)' d='Modules.Demoextrafield.Main'}</h4>
+<section class="demoextraproperty demoextraproperty--customer" style="margin-bottom: 1rem;">
+  <h4>{l s='Extra properties (demoextraproperty)' d='Modules.Demoextraproperty.Main'}</h4>
 
   {* customerObjectModel is the raw Customer ObjectModel (assigned in hookDisplayCustomerAccountTop) —
      no presenter, no array conversion. We are in a front-office controller, so the bag is

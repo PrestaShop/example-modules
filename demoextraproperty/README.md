@@ -1,14 +1,14 @@
-# Demo extra fields
+# Demo extra properties
 
 ## About
 
-This module demonstrates how to use **native extra fields** (custom fields) in PrestaShop (9.2+ ?).
+This module demonstrates how to use **native extra properties** (custom fields) in PrestaShop (9.2+ ?).
 
 It focuses on:
 
-- Registering extra fields on multiple entities (Product, Category, Customer, Address, CMS, Cart, Order, Combination)
+- Registering extra properties on multiple entities (Product, Category, Customer, Address, CMS, Cart, Order, Combination)
 - Covering multiple **scopes** (`common`, `lang`, `shop`) and **types** (bool, date, money, html, json, url, choice, …)
-- Unregistering extra fields on uninstall (including dropping the SQL storage columns)
+- Unregistering extra properties on uninstall (including dropping the SQL storage columns)
 - Rendering the stored values on the Front Office using hooks
 - Making Back Office translation strings visible in the translation interface
 
@@ -87,7 +87,7 @@ This module impacts both Back Office and Front Office.
 
 **Back Office form**
 
-- Extra fields are grouped into a dedicated **"Extra fields"** tab.
+- Extra properties are grouped into a dedicated **"Extra properties"** tab.
 - Except **"Dangerous product"**, which is displayed at the end of the **"Options"** tab.
 
 **Front Office hooks**
@@ -127,7 +127,7 @@ This module impacts both Back Office and Front Office.
 
 - Add any product to the cart: `actionCartSave` seeds the cart `delivery_note` (once).
 - Open the cart / checkout: the note is displayed above the cart summary
-  (`displayCheckoutSummaryTop`, read from `{$cart.extra_properties.demoextrafield.delivery_note}`).
+  (`displayCheckoutSummaryTop`, read from `{$cart.extra_properties.demoextraproperty.delivery_note}`).
 - Place the order: `actionValidateOrder` copies the note onto the order.
 - In the customer account, open the order detail page: the copied note is displayed
   (`displayOrderDetail`).
@@ -136,25 +136,25 @@ This module impacts both Back Office and Front Office.
 
 - Edit a product's combinations: `ean_verified` / `restock_note` are stored per combination
   (`restock_note` per store).
-- Admin API: `GET /products/{productId}/combinations` returns `extra_demoextrafield_ean_verified`
+- Admin API: `GET /products/{productId}/combinations` returns `extra_demoextraproperty_ean_verified`
   inline on each item.
 
 ### Where to find values in FO templates
 
 On the Front Office, the module displays **only the values stored for this module**, under the
-`extra_properties['demoextrafield']` key (snake_case — Smarty/presenter surfaces always use
+`extra_properties['demoextraproperty']` key (snake_case — Smarty/presenter surfaces always use
 `extra_properties`; the camelCase `extraProperties` spelling exists only in the Admin API JSON).
 JSON-typed fields come back as **decoded structures** (arrays), not raw JSON strings.
 
 ## Translation note (Back Office)
 
-Each extra field has a **title** and a **description** meant to be displayed in Back Office.
+Each extra property has a **title** and a **description** meant to be displayed in Back Office.
 The system stores the source wording and its translation domain (for the default language), then translations are managed through PrestaShop Back Office.
 
 To make those strings appear in the Back Office translation interface, two conditions must be met:
 
-1. The strings must be declared in PHP via `$this->trans(...)` (see `demoextrafield::registerTranslationWordings()`).
-2. The same source strings must exist at least once in an XLF file shipped by the module (see `translations/fr-FR/ModulesDemoextrafieldAdmin.fr-FR.xlf`).
+1. The strings must be declared in PHP via `$this->trans(...)` (see `demoextraproperty::registerTranslationWordings()`).
+2. The same source strings must exist at least once in an XLF file shipped by the module (see `translations/fr-FR/ModulesDemoextrapropertyAdmin.fr-FR.xlf`).
 
 ## Supported PrestaShop versions
 
@@ -165,5 +165,5 @@ Compatible with 9.2 ? and above versions.
 1. Download or clone the module into the `modules` directory of your PrestaShop installation
 2. Install the module:
   - from Back Office in Module Manager
-  - or using the command `php ./bin/console prestashop:module install demoextrafield`
+  - or using the command `php ./bin/console prestashop:module install demoextraproperty`
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="ModulesDemoextrapropertyMain.xlf" source-language="fr-FR" target-language="fr-FR" datatype="plaintext">
+    <body>
+      <trans-unit id="3b98b093b93c96e1b8511758d36dacd1">
+        <source>Extra properties (demoextraproperty)</source>
+        <target>Propriétés extra (demoextraproperty)</target>
+      </trans-unit>
+      <trans-unit id="d662dc9b966ff3811bd193a66d026569">
+        <source>No extra properties found for this module.</source>
+        <target>Aucune propriété extra pour ce module.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
